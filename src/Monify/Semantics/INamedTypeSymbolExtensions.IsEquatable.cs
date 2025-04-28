@@ -9,7 +9,7 @@ internal static partial class INamedTypeSymbolExtensions
 {
     private const int ExpectedArgumentsForEquatable = 1;
     private const string EquatableTypeName = "System.IEquatable`1";
-    private const int EquatableTypeArgument = 0;
+    private const int EquatableTypeArgumentOffset = 0;
 
     /// <summary>
     /// Determines whether or not the <paramref name="class"/> implements <see cref="IEquatable{T}"/>.
@@ -44,7 +44,7 @@ internal static partial class INamedTypeSymbolExtensions
         {
             return SymbolEqualityComparer.Default.Equals(@interface.ConstructedFrom, equatable)
                 && @interface.TypeArguments.Length == ExpectedArgumentsForEquatable
-                && SymbolEqualityComparer.Default.Equals(@interface.TypeArguments[EquatableTypeArgument], type);
+                && SymbolEqualityComparer.Default.Equals(@interface.TypeArguments[EquatableTypeArgumentOffset], type);
         }
 
         return @class.AllInterfaces.Any(IsEquatable);

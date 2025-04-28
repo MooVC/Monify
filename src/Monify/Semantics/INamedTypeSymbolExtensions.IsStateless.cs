@@ -9,6 +9,7 @@ internal static partial class INamedTypeSymbolExtensions
 {
     private const int ExpectedFieldsForStatelessType = 0;
     private const int ExpectedFieldsWhenFieldIsAlreadyDefined = 1;
+    private const int OffsetForFieldWhenAlreadyDefined = 0;
 
     /// <summary>
     /// Determines whether or not the <paramref name="class"/> is stateless.
@@ -45,7 +46,9 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (fields.Length == ExpectedFieldsWhenFieldIsAlreadyDefined)
         {
-            hasFieldForEncapsulatedValue = SymbolEqualityComparer.IncludeNullability.Equals(fields[0].Type, value);
+            IFieldSymbol field = fields[OffsetForFieldWhenAlreadyDefined];
+
+            hasFieldForEncapsulatedValue = SymbolEqualityComparer.IncludeNullability.Equals(field.Type, value);
         }
 
         return hasFieldForEncapsulatedValue;

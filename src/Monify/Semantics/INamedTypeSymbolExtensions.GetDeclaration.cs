@@ -1,11 +1,6 @@
 ﻿namespace Monify.Semantics;
 
-using System.Collections.Generic;
-using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Monify.Model;
-using Monify.Syntax;
 
 /// <summary>
 /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -17,9 +12,6 @@ internal static partial class INamedTypeSymbolExtensions
     /// </summary>
     /// <param name="symbol">
     /// The symbol for the type to be checked for Monify support.
-    /// </param>
-    /// <param name="nesting">
-    /// The declaration syntax for the parents of the <paramref name="syntax"/>.
     /// </param>
     /// <returns>
     /// <see langword="true"/> if the type is annotated and partial, otherwise <see langword="false"/>.

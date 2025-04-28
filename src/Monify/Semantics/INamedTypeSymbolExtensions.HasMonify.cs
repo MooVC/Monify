@@ -7,7 +7,8 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
-    private const int ExpectedArgumentsForMonifyAttribute = 1;
+    private const int ExpectedGenericArgumentCountForMonifyAttribute = 1;
+    private const int OffsetForEncapsulatedTypeOnMonifyAttribute = 1;
 
     /// <summary>
     /// Determines whether or not the <paramref name="symbol"/> provided is annotated with the Monify attribute.
@@ -27,9 +28,9 @@ internal static partial class INamedTypeSymbolExtensions
             .GetAttributes()
             .Where(attribute => attribute.AttributeClass is not null
                 && attribute.AttributeClass.IsGenericType
-                && attribute.AttributeClass.TypeArguments.Length == ExpectedArgumentsForMonifyAttribute
+                && attribute.AttributeClass.TypeArguments.Length == ExpectedGenericArgumentCountForMonifyAttribute
                 && attribute.AttributeClass.IsMonify())
-            .Select(attribute => attribute.AttributeClass!.TypeArguments.First())
+            .Select(attribute => attribute.AttributeClass!.TypeArguments.ElementAt(OffsetForEncapsulatedTypeOnMonifyAttribute))
             .FirstOrDefault();
 
         if (value is not null)

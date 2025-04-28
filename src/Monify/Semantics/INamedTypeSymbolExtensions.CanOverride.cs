@@ -7,6 +7,8 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
+    private const int DefaultParameterCountOnMethodOverrides = 0;
+
     /// <summary>
     /// Determines whether or not the <paramref name="class"/> declares an override for method denoted by <paramref name="name"/>.
     /// </summary>
@@ -34,7 +36,7 @@ internal static partial class INamedTypeSymbolExtensions
         SpecialType @return,
         Predicate<IMethodSymbol>? predicate = default)
     {
-        predicate ??= method => method.Parameters.Length == 0;
+        predicate ??= method => method.Parameters.Length == DefaultParameterCountOnMethodOverrides;
 
         return !(@class.HasOverride(name, @return, predicate: predicate)
               || @class.InheritsSealed(name, @return, predicate: predicate));

@@ -7,6 +7,9 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
+    private const int ExpectedParameterCountForEqualsMethod = 1;
+    private const int OffsetForObjectParameterOnEqualsMethod = 0;
+
     /// <summary>
     /// Determines whether or not the <paramref name="class"/> can override <see cref="object.Equals(object)"/>.
     /// </summary>
@@ -21,6 +24,7 @@ internal static partial class INamedTypeSymbolExtensions
         return @class.CanOverride(
             nameof(Equals),
             SpecialType.System_Boolean,
-            predicate: method => method.Parameters.Length == 1 && method.Parameters[0].Type.SpecialType == SpecialType.System_Object);
+            predicate: method => method.Parameters.Length == ExpectedParameterCountForEqualsMethod
+                    && method.Parameters[OffsetForObjectParameterOnEqualsMethod].Type.SpecialType == SpecialType.System_Object);
     }
 }

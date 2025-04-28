@@ -8,8 +8,8 @@ using Microsoft.CodeAnalysis;
 internal static partial class INamedTypeSymbolExtensions
 {
     private const int ExpectedParametersForOperator = 2;
-    private const int LeftParameter = 0;
-    private const int RightParameter = 1;
+    private const int OffsetForLeftParameter = 0;
+    private const int OffsetForRightParameter = 1;
 
     /// <summary>
     /// Determines whether or not the <paramref name="class"/> declares an its own operator named <paramref name="operator"/>.
@@ -30,15 +30,15 @@ internal static partial class INamedTypeSymbolExtensions
     {
         bool IsComparingToSelf(IMethodSymbol method)
         {
-            return SymbolEqualityComparer.Default.Equals(method.Parameters[LeftParameter].Type, method.Parameters[RightParameter].Type)
-                && SymbolEqualityComparer.Default.Equals(method.Parameters[LeftParameter].Type, @class);
+            return SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForLeftParameter].Type, method.Parameters[OffsetForRightParameter].Type)
+                && SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForLeftParameter].Type, @class);
         }
 
         bool IsComparingExpectedTypes(IMethodSymbol method)
         {
-            return !SymbolEqualityComparer.Default.Equals(method.Parameters[LeftParameter].Type, method.Parameters[RightParameter].Type)
-                && IsOfTypes(method.Parameters[LeftParameter].Type)
-                && IsOfTypes(method.Parameters[RightParameter].Type);
+            return !SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForLeftParameter].Type, method.Parameters[OffsetForRightParameter].Type)
+                && IsOfTypes(method.Parameters[OffsetForLeftParameter].Type)
+                && IsOfTypes(method.Parameters[OffsetForRightParameter].Type);
         }
 
         bool IsOfTypes(ITypeSymbol symbol)

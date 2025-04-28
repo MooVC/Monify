@@ -7,8 +7,6 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
-    private const int ExpectedParameters = 1;
-
     /// <summary>
     /// Determines whether or not the <paramref name="class"/> declares an implementaton for Equals.
     /// </summary>
@@ -29,7 +27,7 @@ internal static partial class INamedTypeSymbolExtensions
             .GetMembers(nameof(Equals))
             .OfType<IMethodSymbol>()
             .Any(method => method.ReturnType.SpecialType == SpecialType.System_Boolean
-                        && method.Parameters.Length == ExpectedParameters
-                        && SymbolEqualityComparer.Default.Equals(method.Parameters[0].Type.OriginalDefinition, type));
+                        && method.Parameters.Length == ExpectedParameterCountForEqualsMethod
+                        && SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForObjectParameterOnEqualsMethod].Type.OriginalDefinition, type));
     }
 }

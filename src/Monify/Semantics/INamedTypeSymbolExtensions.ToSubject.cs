@@ -38,7 +38,9 @@ internal static partial class INamedTypeSymbolExtensions
 
         string? declaration = @class.GetDeclaration();
 
-        if (declaration is null || !@class.IsStateless(value, out bool hasFieldForEncapsulatedValue))
+        if (declaration is null
+        || !@class.IsStateless(value, out bool hasFieldForEncapsulatedValue)
+        || !@class.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
         {
             return default;
         }
@@ -49,6 +51,7 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideGetHashCode = @class.CanOverrideGetHashCode(),
             CanOverrideToString = @class.CanOverrideToString(),
             Declaration = declaration,
+            HasConstructorForEncapsulatedValue = hasConstructorForEncapsulatedValue,
             HasEqualityOperatorForSelf = @class.HasEqualityOperator(),
             HasEqualityOperatorForValue = @class.HasEqualityOperator(type: value),
             HasEquatableForSelf = @class.HasEquatable(),

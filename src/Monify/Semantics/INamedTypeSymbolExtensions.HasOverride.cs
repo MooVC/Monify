@@ -34,7 +34,7 @@ internal static partial class INamedTypeSymbolExtensions
         SpecialType @return,
         Predicate<IMethodSymbol>? predicate = default)
     {
-        predicate ??= method => method.Parameters.Length == 0;
+        predicate ??= method => method.Parameters.Length == DefaultParameterCountOnMethodOverrides;
 
         return @class
             .GetMembers(name)
