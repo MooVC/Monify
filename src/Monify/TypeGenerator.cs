@@ -16,6 +16,24 @@ public sealed class TypeGenerator
 {
     private static readonly IStrategy[] strategies =
     [
+        new EqualityStrategy(subject => !subject.HasEqualityOperatorForSelf, "Self", subject => subject.Qualification),
+        new EqualityStrategy(subject => !subject.HasEqualityOperatorForValue, "Value", subject => subject.Value),
+        new EqualsStrategy(),
+        new EquatableStrategy(
+            subject => !subject.IsEquatableToSelf,
+            _ => "Equals(other._value)",
+            subject => subject.HasEquatableForSelf,
+            "Self",
+            subject => subject.Qualification),
+        new EquatableStrategy(
+            subject => !subject.IsEquatableToValue,
+            subject => $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals(_value, other)",
+            subject => subject.HasEquatableForValue,
+            "Value",
+            subject => subject.Value),
+        new GetHashCodeStrategy(),
+        new InequalityStrategy(subject => !subject.HasInequalityOperatorForSelf, "Self", subject => subject.Qualification),
+        new InequalityStrategy(subject => !subject.HasInequalityOperatorForValue, "Value", subject => subject.Value),
         new ToStringStrategy(),
     ];
 

@@ -25,11 +25,6 @@ internal static partial class INamedTypeSymbolExtensions
     /// </returns>
     public static bool IsSupported(this INamedTypeSymbol symbol, Stack<Nesting> nesting)
     {
-        if (!symbol.HasMonify())
-        {
-            return false;
-        }
-
         INamedTypeSymbol? current = symbol;
 
         do
@@ -45,7 +40,14 @@ internal static partial class INamedTypeSymbolExtensions
                 .OfType<TypeDeclarationSyntax>()
                 .All(type => type.IsPartial());
 
-            if (!(isPartial && current.IsSupported(out string declaration)))
+            if (!isPartial)
+            {
+                return false;
+            }
+
+            string? declaration = symbol.GetDeclaration();
+
+            if (declaration is null)
             {
                 return false;
             }
@@ -60,47 +62,5 @@ internal static partial class INamedTypeSymbolExtensions
             nesting.Push(parent);
         }
         while (true);
-    }
-
-    private static string IdentifyPrefix(this INamedTypeSymbol symbol)
-    {
-        string @ref = symbol.IsRefLikeType
-            ? "ref"
-            : string.Empty;
-
-        string @readonly = symbol.IsReadOnly
-            ? "readonly"
-            : string.Empty;
-
-        return string
-            .Join(" ", @readonly, @ref)
-            .Trim();
-    }
-
-    private static string IdentifyType(this INamedTypeSymbol symbol)
-    {
-        return symbol.TypeKind switch
-        {
-            TypeKind.Class => symbol.IsRecord
-                ? "record"
-                : "class",
-            TypeKind.Struct => symbol.IsRecord
-                ? "record struct"
-                : "struct",
-            TypeKind.Interface => "interface",
-            _ => string.Empty,
-        };
-    }
-
-    private static bool IsSupported(this INamedTypeSymbol symbol, out string declaration)
-    {
-        string prefix = symbol.IdentifyPrefix();
-        string type = symbol.IdentifyType();
-
-        declaration = string
-            .Join(" ", prefix, "partial", type)
-            .TrimStart();
-
-        return !string.IsNullOrEmpty(declaration);
     }
 }

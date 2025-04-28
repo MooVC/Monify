@@ -17,7 +17,7 @@ internal sealed class ToStringStrategy
         }
 
         string code = $$$"""
-            {{{subject.Qualification}}}
+            {{{subject.Declaration}}} {{{subject.Qualification}}}
             {
                 public override string ToString()
                 {

@@ -35,36 +35,92 @@ internal sealed partial class Subject
     public bool CanOverrideToString { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not the subject declares an equality operator.
+    /// Gets or sets the type declaration of the subject, be it a class, record or struct.
     /// </summary>
     /// <value>
-    /// A value indicating whether or not the subject declares an equality operator.
+    /// The type declaration of the subject, be it a class, record or struct.
     /// </value>
-    public bool HasEqualityOperator { get; set; }
+    public string Declaration { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/>.
+    /// Gets or sets a value indicating whether or not the subject defines a constructor for the encapsulated value.
     /// </summary>
     /// <value>
-    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/>.
+    /// A value indicating whether or not the subject defines a constructor for the encapsulated value.
     /// </value>
-    public bool HasEquatable { get; set; }
+    public bool HasConstructorForEncapsulatedValue { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not the subject declares an inequality operator.
+    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
     /// </summary>
     /// <value>
-    /// A value indicating whether or not the subject declares an inequality operator.
+    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
     /// </value>
-    public bool HasInequalityOperator { get; set; }
+    public bool HasEquatableForSelf { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}"/>.
+    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for the encapsulated value.
     /// </summary>
     /// <value>
-    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/>.
+    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for the encapsulated value.
     /// </value>
-    public bool IsEquatable { get; set; }
+    public bool HasEquatableForValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject declares an equality operator for its own type.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject declares an equality operator for its own type.
+    /// </value>
+    public bool HasEqualityOperatorForSelf { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject declares an equality operator for the encapsulated value.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject declares an equality operator for the encapsulated value.
+    /// </value>
+    public bool HasEqualityOperatorForValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject defines a field for the encapsulated value.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject defines a field for the encapsulated value.
+    /// </value>
+    public bool HasFieldForEncapsulatedValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject declares an inequality operator for its own type.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject declares an inequality operator for its own type.
+    /// </value>
+    public bool HasInequalityOperatorForSelf { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject declares an inequality operator for the encapsulated value.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject declares an inequality operator for the encapsulated value.
+    /// </value>
+    public bool HasInequalityOperatorForValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for its own type.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/>for its own type.
+    /// </value>
+    public bool IsEquatableToSelf { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for the encapsulated value.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for the encapsulated value.
+    /// </value>
+    public bool IsEquatableToValue { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether or not the subject belongs to the global namespace.
@@ -105,4 +161,12 @@ internal sealed partial class Subject
     /// The qualified name of the subject, which includes any generic arguments.
     /// </value>
     public string Qualification { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the qualified name of the value that is encapsulated by the subject.
+    /// </summary>
+    /// <value>
+    /// The qualified name of the value that is encapsulated by the subject.
+    /// </value>
+    public string Value { get; set; } = string.Empty;
 }
