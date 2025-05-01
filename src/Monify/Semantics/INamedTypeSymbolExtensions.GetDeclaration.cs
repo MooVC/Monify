@@ -36,8 +36,12 @@ internal static partial class INamedTypeSymbolExtensions
             ? "readonly"
             : string.Empty;
 
+        string @sealed = symbol.TypeKind == TypeKind.Class
+            ? "sealed"
+            : string.Empty;
+
         return string
-            .Join(" ", @readonly, @ref)
+            .Join(" ", @readonly, @ref, @sealed)
             .Trim();
     }
 

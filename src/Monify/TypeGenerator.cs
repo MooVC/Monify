@@ -16,21 +16,23 @@ public sealed class TypeGenerator
 {
     private static readonly IStrategy[] strategies =
     [
+        new ConstructorStrategy(),
         new EqualityStrategy(subject => !subject.HasEqualityOperatorForSelf, "Self", subject => subject.Qualification),
         new EqualityStrategy(subject => !subject.HasEqualityOperatorForValue, "Value", subject => subject.Value),
         new EqualsStrategy(),
         new EquatableStrategy(
             subject => !subject.IsEquatableToSelf,
-            _ => "Equals(other._value)",
+            _ => $"Equals(other.{FieldStrategy.Name})",
             subject => subject.HasEquatableForSelf,
             "Self",
             subject => subject.Qualification),
         new EquatableStrategy(
             subject => !subject.IsEquatableToValue,
-            subject => $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals(_value, other)",
+            subject => $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)",
             subject => subject.HasEquatableForValue,
             "Value",
             subject => subject.Value),
+        new FieldStrategy(),
         new GetHashCodeStrategy(),
         new InequalityStrategy(subject => !subject.HasInequalityOperatorForSelf, "Self", subject => subject.Qualification),
         new InequalityStrategy(subject => !subject.HasInequalityOperatorForValue, "Value", subject => subject.Value),
@@ -95,7 +97,11 @@ public sealed class TypeGenerator
             name = string.Join(".", names);
         }
 
-        return $"{subject.Namespace}.{name}.{source.Hint}.g.cs";
+        string separator = source.Hint.StartsWith(".")
+            ? string.Empty
+            : ".";
+
+        return $"{subject.Namespace}.{name}{separator}{source.Hint}.g.cs";
     }
 
     private static LanguageVersion GetVersion(ParseOptions options, CancellationToken cancellationToken)
@@ -148,7 +154,6 @@ public sealed class TypeGenerator
 
         code = $"""
             using System;
-            using System.Collections.Generic;
 
             #nullable disable
             

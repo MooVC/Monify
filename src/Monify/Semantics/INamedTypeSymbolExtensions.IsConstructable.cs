@@ -1,13 +1,13 @@
 ﻿namespace Monify.Semantics;
 
 using Microsoft.CodeAnalysis;
+using Monify.Strategies;
 
 /// <summary>
 /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
-    private const string ConstructorName = ".ctor";
     private const int OffsetForConstructorWhenDefined = 0;
     private const int ExpectedConstructorsWhenUndefined = 0;
     private const int ExpectedConstructorsWhenDefined = 1;
@@ -36,7 +36,7 @@ internal static partial class INamedTypeSymbolExtensions
     {
         IMethodSymbol[] constructors = @class
             .GetMembers()
-            .Where(member => member.Kind == SymbolKind.Method && !member.IsStatic && member.Name == ConstructorName)
+            .Where(member => member.Kind == SymbolKind.Method && !member.IsStatic && member.Name == ConstructorStrategy.Name)
             .OfType<IMethodSymbol>()
             .ToArray();
 

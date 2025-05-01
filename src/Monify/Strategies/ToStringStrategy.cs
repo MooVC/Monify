@@ -21,7 +21,7 @@ internal sealed class ToStringStrategy
             {
                 public override string ToString()
                 {
-                    return $"{{{subject.Name}}} {{ {_value} }}";
+                    return $"{{{subject.Name}}} {{ {{{{FieldStrategy.Name}}}} }}";
                 }
             }
             """;

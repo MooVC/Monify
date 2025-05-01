@@ -21,7 +21,7 @@ internal sealed class GetHashCodeStrategy
             {
                 public override int GetHashCode()
                 {
-                    return _value.GetHashCode();
+                    return {{FieldStrategy.Name}}.GetHashCode();
                 }
             }
             """;

@@ -2,15 +2,21 @@
 
 [Flags]
 public enum Extensions
-    : byte
+    : ushort
 {
     None = 0,
-    HasEqualityOperator = 0b0000_0001,
-    HasEqualsOverride = 0b0000_0010,
-    HasEquatable = 0b0000_0100,
-    HasGetHashCodeOverride = 0b0000_1000,
-    HasInequalityOperator = 0b0001_0000,
-    HasToStringOverride = 0b0010_0000,
-    IsEquatable = 0b0100_0000,
-    All = 0b0111_1111,
+    HasConstructorForEncapsulatedValue = 0b0000_0000_0001,
+    HasEquatableForSelf = 0b0000_0000_0000_0010,
+    HasEquatableForValue = 0b0000_0000_0000_0100,
+    HasEqualityOperatorForSelf = 0b0000_0000_0000_1000,
+    HasEqualityOperatorForValue = 0b0000_0000_0001_0000,
+    HasEqualsOverride = 0b0000_0000_0010_0000,
+    HasFieldForEncapsulatedValue = 0b0000_0000_0100_0000,
+    HasGetHashCodeOverride = 0b0000_0000_1000_0000,
+    HasInequalityOperatorForSelf = 0b0000_0001_0000_0000,
+    HasInequalityOperatorForValue = 0b0000_0010_0000_0000,
+    HasToStringOverride = 0b0000_0100_0000_0000,
+    IsEquatableToSelf = 0b0000_1000_0000_0000,
+    IsEquatableToValue = 0b0001_0000_0000_0000,
+    All = 0b0001_1111_1111_1111,
 }
