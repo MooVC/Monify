@@ -59,7 +59,11 @@ internal sealed class EquatableStrategy
 
     private Source GenerateContract(Subject subject, string type)
     {
-        string code = $"{subject.Declaration} {subject.Qualification} : IEquatable<{type}>;";
+        string code = $$"""
+            {{subject.Declaration}} {{subject.Qualification}} : IEquatable<{{type}}>
+            {
+            }
+            """;
 
         return new Source(code, $"{nameof(IEquatable<Subject>)}.{_name}");
     }

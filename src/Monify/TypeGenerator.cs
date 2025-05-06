@@ -167,10 +167,11 @@ public sealed class TypeGenerator
             return code;
         }
 
-        return $"""
-            namespace {subject.Namespace};
-            
-            {code}
+        return $$"""
+            namespace {{subject.Namespace}}
+            {
+                {{code.Indent()}}
+            }
             """;
     }
 }

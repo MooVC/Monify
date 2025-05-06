@@ -1,5 +1,6 @@
 ﻿namespace Monify.Semantics;
 
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.CodeAnalysis;
 
 /// <summary>
@@ -7,6 +8,7 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
+    private const string EncapsulatedValueTypeArgumentName = "Type";
     private const int ExpectedGenericArgumentCountForMonifyAttribute = 1;
     private const int OffsetForEncapsulatedTypeOnMonifyAttribute = 1;
 
@@ -24,21 +26,44 @@ internal static partial class INamedTypeSymbolExtensions
     /// </returns>
     public static bool HasMonify(this INamedTypeSymbol symbol, out ITypeSymbol value)
     {
-        value = symbol
+        AttributeData data = symbol
             .GetAttributes()
-            .Where(attribute => attribute.AttributeClass is not null
-                && attribute.AttributeClass.IsGenericType
-                && attribute.AttributeClass.TypeArguments.Length == ExpectedGenericArgumentCountForMonifyAttribute
-                && attribute.AttributeClass.IsMonify())
-            .Select(attribute => attribute.AttributeClass!.TypeArguments.ElementAt(OffsetForEncapsulatedTypeOnMonifyAttribute))
+            .Where(attribute => attribute.AttributeClass is not null && attribute.AttributeClass.IsMonify())
+            .Select(attribute => attribute)
             .FirstOrDefault();
 
-        if (value is not null)
+        if (data is not null)
         {
-            return true;
+            return GetEncapsulatedValueType(data.AttributeClass!, data, out value);
         }
 
         value = symbol;
+
+        return false;
+    }
+
+    private static bool GetEncapsulatedValueType(INamedTypeSymbol attribute, AttributeData data, out ITypeSymbol value)
+    {
+        if (attribute.IsGenericType && attribute.TypeArguments.Length == ExpectedGenericArgumentCountForMonifyAttribute)
+        {
+            value = attribute.TypeArguments.ElementAt(OffsetForEncapsulatedTypeOnMonifyAttribute);
+
+            return true;
+        }
+
+        foreach (KeyValuePair<string, TypedConstant> argument in data.NamedArguments)
+        {
+            if (argument.Key == EncapsulatedValueTypeArgumentName
+                && argument.Value.Kind == TypedConstantKind.Type
+                && argument.Value.Value is ITypeSymbol symbol)
+            {
+                value = symbol;
+
+                return true;
+            }
+        }
+
+        value = attribute;
 
         return false;
     }

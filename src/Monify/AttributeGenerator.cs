@@ -15,21 +15,25 @@ public sealed class AttributeGenerator
     /// The source code that will be output by the generator.
     /// </summary>
     internal const string Content = $$"""
-        #if NET8_0_OR_GREATER
-        
-        namespace Monify
+        namespace Monify;
         {
             using System;
             using System.Diagnostics.CodeAnalysis;
-        
+
             [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+            #if NET8_0_OR_GREATER
             internal sealed class {{Name}}Attribute<T>
                 : Attribute
             {
             }
+            #else
+            internal sealed class {{Name}}Attribute
+                : Attribute
+            {
+                public Type Type { get; set; }
+            }
+            #endif
         }
-
-        #endif
         """;
 
     /// <summary>
