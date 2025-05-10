@@ -36,7 +36,10 @@ internal static partial class INamedTypeSymbolExtensions
     {
         IMethodSymbol[] constructors = @class
             .GetMembers()
-            .Where(member => member.Kind == SymbolKind.Method && !member.IsStatic && member.Name == ConstructorStrategy.Name)
+            .Where(member => member.Kind == SymbolKind.Method
+                          && !member.IsStatic
+                          && member.Name == ConstructorStrategy.Name
+                          && !member.IsImplicitlyDeclared)
             .OfType<IMethodSymbol>()
             .ToArray();
 

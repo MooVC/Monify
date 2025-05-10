@@ -42,13 +42,6 @@ public sealed class TypeGenerator
     /// <inheritdoc/>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        IncrementalValueProvider<LanguageVersion> options = context
-            .ParseOptionsProvider
-            .Select(GetVersion);
-
-        IncrementalValueProvider<bool> version = options
-            .Select(IsVersionSupported);
-
         IncrementalValuesProvider<TypeDeclarationSyntax?> classes = context
             .SyntaxProvider
             .CreateSyntaxProvider(predicate: IsMatch, transform: Transform)
@@ -56,9 +49,7 @@ public sealed class TypeGenerator
 
         IncrementalValuesProvider<Subject?> subjects = classes
            .Combine(context.CompilationProvider)
-           .Combine(version)
-           .Where(static tuple => tuple.Right)
-           .Select(static (match, cancellationToken) => Parse(match.Left.Left, match.Left.Right, cancellationToken))
+           .Select(static (match, cancellationToken) => Parse(match.Left, match.Right, cancellationToken))
            .Where(subject => subject is not null);
 
         context.RegisterSourceOutput(subjects, Generate);
@@ -104,21 +95,9 @@ public sealed class TypeGenerator
         return $"{subject.Namespace}.{name}{separator}{source.Hint}.g.cs";
     }
 
-    private static LanguageVersion GetVersion(ParseOptions options, CancellationToken cancellationToken)
-    {
-        return options is CSharpParseOptions csharp
-            ? csharp.LanguageVersion
-            : LanguageVersion.Default;
-    }
-
     private static bool IsMatch(SyntaxNode node, CancellationToken cancellationToken)
     {
         return node is TypeDeclarationSyntax type && type.AttributeLists.Count > 0;
-    }
-
-    private static bool IsVersionSupported(LanguageVersion version, CancellationToken cancellationToken)
-    {
-        return version == LanguageVersion.Default || version >= LanguageVersion.CSharp12;
     }
 
     private static Subject? Parse(TypeDeclarationSyntax? syntax, Compilation compilation, CancellationToken cancellationToken)
@@ -154,12 +133,17 @@ public sealed class TypeGenerator
 
         code = $"""
             using System;
+            using System.Collections.Generic;
 
+            #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
             #nullable disable
-            
+            #endif
+
             {code}
-            
+
+            #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
             #nullable restore
+            #endif
             """;
 
         if (subject.IsGlobal)

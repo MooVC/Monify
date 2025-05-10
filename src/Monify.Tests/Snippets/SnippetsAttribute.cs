@@ -100,7 +100,7 @@ public sealed class SnippetsAttribute
         return Assembly
             .GetAssembly(typeof(SnippetsAttribute))!
             .GetTypes()
-            .Where(type => type.Namespace == "Valuify.Snippets.Declarations")
+            .Where(type => type.Namespace == "Monify.Snippets.Declarations")
             .ToArray();
     }
 

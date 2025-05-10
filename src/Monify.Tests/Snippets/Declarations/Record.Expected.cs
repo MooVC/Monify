@@ -15,9 +15,9 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial sealed record Record
+                sealed partial record Record
                 {
-                    public Record(int value)
+                    private Record(int value)
                     {
                         _value = value;
                     }
@@ -42,7 +42,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record : IEquatable<Record>
+                sealed partial record Record : IEquatable<Record>
                 {
                 }
 
@@ -65,7 +65,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record : IEquatable<int>
+                sealed partial record Record : IEquatable<int>
                 {
                 }
 
@@ -88,7 +88,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial sealed record Record
+                sealed partial record Record
                 {
                     public static bool operator ==(Record left, Record right)
                     {
@@ -125,7 +125,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial sealed record Record
+                sealed partial record Record
                 {
                     public static bool operator ==(Record left, int right)
                     {
@@ -162,7 +162,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial sealed record Record
+                sealed partial record Record
                 {
                     public override bool Equals(object other)
                     {
@@ -189,7 +189,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial sealed record Record
+                sealed partial record Record
                 {
                     private readonly int _value;
                 }
@@ -213,7 +213,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
         
-                partial record Record
+                sealed partial record Record
                 {
                     public override int GetHashCode()
                     {
@@ -240,7 +240,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record
+                sealed partial record Record
                 {
                     public static bool operator !=(Record left, Record right)
                     {
@@ -267,7 +267,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record
+                sealed partial record Record
                 {
                     public static bool operator !=(Record left, int right)
                     {
@@ -294,14 +294,14 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record
+                sealed partial record Record
                 {
                     public override string ToString()
                     {
                         return string.Format("Record { {0} }", _value);
                     }
                 }
-        
+
                 #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                 #nullable restore
                 #endif
@@ -321,7 +321,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record
+                sealed partial record Record
                 {
                     public bool Equals(Record other)
                     {
@@ -335,7 +335,7 @@ internal static partial class Record
                             return false;
                         }
 
-                        return _value.Equals(other._value);
+                        return Equals(other._value);
                     }
                 }
 
@@ -358,7 +358,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                partial record Record
+                sealed partial record Record
                 {
                     public bool Equals(int other)
                     {
@@ -366,7 +366,7 @@ internal static partial class Record
                         {
                             return true;
                         }
-            
+
                         if (ReferenceEquals(other, null))
                         {
                             return false;

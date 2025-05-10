@@ -10,7 +10,7 @@ internal static partial class Record
             """
             namespace Monify.Records.Testing
             {
-                [Monify<int>]
+                [Monify(Type = typeof(int))]
                 public partial record Record;
             }
             """,

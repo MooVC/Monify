@@ -15,7 +15,7 @@ public sealed class AttributeGenerator
     /// The source code that will be output by the generator.
     /// </summary>
     internal const string Content = $$"""
-        namespace Monify;
+        namespace Monify
         {
             using System;
             using System.Diagnostics.CodeAnalysis;

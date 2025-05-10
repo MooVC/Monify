@@ -71,7 +71,7 @@ internal sealed class EquatableStrategy
     private Source GenerateImplementation(Subject subject, string type)
     {
         string code = $$"""
-            partial class {{subject.Qualification}}
+            {{subject.Declaration}} {{subject.Qualification}}
             {
                 public bool Equals({{type}} other)
                 {
@@ -79,12 +79,12 @@ internal sealed class EquatableStrategy
                     {
                         return true;
                     }
-            
+
                     if (ReferenceEquals(other, null))
                     {
                         return false;
                     }
-            
+
                     return {{_equality(subject)}};
                 }
             }
