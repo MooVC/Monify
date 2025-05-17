@@ -1,6 +1,5 @@
 ﻿namespace Monify.Semantics;
 
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.CodeAnalysis;
 
 /// <summary>
@@ -10,7 +9,7 @@ internal static partial class INamedTypeSymbolExtensions
 {
     private const string EncapsulatedValueTypeArgumentName = "Type";
     private const int ExpectedGenericArgumentCountForMonifyAttribute = 1;
-    private const int OffsetForEncapsulatedTypeOnMonifyAttribute = 1;
+    private const int OffsetForEncapsulatedTypeOnMonifyAttribute = 0;
 
     /// <summary>
     /// Determines whether or not the <paramref name="symbol"/> provided is annotated with the Monify attribute.

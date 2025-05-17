@@ -20,19 +20,20 @@ public sealed class AttributeGenerator
             using System;
             using System.Diagnostics.CodeAnalysis;
 
+            #if NET7_0_OR_GREATER
             [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-            #if NET8_0_OR_GREATER
             internal sealed class {{Name}}Attribute<T>
                 : Attribute
             {
             }
-            #else
+            #endif
+
+            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
             internal sealed class {{Name}}Attribute
                 : Attribute
             {
                 public Type Type { get; set; }
             }
-            #endif
         }
         """;
 

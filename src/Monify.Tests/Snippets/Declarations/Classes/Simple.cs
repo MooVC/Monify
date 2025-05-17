@@ -1,9 +1,11 @@
-﻿namespace Monify.Snippets.Declarations;
+﻿namespace Monify.Snippets.Declarations.Classes;
 
-internal static partial class Record
+using static Monify.Snippets.Declarations.Attributes.Declarations;
+
+internal static partial class Simple
 {
     public static readonly Snippets Declaration = new(
-        [],
+        [Generic, NonGeneric],
         Declarations.Main,
         [
             Expected.ConstructorForEncapsulatedValue,
@@ -35,5 +37,5 @@ internal static partial class Record
             new(Expected.EquatableToSelf.Content, Extensions.IsEquatableToSelf),
             new(Expected.EquatableToValue.Content, Extensions.IsEquatableToValue),
         ],
-        nameof(Record));
+        nameof(Simple));
 }

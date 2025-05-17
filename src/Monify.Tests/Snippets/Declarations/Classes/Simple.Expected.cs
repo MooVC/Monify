@@ -1,12 +1,12 @@
-﻿namespace Monify.Snippets.Declarations;
+﻿namespace Monify.Snippets.Declarations.Classes;
 
-internal static partial class Record
+internal static partial class Simple
 {
     public static class Expected
     {
         public static readonly Generated ConstructorForEncapsulatedValue = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -15,9 +15,9 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
-                    private Record(int value)
+                    private Simple(int value)
                     {
                         _value = value;
                     }
@@ -29,11 +29,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasConstructorForEncapsulatedValue,
-            "Monify.Records.Testing.Record.ctor");
+            "Monify.Testing.Classes.Simple.ctor");
 
         public static readonly Generated EquatableForSelf = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -42,7 +42,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record : IEquatable<Record>
+                sealed partial class Simple : IEquatable<Simple>
                 {
                 }
 
@@ -52,11 +52,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasEquatableForSelf,
-            "Monify.Records.Testing.Record.IEquatable.Self");
+            "Monify.Testing.Classes.Simple.IEquatable.Self");
 
         public static readonly Generated EquatableForValue = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -65,7 +65,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record : IEquatable<int>
+                sealed partial class Simple : IEquatable<int>
                 {
                 }
 
@@ -75,11 +75,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasEquatableForValue,
-            "Monify.Records.Testing.Record.IEquatable.Value");
+            "Monify.Testing.Classes.Simple.IEquatable.Value");
 
         public static readonly Generated EqualityOperatorForSelf = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -88,9 +88,9 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
-                    public static bool operator ==(Record left, Record right)
+                    public static bool operator ==(Simple left, Simple right)
                     {
                         if (ReferenceEquals(left, right))
                         {
@@ -112,11 +112,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasEqualityOperatorForSelf,
-            "Monify.Records.Testing.Record.Equality.Self");
+            "Monify.Testing.Classes.Simple.Equality.Self");
 
         public static readonly Generated EqualityOperatorForValue = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -125,9 +125,9 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
-                    public static bool operator ==(Record left, int right)
+                    public static bool operator ==(Simple left, int right)
                     {
                         if (ReferenceEquals(left, right))
                         {
@@ -149,11 +149,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasEqualityOperatorForValue,
-            "Monify.Records.Testing.Record.Equality.Value");
+            "Monify.Testing.Classes.Simple.Equality.Value");
 
         public static new readonly Generated Equals = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -162,11 +162,11 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
                     public override bool Equals(object other)
                     {
-                        return Equals(other as Record);
+                        return Equals(other as Simple);
                     }
                 }
 
@@ -176,11 +176,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasEqualsOverride,
-            "Monify.Records.Testing.Record.Equals");
+            "Monify.Testing.Classes.Simple.Equals");
 
         public static readonly Generated FieldForEncapsulatedValue = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -189,7 +189,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
                     private readonly int _value;
                 }
@@ -200,11 +200,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasFieldForEncapsulatedValue,
-            "Monify.Records.Testing.Record._value");
+            "Monify.Testing.Classes.Simple._value");
 
         public static new readonly Generated GetHashCode = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -212,8 +212,8 @@ internal static partial class Record
                 #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                 #nullable disable
                 #endif
-        
-                sealed partial record Record
+
+                sealed partial class Simple
                 {
                     public override int GetHashCode()
                     {
@@ -227,11 +227,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasGetHashCodeOverride,
-            "Monify.Records.Testing.Record.GetHashCode");
+            "Monify.Testing.Classes.Simple.GetHashCode");
 
         public static readonly Generated InequalityOperatorForSelf = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -240,25 +240,25 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
-                    public static bool operator !=(Record left, Record right)
+                    public static bool operator !=(Simple left, Simple right)
                     {
                         return !(left == right);
                     }
                 }
-        
+
                 #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                 #nullable restore
                 #endif
             }
             """,
             Extensions.HasInequalityOperatorForSelf,
-            "Monify.Records.Testing.Record.Inequality.Self");
+            "Monify.Testing.Classes.Simple.Inequality.Self");
 
         public static readonly Generated InequalityOperatorForValue = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -267,25 +267,25 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
-                    public static bool operator !=(Record left, int right)
+                    public static bool operator !=(Simple left, int right)
                     {
                         return !(left == right);
                     }
                 }
-        
+
                 #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                 #nullable restore
                 #endif
             }
             """,
             Extensions.HasInequalityOperatorForValue,
-            "Monify.Records.Testing.Record.Inequality.Value");
+            "Monify.Testing.Classes.Simple.Inequality.Value");
 
         public static new readonly Generated ToString = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -294,11 +294,11 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
                     public override string ToString()
                     {
-                        return string.Format("Record { {0} }", _value);
+                        return string.Format("Simple { {0} }", _value);
                     }
                 }
 
@@ -308,11 +308,11 @@ internal static partial class Record
             }
             """,
             Extensions.HasToStringOverride,
-            "Monify.Records.Testing.Record.ToString");
+            "Monify.Testing.Classes.Simple.ToString");
 
         public static readonly Generated EquatableToSelf = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -321,9 +321,9 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
-                    public bool Equals(Record other)
+                    public bool Equals(Simple other)
                     {
                         if (ReferenceEquals(this, other))
                         {
@@ -345,11 +345,11 @@ internal static partial class Record
             }
             """,
             Extensions.IsEquatableToSelf,
-            "Monify.Records.Testing.Record.IEquatable.Self.Equals");
+            "Monify.Testing.Classes.Simple.IEquatable.Self.Equals");
 
         public static readonly Generated EquatableToValue = new(
             """
-            namespace Monify.Records.Testing
+            namespace Monify.Testing.Classes
             {
                 using System;
                 using System.Collections.Generic;
@@ -358,7 +358,7 @@ internal static partial class Record
                 #nullable disable
                 #endif
 
-                sealed partial record Record
+                sealed partial class Simple
                 {
                     public bool Equals(int other)
                     {
@@ -382,6 +382,6 @@ internal static partial class Record
             }
             """,
             Extensions.HasEquatableForValue,
-            "Monify.Records.Testing.Record.IEquatable.Value.Equals");
+            "Monify.Testing.Classes.Simple.IEquatable.Value.Equals");
     }
 }

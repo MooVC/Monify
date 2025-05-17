@@ -1,7 +1,6 @@
 ﻿namespace Monify;
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Monify.Model;
 using Monify.Strategies;
@@ -23,13 +22,13 @@ public sealed class TypeGenerator
         new EquatableStrategy(
             subject => !subject.IsEquatableToSelf,
             _ => $"Equals(other.{FieldStrategy.Name})",
-            subject => subject.HasEquatableForSelf,
+            subject => !subject.HasEquatableForSelf,
             "Self",
             subject => subject.Qualification),
         new EquatableStrategy(
             subject => !subject.IsEquatableToValue,
             subject => $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)",
-            subject => subject.HasEquatableForValue,
+            subject => !subject.HasEquatableForValue,
             "Value",
             subject => subject.Value),
         new FieldStrategy(),

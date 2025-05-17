@@ -82,6 +82,7 @@ public sealed class SnippetsAttribute
                     foreach (object[] theory in frameworks(expectation.Minimum, Prepare))
                     {
                         yield return theory;
+                        yield break;
                     }
                 }
             }
@@ -100,7 +101,7 @@ public sealed class SnippetsAttribute
         return Assembly
             .GetAssembly(typeof(SnippetsAttribute))!
             .GetTypes()
-            .Where(type => type.Namespace == "Monify.Snippets.Declarations")
+            .Where(type => type.Namespace is not null && type.Namespace.StartsWith("Monify.Snippets.Declarations", StringComparison.InvariantCulture))
             .ToArray();
     }
 

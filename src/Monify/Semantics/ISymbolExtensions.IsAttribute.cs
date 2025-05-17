@@ -7,6 +7,14 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class ISymbolExtensions
 {
+    private static readonly SymbolDisplayFormat fullyQualifiedFormat = new(
+        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+        genericsOptions: SymbolDisplayGenericsOptions.None);
+
+    private static readonly SymbolDisplayFormat minimallyQualifiedFormat = new(
+        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
+        genericsOptions: SymbolDisplayGenericsOptions.None);
+
     /// <summary>
     /// Determines whether or not the <paramref name="symbol"/> represents the attribute specified using <paramref name="name"/>.
     /// </summary>
@@ -21,22 +29,23 @@ internal static partial class ISymbolExtensions
     /// </returns>
     public static bool IsAttribute(this ISymbol? symbol, string name)
     {
-        string fullyQualifiedName = $"Monify.{name}Attribute";
+        string qualifiedName = $"{name}Attribute";
+        string fullyQualifiedName = $"Monify.{qualifiedName}";
         string globalQualifiedName = $"global::{fullyQualifiedName}";
 
         bool IsGlobal()
         {
-            return symbol.ContainingNamespace.IsGlobalNamespace && symbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat) == name;
+            return symbol.ContainingNamespace.IsGlobalNamespace && symbol.ToDisplayString(minimallyQualifiedFormat) == name;
         }
 
         bool IsQualified()
         {
-            string name = symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            string name = symbol.ToDisplayString(fullyQualifiedFormat);
 
-            return name == fullyQualifiedName || name == globalQualifiedName;
+            return name == qualifiedName || name == fullyQualifiedName || name == globalQualifiedName;
         }
 
         return symbol is not null
-            && (IsQualified() || IsGlobal());
+            && (IsQualified() || IsGlobal() || symbol.Name == name);
     }
 }
