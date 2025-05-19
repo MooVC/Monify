@@ -12,7 +12,7 @@ internal static partial class Simple
             namespace Monify.Testing.Records
             {
                 [{{BodyTag}}]
-                public partial record Record;
+                public partial record Simple;
             }
             """,
             LanguageVersion.CSharp9);

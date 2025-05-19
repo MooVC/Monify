@@ -247,7 +247,7 @@ internal static partial class Simple
                         return !(left == right);
                     }
                 }
-        
+
                 #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                 #nullable restore
                 #endif
@@ -274,7 +274,7 @@ internal static partial class Simple
                         return !(left == right);
                     }
                 }
-        
+
                 #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                 #nullable restore
                 #endif
