@@ -15,15 +15,14 @@ public sealed class WhenExecuted
     ];
 
     [Theory]
-    [Snippets(exclusions: [typeof(Simple)])]
+    [Snippets(exclusions: [typeof(Attributes), typeof(Simple)])]
     public async Task GivenATypeTheExpectedSourceIsGenerated(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange
         var test = new GeneratorTest<TypeGenerator>(assembly, language, generators);
 
+        Attributes.IsExpectedIn(test.TestState, language);
         expectations.IsDeclaredIn(test.TestState);
-
-        Attributes.Monify.IsExpectedIn(test.TestState);
 
         // Act
         Func<Task> act = () => test.RunAsync();

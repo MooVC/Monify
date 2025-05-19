@@ -1,6 +1,6 @@
 ﻿namespace Monify.Snippets.Declarations.Classes;
 
-using static Monify.Snippets.Declarations.Attributes.Declarations;
+using static Monify.Snippets.Declarations.Attributes.Annotations;
 
 internal static partial class Simple
 {

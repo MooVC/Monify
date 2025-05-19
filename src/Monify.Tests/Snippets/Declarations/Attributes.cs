@@ -1,19 +1,25 @@
 ﻿namespace Monify.Snippets.Declarations;
 
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Testing;
+using static Monify.Snippets.Declarations.Attributes.Declarations;
 
-public static class Attributes
+public static partial class Attributes
 {
-    public static readonly Generated Monify = new(
-        AttributeGenerator.Content,
-        Extensions.None,
-        $"{AttributeGenerator.Name}Attribute",
-        typeof(AttributeGenerator));
+    public static readonly Snippets Monify = new(
+        [new(Generic.Content, LanguageVersion.CSharp11), new(NonGeneric.Content, LanguageVersion.CSharp2)],
+        new Content(Snippets.BodyTag, LanguageVersion.CSharp1),
+        [Generic, NonGeneric],
+        [],
+        nameof(Monify));
 
-    public static class Declarations
+    public static void IsExpectedIn(this SolutionState state, LanguageVersion language)
     {
-        public static readonly Content Generic = new("global::Monify.MonifyAttribute<int>", LanguageVersion.CSharp11);
+        if (language >= LanguageVersion.CSharp11)
+        {
+            Generic.IsExpectedIn(state);
+        }
 
-        public static readonly Content NonGeneric = new("Monify(Type = typeof(int))", LanguageVersion.CSharp2);
+        NonGeneric.IsExpectedIn(state);
     }
 }

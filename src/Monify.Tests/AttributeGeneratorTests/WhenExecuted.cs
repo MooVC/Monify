@@ -13,7 +13,7 @@ public sealed class WhenExecuted
         // Arrange
         var test = new GeneratorTest<AttributeGenerator>(assemblies, language);
 
-        Attributes.Monify.IsExpectedIn(test.TestState);
+        Attributes.IsExpectedIn(test.TestState, language);
 
         // Act
         Func<Task> act = () => test.RunAsync();
