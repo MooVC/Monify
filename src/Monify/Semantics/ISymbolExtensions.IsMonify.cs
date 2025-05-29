@@ -8,16 +8,16 @@ using Microsoft.CodeAnalysis;
 internal static partial class ISymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="symbol"/> represents the Monify attribute.
+    /// Determines whether or not the <paramref name="subject"/> represents the Monify attribute.
     /// </summary>
-    /// <param name="symbol">
+    /// <param name="subject">
     /// The symbol to check.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="symbol"/> is the Monify attribute, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> is the Monify attribute, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool IsMonify(this ISymbol? symbol)
+    public static bool IsMonify(this ISymbol? subject)
     {
-        return symbol.IsAttribute(AttributeGenerator.Name);
+        return subject.IsAttribute(AttributeGenerator.Name);
     }
 }

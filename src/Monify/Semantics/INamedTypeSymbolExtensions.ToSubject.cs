@@ -10,9 +10,9 @@ using Monify.Model;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Maps the required Semantics from the <paramref name="class"/> and places it within an instance of <see cref="Subject"/>.
+    /// Maps the required Semantics from the <paramref name="subject"/> and places it within an instance of <see cref="Subject"/>.
     /// </summary>
-    /// <param name="class">
+    /// <param name="subject">
     /// The subject from which the semantics are identified.
     /// </param>
     /// <param name="compilation">
@@ -30,41 +30,43 @@ internal static partial class INamedTypeSymbolExtensions
     /// <remarks>
     /// If the declaration associated with the type cannot be determined, the method will return <see langword="null" />.
     /// </remarks>
-    public static Subject? ToSubject(this INamedTypeSymbol @class, Compilation compilation, ImmutableArray<Nesting> nesting, ITypeSymbol value)
+    public static Subject? ToSubject(this INamedTypeSymbol subject, Compilation compilation, ImmutableArray<Nesting> nesting, ITypeSymbol value)
     {
-        string @namespace = @class.ContainingNamespace.IsGlobalNamespace
+        string @namespace = subject.ContainingNamespace.IsGlobalNamespace
            ? string.Empty
-           : @class.ContainingNamespace.ToDisplayString();
+           : subject.ContainingNamespace.ToDisplayString();
 
-        string? declaration = @class.GetDeclaration();
+        string? declaration = subject.GetDeclaration();
 
         if (declaration is null
-        || !@class.IsStateless(value, out bool hasFieldForEncapsulatedValue)
-        || !@class.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
+        || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue)
+        || !subject.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
         {
             return default;
         }
 
         return new Subject
         {
-            CanOverrideEquals = @class.CanOverrideEquals(),
-            CanOverrideGetHashCode = @class.CanOverrideGetHashCode(),
-            CanOverrideToString = @class.CanOverrideToString(),
+            CanOverrideEquals = subject.CanOverrideEquals(),
+            CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
+            CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
             HasConstructorForEncapsulatedValue = hasConstructorForEncapsulatedValue,
-            HasEqualityOperatorForSelf = @class.HasEqualityOperator(),
-            HasEqualityOperatorForValue = @class.HasEqualityOperator(type: value),
-            HasEquatableForSelf = @class.HasEquatable(),
-            HasEquatableForValue = @class.HasEquatable(type: value),
+            HasConversionFrom = subject.HasConversion(subject),
+            HasConversionTo = subject.HasConversion(value),
+            HasEqualityOperatorForSelf = subject.HasEqualityOperator(),
+            HasEqualityOperatorForValue = subject.HasEqualityOperator(type: value),
+            HasEquatableForSelf = subject.HasEquatable(),
+            HasEquatableForValue = subject.HasEquatable(type: value),
             HasFieldForEncapsulatedValue = hasFieldForEncapsulatedValue,
-            HasInequalityOperatorForSelf = @class.HasInequalityOperator(),
-            HasInequalityOperatorForValue = @class.HasInequalityOperator(type: value),
-            IsEquatableToSelf = @class.IsEquatable(compilation),
-            IsEquatableToValue = @class.IsEquatable(compilation, type: value),
-            Name = @class.Name,
+            HasInequalityOperatorForSelf = subject.HasInequalityOperator(),
+            HasInequalityOperatorForValue = subject.HasInequalityOperator(type: value),
+            IsEquatableToSelf = subject.IsEquatable(compilation),
+            IsEquatableToValue = subject.IsEquatable(compilation, type: value),
+            Name = subject.Name,
             Namespace = @namespace,
             Nesting = nesting,
-            Qualification = @class.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
+            Qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
             Value = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
         };
     }

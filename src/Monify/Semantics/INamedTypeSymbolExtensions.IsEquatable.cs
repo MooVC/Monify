@@ -12,24 +12,24 @@ internal static partial class INamedTypeSymbolExtensions
     private const int EquatableTypeArgumentOffset = 0;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> implements <see cref="IEquatable{T}"/>.
+    /// Determines whether or not the <paramref name="subject"/> implements <see cref="IEquatable{T}"/>.
     /// </summary>
-    /// <param name="class">
+    /// <param name="subject">
     /// The symbol for the class to be checked for the declaration.
     /// </param>
     /// <param name="compilation">
     /// The <see cref="Compilation"/> used to source the symbol for <see cref="IEquatable{T}"/>.
     /// </param>
     /// <param name="type">
-    /// The type to which the <paramref name="class"/> is being compared.
+    /// The type to which the <paramref name="subject"/> is being compared.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> declares that it implements <see cref="IEquatable{T}"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> declares that it implements <see cref="IEquatable{T}"/>, otherwise <see langword="false"/>.
     /// </returns>
     /// <remarks>
-    /// The <paramref name="class"/> is assumed to be a class.
+    /// The <paramref name="subject"/> is assumed to be a class.
     /// </remarks>
-    public static bool IsEquatable(this INamedTypeSymbol @class, Compilation compilation, ITypeSymbol? type = default)
+    public static bool IsEquatable(this INamedTypeSymbol subject, Compilation compilation, ITypeSymbol? type = default)
     {
         INamedTypeSymbol? equatable = compilation.GetTypeByMetadataName(EquatableTypeName);
 
@@ -38,7 +38,7 @@ internal static partial class INamedTypeSymbolExtensions
             return false;
         }
 
-        type ??= @class;
+        type ??= subject;
 
         bool IsEquatable(INamedTypeSymbol @interface)
         {
@@ -47,6 +47,6 @@ internal static partial class INamedTypeSymbolExtensions
                 && SymbolEqualityComparer.Default.Equals(@interface.TypeArguments[EquatableTypeArgumentOffset], type);
         }
 
-        return @class.AllInterfaces.Any(IsEquatable);
+        return subject.AllInterfaces.Any(IsEquatable);
     }
 }

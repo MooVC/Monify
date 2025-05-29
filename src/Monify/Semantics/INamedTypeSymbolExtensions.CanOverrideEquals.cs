@@ -11,17 +11,17 @@ internal static partial class INamedTypeSymbolExtensions
     private const int OffsetForObjectParameterOnEqualsMethod = 0;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> can override <see cref="object.Equals(object)"/>.
+    /// Determines whether or not the <paramref name="subject"/> can override <see cref="object.Equals(object)"/>.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> can override <see cref="object.Equals(object)"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> can override <see cref="object.Equals(object)"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool CanOverrideEquals(this INamedTypeSymbol @class)
+    public static bool CanOverrideEquals(this INamedTypeSymbol subject)
     {
-        return @class.CanOverride(
+        return subject.CanOverride(
             nameof(Equals),
             SpecialType.System_Boolean,
             predicate: method => method.Parameters.Length == ExpectedParameterCountForEqualsMethod

@@ -10,19 +10,19 @@ internal static partial class INamedTypeSymbolExtensions
     private const string EqualityOperatorName = "op_Equality";
 
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> declares an its own equals operator.
+    /// Determines whether or not the <paramref name="subject"/> declares an its own equals operator.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <param name="type">
     /// The type to which the operator is applied.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> declares the equals operator, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> declares the equals operator, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool HasEqualityOperator(this INamedTypeSymbol @class, ITypeSymbol? type = default)
+    public static bool HasEqualityOperator(this INamedTypeSymbol subject, ITypeSymbol? type = default)
     {
-        return @class.HasOperator(EqualityOperatorName, type: type);
+        return subject.HasOperator(EqualityOperatorName, type: type);
     }
 }

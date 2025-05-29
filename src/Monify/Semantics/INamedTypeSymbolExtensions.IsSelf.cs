@@ -9,19 +9,19 @@ using Monify.Model;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="value"/> is the same as the <paramref name="class"/>, indicating a circular encapsulation.
+    /// Determines whether or not the <paramref name="value"/> is the same as the <paramref name="subject"/>, indicating a circular encapsulation.
     /// </summary>
-    /// <param name="class">
+    /// <param name="subject">
     /// The subject from which the semantics are identified.
     /// </param>
     /// <param name="value">
     /// The type of the value encapsulated by the <see cref="Subject"/>.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> is the same as the <paramref name="value"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> is the same as the <paramref name="value"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool IsSelf(this INamedTypeSymbol @class, ITypeSymbol value)
+    public static bool IsSelf(this INamedTypeSymbol subject, ITypeSymbol value)
     {
-        return SymbolEqualityComparer.Default.Equals(@class, value);
+        return SymbolEqualityComparer.Default.Equals(subject, value);
     }
 }

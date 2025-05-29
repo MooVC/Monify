@@ -17,7 +17,7 @@ internal static partial class Simple
 
                 sealed partial record Simple
                 {
-                    private Simple(int value)
+                    public Simple(int value)
                     {
                         _value = value;
                     }
@@ -30,6 +30,65 @@ internal static partial class Simple
             """,
             Extensions.HasConstructorForEncapsulatedValue,
             "Monify.Testing.Records.Simple.ctor");
+
+        public static readonly Generated ConversionFromValue = new(
+            """
+            namespace Monify.Testing.Classes
+            {
+                using System;
+                using System.Collections.Generic;
+
+                #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+                #nullable disable
+                #endif
+
+                sealed partial record Simple
+                {
+                    public static implicit operator int(Simple subject)
+                    {
+                        if (subject == null)
+                        {
+                            throw new ArgumentNullException("subject");
+                        }
+
+                        return subject._value;
+                    }
+                }
+
+                #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+                #nullable restore
+                #endif
+            }
+            """,
+            Extensions.HasConversionFrom,
+            "Monify.Testing.Records.Simple.ConvertFrom");
+
+        public static readonly Generated ConversionToValue = new(
+            """
+            namespace Monify.Testing.Classes
+            {
+                using System;
+                using System.Collections.Generic;
+
+                #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+                #nullable disable
+                #endif
+
+                sealed partial record Simple
+                {
+                    public static implicit operator Simple(int value)
+                    {
+                        return new Simple(value);
+                    }
+                }
+
+                #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+                #nullable restore
+                #endif
+            }
+            """,
+            Extensions.HasConversionFrom,
+            "Monify.Testing.Records.Simple.ConvertTo");
 
         public static readonly Generated EquatableForSelf = new(
             """

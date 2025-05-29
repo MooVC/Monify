@@ -8,18 +8,18 @@ using Microsoft.CodeAnalysis;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="symbol"/> provided is supported by Monify.
+    /// Determines whether or not the <paramref name="subject"/> provided is supported by Monify.
     /// </summary>
-    /// <param name="symbol">
+    /// <param name="subject">
     /// The symbol for the type to be checked for Monify support.
     /// </param>
     /// <returns>
     /// <see langword="true"/> if the type is annotated and partial, otherwise <see langword="false"/>.
     /// </returns>
-    public static string? GetDeclaration(this INamedTypeSymbol symbol)
+    public static string? GetDeclaration(this INamedTypeSymbol subject)
     {
-        string prefix = symbol.IdentifyPrefix();
-        string type = symbol.IdentifyType();
+        string prefix = subject.IdentifyPrefix();
+        string type = subject.IdentifyType();
 
         return string
             .Join(" ", prefix, "partial", type)

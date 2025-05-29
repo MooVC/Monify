@@ -24,7 +24,7 @@ internal sealed class ConstructorStrategy
         string code = $$"""
             {{subject.Declaration}} {{subject.Qualification}}
             {
-                private {{subject.Name}}({{subject.Value}} value)
+                public {{subject.Name}}({{subject.Value}} value)
                 {
                     {{FieldStrategy.Name}} = value;
                 }

@@ -15,26 +15,26 @@ internal static partial class INamedTypeSymbolExtensions
     private const int ExpectedParametersForConstructorWhenDefined = 1;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> is constructable.
+    /// Determines whether or not the <paramref name="subject"/> is constructable.
     /// </summary>
-    /// <param name="class">
+    /// <param name="subject">
     /// The subject for which constructability is to be determined.
     /// </param>
     /// <param name="value">
     /// The type associated with the encapsulated value.
     /// </param>
     /// <param name="hasConstructorForEncapsulatedValue">
-    /// <see langword="true"/> if the <paramref name="class"/> already defines a constructor for the encapsulated value, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> already defines a constructor for the encapsulated value, otherwise <see langword="false"/>.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> is constructable, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> is constructable, otherwise <see langword="false"/>.
     /// </returns>
     /// <remarks>
     /// If the class has different constructors, then it points to a design issue, as the class is intended to represent a single state with just one constructor.
     /// </remarks>
-    public static bool IsConstructable(this INamedTypeSymbol @class, ITypeSymbol value, out bool hasConstructorForEncapsulatedValue)
+    public static bool IsConstructable(this INamedTypeSymbol subject, ITypeSymbol value, out bool hasConstructorForEncapsulatedValue)
     {
-        IMethodSymbol[] constructors = @class
+        IMethodSymbol[] constructors = subject
             .GetMembers()
             .Where(member => member.Kind == SymbolKind.Method
                           && !member.IsStatic

@@ -51,6 +51,22 @@ internal sealed partial class Subject
     public bool HasConstructorForEncapsulatedValue { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether or not the subject defines a cast to the encapsulating type.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject defines a cast to the encapsulating type.
+    /// </value>
+    public bool HasConversionFrom { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether or not the subject defines a cast from the encapsulating type.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject defines a cast from the encapsulating type.
+    /// </value>
+    public bool HasConversionTo { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
     /// </summary>
     /// <value>

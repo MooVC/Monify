@@ -9,6 +9,8 @@ internal static partial class Simple
         Declarations.Main,
         [
             Expected.ConstructorForEncapsulatedValue,
+            Expected.ConversionFromValue,
+            Expected.ConversionToValue,
             ////Expected.EquatableForSelf,
             Expected.EquatableForValue,
             ////Expected.EqualityOperatorForSelf,
@@ -24,6 +26,8 @@ internal static partial class Simple
         ],
         [
             new(Expected.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
+            new(Expected.ConversionFromValue.Content, Extensions.HasConversionFrom),
+            new(Expected.ConversionToValue.Content, Extensions.HasConversionTo),
             new(Expected.EquatableForSelf.Content, Extensions.HasEquatableForSelf),
             new(Expected.EquatableForValue.Content, Extensions.HasEquatableForValue),
             new(Expected.EqualityOperatorForSelf.Content, Extensions.HasEqualityOperatorForSelf),

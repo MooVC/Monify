@@ -16,6 +16,8 @@ public sealed class TypeGenerator
     private static readonly IStrategy[] strategies =
     [
         new ConstructorStrategy(),
+        new ConvertFromStrategy(),
+        new ConvertToStrategy(),
         new EqualityStrategy(subject => !subject.HasEqualityOperatorForSelf, "Self", subject => subject.Qualification),
         new EqualityStrategy(subject => !subject.HasEqualityOperatorForValue, "Value", subject => subject.Value),
         new EqualsStrategy(),

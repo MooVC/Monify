@@ -8,22 +8,22 @@ using Microsoft.CodeAnalysis;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> declares an implementaton for Equals.
+    /// Determines whether or not the <paramref name="subject"/> declares an implementaton for Equals.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <param name="type">
     /// The type for which the method is applied.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> implements Equals, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> implements Equals, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool HasEquatable(this INamedTypeSymbol @class, ITypeSymbol? type = default)
+    public static bool HasEquatable(this INamedTypeSymbol subject, ITypeSymbol? type = default)
     {
-        type ??= @class;
+        type ??= subject;
 
-        return @class
+        return subject
             .GetMembers(nameof(Equals))
             .OfType<IMethodSymbol>()
             .Any(method => method.ReturnType.SpecialType == SpecialType.System_Boolean

@@ -8,16 +8,16 @@ using Microsoft.CodeAnalysis;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> can override <see cref="object.ToString()"/>.
+    /// Determines whether or not the <paramref name="subject"/> can override <see cref="object.ToString()"/>.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> can override <see cref="object.ToString()"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> can override <see cref="object.ToString()"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool CanOverrideToString(this INamedTypeSymbol @class)
+    public static bool CanOverrideToString(this INamedTypeSymbol subject)
     {
-        return @class.CanOverride(nameof(ToString), SpecialType.System_String);
+        return subject.CanOverride(nameof(ToString), SpecialType.System_String);
     }
 }

@@ -12,9 +12,9 @@ using Monify.Syntax;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="symbol"/> provided is supported by Monify.
+    /// Determines whether or not the <paramref name="subject"/> provided is supported by Monify.
     /// </summary>
-    /// <param name="symbol">
+    /// <param name="subject">
     /// The symbol for the type to be checked for Monify support.
     /// </param>
     /// <param name="nesting">
@@ -23,9 +23,9 @@ internal static partial class INamedTypeSymbolExtensions
     /// <returns>
     /// <see langword="true"/> if the type is annotated and partial, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool IsSupported(this INamedTypeSymbol symbol, Stack<Nesting> nesting)
+    public static bool IsSupported(this INamedTypeSymbol subject, Stack<Nesting> nesting)
     {
-        INamedTypeSymbol? current = symbol;
+        INamedTypeSymbol? current = subject;
 
         do
         {
@@ -45,7 +45,7 @@ internal static partial class INamedTypeSymbolExtensions
                 return false;
             }
 
-            string? declaration = symbol.GetDeclaration();
+            string? declaration = subject.GetDeclaration();
 
             if (declaration is null)
             {

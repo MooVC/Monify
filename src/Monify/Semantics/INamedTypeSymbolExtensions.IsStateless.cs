@@ -12,26 +12,26 @@ internal static partial class INamedTypeSymbolExtensions
     private const int OffsetForFieldWhenAlreadyDefined = 0;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> is stateless.
+    /// Determines whether or not the <paramref name="subject"/> is stateless.
     /// </summary>
-    /// <param name="class">
+    /// <param name="subject">
     /// The subject for which the state holding capability is to be determined.
     /// </param>
     /// <param name="value">
     /// The type associated with the encapsulated value.
     /// </param>
     /// <param name="hasFieldForEncapsulatedValue">
-    /// <see langword="true"/> if the <paramref name="class"/> already defines a field for the encapsulated value, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> already defines a field for the encapsulated value, otherwise <see langword="false"/>.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> is stateless, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> is stateless, otherwise <see langword="false"/>.
     /// </returns>
     /// <remarks>
     /// If the class holds state, then it points to a design issue, as the class is intended to represent a single state.
     /// </remarks>
-    public static bool IsStateless(this INamedTypeSymbol @class, ITypeSymbol value, out bool hasFieldForEncapsulatedValue)
+    public static bool IsStateless(this INamedTypeSymbol subject, ITypeSymbol value, out bool hasFieldForEncapsulatedValue)
     {
-        IFieldSymbol[] fields = @class
+        IFieldSymbol[] fields = subject
             .GetMembers()
             .Where(member => member.Kind == SymbolKind.Field && !member.IsStatic)
             .OfType<IFieldSymbol>()

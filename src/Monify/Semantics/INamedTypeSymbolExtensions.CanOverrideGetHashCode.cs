@@ -8,16 +8,16 @@ using Microsoft.CodeAnalysis;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> can override <see cref="object.GetHashCode()"/>.
+    /// Determines whether or not the <paramref name="subject"/> can override <see cref="object.GetHashCode()"/>.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> can override <see cref="object.GetHashCode()"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> can override <see cref="object.GetHashCode()"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool CanOverrideGetHashCode(this INamedTypeSymbol @class)
+    public static bool CanOverrideGetHashCode(this INamedTypeSymbol subject)
     {
-        return @class.CanOverride(nameof(GetHashCode), SpecialType.System_Int32);
+        return subject.CanOverride(nameof(GetHashCode), SpecialType.System_Int32);
     }
 }

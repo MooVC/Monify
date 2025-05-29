@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Monify.Snippets;
 using Monify.Snippets.Declarations;
-using Monify.Snippets.Declarations.Classes;
+using Monify.Snippets.Declarations.Records;
 
 public sealed class WhenExecuted
 {

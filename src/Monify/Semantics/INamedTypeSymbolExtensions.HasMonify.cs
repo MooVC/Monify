@@ -12,20 +12,20 @@ internal static partial class INamedTypeSymbolExtensions
     private const int OffsetForEncapsulatedTypeOnMonifyAttribute = 0;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="symbol"/> provided is annotated with the Monify attribute.
+    /// Determines whether or not the <paramref name="subject"/> provided is annotated with the Monify attribute.
     /// </summary>
-    /// <param name="symbol">
-    /// The symbol for the symbol to be checked for the presence of the Monify attribute.
+    /// <param name="subject">
+    /// The symbol to be checked for the presence of the Monify attribute.
     /// </param>
     /// <param name="value">
-    /// The type of the value to be encapsulated by the <paramref name="symbol"/>.
+    /// The type of the value to be encapsulated by the <paramref name="subject"/>.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the Monify attribute is present on the <paramref name="symbol"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the Monify attribute is present on the <paramref name="subject"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool HasMonify(this INamedTypeSymbol symbol, out ITypeSymbol value)
+    public static bool HasMonify(this INamedTypeSymbol subject, out ITypeSymbol value)
     {
-        AttributeData data = symbol
+        AttributeData data = subject
             .GetAttributes()
             .Where(attribute => attribute.AttributeClass is not null && attribute.AttributeClass.IsMonify())
             .Select(attribute => attribute)
@@ -36,7 +36,7 @@ internal static partial class INamedTypeSymbolExtensions
             return GetEncapsulatedValueType(data.AttributeClass!, data, out value);
         }
 
-        value = symbol;
+        value = subject;
 
         return false;
     }

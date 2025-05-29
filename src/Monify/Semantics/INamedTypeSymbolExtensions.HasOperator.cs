@@ -12,26 +12,26 @@ internal static partial class INamedTypeSymbolExtensions
     private const int OffsetForRightParameter = 1;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> declares an its own operator named <paramref name="operator"/>.
+    /// Determines whether or not the <paramref name="subject"/> declares an its own operator named <paramref name="operator"/>.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <param name="operator">
     /// The name of the operator to check.
     /// </param>
     /// <param name="type">
-    /// The type to which the <paramref name="class"/> is being compared.
+    /// The type to which the <paramref name="subject"/> is being compared.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> declares the operator, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> declares the operator, otherwise <see langword="false"/>.
     /// </returns>
-    private static bool HasOperator(this INamedTypeSymbol @class, string @operator, ITypeSymbol? type = default)
+    private static bool HasOperator(this INamedTypeSymbol subject, string @operator, ITypeSymbol? type = default)
     {
         bool IsComparingToSelf(IMethodSymbol method)
         {
             return SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForLeftParameter].Type, method.Parameters[OffsetForRightParameter].Type)
-                && SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForLeftParameter].Type, @class);
+                && SymbolEqualityComparer.Default.Equals(method.Parameters[OffsetForLeftParameter].Type, subject);
         }
 
         bool IsComparingExpectedTypes(IMethodSymbol method)
@@ -43,14 +43,14 @@ internal static partial class INamedTypeSymbolExtensions
 
         bool IsOfTypes(ITypeSymbol symbol)
         {
-            return SymbolEqualityComparer.Default.Equals(symbol, @class) || SymbolEqualityComparer.Default.Equals(symbol, type);
+            return SymbolEqualityComparer.Default.Equals(symbol, subject) || SymbolEqualityComparer.Default.Equals(symbol, type);
         }
 
         Predicate<IMethodSymbol> condition = type is null
             ? IsComparingToSelf
             : IsComparingExpectedTypes;
 
-        return @class
+        return subject
             .GetMembers()
             .OfType<IMethodSymbol>()
             .Any(method => method.MethodKind == MethodKind.UserDefinedOperator

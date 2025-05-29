@@ -8,10 +8,10 @@ using Microsoft.CodeAnalysis;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Determines whether or not the <paramref name="class"/> declares an override for method denoted by <paramref name="name"/>.
+    /// Determines whether or not the <paramref name="subject"/> declares an override for method denoted by <paramref name="name"/>.
     /// </summary>
-    /// <param name="class">
-    /// The <paramref name="class"/> to be checked.
+    /// <param name="subject">
+    /// The <paramref name="subject"/> to be checked.
     /// </param>
     /// <param name="name">
     /// The name of the method to locate.
@@ -23,25 +23,21 @@ internal static partial class INamedTypeSymbolExtensions
     /// Allows for the specification of an optional parameter check on the override method.
     /// </param>
     /// <returns>
-    /// <see langword="true"/> if the <paramref name="class"/> overrides the method denoted by <paramref name="name"/>, otherwise <see langword="false"/>.
+    /// <see langword="true"/> if the <paramref name="subject"/> overrides the method denoted by <paramref name="name"/>, otherwise <see langword="false"/>.
     /// </returns>
     /// <remarks>
     /// When no <paramref name="predicate"/> is specified, it is assumed that the method accepts no parameters.
     /// </remarks>
-    public static bool HasOverride(
-        this INamedTypeSymbol @class,
-        string name,
-        SpecialType @return,
-        Predicate<IMethodSymbol>? predicate = default)
+    public static bool HasOverride(this INamedTypeSymbol subject, string name, SpecialType @return, Predicate<IMethodSymbol>? predicate = default)
     {
         predicate ??= method => method.Parameters.Length == DefaultParameterCountOnMethodOverrides;
 
-        return @class
+        return subject
             .GetMembers(name)
             .OfType<IMethodSymbol>()
             .Any(method => method.IsOverride
                         && method.ReturnType.SpecialType == @return
-                        && SymbolEqualityComparer.Default.Equals(method.ContainingType, @class)
+                        && SymbolEqualityComparer.Default.Equals(method.ContainingType, subject)
                         && predicate(method));
     }
 }
