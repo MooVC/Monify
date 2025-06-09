@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Monify.Snippets;
 using Monify.Snippets.Declarations;
-using Monify.Snippets.Declarations.Records;
 
 public sealed class WhenExecuted
 {
@@ -15,7 +14,7 @@ public sealed class WhenExecuted
     ];
 
     [Theory]
-    [Snippets(exclusions: [typeof(Attributes), typeof(Simple)])]
+    [Snippets(exclusions: [typeof(Attributes)])]
     public async Task GivenATypeTheExpectedSourceIsGenerated(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange
