@@ -1,4 +1,4 @@
-﻿namespace Monify.Semantics;
+namespace Monify.Semantics;
 
 using Microsoft.CodeAnalysis;
 using Monify.Model;

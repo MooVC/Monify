@@ -1,4 +1,4 @@
-﻿namespace Monify;
+namespace Monify;
 
 using System.Reflection;
 using Microsoft.CodeAnalysis.CSharp;

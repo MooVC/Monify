@@ -1,4 +1,4 @@
-﻿namespace Monify;
+namespace Monify;
 
 /// <summary>
 /// Represents a unit of source code to be added to the output.

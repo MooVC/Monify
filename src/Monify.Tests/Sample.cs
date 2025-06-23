@@ -1,4 +1,4 @@
-﻿namespace Monify;
+namespace Monify;
 
 internal sealed class Sample
     : IEquatable<Sample>,

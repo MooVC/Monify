@@ -1,4 +1,4 @@
-﻿namespace Monify.AttributeGeneratorTests;
+namespace Monify.AttributeGeneratorTests;
 
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;

@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Records;
+namespace Monify.Snippets.Declarations.Records;
 
 internal static partial class Simple
 {

@@ -1,4 +1,4 @@
-﻿namespace Monify;
+namespace Monify;
 
 using System.Text;
 using Microsoft.CodeAnalysis;

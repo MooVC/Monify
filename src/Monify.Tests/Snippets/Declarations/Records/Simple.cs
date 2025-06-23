@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Records;
+namespace Monify.Snippets.Declarations.Records;
 
 using static Monify.Snippets.Declarations.Attributes.Annotations;
 

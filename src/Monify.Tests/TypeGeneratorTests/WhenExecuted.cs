@@ -1,4 +1,4 @@
-﻿namespace Monify.TypeGeneratorTests;
+namespace Monify.TypeGeneratorTests;
 
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;

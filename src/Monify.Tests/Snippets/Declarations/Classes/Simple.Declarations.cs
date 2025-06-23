@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Classes;
+namespace Monify.Snippets.Declarations.Classes;
 
 using Microsoft.CodeAnalysis.CSharp;
 using static Monify.Snippets.Snippets;

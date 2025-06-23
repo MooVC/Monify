@@ -1,4 +1,4 @@
-﻿namespace Monify.Semantics;
+namespace Monify.Semantics;
 
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;

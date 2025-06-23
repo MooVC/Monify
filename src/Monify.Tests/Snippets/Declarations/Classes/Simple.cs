@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Classes;
+namespace Monify.Snippets.Declarations.Classes;
 
 using static Monify.Snippets.Declarations.Attributes.Annotations;
 

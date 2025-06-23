@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets;
+namespace Monify.Snippets;
 
 using System.Diagnostics;
 using Microsoft.CodeAnalysis.CSharp;

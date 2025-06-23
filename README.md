@@ -12,7 +12,13 @@ install-package Monify
 
 ## Usage
 
-Coming Soon™
+Annotate a partial type with the `Monify` attribute to create a wrapper around a single value.
+
+```csharp
+[Monify]
+public partial class EmailAddress(string value);
+```
+
 
 ## Analyzers
 

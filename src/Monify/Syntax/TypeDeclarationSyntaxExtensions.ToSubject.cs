@@ -1,4 +1,4 @@
-﻿namespace Monify.Syntax;
+namespace Monify.Syntax;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets;
+namespace Monify.Snippets;
 
 [Flags]
 public enum Extensions

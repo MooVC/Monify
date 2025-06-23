@@ -1,4 +1,4 @@
-﻿namespace Monify.Strategies;
+namespace Monify.Strategies;
 
 using System.Collections.Generic;
 using Monify.Model;
