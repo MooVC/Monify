@@ -1,6 +1,8 @@
 ﻿namespace Monify.Semantics;
 
+using System;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 /// <summary>
 /// Provides extensions relating to <see cref="ISymbol"/>.
@@ -17,13 +19,16 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="subject">
     /// The symbol to be checked for the presence of the Monify attribute.
     /// </param>
+    /// <param name="model">
+    /// Allows asking semantic questions about a tree of syntax nodes in a Compilation.
+    /// </param>
     /// <param name="value">
     /// The type of the value to be encapsulated by the <paramref name="subject"/>.
     /// </param>
     /// <returns>
     /// <see langword="true"/> if the Monify attribute is present on the <paramref name="subject"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool HasMonify(this INamedTypeSymbol subject, out ITypeSymbol value)
+    public static bool HasMonify(this INamedTypeSymbol subject, SemanticModel model, out ITypeSymbol value)
     {
         AttributeData data = subject
             .GetAttributes()
@@ -33,7 +38,7 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (data is not null)
         {
-            return GetEncapsulatedValueType(data.AttributeClass!, data, out value);
+            return GetEncapsulatedValueType(data.AttributeClass!, data, model, out value);
         }
 
         value = subject;
@@ -41,7 +46,7 @@ internal static partial class INamedTypeSymbolExtensions
         return false;
     }
 
-    private static bool GetEncapsulatedValueType(INamedTypeSymbol attribute, AttributeData data, out ITypeSymbol value)
+    private static bool GetEncapsulatedValueType(INamedTypeSymbol attribute, AttributeData data, SemanticModel model, out ITypeSymbol value)
     {
         if (attribute.IsGenericType && attribute.TypeArguments.Length == ExpectedGenericArgumentCountForMonifyAttribute)
         {
@@ -50,11 +55,16 @@ internal static partial class INamedTypeSymbolExtensions
             return true;
         }
 
+        return GetTypeFromArgument(attribute, data, model, out value);
+    }
+
+    private static bool GetTypeFromArgument(INamedTypeSymbol attribute, AttributeData data, SemanticModel model, out ITypeSymbol value)
+    {
         foreach (KeyValuePair<string, TypedConstant> argument in data.NamedArguments)
         {
             if (argument.Key == EncapsulatedValueTypeArgumentName
-                && argument.Value.Kind == TypedConstantKind.Type
-                && argument.Value.Value is ITypeSymbol symbol)
+             && argument.Value.Kind == TypedConstantKind.Type
+             && argument.Value.Value is ITypeSymbol symbol)
             {
                 value = symbol;
 
@@ -64,6 +74,34 @@ internal static partial class INamedTypeSymbolExtensions
 
         value = attribute;
 
-        return false;
+        return GetTypeFromArgumentSyntax(data, model, ref value);
+    }
+
+    private static bool GetTypeFromArgumentSyntax(AttributeData attribute, SemanticModel model, ref ITypeSymbol value)
+    {
+        if (attribute.ApplicationSyntaxReference?.GetSyntax() is not AttributeSyntax syntax || syntax.ArgumentList is null)
+        {
+            return false;
+        }
+
+        AttributeArgumentSyntax? type = syntax.ArgumentList.Arguments
+            .FirstOrDefault(argument => argument.Expression is TypeOfExpressionSyntax
+                                     && argument.NameEquals?.Name.Identifier.Text == nameof(Type));
+
+        if (type?.Expression is not TypeOfExpressionSyntax typeOfSyntax)
+        {
+            return false;
+        }
+
+        ITypeSymbol? symbol = model.GetTypeInfo(typeOfSyntax.Type).Type;
+
+        if (symbol is null)
+        {
+            return false;
+        }
+
+        value = symbol;
+
+        return true;
     }
 }

@@ -82,7 +82,6 @@ public sealed class SnippetsAttribute
                     foreach (object[] theory in frameworks(expectation.Minimum, Prepare))
                     {
                         yield return theory;
-                        yield break;
                     }
                 }
             }

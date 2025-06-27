@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Classes;
+﻿namespace Monify.Snippets.Declarations.Structs;
 
 internal static partial class Simple
 {
@@ -6,7 +6,7 @@ internal static partial class Simple
     {
         public static readonly Generated ConstructorForEncapsulatedValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -15,7 +15,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public Simple(int value)
                     {
@@ -29,11 +29,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasConstructorForEncapsulatedValue,
-            "Monify.Testing.Classes.Simple.ctor");
+            "Monify.Testing.Structs.Simple.ctor");
 
         public static readonly Generated ConversionFromValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -42,7 +42,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public static implicit operator int(Simple subject)
                     {
@@ -61,11 +61,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasConversionFrom,
-            "Monify.Testing.Classes.Simple.ConvertFrom");
+            "Monify.Testing.Structs.Simple.ConvertFrom");
 
         public static readonly Generated ConversionToValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -74,7 +74,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public static implicit operator Simple(int value)
                     {
@@ -88,11 +88,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasConversionFrom,
-            "Monify.Testing.Classes.Simple.ConvertTo");
+            "Monify.Testing.Structs.Simple.ConvertTo");
 
         public static readonly Generated EquatableForSelf = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -101,7 +101,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple : IEquatable<Simple>
+                partial struct Simple : IEquatable<Simple>
                 {
                 }
 
@@ -111,11 +111,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasEquatableForSelf,
-            "Monify.Testing.Classes.Simple.IEquatable.Self");
+            "Monify.Testing.Structs.Simple.IEquatable.Self");
 
         public static readonly Generated EquatableForValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -124,7 +124,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple : IEquatable<int>
+                partial struct Simple : IEquatable<int>
                 {
                 }
 
@@ -134,11 +134,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasEquatableForValue,
-            "Monify.Testing.Classes.Simple.IEquatable.Value");
+            "Monify.Testing.Structs.Simple.IEquatable.Value");
 
         public static readonly Generated EqualityOperatorForSelf = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -147,7 +147,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public static bool operator ==(Simple left, Simple right)
                     {
@@ -171,11 +171,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasEqualityOperatorForSelf,
-            "Monify.Testing.Classes.Simple.Equality.Self");
+            "Monify.Testing.Structs.Simple.Equality.Self");
 
         public static readonly Generated EqualityOperatorForValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -184,7 +184,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public static bool operator ==(Simple left, int right)
                     {
@@ -208,11 +208,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasEqualityOperatorForValue,
-            "Monify.Testing.Classes.Simple.Equality.Value");
+            "Monify.Testing.Structs.Simple.Equality.Value");
 
         public static new readonly Generated Equals = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -221,7 +221,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public override bool Equals(object other)
                     {
@@ -235,11 +235,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasEqualsOverride,
-            "Monify.Testing.Classes.Simple.Equals");
+            "Monify.Testing.Structs.Simple.Equals");
 
         public static readonly Generated FieldForEncapsulatedValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -248,7 +248,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     private readonly int _value;
                 }
@@ -259,11 +259,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasFieldForEncapsulatedValue,
-            "Monify.Testing.Classes.Simple._value");
+            "Monify.Testing.Structs.Simple._value");
 
         public static new readonly Generated GetHashCode = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -272,7 +272,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public override int GetHashCode()
                     {
@@ -286,11 +286,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasGetHashCodeOverride,
-            "Monify.Testing.Classes.Simple.GetHashCode");
+            "Monify.Testing.Structs.Simple.GetHashCode");
 
         public static readonly Generated InequalityOperatorForSelf = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -299,7 +299,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public static bool operator !=(Simple left, Simple right)
                     {
@@ -313,11 +313,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasInequalityOperatorForSelf,
-            "Monify.Testing.Classes.Simple.Inequality.Self");
+            "Monify.Testing.Structs.Simple.Inequality.Self");
 
         public static readonly Generated InequalityOperatorForValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -326,7 +326,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public static bool operator !=(Simple left, int right)
                     {
@@ -340,11 +340,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasInequalityOperatorForValue,
-            "Monify.Testing.Classes.Simple.Inequality.Value");
+            "Monify.Testing.Structs.Simple.Inequality.Value");
 
         public static new readonly Generated ToString = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -353,7 +353,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public override string ToString()
                     {
@@ -367,11 +367,11 @@ internal static partial class Simple
             }
             """,
             Extensions.HasToStringOverride,
-            "Monify.Testing.Classes.Simple.ToString");
+            "Monify.Testing.Structs.Simple.ToString");
 
         public static readonly Generated EquatableToSelf = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -380,7 +380,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public bool Equals(Simple other)
                     {
@@ -404,11 +404,11 @@ internal static partial class Simple
             }
             """,
             Extensions.IsEquatableToSelf,
-            "Monify.Testing.Classes.Simple.IEquatable.Self.Equals");
+            "Monify.Testing.Structs.Simple.IEquatable.Self.Equals");
 
         public static readonly Generated EquatableToValue = new(
             """
-            namespace Monify.Testing.Classes
+            namespace Monify.Testing.Structs
             {
                 using System;
                 using System.Collections.Generic;
@@ -417,7 +417,7 @@ internal static partial class Simple
                 #nullable disable
                 #endif
 
-                sealed partial class Simple
+                partial struct Simple
                 {
                     public bool Equals(int other)
                     {
@@ -441,6 +441,6 @@ internal static partial class Simple
             }
             """,
             Extensions.HasEquatableForValue,
-            "Monify.Testing.Classes.Simple.IEquatable.Value.Equals");
+            "Monify.Testing.Structs.Simple.IEquatable.Value.Equals");
     }
 }

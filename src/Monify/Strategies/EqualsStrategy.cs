@@ -21,7 +21,7 @@ internal sealed class EqualsStrategy
             {
                 public override bool Equals(object other)
                 {
-                    return Equals(other as {{subject.Qualification}});
+                    return Equals(({{subject.Qualification}})other);
                 }
             }
             """;

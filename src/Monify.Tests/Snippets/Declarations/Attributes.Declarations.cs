@@ -1,7 +1,5 @@
 ﻿namespace Monify.Snippets.Declarations;
 
-using Microsoft.CodeAnalysis.CSharp;
-
 public static partial class Attributes
 {
     public static class Declarations
