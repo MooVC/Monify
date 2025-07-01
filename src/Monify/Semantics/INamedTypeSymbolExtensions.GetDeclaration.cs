@@ -13,12 +13,18 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="subject">
     /// The symbol for the type to be checked for Monify support.
     /// </param>
+    /// <param name="isNesting">
+    /// A value indicating whether the <paramref name="subject"/> represents the nesting type.
+    /// </param>
     /// <returns>
     /// <see langword="true"/> if the type is annotated and partial, otherwise <see langword="false"/>.
     /// </returns>
-    public static string? GetDeclaration(this INamedTypeSymbol subject)
+    /// <remarks>
+    /// When <paramref name="isNesting"/> is <see langword="true"/>, the <see langword="sealed"/> keyword will be omitted.
+    /// </remarks>
+    public static string? GetDeclaration(this INamedTypeSymbol subject, bool isNesting = false)
     {
-        string prefix = subject.IdentifyPrefix();
+        string prefix = subject.IdentifyPrefix(isNesting);
         string type = subject.IdentifyType();
 
         return string
@@ -26,7 +32,7 @@ internal static partial class INamedTypeSymbolExtensions
             .TrimStart();
     }
 
-    private static string IdentifyPrefix(this INamedTypeSymbol symbol)
+    private static string IdentifyPrefix(this INamedTypeSymbol symbol, bool isNesting)
     {
         string @ref = symbol.IsRefLikeType
             ? "ref"
@@ -36,7 +42,7 @@ internal static partial class INamedTypeSymbolExtensions
             ? "readonly"
             : string.Empty;
 
-        string @sealed = symbol.TypeKind == TypeKind.Class
+        string @sealed = symbol.TypeKind == TypeKind.Class && !isNesting
             ? "sealed"
             : string.Empty;
 
