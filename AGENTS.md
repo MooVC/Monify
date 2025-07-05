@@ -2,16 +2,20 @@
 
 This repository hosts **Monify**, a .NET source generator and analyzers solution.
 
+> **Note**
+> This file provides quick instructions for Codex. Human contributors should refer to the
+> [README](README.md) and [CONTRIBUTING guide](.github/CONTRIBUTING.md) for a fuller picture.
+
 ## Build and Test
 
-- Use the .NET SDK **9.0**.
+- Use the .NET SDK **9.0**. The latest SDK can be found at [dotnet.microsoft.com](https://dotnet.microsoft.com/).
 - Restore packages with `dotnet restore`.
 - Run `dotnet test` to execute the test suite. This is the primary check before committing.
 - Tests are configured via `.runsettings` and use xUnit.
 
 ## Coding Style
 
-The project enforces strong C# coding conventions through `.editorconfig`, StyleCop, and Sonar analyzers. Key points from the [Contributing guide](.github/CONTRIBUTING.md):
+The project enforces strong C# coding conventions through `.editorconfig`, [StyleCop Analyzers](https://github.com/DotNetAnalyzers/StyleCopAnalyzers), and [SonarAnalyzer for C#](https://github.com/SonarSource/sonar-dotnet). Key points from the [Contributing guide](.github/CONTRIBUTING.md):
 
 - Prefer **file-scoped namespaces**.
 - Follow Microsoft naming guidelines (PascalCase for types and members, camelCase for locals/parameters, prefix interfaces with `I`).
@@ -26,7 +30,7 @@ The project enforces strong C# coding conventions through `.editorconfig`, Style
 - Follow **Arrange-Act-Assert** structure.
 - Place tests for a class under a matching namespace `{Class Namespace}.{Class Name}Tests`.
 - Name test classes `When{MethodName}IsCalled` and test methods `Given{Condition}When{State}Then{Expectation}`.
-- Use `FluentAssertions` and `NSubstitute` for assertions and mocks.
+- Use [`FluentAssertions`](https://fluentassertions.com/) and `NSubstitute` for assertions and mocks.
 
 ## Project Structure
 
@@ -36,7 +40,7 @@ The project enforces strong C# coding conventions through `.editorconfig`, Style
 
 ## Pull Requests
 
-The PR template requires that you:
+The [PR template](.github/pull_request_template.md) requires that you:
 
 - Follow the coding style.
 - Add or update tests when necessary.
