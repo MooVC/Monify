@@ -45,7 +45,7 @@ internal static partial class INamedTypeSymbolExtensions
                 return false;
             }
 
-            string? declaration = subject.GetDeclaration(isNesting: true);
+            string? declaration = current.GetDeclaration(isNesting: true);
 
             if (declaration is null)
             {

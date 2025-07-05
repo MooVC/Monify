@@ -27,7 +27,6 @@ internal static partial class Nested
                             }
                         }
                     }
-                    
 
                     #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
                     #nullable restore
