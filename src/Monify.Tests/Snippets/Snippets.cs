@@ -13,11 +13,16 @@ public sealed record Snippets(Content[] Body, Content Declaration, Generated[] E
     {
         IEnumerable<Content> declarations = Compose();
 
-        for (Arrangements arrangement = Arrangements.None; arrangement <= target; arrangement++)
+        Arrangements[] arrangements = Enum.GetValues<Arrangements>();
+
+        foreach (Arrangements arrangement in arrangements)
         {
-            foreach (Expectations expectation in Expect(arrangement, declarations))
+            if (arrangement == Arrangements.None || target.HasFlag(arrangement))
             {
-                yield return expectation;
+                foreach (Expectations expectation in Expect(arrangement, declarations))
+                {
+                    yield return expectation;
+                }
             }
         }
     }
