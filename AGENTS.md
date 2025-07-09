@@ -30,7 +30,7 @@ The project enforces strong C# coding conventions through `.editorconfig`, [Styl
 - Follow **Arrange-Act-Assert** structure.
 - Place tests for a class under a matching namespace `{Class Namespace}.{Class Name}Tests`.
 - Name test classes `When{MethodName}IsCalled` and test methods `Given{Condition}When{State}Then{Expectation}`.
-- Use [`FluentAssertions`](https://fluentassertions.com/) and `NSubstitute` for assertions and mocks.
+- Use [`AwesomeAssertions`](https://awesomeassertions.org/) and `NSubstitute` for assertions and mocks.
 
 ## Project Structure
 
@@ -45,5 +45,4 @@ The [PR template](.github/pull_request_template.md) requires that you:
 - Follow the coding style.
 - Add or update tests when necessary.
 - Ensure tests pass locally.
-- Update `CHANGELOG.md` when user-facing changes occur.
-
+- Update `CHANGELOG.md` when consumer-facing changes occur.

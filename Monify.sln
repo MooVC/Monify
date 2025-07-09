@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{789EE2EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{3F85F26E-E1E6-4DFE-A4F8-C71ADCB466F0}"
 	ProjectSection(SolutionItems) = preProject
+		AGENTS.md = AGENTS.md
 		CHANGELOG.md = CHANGELOG.md
 		.github\CODE_OF_CONDUCT.md = .github\CODE_OF_CONDUCT.md
 		.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
