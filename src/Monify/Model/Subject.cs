@@ -5,7 +5,7 @@ using Valuify;
 
 /// <summary>
 /// The definition of the <see cref="Subject"/> type, which is used to capture information relating to a subject
-/// upon which the Valuify attribute has been placed.
+/// upon which the Monify attribute has been placed.
 /// </summary>
 [Valuify]
 internal sealed partial class Subject

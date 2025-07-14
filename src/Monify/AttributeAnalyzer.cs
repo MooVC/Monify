@@ -116,7 +116,7 @@ public sealed class AttributeAnalyzer
 
     private static string GetHelpLinkUri(string ruleId)
     {
-        return $"https://github.com/MooVC/Valuify/blob/{Branch}/docs/rules/{ruleId}.md";
+        return $"https://github.com/MooVC/Monify/blob/{Branch}/docs/rules/{ruleId}.md";
     }
 
     private static LocalizableResourceString GetResourceString(Manager manager, string name)
