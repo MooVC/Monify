@@ -90,8 +90,6 @@ public sealed class AttributeAnalyzer
         if (IsViolatingPartialTypeRule(type, out string? identifier))
         {
             Raise(context, PartialTypeRule, location, identifier);
-
-            return;
         }
     }
 
