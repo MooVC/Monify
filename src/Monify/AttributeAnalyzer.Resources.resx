@@ -126,6 +126,15 @@
   <data name="CompatibleTargetTypeRuleTitle" xml:space="preserve">
     <value>Type is not compatible with Monify</value>
   </data>
+  <data name="CapturesStateMessageFormat" xml:space="preserve">
+    <value>Type `{0}` defines fields that capture additional state.</value>
+  </data>
+  <data name="CapturesStateRuleDescription" xml:space="preserve">
+    <value>Type captures additional state.</value>
+  </data>
+  <data name="CapturesStateTitle" xml:space="preserve">
+    <value>Type captures State</value>
+  </data>
   <data name="PartialTypeRuleDescription" xml:space="preserve">
     <value>Type must be marked as Partial to facilitate code generation.</value>
   </data>

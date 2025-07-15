@@ -29,7 +29,7 @@ A type declaration upon which the `Monify` attribute is placed is not a `class`,
 
 ## Rule Description
 
-A violation of this rule occurs when the `Monify` attribute is placed on a type declaration that is not a `class`, `record` or `struct`. There is no known instance when this should be the case but in logic terms, the possibility arises.
+A violation of this rule occurs when the `Monify` attribute is placed on a type declaration that is not a `class`, `record` or `struct`. This occurs most commonly when placed upon a `interface` declaration.
 
 ## How to Fix Violations
 
@@ -39,7 +39,10 @@ For example:
 
 ```csharp
 [Monify<byte>]
-public partial record Age;
+public partial interface IAge
+{
+	bool IsAdult { get; }
+}
 ```
 
 ## How to Suppress Violations
@@ -51,7 +54,10 @@ If suppression is desired, one of the following approaches can be used:
 ```csharp
 #pragma warning disable MONFY01 // Type is not compatible with Monify
 [Monify<byte>]
-// Unknown Type Declaration
+public partial interface IAge
+{
+	bool IsAdult { get; }
+}
 #pragma warning restore MONFY01 // Type is not compatible with Monify
 ```
 
@@ -60,7 +66,10 @@ or alternatively:
 ```csharp
 [Monify<byte>]
 [SuppressMessage("Design", "MONFY01:Type is not compatible with Monify", Justification = "Explanation for suppression")]
-// Unknown Type Declaration
+public partial interface IAge
+{
+	bool IsAdult { get; }
+}
 ```
 
 ## How to Disable MONFY01

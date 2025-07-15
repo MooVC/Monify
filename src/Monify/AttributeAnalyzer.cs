@@ -24,6 +24,7 @@ public sealed class AttributeAnalyzer
     [
         CompatibleTargetTypeRule,
         PartialTypeRule,
+        CapturesStateRule,
     ];
 
     /// <summary>
@@ -58,6 +59,22 @@ public sealed class AttributeAnalyzer
         description: GetResourceString(ResourceManager, nameof(PartialTypeRuleDescription)),
         helpLinkUri: GetHelpLinkUri("MONFY02"));
 
+    /// <summary>
+    /// Gets the descriptor associated with the captures state rule (MONFY03).
+    /// </summary>
+    /// <value>
+    /// The descriptor associated with the captures state rule (MONFY03).
+    /// </value>
+    internal static DiagnosticDescriptor CapturesStateRule { get; } = new(
+        "MONFY03",
+        GetResourceString(ResourceManager, nameof(CapturesStateTitle)),
+        GetResourceString(ResourceManager, nameof(CapturesStateMessageFormat)),
+        "Design",
+        DiagnosticSeverity.Info,
+        isEnabledByDefault: true,
+        description: GetResourceString(ResourceManager, nameof(CapturesStateRuleDescription)),
+        helpLinkUri: GetHelpLinkUri("MONFY03"));
+
     /// <inheritdoc/>
     public sealed override void Initialize(AnalysisContext context)
     {
@@ -90,6 +107,13 @@ public sealed class AttributeAnalyzer
         if (IsViolatingPartialTypeRule(type, out string? identifier))
         {
             Raise(context, PartialTypeRule, location, identifier);
+
+            return;
+        }
+
+        if (IsViolatingCapturesStateRule(context, type))
+        {
+            Raise(context, CapturesStateRule, location, identifier);
         }
     }
 
@@ -100,7 +124,7 @@ public sealed class AttributeAnalyzer
             return;
         }
 
-        IMethodSymbol? symbol = GetSymbol(context, attribute);
+        IMethodSymbol? symbol = GetSymbol<IMethodSymbol>(context, attribute);
 
         if (symbol is null || !IsMatch(symbol))
         {
@@ -122,18 +146,38 @@ public sealed class AttributeAnalyzer
         return new(name, manager, typeof(AttributeAnalyzer_Resources));
     }
 
-    private static IMethodSymbol? GetSymbol(SyntaxNodeAnalysisContext context, AttributeSyntax syntax)
+    private static TSymbol? GetSymbol<TSymbol>(SyntaxNodeAnalysisContext context, SyntaxNode? syntax)
+        where TSymbol : class, ISymbol
     {
+        if (syntax is null)
+        {
+            return default;
+        }
+
+        if (typeof(INamedTypeSymbol).IsAssignableFrom(typeof(TSymbol)))
+        {
+            return context
+                .SemanticModel
+                .GetDeclaredSymbol(syntax, cancellationToken: context.CancellationToken) as TSymbol;
+        }
+
         return context
             .SemanticModel
             .GetSymbolInfo(syntax, cancellationToken: context.CancellationToken)
-            .Symbol as IMethodSymbol;
+            .Symbol as TSymbol;
     }
 
     private static bool IsMatch(IMethodSymbol symbol)
     {
         return symbol.ContainingType is not null
             && symbol.ContainingType.IsMonify();
+    }
+
+    private static bool IsViolatingCapturesStateRule(SyntaxNodeAnalysisContext context, TypeDeclarationSyntax? type)
+    {
+        INamedTypeSymbol? symbol = GetSymbol<INamedTypeSymbol>(context, type);
+
+        return symbol is null || !symbol.HasMonify(context.SemanticModel, out ITypeSymbol value) || !symbol.IsStateless(value, out _);
     }
 
     private static bool IsViolatingCompatibleTargetTypeRule(AttributeSyntax attribute, out TypeDeclarationSyntax? type)

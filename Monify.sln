@@ -60,6 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rules", "Rules", "{DF5E2435
 	ProjectSection(SolutionItems) = preProject
 		docs\rules\MONFY01.md = docs\rules\MONFY01.md
 		docs\rules\MONFY02.md = docs\rules\MONFY02.md
+		docs\rules\MONFY03.md = docs\rules\MONFY03.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monify.Tests", "src\Monify.Tests\Monify.Tests.csproj", "{9C2086AB-647E-485E-A964-A4A383354230}"

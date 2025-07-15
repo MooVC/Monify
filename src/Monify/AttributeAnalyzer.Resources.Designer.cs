@@ -61,6 +61,33 @@ namespace Monify {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type `{0}` defines fields that capture additional state..
+        /// </summary>
+        internal static string CapturesStateMessageFormat {
+            get {
+                return ResourceManager.GetString("CapturesStateMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type captures additional state..
+        /// </summary>
+        internal static string CapturesStateRuleDescription {
+            get {
+                return ResourceManager.GetString("CapturesStateRuleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type captures State.
+        /// </summary>
+        internal static string CapturesStateTitle {
+            get {
+                return ResourceManager.GetString("CapturesStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Monify attribute is only supported on type declarations..
         /// </summary>
         internal static string CompatibleTargetTypeRuleDescription {
