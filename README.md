@@ -24,7 +24,6 @@ Rule ID                          | Category | Severity | Notes
 [MONFY02](docs/rules/MONFY02.md) | Usage    | Warning  | Type is not Partial
 [MONFY03](docs/rules/MONFY03.md) | Design   | Error    | Type captures State
 [MONFY04](docs/rules/MONFY04.md) | Design   | Error    | Self Referencing Type
-[MONFY05](docs/rules/MONFY05.md) | Design   | Error    | Type is an Interface
 
 ## Contributing
 
