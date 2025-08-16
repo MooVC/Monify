@@ -46,8 +46,14 @@ public sealed class AttributeGenerator
 
                 public Type Type
                 {
-                    get => _type;
-                    set => _type = value;
+                    get
+                    {
+                        return _type;
+                    }
+                    set
+                    {
+                        _type = value;
+                    }
                 }
             }
         }
