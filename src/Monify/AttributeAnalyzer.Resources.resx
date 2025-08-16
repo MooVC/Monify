@@ -144,4 +144,13 @@
   <data name="PartialTypeRuleTitle" xml:space="preserve">
     <value>Type is not Partial</value>
   </data>
+  <data name="SelfReferenceRuleDescription" xml:space="preserve">
+    <value>Type cannot reference itself.</value>
+  </data>
+  <data name="SelfReferenceMessageFormat" xml:space="preserve">
+    <value>Type `{0}` cannot reference itself.</value>
+  </data>
+  <data name="SelfReferenceTitle" xml:space="preserve">
+    <value>Type references itself</value>
+  </data>
 </root>

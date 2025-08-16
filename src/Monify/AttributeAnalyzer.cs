@@ -24,6 +24,7 @@ public sealed class AttributeAnalyzer
     [
         CompatibleTargetTypeRule,
         PartialTypeRule,
+        SelfReferenceRule,
         CapturesStateRule,
     ];
 
@@ -75,6 +76,22 @@ public sealed class AttributeAnalyzer
         description: GetResourceString(ResourceManager, nameof(CapturesStateRuleDescription)),
         helpLinkUri: GetHelpLinkUri("MONFY03"));
 
+    /// <summary>
+    /// Gets the descriptor associated with the self reference rule (MONFY04).
+    /// </summary>
+    /// <value>
+    /// The descriptor associated with the self reference rule (MONFY04).
+    /// </value>
+    internal static DiagnosticDescriptor SelfReferenceRule { get; } = new(
+        "MONFY04",
+        GetResourceString(ResourceManager, nameof(SelfReferenceTitle)),
+        GetResourceString(ResourceManager, nameof(SelfReferenceMessageFormat)),
+        "Usage",
+        DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        description: GetResourceString(ResourceManager, nameof(SelfReferenceRuleDescription)),
+        helpLinkUri: GetHelpLinkUri("MONFY04"));
+
     /// <inheritdoc/>
     public sealed override void Initialize(AnalysisContext context)
     {
@@ -107,6 +124,13 @@ public sealed class AttributeAnalyzer
         if (IsViolatingPartialTypeRule(type, out string? identifier))
         {
             Raise(context, PartialTypeRule, location, identifier);
+
+            return;
+        }
+
+        if (IsViolatingSelfReferenceRule(context, type, out identifier))
+        {
+            Raise(context, SelfReferenceRule, location, identifier);
 
             return;
         }
@@ -171,6 +195,30 @@ public sealed class AttributeAnalyzer
     {
         return symbol.ContainingType is not null
             && symbol.ContainingType.IsMonify();
+    }
+
+    private static bool IsViolatingSelfReferenceRule(
+        SyntaxNodeAnalysisContext context,
+        TypeDeclarationSyntax? type,
+        out string? identifier)
+    {
+        identifier = default;
+
+        INamedTypeSymbol? symbol = GetSymbol<INamedTypeSymbol>(context, type);
+
+        if (symbol is null || !symbol.HasMonify(context.SemanticModel, out ITypeSymbol value))
+        {
+            return false;
+        }
+
+        if (SymbolEqualityComparer.IncludeNullability.Equals(symbol, value))
+        {
+            identifier = symbol.Name;
+
+            return true;
+        }
+
+        return false;
     }
 
     private static bool IsViolatingCapturesStateRule(SyntaxNodeAnalysisContext context, TypeDeclarationSyntax? type)

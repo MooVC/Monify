@@ -3,6 +3,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
+using Monify;
 using Monify.Snippets;
 using Monify.Snippets.Declarations;
 using AnalyzerTest = Monify.AnalyzerTest<Monify.AttributeAnalyzer>;
@@ -57,6 +58,34 @@ public sealed class WhenExecuted
 
         // Assert
         await act.ShouldNotThrowAsync();
+    }
+
+    [Theory]
+    [Frameworks(Language = LanguageVersion.CSharp2)]
+    public async Task GivenATypeWhenReferencingItselfThenSelfReferenceRuleIsRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    {
+        // Arrange
+        foreach (string annotation in ["[Monify<Age>]", "[Monify(Type = typeof(Age))]"])
+        {
+            var test = new AnalyzerTest(assembly, language);
+
+            test.TestState.Sources.Add($$"""
+            using Monify;
+
+            namespace Monify.Testing;
+
+            {{annotation}}
+            public partial record Age;
+            """);
+
+            test.ExpectedDiagnostics.Add(new DiagnosticResult(AttributeAnalyzer.SelfReferenceRule).WithArguments("Age"));
+
+            // Act
+            Func<Task> act = () => test.RunAsync();
+
+            // Assert
+            await act.ShouldNotThrowAsync();
+        }
     }
 
     private static DiagnosticResult GetExpectedPartialThePartialTypeRule(LinePosition position, string @class)

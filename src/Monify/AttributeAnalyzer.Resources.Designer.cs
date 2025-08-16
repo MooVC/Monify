@@ -140,5 +140,32 @@ namespace Monify {
                 return ResourceManager.GetString("PartialTypeRuleTitle", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Type cannot reference itself..
+        /// </summary>
+        internal static string SelfReferenceRuleDescription {
+            get {
+                return ResourceManager.GetString("SelfReferenceRuleDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Type `{0}` cannot reference itself..
+        /// </summary>
+        internal static string SelfReferenceMessageFormat {
+            get {
+                return ResourceManager.GetString("SelfReferenceMessageFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Type references itself.
+        /// </summary>
+        internal static string SelfReferenceTitle {
+            get {
+                return ResourceManager.GetString("SelfReferenceTitle", resourceCulture);
+            }
+        }
     }
 }
