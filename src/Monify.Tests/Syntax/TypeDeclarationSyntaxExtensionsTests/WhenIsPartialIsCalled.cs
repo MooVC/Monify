@@ -6,11 +6,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 public sealed class WhenIsPartialIsCalled
 {
     [Fact]
-    public void GivenPartialTypeDeclarationWhenIsPartialIsCalledThenReturnsTrue()
+    public void GivenPartialTypeDeclarationThenReturnsTrue()
     {
         // Arrange
-        TypeDeclarationSyntax syntax = SyntaxFactory.ClassDeclaration("Sample")
-            .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PartialKeyword)));
+        TypeDeclarationSyntax syntax = SyntaxFactory
+            .ClassDeclaration("Sample")
+            .WithModifiers(SyntaxFactory
+                .TokenList(SyntaxFactory
+                    .Token(SyntaxKind.PartialKeyword)));
 
         // Act
         bool result = syntax.IsPartial();
@@ -20,7 +23,7 @@ public sealed class WhenIsPartialIsCalled
     }
 
     [Fact]
-    public void GivenNonPartialTypeDeclarationWhenIsPartialIsCalledThenReturnsFalse()
+    public void GivenNonPartialTypeDeclarationThenReturnsFalse()
     {
         // Arrange
         TypeDeclarationSyntax syntax = SyntaxFactory.StructDeclaration("Sample");

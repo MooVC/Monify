@@ -60,9 +60,9 @@ public sealed class TypeGenerator
     {
         if (subject is not null)
         {
-            #if DEBUG
+#if DEBUG
             Dictionary<string, string> files = [];
-            #endif
+#endif
 
             foreach (IStrategy strategy in strategies)
             {
@@ -73,9 +73,9 @@ public sealed class TypeGenerator
                     string code = Wrap(source.Code, subject);
                     string hint = GetHint(source, subject);
 
-                    #if DEBUG
+#if DEBUG
                     files[hint] = code;
-                    #endif
+#endif
 
                     context.AddSource(hint, code);
                 }

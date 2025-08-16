@@ -1,13 +1,15 @@
 namespace Monify.Strategies.EqualityStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenConditionIsFalseWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenConditionWhenFalseThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
-        var strategy = new EqualityStrategy(_ => false, "Self", s => s.Qualification);
+        Subject subject = TestSubject.Create();
+        var strategy = new EqualityStrategy(_ => false, "Self", subject => subject.Qualification);
 
         // Act
         IEnumerable<Source> result = strategy.Generate(subject);
@@ -17,11 +19,11 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenConditionIsTrueWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenConditionWhenTrueThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
-        var strategy = new EqualityStrategy(_ => true, "Self", s => s.Qualification);
+        Subject subject = TestSubject.Create();
+        var strategy = new EqualityStrategy(_ => true, "Self", subject => subject.Qualification);
 
         // Act
         Source source = strategy.Generate(subject).Single();

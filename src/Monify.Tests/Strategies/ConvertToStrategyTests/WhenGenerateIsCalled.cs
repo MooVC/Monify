@@ -1,12 +1,14 @@
 namespace Monify.Strategies.ConvertToStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenSubjectHasConversionToWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenSubjectWhenHasConversionToThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         subject.HasConversionTo = true;
         var strategy = new ConvertToStrategy();
 
@@ -18,10 +20,10 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenSubjectLacksConversionToWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenSubjectWhenLacksConversionToThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         var strategy = new ConvertToStrategy();
 
         // Act

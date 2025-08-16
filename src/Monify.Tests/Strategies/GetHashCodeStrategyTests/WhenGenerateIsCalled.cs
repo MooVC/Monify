@@ -1,12 +1,14 @@
 namespace Monify.Strategies.GetHashCodeStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenOverridesNotAllowedWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         var strategy = new GetHashCodeStrategy();
 
         // Act
@@ -17,10 +19,10 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenOverridesAllowedWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenOverridesWhenAllowedThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         subject.CanOverrideGetHashCode = true;
         var strategy = new GetHashCodeStrategy();
 

@@ -1,12 +1,14 @@
 namespace Monify.Strategies.FieldStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenSubjectHasFieldWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenSubjectWhenHasFieldThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         subject.HasFieldForEncapsulatedValue = true;
         var strategy = new FieldStrategy();
 
@@ -18,10 +20,10 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenSubjectLacksFieldWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenSubjectWhenLacksFieldThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         var strategy = new FieldStrategy();
 
         // Act

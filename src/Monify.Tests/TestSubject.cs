@@ -1,6 +1,5 @@
 namespace Monify;
 
-using System.Collections.Immutable;
 using Monify.Model;
 
 internal static class TestSubject

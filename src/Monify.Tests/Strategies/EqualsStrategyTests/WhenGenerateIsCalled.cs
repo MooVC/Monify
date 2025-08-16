@@ -1,12 +1,14 @@
 namespace Monify.Strategies.EqualsStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenOverridesNotAllowedWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         var strategy = new EqualsStrategy();
 
         // Act
@@ -17,10 +19,10 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenOverridesAllowedWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenOverridesWhenAllowedThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         subject.CanOverrideEquals = true;
         var strategy = new EqualsStrategy();
 
@@ -28,7 +30,7 @@ public sealed class WhenGenerateIsCalled
         Source source = strategy.Generate(subject).Single();
 
         // Assert
-        source.Hint.ShouldBe(nameof(object.Equals));
+        source.Hint.ShouldBe(nameof(Equals));
         source.Code.ShouldContain("public override bool Equals(object other)");
     }
 }

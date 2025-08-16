@@ -1,9 +1,9 @@
 namespace Monify.SourceTests;
 
-public sealed class WhenConstructorIsCalled
+public sealed class WhenConstructed
 {
     [Fact]
-    public void GivenCodeAndHintWhenConstructorIsCalledThenPropertiesAreSet()
+    public void GivenCodeAndHintThenPropertiesAreSet()
     {
         // Arrange
         const string code = "code";

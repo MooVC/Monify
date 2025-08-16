@@ -1,12 +1,14 @@
 namespace Monify.Strategies.ToStringStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenOverridesNotAllowedWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         var strategy = new ToStringStrategy();
 
         // Act
@@ -17,10 +19,10 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenOverridesAllowedWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenOverridesWhenAllowedThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         subject.CanOverrideToString = true;
         var strategy = new ToStringStrategy();
 

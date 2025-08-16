@@ -1,13 +1,15 @@
 namespace Monify.Strategies.EquatableStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenConditionsAreFalseWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenConditionsWhenFalseThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
-        var strategy = new EquatableStrategy(_ => false, _ => "true", _ => false, "Self", s => s.Qualification);
+        Subject subject = TestSubject.Create();
+        var strategy = new EquatableStrategy(_ => false, _ => "true", _ => false, "Self", subject => subject.Qualification);
 
         // Act
         IEnumerable<Source> result = strategy.Generate(subject);
@@ -17,11 +19,11 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenConditionsAreTrueWhenGenerateIsCalledThenTwoSourcesAreReturned()
+    public void GivenConditionsWhenTrueThenTwoSourcesAreReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
-        var strategy = new EquatableStrategy(_ => true, _ => "true", _ => true, "Self", s => s.Qualification);
+        Subject subject = TestSubject.Create();
+        var strategy = new EquatableStrategy(_ => true, _ => "true", _ => true, "Self", subject => subject.Qualification);
 
         // Act
         Source[] sources = strategy.Generate(subject).ToArray();

@@ -1,12 +1,14 @@
 namespace Monify.Strategies.ConstructorStrategyTests;
 
+using Monify.Model;
+
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenSubjectHasConstructorWhenGenerateIsCalledThenNoSourceIsGenerated()
+    public void GivenSubjectWhenHasConstructorThenNoSourceIsGenerated()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         subject.HasConstructorForEncapsulatedValue = true;
         var strategy = new ConstructorStrategy();
 
@@ -18,10 +20,10 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenSubjectLacksConstructorWhenGenerateIsCalledThenSourceIsReturned()
+    public void GivenSubjectWhenLacksConstructorThenSourceIsReturned()
     {
         // Arrange
-        var subject = TestSubject.Create();
+        Subject subject = TestSubject.Create();
         var strategy = new ConstructorStrategy();
 
         // Act
