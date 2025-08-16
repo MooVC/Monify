@@ -42,7 +42,13 @@ public sealed class AttributeGenerator
             internal sealed class {{Name}}Attribute
                 : Attribute
             {
-                public Type Type { get; set; }
+                private Type _type;
+
+                public Type Type
+                {
+                    get => _type;
+                    set => _type = value;
+                }
             }
         }
         """;
