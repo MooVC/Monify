@@ -128,14 +128,14 @@ public sealed class AttributeAnalyzer
             return;
         }
 
-        if (IsViolatingSelfReferenceRule(context, type, out identifier))
+        if (IsViolatingSelfReferenceRule(context, type, out identifier, out INamedTypeSymbol? symbol, out ITypeSymbol? value))
         {
             Raise(context, SelfReferenceRule, location, identifier);
 
             return;
         }
 
-        if (IsViolatingCapturesStateRule(context, type))
+        if (IsViolatingCapturesStateRule(symbol, value))
         {
             Raise(context, CapturesStateRule, location, identifier);
         }
@@ -200,32 +200,25 @@ public sealed class AttributeAnalyzer
     private static bool IsViolatingSelfReferenceRule(
         SyntaxNodeAnalysisContext context,
         TypeDeclarationSyntax? type,
-        out string? identifier)
+        out string? identifier,
+        out INamedTypeSymbol? symbol,
+        out ITypeSymbol? value)
     {
-        identifier = default;
+        symbol = GetSymbol<INamedTypeSymbol>(context, type);
+        identifier = symbol?.Name;
+        value = default;
 
-        INamedTypeSymbol? symbol = GetSymbol<INamedTypeSymbol>(context, type);
-
-        if (symbol is null || !symbol.HasMonify(context.SemanticModel, out ITypeSymbol value))
+        if (symbol is null || !symbol.HasMonify(context.SemanticModel, out value))
         {
             return false;
         }
 
-        if (SymbolEqualityComparer.IncludeNullability.Equals(symbol, value))
-        {
-            identifier = symbol.Name;
-
-            return true;
-        }
-
-        return false;
+        return SymbolEqualityComparer.IncludeNullability.Equals(symbol, value);
     }
 
-    private static bool IsViolatingCapturesStateRule(SyntaxNodeAnalysisContext context, TypeDeclarationSyntax? type)
+    private static bool IsViolatingCapturesStateRule(INamedTypeSymbol? symbol, ITypeSymbol? value)
     {
-        INamedTypeSymbol? symbol = GetSymbol<INamedTypeSymbol>(context, type);
-
-        return symbol is null || !symbol.HasMonify(context.SemanticModel, out ITypeSymbol value) || !symbol.IsStateless(value, out _);
+        return symbol is null || value is null || !symbol.IsStateless(value, out _);
     }
 
     private static bool IsViolatingCompatibleTargetTypeRule(AttributeSyntax attribute, out TypeDeclarationSyntax? type)
