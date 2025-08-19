@@ -87,7 +87,7 @@ internal static partial class Simple
                 #endif
             }
             """,
-            Extensions.HasConversionFrom,
+            Extensions.HasConversionTo,
             "Monify.Testing.Structs.Simple.ConvertTo");
 
         public static readonly Generated EquatableForSelf = new(
@@ -440,7 +440,7 @@ internal static partial class Simple
                 #endif
             }
             """,
-            Extensions.HasEquatableForValue,
+            Extensions.IsEquatableToValue,
             "Monify.Testing.Structs.Simple.IEquatable.Value.Equals");
     }
 }

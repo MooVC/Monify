@@ -13,9 +13,7 @@ public sealed class SnippetsAttribute
 #if CI
 
     private const Extensions DefaultExtensions = All;
-    private static readonly GetFrameworks frameworks = Frameworks.Supported;
-
-    //// TODO: Find out why Frameworks.All doesn't work, specifically for .NET 7 and CSharp 11
+    private static readonly GetFrameworks frameworks = Frameworks.All;
 
 #else
 

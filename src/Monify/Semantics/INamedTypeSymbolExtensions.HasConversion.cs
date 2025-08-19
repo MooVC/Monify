@@ -30,6 +30,6 @@ internal static partial class INamedTypeSymbolExtensions
             .Any(method => method.MethodKind == MethodKind.Conversion
                         && method.Name == ImplciitOperatorName
                         && method.Parameters.Length == ExpectedParametersForConversion
-                        && method.Parameters[0].Type.Equals(type, SymbolEqualityComparer.Default));
+                        && method.Parameters[0].Type.Equals(type, SymbolEqualityComparer.IncludeNullability));
     }
 }
