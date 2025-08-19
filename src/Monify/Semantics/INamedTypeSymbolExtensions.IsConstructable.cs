@@ -11,7 +11,7 @@ internal static partial class INamedTypeSymbolExtensions
     private const int OffsetForConstructorWhenDefined = 0;
     private const int ExpectedConstructorsWhenUndefined = 0;
     private const int ExpectedConstructorsWhenDefined = 1;
-    private const int OffsetForConstructorParameterWhenDefined = 1;
+    private const int OffsetForConstructorParameterWhenDefined = 0;
     private const int ExpectedParametersForConstructorWhenDefined = 1;
 
     /// <summary>

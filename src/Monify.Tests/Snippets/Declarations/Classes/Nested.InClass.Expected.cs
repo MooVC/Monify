@@ -98,7 +98,7 @@ internal static partial class Nested
                     #endif
                 }
                 """,
-                Extensions.HasConversionFrom,
+                Extensions.HasConversionTo,
                 "Monify.Testing.Classes.Outter.Inner.ConvertTo");
 
             public static readonly Generated EquatableForSelf = new(
@@ -487,7 +487,7 @@ internal static partial class Nested
                     #endif
                 }
                 """,
-                Extensions.HasEquatableForValue,
+                Extensions.IsEquatableToValue,
                 "Monify.Testing.Classes.Outter.Inner.IEquatable.Value.Equals");
         }
     }

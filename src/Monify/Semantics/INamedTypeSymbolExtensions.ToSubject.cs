@@ -39,8 +39,9 @@ internal static partial class INamedTypeSymbolExtensions
         string? declaration = subject.GetDeclaration();
 
         if (declaration is null
-        || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue)
-        || !subject.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
+         || subject.Equals(value, SymbolEqualityComparer.IncludeNullability)
+         || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue)
+         || !subject.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
         {
             return default;
         }
