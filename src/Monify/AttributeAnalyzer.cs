@@ -24,6 +24,7 @@ public sealed class AttributeAnalyzer
     [
         CompatibleTargetTypeRule,
         PartialTypeRule,
+        SelfReferenceRule,
         CapturesStateRule,
     ];
 
@@ -75,6 +76,22 @@ public sealed class AttributeAnalyzer
         description: GetResourceString(ResourceManager, nameof(CapturesStateRuleDescription)),
         helpLinkUri: GetHelpLinkUri("MONFY03"));
 
+    /// <summary>
+    /// Gets the descriptor associated with the self reference rule (MONFY04).
+    /// </summary>
+    /// <value>
+    /// The descriptor associated with the self reference rule (MONFY04).
+    /// </value>
+    internal static DiagnosticDescriptor SelfReferenceRule { get; } = new(
+        "MONFY04",
+        GetResourceString(ResourceManager, nameof(SelfReferenceTitle)),
+        GetResourceString(ResourceManager, nameof(SelfReferenceMessageFormat)),
+        "Usage",
+        DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        description: GetResourceString(ResourceManager, nameof(SelfReferenceRuleDescription)),
+        helpLinkUri: GetHelpLinkUri("MONFY04"));
+
     /// <inheritdoc/>
     public sealed override void Initialize(AnalysisContext context)
     {
@@ -111,7 +128,14 @@ public sealed class AttributeAnalyzer
             return;
         }
 
-        if (IsViolatingCapturesStateRule(context, type))
+        if (IsViolatingSelfReferenceRule(context, type, out identifier, out INamedTypeSymbol? symbol, out ITypeSymbol? value))
+        {
+            Raise(context, SelfReferenceRule, location, identifier);
+
+            return;
+        }
+
+        if (IsViolatingCapturesStateRule(symbol, value))
         {
             Raise(context, CapturesStateRule, location, identifier);
         }
@@ -173,11 +197,28 @@ public sealed class AttributeAnalyzer
             && symbol.ContainingType.IsMonify();
     }
 
-    private static bool IsViolatingCapturesStateRule(SyntaxNodeAnalysisContext context, TypeDeclarationSyntax? type)
+    private static bool IsViolatingSelfReferenceRule(
+        SyntaxNodeAnalysisContext context,
+        TypeDeclarationSyntax? type,
+        out string? identifier,
+        out INamedTypeSymbol? symbol,
+        out ITypeSymbol? value)
     {
-        INamedTypeSymbol? symbol = GetSymbol<INamedTypeSymbol>(context, type);
+        symbol = GetSymbol<INamedTypeSymbol>(context, type);
+        identifier = symbol?.Name;
+        value = default;
 
-        return symbol is null || !symbol.HasMonify(context.SemanticModel, out ITypeSymbol value) || !symbol.IsStateless(value, out _);
+        if (symbol is null || !symbol.HasMonify(context.SemanticModel, out value))
+        {
+            return false;
+        }
+
+        return SymbolEqualityComparer.IncludeNullability.Equals(symbol, value);
+    }
+
+    private static bool IsViolatingCapturesStateRule(INamedTypeSymbol? symbol, ITypeSymbol? value)
+    {
+        return symbol is null || value is null || !symbol.IsStateless(value, out _);
     }
 
     private static bool IsViolatingCompatibleTargetTypeRule(AttributeSyntax attribute, out TypeDeclarationSyntax? type)
