@@ -2,6 +2,10 @@
 
 Monify, a .NET Roslyn source generator, automates the creation of strongly-typed wrappers around single values, improving semantic clarity, type safety, and maintainability.
 
+## Requirements
+
+- Visual Studio 2022 v17.4 or later, or any compatible IDE that supports Roslyn source generators.
+
 ## Installation
 
 To install Monify, use the following command in your package manager console:

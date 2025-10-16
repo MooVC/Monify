@@ -1,5 +1,6 @@
 ﻿namespace Monify.Syntax;
 
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Monify.Model;
@@ -47,6 +48,6 @@ internal static partial class TypeDeclarationSyntaxExtensions
             return default;
         }
 
-        return type.ToSubject(compilation, [.. nesting], value);
+        return type.ToSubject(compilation, ImmutableArray.ToImmutableArray(nesting), value);
     }
 }
