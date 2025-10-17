@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Monify, a .NET Roslyn source generator, automates the creation of strongly-typed wrappers around single values, improving semantic clarity, type safety, and maintainability.</Description>
+    <LangVersion>11.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Valuify">
