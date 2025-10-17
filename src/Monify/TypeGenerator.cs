@@ -13,8 +13,8 @@ using Monify.Syntax;
 public sealed class TypeGenerator
     : IIncrementalGenerator
 {
-    private static readonly IStrategy[] strategies =
-    [
+    private static readonly IStrategy[] strategies = new IStrategy[]
+    {
         new ConstructorStrategy(),
         new ConvertFromStrategy(),
         new ConvertToStrategy(),
@@ -38,7 +38,7 @@ public sealed class TypeGenerator
         new InequalityStrategy(subject => !subject.HasInequalityOperatorForSelf, "Self", subject => subject.Qualification),
         new InequalityStrategy(subject => !subject.HasInequalityOperatorForValue, "Value", subject => subject.Value),
         new ToStringStrategy(),
-    ];
+    };
 
     /// <inheritdoc/>
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -61,7 +61,7 @@ public sealed class TypeGenerator
         if (subject is not null)
         {
 #if DEBUG
-            Dictionary<string, string> files = [];
+            Dictionary<string, string> files = new();
 #endif
 
             foreach (IStrategy strategy in strategies)
@@ -92,7 +92,7 @@ public sealed class TypeGenerator
             IEnumerable<string> names = subject.Nesting
                 .Reverse()
                 .Select(parent => parent.Name)
-                .Union([name]);
+                .Union(new[] { name });
 
             name = string.Join(".", names);
         }

@@ -20,13 +20,11 @@ public sealed class AttributeAnalyzer
     private const string Branch = "master";
 
     /// <inheritdoc/>
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } =
-    [
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
         CompatibleTargetTypeRule,
         PartialTypeRule,
         SelfReferenceRule,
-        CapturesStateRule,
-    ];
+        CapturesStateRule);
 
     /// <summary>
     /// Gets the descriptor associated with the compatible target type rule (MONFY01).

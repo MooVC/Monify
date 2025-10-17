@@ -168,7 +168,7 @@ internal sealed partial class Subject
     /// <value>
     /// The declarations associated with the parent types in order of declaration.
     /// </value>
-    public ImmutableArray<Nesting> Nesting { get; set; } = [];
+    public ImmutableArray<Nesting> Nesting { get; set; } = ImmutableArray<Nesting>.Empty;
 
     /// <summary>
     /// Gets or sets the qualified name of the subject, which includes any generic arguments.
