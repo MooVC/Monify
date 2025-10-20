@@ -53,7 +53,7 @@ internal static partial class Nested
                         {
                             public static implicit operator int(Inner subject)
                             {
-                                if (subject == null)
+                                if (ReferenceEquals(subject, null))
                                 {
                                     throw new ArgumentNullException("subject");
                                 }

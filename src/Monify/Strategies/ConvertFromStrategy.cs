@@ -21,7 +21,7 @@ internal sealed class ConvertFromStrategy
             {
                 public static implicit operator {{subject.Value}}({{subject.Qualification}} subject)
                 {
-                    if (subject == null)
+                    if (ReferenceEquals(subject, null))
                     {
                         throw new ArgumentNullException("subject");
                     }
