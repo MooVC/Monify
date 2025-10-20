@@ -46,7 +46,7 @@ internal static partial class Simple
                 {
                     public static implicit operator int(Simple subject)
                     {
-                        if (subject == null)
+                        if (ReferenceEquals(subject, null))
                         {
                             throw new ArgumentNullException("subject");
                         }
