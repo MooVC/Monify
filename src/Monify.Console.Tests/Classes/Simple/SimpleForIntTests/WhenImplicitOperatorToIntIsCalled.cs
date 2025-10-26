@@ -1,9 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using System;
-using Shouldly;
-using Xunit;
-
 public static class WhenImplicitOperatorToIntIsCalled
 {
     private const int SampleValue = 42;
@@ -12,7 +8,7 @@ public static class WhenImplicitOperatorToIntIsCalled
     public static void GivenNullSubjectThenThrowsArgumentNullException()
     {
         // Arrange
-        SimpleForInt? subject = null;
+        SimpleForInt? subject = default;
 
         // Act
         Action act = () => _ = (int)subject!;

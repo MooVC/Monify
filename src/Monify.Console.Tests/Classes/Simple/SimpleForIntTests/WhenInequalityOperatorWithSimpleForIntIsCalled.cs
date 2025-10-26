@@ -1,8 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using Shouldly;
-using Xunit;
-
 public static class WhenInequalityOperatorWithSimpleForIntIsCalled
 {
     private const int SampleValue = 63;

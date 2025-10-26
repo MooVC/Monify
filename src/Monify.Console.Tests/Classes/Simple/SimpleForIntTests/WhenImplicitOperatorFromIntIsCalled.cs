@@ -1,8 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using Shouldly;
-using Xunit;
-
 public static class WhenImplicitOperatorFromIntIsCalled
 {
     private const int SampleValue = 77;
@@ -10,11 +7,13 @@ public static class WhenImplicitOperatorFromIntIsCalled
     [Fact]
     public static void GivenValueThenReturnsEquivalentInstance()
     {
-        // Arrange & Act
+        // Arrange
         SimpleForInt result = SampleValue;
 
-        // Assert
+        // Act
         int actual = result;
+
+        // Assert
         actual.ShouldBe(SampleValue);
     }
 }

@@ -1,8 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using Shouldly;
-using Xunit;
-
 public static class WhenEqualityOperatorWithSimpleForIntIsCalled
 {
     private const int SampleValue = 14;
@@ -12,8 +9,8 @@ public static class WhenEqualityOperatorWithSimpleForIntIsCalled
     public static void GivenBothNullThenReturnTrue()
     {
         // Arrange
-        SimpleForInt? left = null;
-        SimpleForInt? right = null;
+        SimpleForInt? left = default;
+        SimpleForInt? right = default;
 
         // Act
         bool actual = left == right;
@@ -26,7 +23,7 @@ public static class WhenEqualityOperatorWithSimpleForIntIsCalled
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
-        SimpleForInt? left = null;
+        SimpleForInt? left = default;
         SimpleForInt right = new(SampleValue);
 
         // Act

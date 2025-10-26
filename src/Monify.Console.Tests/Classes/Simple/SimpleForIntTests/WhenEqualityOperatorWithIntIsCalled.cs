@@ -1,8 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using Shouldly;
-using Xunit;
-
 public static class WhenEqualityOperatorWithIntIsCalled
 {
     private const int SampleValue = 101;
@@ -12,7 +9,7 @@ public static class WhenEqualityOperatorWithIntIsCalled
     public static void GivenSubjectIsNullThenReturnFalse()
     {
         // Arrange
-        SimpleForInt subject = null!;
+        SimpleForInt? subject = default;
 
         // Act
         bool actual = subject == SampleValue;

@@ -1,8 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using Shouldly;
-using Xunit;
-
 public static class WhenEqualsWithSimpleForIntIsCalled
 {
     private const int SampleValue = 51;
@@ -27,7 +24,7 @@ public static class WhenEqualsWithSimpleForIntIsCalled
     {
         // Arrange
         SimpleForInt subject = new(SampleValue);
-        SimpleForInt other = null!;
+        SimpleForInt? other = default;
 
         // Act
         bool actual = subject.Equals(other);

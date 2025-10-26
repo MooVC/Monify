@@ -1,9 +1,5 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-using System;
-using Shouldly;
-using Xunit;
-
 public static class WhenEqualsWithObjectIsCalled
 {
     private const int SampleValue = 28;
@@ -15,7 +11,7 @@ public static class WhenEqualsWithObjectIsCalled
         SimpleForInt subject = new(SampleValue);
 
         // Act
-        bool actual = subject.Equals((object?)null);
+        bool actual = subject.Equals((object?)default);
 
         // Assert
         actual.ShouldBeFalse();
@@ -46,6 +42,6 @@ public static class WhenEqualsWithObjectIsCalled
         Action act = () => subject.Equals(other);
 
         // Assert
-        Should.Throw<InvalidCastException>(act);
+        _ = Should.Throw<InvalidCastException>(act);
     }
 }
