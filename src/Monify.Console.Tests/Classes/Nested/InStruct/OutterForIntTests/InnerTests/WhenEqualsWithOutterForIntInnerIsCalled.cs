@@ -1,0 +1,35 @@
+namespace Monify.Console.Classes.Nested.InStruct.OutterForIntTests.InnerTests;
+
+public static class WhenEqualsWithOutterForIntInnerIsCalled
+{
+    private const int SampleValue = 42;
+    private const int DifferentValue = 84;
+
+    [Fact]
+    public static void GivenSameValueThenReturnTrue()
+    {
+        // Arrange
+        OutterForInt<int>.Inner left = new(SampleValue);
+        OutterForInt<int>.Inner right = new(SampleValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
+    public static void GivenDifferentValueThenReturnFalse()
+    {
+        // Arrange
+        OutterForInt<int>.Inner left = new(SampleValue);
+        OutterForInt<int>.Inner right = new(DifferentValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+}
