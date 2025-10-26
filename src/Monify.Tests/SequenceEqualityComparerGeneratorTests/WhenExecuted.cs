@@ -1,29 +1,24 @@
-﻿namespace Monify.TypeGeneratorTests;
+﻿namespace Monify.SequenceEqualityComparerGeneratorTests;
 
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
-using Monify.Snippets;
 using Monify.Snippets.Declarations;
 
 public sealed class WhenExecuted
 {
     private static readonly Type[] _generators =
     [
-        typeof(AttributeGenerator),
         typeof(HashCodeGenerator),
         typeof(SequenceEqualityComparerGenerator),
-        typeof(TypeGenerator),
     ];
 
     [Theory]
-    [Snippets(exclusions: [typeof(Attributes)])]
-    public async Task GivenATypeTheExpectedSourceIsGenerated(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
+    [Frameworks]
+    public async Task GivenAnAssemblyThenTheClassIsGenerated(ReferenceAssemblies assemblies, LanguageVersion language)
     {
         // Arrange
-        var test = new GeneratorTest<TypeGenerator>(assembly, language, _generators);
+        var test = new GeneratorTest<SequenceEqualityComparerGenerator>(assemblies, language, generators: _generators);
 
-        Attributes.IsExpectedIn(test.TestState, language);
-        expectations.IsDeclaredIn(test.TestState);
         Internal.HashCode.IsExpectedIn(test.TestState);
         Internal.SequenceEqualityComparer.IsExpectedIn(test.TestState);
 

@@ -307,7 +307,7 @@ internal static partial class Nested
                         {
                             public override int GetHashCode()
                             {
-                                return _value.GetHashCode();
+                                return global::Monify.Internal.HashCode.Combine(_value);
                             }
                         }
                     }

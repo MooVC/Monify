@@ -21,7 +21,7 @@ internal sealed class GetHashCodeStrategy
             {
                 public override int GetHashCode()
                 {
-                    return {{FieldStrategy.Name}}.GetHashCode();
+                    return global::Monify.Internal.HashCode.Combine({{FieldStrategy.Name}});
                 }
             }
             """;

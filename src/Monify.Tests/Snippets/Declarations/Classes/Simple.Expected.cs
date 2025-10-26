@@ -276,7 +276,7 @@ internal static partial class Simple
                 {
                     public override int GetHashCode()
                     {
-                        return _value.GetHashCode();
+                        return global::Monify.Internal.HashCode.Combine(_value);
                     }
                 }
 
