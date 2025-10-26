@@ -1,4 +1,4 @@
-namespace Monify.Testing.Structs.Simple;
+namespace Monify.Console.Structs.Simple;
 
 [Monify<string>]
-public partial struct SimpleForString;
+public readonly partial struct SimpleForString;

@@ -1,4 +1,4 @@
-namespace Monify.Testing.Structs.Nested.InInterface;
+namespace Monify.Console.Structs.Nested.InInterface;
 
 public partial interface IOutterForArray<T>
     where T : struct

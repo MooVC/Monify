@@ -1,4 +1,4 @@
-namespace Monify.Testing.Records.Nested.InInterface;
+namespace Monify.Console.Records.Nested.InInterface;
 
 public partial interface IOutterForString<T>
     where T : struct

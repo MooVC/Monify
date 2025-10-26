@@ -1,4 +1,4 @@
-namespace Monify.Testing.Classes.Nested.InClass;
+namespace Monify.Console.Classes.Nested.InClass;
 
 public sealed partial class OutterForString<T>
     where T : struct

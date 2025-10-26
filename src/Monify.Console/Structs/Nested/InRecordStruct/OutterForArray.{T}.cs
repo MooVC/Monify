@@ -1,4 +1,4 @@
-namespace Monify.Testing.Structs.Nested.InRecordStruct;
+namespace Monify.Console.Structs.Nested.InRecordStruct;
 
 public readonly partial record struct OutterForArray<T>
     where T : struct
