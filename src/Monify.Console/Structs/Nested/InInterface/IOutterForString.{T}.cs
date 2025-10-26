@@ -4,7 +4,5 @@ public partial interface IOutterForString<T>
     where T : struct
 {
     [Monify<string>]
-    public readonly partial struct Inner
-    {
-    }
+    public readonly partial struct Inner;
 }

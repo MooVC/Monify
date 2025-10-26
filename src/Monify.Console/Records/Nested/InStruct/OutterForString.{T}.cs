@@ -4,7 +4,5 @@ public readonly ref partial struct OutterForString<T>
     where T : struct
 {
     [Monify<string>]
-    public sealed partial record Inner
-    {
-    }
+    public sealed partial record Inner;
 }
