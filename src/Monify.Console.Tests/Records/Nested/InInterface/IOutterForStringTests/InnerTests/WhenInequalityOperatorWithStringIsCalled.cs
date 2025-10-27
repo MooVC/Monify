@@ -1,0 +1,46 @@
+namespace Monify.Console.Records.Nested.InInterface.IOutterForStringTests.InnerTests;
+
+public static class WhenInequalityOperatorWithStringIsCalled
+{
+    private const string SampleValue = "Sample";
+    private const string DifferentValue = "Different";
+
+    [Fact]
+    public static void GivenSubjectIsNullThenReturnTrue()
+    {
+        // Arrange
+        IOutterForString<int>.Inner? subject = default;
+
+        // Act
+        bool actual = subject != SampleValue;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
+    public static void GivenSameValueThenReturnFalse()
+    {
+        // Arrange
+        IOutterForString<int>.Inner subject = new(SampleValue);
+
+        // Act
+        bool actual = subject != SampleValue;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenDifferentValueThenReturnTrue()
+    {
+        // Arrange
+        IOutterForString<int>.Inner subject = new(SampleValue);
+
+        // Act
+        bool actual = subject != DifferentValue;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+}

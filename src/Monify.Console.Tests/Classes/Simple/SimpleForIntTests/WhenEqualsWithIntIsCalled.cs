@@ -2,8 +2,8 @@ namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
 public static class WhenEqualsWithIntIsCalled
 {
-    private const int SampleValue = 36;
     private const int DifferentValue = 12;
+    private const int SampleValue = 36;
 
     [Fact]
     public static void GivenSameValueThenReturnTrue()

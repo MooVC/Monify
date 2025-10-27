@@ -147,6 +147,14 @@ internal sealed partial class Subject
     public bool IsGlobal => string.IsNullOrEmpty(Namespace);
 
     /// <summary>
+    /// Gets or sets a value indicating whether or not the encapsulated type is deemed to be a sequence.
+    /// </summary>
+    /// <value>
+    /// The value indicating whether or not the encapsulated type is deemed to be a sequence.
+    /// </value>
+    public bool IsSequence { get; set; }
+
+    /// <summary>
     /// Gets or sets the name of the subject.
     /// </summary>
     /// <value>

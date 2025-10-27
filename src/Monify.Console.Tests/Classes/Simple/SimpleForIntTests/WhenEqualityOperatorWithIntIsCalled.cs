@@ -2,8 +2,8 @@ namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
 public static class WhenEqualityOperatorWithIntIsCalled
 {
-    private const int SampleValue = 101;
     private const int DifferentValue = 202;
+    private const int SampleValue = 101;
 
     [Fact]
     public static void GivenSubjectIsNullThenReturnFalse()

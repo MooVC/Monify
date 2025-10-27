@@ -13,7 +13,7 @@ using Monify.Syntax;
 public sealed class TypeGenerator
     : IIncrementalGenerator
 {
-    private static readonly IStrategy[] strategies = new IStrategy[]
+    private static readonly IStrategy[] _strategies = new IStrategy[]
     {
         new ConstructorStrategy(),
         new ConvertFromStrategy(),
@@ -29,7 +29,7 @@ public sealed class TypeGenerator
             subject => subject.Qualification),
         new EquatableStrategy(
             subject => !subject.IsEquatableToValue,
-            subject => $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)",
+            GetEqualityOperator,
             subject => !subject.HasEquatableForValue,
             "Value",
             subject => subject.Value),
@@ -64,7 +64,7 @@ public sealed class TypeGenerator
             Dictionary<string, string> files = new();
 #endif
 
-            foreach (IStrategy strategy in strategies)
+            foreach (IStrategy strategy in _strategies)
             {
                 IEnumerable<Source> sources = strategy.Generate(subject);
 
@@ -81,6 +81,16 @@ public sealed class TypeGenerator
                 }
             }
         }
+    }
+
+    private static string GetEqualityOperator(Subject subject)
+    {
+        if (subject.IsSequence)
+        {
+            return $"global::Monify.Internal.SequenceEqualityComparer.Default.Equals({FieldStrategy.Name}, other)";
+        }
+
+        return $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)";
     }
 
     private static string GetHint(Source source, Subject subject)
