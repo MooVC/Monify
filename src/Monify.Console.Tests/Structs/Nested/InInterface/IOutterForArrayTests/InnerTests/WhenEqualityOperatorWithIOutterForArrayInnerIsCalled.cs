@@ -2,8 +2,8 @@ namespace Monify.Console.Structs.Nested.InInterface.IOutterForArrayTests.InnerTe
 
 public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
-    private static readonly int[] DifferentValue = new[] { 4, 5, 6 };
+    private static readonly int[] _differentValue = [4, 5, 6];
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenBothNullThenReturnTrue()
@@ -24,7 +24,7 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
     {
         // Arrange
         IOutterForArray<int>.Inner? left = default;
-        IOutterForArray<int>.Inner right = new(SampleValue);
+        IOutterForArray<int>.Inner right = new(_sampleValue);
 
         // Act
         bool actual = left == right;
@@ -37,8 +37,8 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
-        IOutterForArray<int>.Inner left = new(SampleValue);
-        IOutterForArray<int>.Inner right = new(SampleValue);
+        IOutterForArray<int>.Inner left = new(_sampleValue);
+        IOutterForArray<int>.Inner right = new(_sampleValue);
 
         // Act
         bool actual = left == right;
@@ -51,8 +51,8 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
     public static void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
-        IOutterForArray<int>.Inner left = new(SampleValue);
-        IOutterForArray<int>.Inner right = new(DifferentValue);
+        IOutterForArray<int>.Inner left = new(_sampleValue);
+        IOutterForArray<int>.Inner right = new(_differentValue);
 
         // Act
         bool actual = left == right;

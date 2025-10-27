@@ -2,18 +2,18 @@ namespace Monify.Console.Structs.Simple.SimpleForArrayTests;
 
 public static class WhenImplicitOperatorFromIntArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
-        SimpleForArray result = SampleValue;
+        SimpleForArray result = _sampleValue;
 
         // Act
         int[] actual = result;
 
         // Assert
-        actual.ShouldBe(SampleValue);
+        actual.ShouldBe(_sampleValue);
     }
 }

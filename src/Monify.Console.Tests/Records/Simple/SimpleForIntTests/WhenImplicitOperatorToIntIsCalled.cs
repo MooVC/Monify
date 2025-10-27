@@ -15,7 +15,7 @@ public static class WhenImplicitOperatorToIntIsCalled
 
         // Assert
         ArgumentNullException exception = Should.Throw<ArgumentNullException>(act);
-        exception.ParamName.ShouldBe("subject");
+        exception.ParamName.ShouldBe(nameof(subject));
     }
 
     [Fact]

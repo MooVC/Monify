@@ -2,13 +2,13 @@ namespace Monify.Console.Records.Nested.InInterface.IOutterForArrayTests.InnerTe
 
 public static class WhenEqualsWithObjectIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenNullThenReturnFalse()
     {
         // Arrange
-        IOutterForArray<int>.Inner subject = new(SampleValue);
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
         bool actual = subject.Equals((object?)default);
@@ -21,8 +21,8 @@ public static class WhenEqualsWithObjectIsCalled
     public static void GivenEquivalentIOutterForArrayInnerThenReturnTrue()
     {
         // Arrange
-        IOutterForArray<int>.Inner subject = new(SampleValue);
-        object other = new IOutterForArray<int>.Inner(SampleValue);
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
+        object other = new IOutterForArray<int>.Inner(_sampleValue);
 
         // Act
         bool actual = subject.Equals(other);
@@ -35,7 +35,7 @@ public static class WhenEqualsWithObjectIsCalled
     public static void GivenDifferentTypeThenReturnFalse()
     {
         // Arrange
-        IOutterForArray<int>.Inner subject = new(SampleValue);
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
         object other = string.Empty;
 
         // Act

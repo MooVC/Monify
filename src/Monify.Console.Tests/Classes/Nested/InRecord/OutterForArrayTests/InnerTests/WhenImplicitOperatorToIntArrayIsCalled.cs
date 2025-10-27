@@ -2,7 +2,7 @@ namespace Monify.Console.Classes.Nested.InRecord.OutterForArrayTests.InnerTests;
 
 public static class WhenImplicitOperatorToIntArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenNullSubjectThenThrowsArgumentNullException()
@@ -15,19 +15,19 @@ public static class WhenImplicitOperatorToIntArrayIsCalled
 
         // Assert
         ArgumentNullException exception = Should.Throw<ArgumentNullException>(act);
-        exception.ParamName.ShouldBe("subject");
+        exception.ParamName.ShouldBe(nameof(subject));
     }
 
     [Fact]
     public static void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
         int[] actual = subject;
 
         // Assert
-        actual.ShouldBe(SampleValue);
+        actual.ShouldBe(_sampleValue);
     }
 }

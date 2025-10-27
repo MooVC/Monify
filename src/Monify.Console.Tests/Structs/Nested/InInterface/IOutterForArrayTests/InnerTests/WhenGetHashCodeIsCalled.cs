@@ -2,15 +2,15 @@ namespace Monify.Console.Structs.Nested.InInterface.IOutterForArrayTests.InnerTe
 
 public static class WhenGetHashCodeIsCalled
 {
-    private static readonly int[] FirstValue = new[] { 7, 8, 9 };
-    private static readonly int[] SecondValue = new[] { 10, 11, 12 };
+    private static readonly int[] _firstValue = [7, 8, 9];
+    private static readonly int[] _secondValue = [10, 11, 12];
 
     [Fact]
     public static void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
-        IOutterForArray<int>.Inner first = new(FirstValue);
-        IOutterForArray<int>.Inner second = new(FirstValue);
+        IOutterForArray<int>.Inner first = new(_firstValue);
+        IOutterForArray<int>.Inner second = new(_firstValue);
 
         // Act
         int firstHash = first.GetHashCode();
@@ -24,8 +24,8 @@ public static class WhenGetHashCodeIsCalled
     public static void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
-        IOutterForArray<int>.Inner first = new(FirstValue);
-        IOutterForArray<int>.Inner second = new(SecondValue);
+        IOutterForArray<int>.Inner first = new(_firstValue);
+        IOutterForArray<int>.Inner second = new(_secondValue);
 
         // Act
         int firstHash = first.GetHashCode();

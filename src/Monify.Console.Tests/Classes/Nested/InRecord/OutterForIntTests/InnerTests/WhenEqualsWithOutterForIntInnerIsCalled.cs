@@ -2,8 +2,8 @@ namespace Monify.Console.Classes.Nested.InRecord.OutterForIntTests.InnerTests;
 
 public static class WhenEqualsWithOutterForIntInnerIsCalled
 {
-    private const int SampleValue = 42;
     private const int DifferentValue = 84;
+    private const int SampleValue = 42;
 
     [Fact]
     public static void GivenSameValueThenReturnTrue()

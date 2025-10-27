@@ -2,18 +2,18 @@ namespace Monify.Console.Structs.Nested.InRecord.OutterForArrayTests.InnerTests;
 
 public static class WhenImplicitOperatorToIntArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
         int[] actual = subject;
 
         // Assert
-        actual.ShouldBe(SampleValue);
+        actual.ShouldBe(_sampleValue);
     }
 }

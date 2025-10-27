@@ -2,8 +2,8 @@ namespace Monify.Console.Classes.Simple.SimpleForArrayTests;
 
 public static class WhenEqualityOperatorWithIntArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
-    private static readonly int[] DifferentValue = new[] { 4, 5, 6 };
+    private static readonly int[] _differentValue = [4, 5, 6];
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenSubjectIsNullThenReturnFalse()
@@ -12,7 +12,7 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
         SimpleForArray? subject = default;
 
         // Act
-        bool actual = subject == SampleValue;
+        bool actual = subject == _sampleValue;
 
         // Assert
         actual.ShouldBeFalse();
@@ -22,10 +22,10 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
-        SimpleForArray subject = new(SampleValue);
+        SimpleForArray subject = new(_sampleValue);
 
         // Act
-        bool actual = subject == SampleValue;
+        bool actual = subject == _sampleValue;
 
         // Assert
         actual.ShouldBeTrue();
@@ -35,10 +35,10 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
-        SimpleForArray subject = new(SampleValue);
+        SimpleForArray subject = new(_sampleValue);
 
         // Act
-        bool actual = subject == DifferentValue;
+        bool actual = subject == _differentValue;
 
         // Assert
         actual.ShouldBeFalse();

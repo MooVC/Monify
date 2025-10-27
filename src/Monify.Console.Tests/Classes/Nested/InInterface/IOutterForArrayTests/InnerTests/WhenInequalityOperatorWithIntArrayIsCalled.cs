@@ -2,8 +2,8 @@ namespace Monify.Console.Classes.Nested.InInterface.IOutterForArrayTests.InnerTe
 
 public static class WhenInequalityOperatorWithIntArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
-    private static readonly int[] DifferentValue = new[] { 4, 5, 6 };
+    private static readonly int[] _differentValue = [4, 5, 6];
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenSubjectIsNullThenReturnTrue()
@@ -12,7 +12,7 @@ public static class WhenInequalityOperatorWithIntArrayIsCalled
         IOutterForArray<int>.Inner? subject = default;
 
         // Act
-        bool actual = subject != SampleValue;
+        bool actual = subject != _sampleValue;
 
         // Assert
         actual.ShouldBeTrue();
@@ -22,10 +22,10 @@ public static class WhenInequalityOperatorWithIntArrayIsCalled
     public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
-        IOutterForArray<int>.Inner subject = new(SampleValue);
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
-        bool actual = subject != SampleValue;
+        bool actual = subject != _sampleValue;
 
         // Assert
         actual.ShouldBeFalse();
@@ -35,10 +35,10 @@ public static class WhenInequalityOperatorWithIntArrayIsCalled
     public static void GivenDifferentValueThenReturnTrue()
     {
         // Arrange
-        IOutterForArray<int>.Inner subject = new(SampleValue);
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
-        bool actual = subject != DifferentValue;
+        bool actual = subject != _differentValue;
 
         // Assert
         actual.ShouldBeTrue();

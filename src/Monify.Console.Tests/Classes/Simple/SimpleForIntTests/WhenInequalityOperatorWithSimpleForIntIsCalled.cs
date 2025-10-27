@@ -2,8 +2,8 @@ namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
 public static class WhenInequalityOperatorWithSimpleForIntIsCalled
 {
-    private const int SampleValue = 63;
     private const int DifferentValue = 64;
+    private const int SampleValue = 63;
 
     [Fact]
     public static void GivenSameValueThenReturnFalse()

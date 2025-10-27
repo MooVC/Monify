@@ -2,15 +2,15 @@ namespace Monify.Console.Classes.Simple.SimpleForArrayTests;
 
 public static class WhenGetHashCodeIsCalled
 {
-    private static readonly int[] FirstValue = new[] { 7, 8, 9 };
-    private static readonly int[] SecondValue = new[] { 10, 11, 12 };
+    private static readonly int[] _firstValue = [7, 8, 9];
+    private static readonly int[] _secondValue = [10, 11, 12];
 
     [Fact]
     public static void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
-        SimpleForArray first = new(FirstValue);
-        SimpleForArray second = new(FirstValue);
+        SimpleForArray first = new(_firstValue);
+        SimpleForArray second = new(_firstValue);
 
         // Act
         int firstHash = first.GetHashCode();
@@ -24,8 +24,8 @@ public static class WhenGetHashCodeIsCalled
     public static void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
-        SimpleForArray first = new(FirstValue);
-        SimpleForArray second = new(SecondValue);
+        SimpleForArray first = new(_firstValue);
+        SimpleForArray second = new(_secondValue);
 
         // Act
         int firstHash = first.GetHashCode();

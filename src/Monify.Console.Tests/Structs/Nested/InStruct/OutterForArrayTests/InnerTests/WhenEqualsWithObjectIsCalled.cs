@@ -2,13 +2,13 @@ namespace Monify.Console.Structs.Nested.InStruct.OutterForArrayTests.InnerTests;
 
 public static class WhenEqualsWithObjectIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenNullThenThrowNullReferenceException()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
         Action act = () => subject.Equals((object?)default);
@@ -21,8 +21,8 @@ public static class WhenEqualsWithObjectIsCalled
     public static void GivenEquivalentOutterForArrayInnerThenReturnTrue()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
-        object other = new OutterForArray<int>.Inner(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
+        object other = new OutterForArray<int>.Inner(_sampleValue);
 
         // Act
         bool actual = subject.Equals(other);
@@ -35,7 +35,7 @@ public static class WhenEqualsWithObjectIsCalled
     public static void GivenDifferentTypeThenThrowInvalidCastException()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
         object other = string.Empty;
 
         // Act

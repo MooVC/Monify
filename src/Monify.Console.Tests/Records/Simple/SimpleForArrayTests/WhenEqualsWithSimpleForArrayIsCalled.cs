@@ -2,15 +2,15 @@ namespace Monify.Console.Records.Simple.SimpleForArrayTests;
 
 public static class WhenEqualsWithSimpleForArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
-    private static readonly int[] DifferentValue = new[] { 4, 5, 6 };
+    private static readonly int[] _differentValue = [4, 5, 6];
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
-        SimpleForArray left = new(SampleValue);
-        SimpleForArray right = new(SampleValue);
+        SimpleForArray left = new(_sampleValue);
+        SimpleForArray right = new(_sampleValue);
 
         // Act
         bool actual = left.Equals(right);
@@ -23,8 +23,8 @@ public static class WhenEqualsWithSimpleForArrayIsCalled
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
-        SimpleForArray left = new(SampleValue);
-        SimpleForArray right = new(DifferentValue);
+        SimpleForArray left = new(_sampleValue);
+        SimpleForArray right = new(_differentValue);
 
         // Act
         bool actual = left.Equals(right);

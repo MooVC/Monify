@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Nested.InInterface.IOutterForArrayTests.InnerTe
 
 public static class WhenToStringIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenValueThenThrowFormatException()
     {
         // Arrange
-        IOutterForArray<int>.Inner subject = new(SampleValue);
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
         Action act = () => subject.ToString();

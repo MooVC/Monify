@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Simple.SimpleForArrayTests;
 
 public static class WhenEqualsWithObjectIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenNullThenReturnFalse()
     {
         // Arrange
-        SimpleForArray subject = new(SampleValue);
+        SimpleForArray subject = new(_sampleValue);
 
         // Act
         bool actual = subject.Equals((object?)default);
@@ -21,8 +21,8 @@ public static class WhenEqualsWithObjectIsCalled
     public static void GivenEquivalentSimpleForArrayThenReturnTrue()
     {
         // Arrange
-        SimpleForArray subject = new(SampleValue);
-        object other = new SimpleForArray(SampleValue);
+        SimpleForArray subject = new(_sampleValue);
+        object other = new SimpleForArray(_sampleValue);
 
         // Act
         bool actual = subject.Equals(other);
@@ -35,7 +35,7 @@ public static class WhenEqualsWithObjectIsCalled
     public static void GivenDifferentTypeThenThrowInvalidCastException()
     {
         // Arrange
-        SimpleForArray subject = new(SampleValue);
+        SimpleForArray subject = new(_sampleValue);
         object other = string.Empty;
 
         // Act

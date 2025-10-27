@@ -2,13 +2,13 @@ namespace Monify.Console.Records.Nested.InRecord.OutterForArrayTests.InnerTests;
 
 public static class WhenToStringIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenValueThenReturnRecordDescription()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
         string actual = subject.ToString();

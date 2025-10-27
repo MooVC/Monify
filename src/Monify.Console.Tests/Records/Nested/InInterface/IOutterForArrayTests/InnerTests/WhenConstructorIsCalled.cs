@@ -2,18 +2,18 @@ namespace Monify.Console.Records.Nested.InInterface.IOutterForArrayTests.InnerTe
 
 public static class WhenConstructorIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenValueThenValueIsStored()
     {
         // Arrange
-        IOutterForArray<int>.Inner instance = new(SampleValue);
+        IOutterForArray<int>.Inner instance = new(_sampleValue);
 
         // Act
         int[] actual = instance;
 
         // Assert
-        actual.ShouldBe(SampleValue);
+        actual.ShouldBe(_sampleValue);
     }
 }

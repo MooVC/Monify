@@ -2,17 +2,17 @@ namespace Monify.Console.Structs.Nested.InRecord.OutterForArrayTests.InnerTests;
 
 public static class WhenEqualsWithIntArrayIsCalled
 {
-    private static readonly int[] SampleValue = new[] { 1, 2, 3 };
-    private static readonly int[] DifferentValue = new[] { 4, 5, 6 };
+    private static readonly int[] _differentValue = [4, 5, 6];
+    private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
-        bool actual = subject.Equals(SampleValue);
+        bool actual = subject.Equals(_sampleValue);
 
         // Assert
         actual.ShouldBeTrue();
@@ -22,10 +22,10 @@ public static class WhenEqualsWithIntArrayIsCalled
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
-        OutterForArray<int>.Inner subject = new(SampleValue);
+        OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
-        bool actual = subject.Equals(DifferentValue);
+        bool actual = subject.Equals(_differentValue);
 
         // Assert
         actual.ShouldBeFalse();
