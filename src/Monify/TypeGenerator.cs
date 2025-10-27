@@ -13,7 +13,7 @@ using Monify.Syntax;
 public sealed class TypeGenerator
     : IIncrementalGenerator
 {
-    private static readonly IStrategy[] strategies = new IStrategy[]
+    private static readonly IStrategy[] _strategies = new IStrategy[]
     {
         new ConstructorStrategy(),
         new ConvertFromStrategy(),
@@ -64,7 +64,7 @@ public sealed class TypeGenerator
             Dictionary<string, string> files = new();
 #endif
 
-            foreach (IStrategy strategy in strategies)
+            foreach (IStrategy strategy in _strategies)
             {
                 IEnumerable<Source> sources = strategy.Generate(subject);
 

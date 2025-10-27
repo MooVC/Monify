@@ -2,18 +2,19 @@ namespace Monify.Console.Structs.Nested.InRecord.OutterForArrayTests.InnerTests;
 
 public static class WhenToStringIsCalled
 {
+    private const string Expected = "Inner { System.Int32[] }";
     private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
-    public static void GivenValueThenThrowFormatException()
+    public static void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
 
         // Act
-        Action act = () => subject.ToString();
+        string result = subject.ToString();
 
         // Assert
-        _ = Should.Throw<FormatException>(act);
+        result.ShouldBe(Expected);
     }
 }

@@ -16,12 +16,12 @@ internal sealed class ToStringStrategy
             yield break;
         }
 
-        string code = $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
+        string code = $$$"""
+            {{{subject.Declaration}}} {{{subject.Qualification}}}
             {
                 public override string ToString()
                 {
-                    return string.Format("{{subject.Name}} { {0} }", {{FieldStrategy.Name}});
+                    return string.Format("{{{subject.Name}}} {{ {0} }}", {{{FieldStrategy.Name}}});
                 }
             }
             """;

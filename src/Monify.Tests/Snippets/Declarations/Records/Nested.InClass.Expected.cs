@@ -397,7 +397,7 @@ internal static partial class Nested
                         {
                             public override string ToString()
                             {
-                                return string.Format("Inner { {0} }", _value);
+                                return string.Format("Inner {{ {0} }}", _value);
                             }
                         }
                     }

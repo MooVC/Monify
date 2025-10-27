@@ -2,18 +2,19 @@ namespace Monify.Console.Structs.Nested.InInterface.IOutterForIntTests.InnerTest
 
 public static class WhenToStringIsCalled
 {
+    private const string Expected = "Inner { 42 }";
     private const int SampleValue = 42;
 
     [Fact]
-    public static void GivenValueThenThrowFormatException()
+    public static void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         IOutterForInt<int>.Inner subject = new(SampleValue);
 
         // Act
-        Action act = () => subject.ToString();
+        string result = subject.ToString();
 
         // Assert
-        _ = Should.Throw<FormatException>(act);
+        result.ShouldBe(Expected);
     }
 }
