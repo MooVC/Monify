@@ -48,6 +48,22 @@ public static class WhenEqualityOperatorWithOutterForStringInnerIsCalled
     }
 
     [Fact]
+    public static void GivenEquivalentValuesThenReturnTrue()
+    {
+        // Arrange
+        string leftValue = new(SampleValue.ToCharArray());
+        string rightValue = new(SampleValue.ToCharArray());
+        OutterForString<int>.Inner left = new(leftValue);
+        OutterForString<int>.Inner right = new(rightValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange

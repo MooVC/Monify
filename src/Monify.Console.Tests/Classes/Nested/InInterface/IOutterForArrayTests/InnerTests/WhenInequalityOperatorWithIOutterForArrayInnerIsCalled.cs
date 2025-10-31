@@ -20,6 +20,22 @@ public static class WhenInequalityOperatorWithIOutterForArrayInnerIsCalled
     }
 
     [Fact]
+    public static void GivenEquivalentValuesThenReturnFalse()
+    {
+        // Arrange
+        int[] leftValues = [1, 2, 3];
+        int[] rightValues = [1, 2, 3];
+        IOutterForArray<int>.Inner left = new(leftValues);
+        IOutterForArray<int>.Inner right = new(rightValues);
+
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange

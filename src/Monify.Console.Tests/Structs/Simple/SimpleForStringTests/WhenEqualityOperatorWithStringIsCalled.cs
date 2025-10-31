@@ -32,6 +32,21 @@ public static class WhenEqualityOperatorWithStringIsCalled
     }
 
     [Fact]
+    public static void GivenEquivalentValueThenReturnTrue()
+    {
+        // Arrange
+        string subjectValue = new(SampleValue.ToCharArray());
+        string comparisonValue = new(SampleValue.ToCharArray());
+        SimpleForString subject = new(subjectValue);
+
+        // Act
+        bool actual = subject == comparisonValue;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
