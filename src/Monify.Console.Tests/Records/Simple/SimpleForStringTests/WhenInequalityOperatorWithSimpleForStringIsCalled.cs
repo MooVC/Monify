@@ -20,6 +20,22 @@ public static class WhenInequalityOperatorWithSimpleForStringIsCalled
     }
 
     [Fact]
+    public static void GivenEquivalentValuesThenReturnFalse()
+    {
+        // Arrange
+        string leftValue = new string(SampleValue.ToCharArray());
+        string rightValue = new string(SampleValue.ToCharArray());
+        SimpleForString left = new(leftValue);
+        SimpleForString right = new(rightValue);
+
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange

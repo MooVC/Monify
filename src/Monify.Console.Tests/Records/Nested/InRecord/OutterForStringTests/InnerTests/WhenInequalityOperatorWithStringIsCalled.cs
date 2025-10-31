@@ -32,6 +32,21 @@ public static class WhenInequalityOperatorWithStringIsCalled
     }
 
     [Fact]
+    public static void GivenEquivalentValueThenReturnFalse()
+    {
+        // Arrange
+        string subjectValue = new string(SampleValue.ToCharArray());
+        string comparisonValue = new string(SampleValue.ToCharArray());
+        OutterForString<int>.Inner subject = new(subjectValue);
+
+        // Act
+        bool actual = subject != comparisonValue;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenDifferentValueThenReturnTrue()
     {
         // Arrange

@@ -48,6 +48,22 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
     }
 
     [Fact]
+    public static void GivenEquivalentValuesThenReturnFalse()
+    {
+        // Arrange
+        int[] leftValues = [1, 2, 3];
+        int[] rightValues = [1, 2, 3];
+        SimpleForArray left = new(leftValues);
+        SimpleForArray right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
