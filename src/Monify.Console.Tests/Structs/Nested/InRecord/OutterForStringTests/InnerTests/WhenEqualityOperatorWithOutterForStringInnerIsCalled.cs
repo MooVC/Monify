@@ -51,8 +51,8 @@ public static class WhenEqualityOperatorWithOutterForStringInnerIsCalled
     public static void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
-        string leftValue = new string(SampleValue.ToCharArray());
-        string rightValue = new string(SampleValue.ToCharArray());
+        string leftValue = new(SampleValue.ToCharArray());
+        string rightValue = new(SampleValue.ToCharArray());
         OutterForString<int>.Inner left = new(leftValue);
         OutterForString<int>.Inner right = new(rightValue);
 

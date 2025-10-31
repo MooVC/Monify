@@ -35,8 +35,8 @@ public static class WhenInequalityOperatorWithStringIsCalled
     public static void GivenEquivalentValueThenReturnFalse()
     {
         // Arrange
-        string subjectValue = new string(SampleValue.ToCharArray());
-        string comparisonValue = new string(SampleValue.ToCharArray());
+        string subjectValue = new(SampleValue.ToCharArray());
+        string comparisonValue = new(SampleValue.ToCharArray());
         SimpleForString subject = new(subjectValue);
 
         // Act

@@ -23,8 +23,8 @@ public static class WhenInequalityOperatorWithSimpleForStringIsCalled
     public static void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
-        string leftValue = new string(SampleValue.ToCharArray());
-        string rightValue = new string(SampleValue.ToCharArray());
+        string leftValue = new(SampleValue.ToCharArray());
+        string rightValue = new(SampleValue.ToCharArray());
         SimpleForString left = new(leftValue);
         SimpleForString right = new(rightValue);
 

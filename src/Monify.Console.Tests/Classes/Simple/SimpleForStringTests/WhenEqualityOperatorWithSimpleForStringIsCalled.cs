@@ -51,8 +51,8 @@ public static class WhenEqualityOperatorWithSimpleForStringIsCalled
     public static void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
-        string leftValue = new string(SampleValue.ToCharArray());
-        string rightValue = new string(SampleValue.ToCharArray());
+        string leftValue = new(SampleValue.ToCharArray());
+        string rightValue = new(SampleValue.ToCharArray());
         SimpleForString left = new(leftValue);
         SimpleForString right = new(rightValue);
 
