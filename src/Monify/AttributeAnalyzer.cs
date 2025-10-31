@@ -216,7 +216,7 @@ public sealed class AttributeAnalyzer
 
     private static bool IsViolatingCapturesStateRule(INamedTypeSymbol? symbol, ITypeSymbol? value)
     {
-        return symbol is null || value is null || !symbol.IsStateless(value, out _);
+        return symbol is null || !symbol.IsStateless(value, out _);
     }
 
     private static bool IsViolatingCompatibleTargetTypeRule(AttributeSyntax attribute, out TypeDeclarationSyntax? type)

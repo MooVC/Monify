@@ -29,7 +29,7 @@ internal static partial class INamedTypeSymbolExtensions
     /// <remarks>
     /// If the class holds state, then it points to a design issue, as the class is intended to represent a single state.
     /// </remarks>
-    public static bool IsStateless(this INamedTypeSymbol subject, ITypeSymbol value, out bool hasFieldForEncapsulatedValue)
+    public static bool IsStateless(this INamedTypeSymbol subject, ITypeSymbol? value, out bool hasFieldForEncapsulatedValue)
     {
         IFieldSymbol[] fields = subject
             .GetMembers()
@@ -44,7 +44,7 @@ internal static partial class INamedTypeSymbolExtensions
             return true;
         }
 
-        if (fields.Length == ExpectedFieldsWhenFieldIsAlreadyDefined)
+        if (value is not null && fields.Length == ExpectedFieldsWhenFieldIsAlreadyDefined)
         {
             IFieldSymbol field = fields[OffsetForFieldWhenAlreadyDefined];
 
