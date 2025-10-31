@@ -65,6 +65,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rules", "Rules", "{DF5E2435
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monify.Tests", "src\Monify.Tests\Monify.Tests.csproj", "{9C2086AB-647E-485E-A964-A4A383354230}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monify.Console", "src\Monify.Console\Monify.Console.csproj", "{8EC2148F-0491-4116-AC04-C4A0AD013C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monify.Console.Tests", "src\Monify.Console.Tests\Monify.Console.Tests.csproj", "{5EE36FF0-4AA4-4EB1-A6C9-9FE144B1D4FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +83,14 @@ Global
 		{9C2086AB-647E-485E-A964-A4A383354230}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2086AB-647E-485E-A964-A4A383354230}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2086AB-647E-485E-A964-A4A383354230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EC2148F-0491-4116-AC04-C4A0AD013C82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC2148F-0491-4116-AC04-C4A0AD013C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC2148F-0491-4116-AC04-C4A0AD013C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC2148F-0491-4116-AC04-C4A0AD013C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE36FF0-4AA4-4EB1-A6C9-9FE144B1D4FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE36FF0-4AA4-4EB1-A6C9-9FE144B1D4FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE36FF0-4AA4-4EB1-A6C9-9FE144B1D4FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE36FF0-4AA4-4EB1-A6C9-9FE144B1D4FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

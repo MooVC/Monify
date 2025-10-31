@@ -7,9 +7,11 @@ using Monify.Snippets.Declarations;
 
 public sealed class WhenExecuted
 {
-    private static readonly Type[] generators =
+    private static readonly Type[] _generators =
     [
         typeof(AttributeGenerator),
+        typeof(HashCodeGenerator),
+        typeof(SequenceEqualityComparerGenerator),
         typeof(TypeGenerator),
     ];
 
@@ -18,10 +20,12 @@ public sealed class WhenExecuted
     public async Task GivenATypeTheExpectedSourceIsGenerated(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange
-        var test = new GeneratorTest<TypeGenerator>(assembly, language, generators);
+        var test = new GeneratorTest<TypeGenerator>(assembly, language, _generators);
 
         Attributes.IsExpectedIn(test.TestState, language);
         expectations.IsDeclaredIn(test.TestState);
+        Internal.HashCode.IsExpectedIn(test.TestState);
+        Internal.SequenceEqualityComparer.IsExpectedIn(test.TestState);
 
         // Act
         Func<Task> act = () => test.RunAsync();

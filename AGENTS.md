@@ -30,6 +30,7 @@ The project enforces strong C# coding conventions through `.editorconfig`, [Styl
 - Use `var` for local variables when the type is clear from the right-hand side.
 - Use `nameof` for member names in exceptions and logging.
 - Use `string.Empty` instead of `""` for empty strings.
+- When possible, place declarations in alphabetical order (e.g. fields, parameters, properties, methods).
 
 ### Unit Testing Conventions
 

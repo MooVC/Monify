@@ -276,7 +276,7 @@ internal static partial class Simple
                 {
                     public override int GetHashCode()
                     {
-                        return _value.GetHashCode();
+                        return global::Monify.Internal.HashCode.Combine(_value);
                     }
                 }
 
@@ -357,7 +357,7 @@ internal static partial class Simple
                 {
                     public override string ToString()
                     {
-                        return string.Format("Simple { {0} }", _value);
+                        return string.Format("Simple {{ {0} }}", _value);
                     }
                 }
 

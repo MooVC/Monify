@@ -7,11 +7,11 @@ using Microsoft.CodeAnalysis;
 /// </summary>
 internal static partial class ISymbolExtensions
 {
-    private static readonly SymbolDisplayFormat fullyQualifiedFormat = new(
+    private static readonly SymbolDisplayFormat _fullyQualifiedFormat = new(
         typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
         genericsOptions: SymbolDisplayGenericsOptions.None);
 
-    private static readonly SymbolDisplayFormat minimallyQualifiedFormat = new(
+    private static readonly SymbolDisplayFormat _minimallyQualifiedFormat = new(
         typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
         genericsOptions: SymbolDisplayGenericsOptions.None);
 
@@ -35,12 +35,12 @@ internal static partial class ISymbolExtensions
 
         bool IsGlobal()
         {
-            return subject.ContainingNamespace.IsGlobalNamespace && subject.ToDisplayString(minimallyQualifiedFormat) == name;
+            return subject.ContainingNamespace.IsGlobalNamespace && subject.ToDisplayString(_minimallyQualifiedFormat) == name;
         }
 
         bool IsQualified()
         {
-            string name = subject.ToDisplayString(fullyQualifiedFormat);
+            string name = subject.ToDisplayString(_fullyQualifiedFormat);
 
             return name == qualifiedName || name == fullyQualifiedName || name == globalQualifiedName;
         }
