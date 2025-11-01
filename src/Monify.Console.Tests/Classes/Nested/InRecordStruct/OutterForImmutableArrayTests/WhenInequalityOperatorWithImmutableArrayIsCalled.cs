@@ -45,4 +45,18 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
+    [Fact]
+    public static void GivenUninitializedValuesThenReturnFalse()
+    {
+        // Arrange
+        ImmutableArray<string> values = default;
+        OutterForImmutableArray<int>.Inner subject = new(values);
+
+        // Act
+        bool actual = subject != values;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
 }

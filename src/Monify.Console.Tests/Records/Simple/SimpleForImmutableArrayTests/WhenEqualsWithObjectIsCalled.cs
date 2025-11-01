@@ -46,4 +46,19 @@ public static class WhenEqualsWithObjectIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
+    [Fact]
+    public static void GivenUninitializedValuesThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> values = default;
+        SimpleForImmutableArray subject = new(values);
+        object other = new SimpleForImmutableArray(values);
+
+        // Act
+        bool actual = subject.Equals(other);
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
 }

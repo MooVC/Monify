@@ -32,4 +32,18 @@ public static class WhenEqualsWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
+    [Fact]
+    public static void GivenUninitializedValuesThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> values = default;
+        OutterForImmutableArray<int>.Inner subject = new(values);
+
+        // Act
+        bool actual = subject.Equals(values);
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
 }

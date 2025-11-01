@@ -34,4 +34,20 @@ public static class WhenEqualsWithIOutterForImmutableArrayInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
+    [Fact]
+    public static void GivenUninitializedValuesThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = default;
+        ImmutableArray<string> rightValues = default;
+        IOutterForImmutableArray<int>.Inner left = new(leftValues);
+        IOutterForImmutableArray<int>.Inner right = new(rightValues);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
 }

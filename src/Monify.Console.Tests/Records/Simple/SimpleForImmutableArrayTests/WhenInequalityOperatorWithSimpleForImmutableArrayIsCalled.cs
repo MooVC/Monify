@@ -50,4 +50,20 @@ public static class WhenInequalityOperatorWithSimpleForImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
+    [Fact]
+    public static void GivenUninitializedValuesThenReturnFalse()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = default;
+        ImmutableArray<string> rightValues = default;
+        SimpleForImmutableArray left = new(leftValues);
+        SimpleForImmutableArray right = new(rightValues);
+
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
 }

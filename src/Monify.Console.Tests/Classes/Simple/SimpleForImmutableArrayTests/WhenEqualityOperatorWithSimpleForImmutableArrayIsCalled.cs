@@ -78,4 +78,20 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
+    [Fact]
+    public static void GivenUninitializedValuesThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = default;
+        ImmutableArray<string> rightValues = default;
+        SimpleForImmutableArray left = new(leftValues);
+        SimpleForImmutableArray right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
 }

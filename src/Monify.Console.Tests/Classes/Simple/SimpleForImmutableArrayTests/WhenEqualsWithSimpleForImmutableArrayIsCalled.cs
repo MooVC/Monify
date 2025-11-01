@@ -22,6 +22,22 @@ public static class WhenEqualsWithSimpleForImmutableArrayIsCalled
     }
 
     [Fact]
+    public static void GivenUninitializedValuesThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = default;
+        ImmutableArray<string> rightValues = default;
+        SimpleForImmutableArray left = new(leftValues);
+        SimpleForImmutableArray right = new(rightValues);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
