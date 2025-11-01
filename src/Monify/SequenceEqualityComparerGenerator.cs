@@ -23,13 +23,13 @@ public sealed class SequenceEqualityComparerGenerator
 
             internal sealed class SequenceEqualityComparer
             {
-                private static readonly IEnumerable EmptyEnumerable = new object[0];
-                private static readonly ConcurrentDictionary<Type, Lazy<PropertyInfo>> ImmutableArrayIsDefaultProperties = new ConcurrentDictionary<Type, Lazy<PropertyInfo>>();
+                public static readonly SequenceEqualityComparer Default = new SequenceEqualityComparer();
 
                 private const string ImmutableArrayGenericTypeFullName = "System.Collections.Immutable.ImmutableArray`1";
                 private const string ImmutableArrayIsDefaultPropertyName = "IsDefault";
 
-                public static readonly SequenceEqualityComparer Default = new SequenceEqualityComparer();
+                private static readonly IEnumerable EmptyEnumerable = new object[0];
+                private static readonly ConcurrentDictionary<Type, PropertyInfo> Properties = new ConcurrentDictionary<Type, PropertyInfo>();
 
                 public bool Equals(IEnumerable left, IEnumerable right)
                 {
@@ -68,13 +68,7 @@ public sealed class SequenceEqualityComparerGenerator
                 {
                     Type enumerableType = enumerable.GetType();
 
-                    if (!enumerableType.IsValueType)
-                    {
-                        // ImmutableArray<T> is implemented as a struct, so any reference type can be skipped early.
-                        return false;
-                    }
-
-                    if (!enumerableType.IsGenericType)
+                    if (!(enumerableType.IsValueType && enumerableType.IsGenericType))
                     {
                         return false;
                     }
@@ -100,18 +94,9 @@ public sealed class SequenceEqualityComparerGenerator
 
                 private static PropertyInfo GetImmutableArrayIsDefaultProperty(Type immutableArrayType)
                 {
-                    Lazy<PropertyInfo> propertyInfo = ImmutableArrayIsDefaultProperties.GetOrAdd(
+                    return Properties.GetOrAdd(
                         immutableArrayType,
-                        delegate(Type key)
-                        {
-                            return new Lazy<PropertyInfo>(
-                                delegate
-                                {
-                                    return key.GetProperty(ImmutableArrayIsDefaultPropertyName);
-                                });
-                        });
-
-                    return propertyInfo.Value;
+                        immutableArrayType.GetProperty(ImmutableArrayIsDefaultPropertyName));
                 }
 
                 private static bool Equals(IEnumerator left, IEnumerator right)
