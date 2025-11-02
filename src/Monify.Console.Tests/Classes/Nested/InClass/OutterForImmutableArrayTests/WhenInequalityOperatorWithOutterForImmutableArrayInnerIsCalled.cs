@@ -38,6 +38,21 @@ public static class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCall
     }
 
     [Fact]
+    public static void GivenDefaultValueThenReturnFalse()
+    {
+        // Arrange
+        ImmutableArray<string> defaultValue = default;
+        OutterForImmutableArray<int>.Inner left = new(defaultValue);
+        OutterForImmutableArray<int>.Inner right = new(ImmutableArray<string>.Empty);
+
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange

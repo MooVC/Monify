@@ -34,6 +34,20 @@ public static class WhenEqualityOperatorWithImmutableArrayIsCalled
     }
 
     [Fact]
+    public static void GivenDefaultValueThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> defaultValue = default;
+        SimpleForImmutableArray subject = new(defaultValue);
+
+        // Act
+        bool actual = subject == ImmutableArray<string>.Empty;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange

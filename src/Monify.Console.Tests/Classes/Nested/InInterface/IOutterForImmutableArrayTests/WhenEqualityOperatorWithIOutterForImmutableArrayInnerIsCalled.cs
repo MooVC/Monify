@@ -66,6 +66,21 @@ public static class WhenEqualityOperatorWithIOutterForImmutableArrayInnerIsCalle
     }
 
     [Fact]
+    public static void GivenDefaultValueThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> defaultValue = default;
+        IOutterForImmutableArray<int>.Inner left = new(defaultValue);
+        IOutterForImmutableArray<int>.Inner right = new(ImmutableArray<string>.Empty);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
