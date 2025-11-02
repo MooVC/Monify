@@ -33,4 +33,21 @@ public sealed class WhenGenerateIsCalled
         source.Hint.ShouldBe(ConstructorStrategy.Name);
         source.Code.ShouldContain("public Sample(int value)");
     }
+
+    [Fact]
+    public void GivenSubjectWhenValueIsImmutableArrayThenDefaultIsReplaced()
+    {
+        // Arrange
+        Subject subject = TestSubject.Create();
+        subject.IsImmutableArray = true;
+        subject.Value = "global::System.Collections.Immutable.ImmutableArray<int>";
+        var strategy = new ConstructorStrategy();
+
+        // Act
+        Source source = strategy.Generate(subject).Single();
+
+        // Assert
+        source.Code.ShouldContain("if (value.IsDefault)");
+        source.Code.ShouldContain("value = global::System.Collections.Immutable.ImmutableArray<int>.Empty;");
+    }
 }

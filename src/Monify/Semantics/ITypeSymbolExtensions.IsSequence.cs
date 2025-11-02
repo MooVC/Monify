@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 /// <summary>
 /// Provides extensions relating to <see cref="ITypeSymbol"/>.
 /// </summary>
-internal static class ITypeSymbolExtensions
+internal static partial class ITypeSymbolExtensions
 {
     /// <summary>
     /// Determines whether or not the <paramref name="type"/> represents a sequence.

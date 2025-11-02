@@ -147,6 +147,14 @@ internal sealed partial class Subject
     public bool IsGlobal => string.IsNullOrEmpty(Namespace);
 
     /// <summary>
+    /// Gets or sets a value indicating whether or not the encapsulated type represents an <c>ImmutableArray&lt;T&gt;</c>.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the encapsulated type represents an <c>ImmutableArray&lt;T&gt;</c>.
+    /// </value>
+    public bool IsImmutableArray { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether or not the encapsulated type is deemed to be a sequence.
     /// </summary>
     /// <value>

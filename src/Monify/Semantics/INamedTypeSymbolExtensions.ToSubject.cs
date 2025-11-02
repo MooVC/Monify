@@ -64,6 +64,7 @@ internal static partial class INamedTypeSymbolExtensions
             HasInequalityOperatorForValue = subject.HasInequalityOperator(type: value),
             IsEquatableToSelf = subject.IsEquatable(compilation),
             IsEquatableToValue = subject.IsEquatable(compilation, type: value),
+            IsImmutableArray = value.IsImmutableArray(),
             IsSequence = value.IsSequence(),
             Name = subject.Name,
             Namespace = @namespace,

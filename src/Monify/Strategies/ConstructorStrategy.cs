@@ -21,15 +21,37 @@ internal sealed class ConstructorStrategy
             yield break;
         }
 
-        string code = $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
-            {
-                public {{subject.Name}}({{subject.Value}} value)
+        string code;
+
+        if (subject.IsImmutableArray)
+        {
+            code = $$"""
+                {{subject.Declaration}} {{subject.Qualification}}
                 {
-                    {{FieldStrategy.Name}} = value;
+                    public {{subject.Name}}({{subject.Value}} value)
+                    {
+                        if (value.IsDefault)
+                        {
+                            value = {{subject.Value}}.Empty;
+                        }
+
+                        {{FieldStrategy.Name}} = value;
+                    }
                 }
-            }
-            """;
+                """;
+        }
+        else
+        {
+            code = $$"""
+                {{subject.Declaration}} {{subject.Qualification}}
+                {
+                    public {{subject.Name}}({{subject.Value}} value)
+                    {
+                        {{FieldStrategy.Name}} = value;
+                    }
+                }
+                """;
+        }
 
         yield return new Source(code, Name);
     }
