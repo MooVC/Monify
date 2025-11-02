@@ -27,9 +27,10 @@ public sealed class SequenceEqualityComparerGenerator
 
                 private const string ImmutableArrayGenericTypeFullName = "System.Collections.Immutable.ImmutableArray`1";
                 private const string ImmutableArrayIsDefaultPropertyName = "IsDefault";
+                private const string ImmutableArrayEmptyPropertyName = "Empty";
 
-                private static readonly IEnumerable EmptyEnumerable = new object[0];
-                private static readonly ConcurrentDictionary<Type, PropertyInfo> Properties = new ConcurrentDictionary<Type, PropertyInfo>();
+                private static readonly ConcurrentDictionary<Type, PropertyInfo> IsDefaultProperties = new ConcurrentDictionary<Type, PropertyInfo>();
+                private static readonly ConcurrentDictionary<Type, PropertyInfo> EmptyProperties = new ConcurrentDictionary<Type, PropertyInfo>();
 
                 public bool Equals(IEnumerable left, IEnumerable right)
                 {
@@ -38,7 +39,7 @@ public sealed class SequenceEqualityComparerGenerator
                         return true;
                     }
 
-                    if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+                    if (left is null || right is null)
                     {
                         return false;
                     }
@@ -56,16 +57,44 @@ public sealed class SequenceEqualityComparerGenerator
 
                 private static IEnumerator TryGetEnumerator(IEnumerable enumerable)
                 {
-                    if (IsDefaultImmutableArray(enumerable))
+                    if (IsDefaultImmutableArray(enumerable, out IEnumerable emptyImmutableArray))
                     {
-                        return EmptyEnumerable.GetEnumerator();
+                        return emptyImmutableArray.GetEnumerator();
                     }
 
                     return enumerable.GetEnumerator();
                 }
 
-                private static bool IsDefaultImmutableArray(IEnumerable enumerable)
+                private static bool IsDefaultImmutableArray(IEnumerable enumerable, out IEnumerable emptyImmutableArray)
                 {
+                    emptyImmutableArray = default;
+
+                    if (!TryGetImmutableArrayElementType(enumerable, out Type elementType))
+                    {
+                        return false;
+                    }
+
+                    if (!TryGetIsDefault(enumerable, out bool isDefault) || !isDefault)
+                    {
+                        return false;
+                    }
+
+                    if (!TryGetEmptyImmutableArray(enumerable.GetType(), out IEnumerable empty))
+                    {
+                        emptyImmutableArray = Array.Empty<object>();
+
+                        return true;
+                    }
+
+                    emptyImmutableArray = empty;
+
+                    return true;
+                }
+
+                private static bool TryGetImmutableArrayElementType(IEnumerable enumerable, out Type elementType)
+                {
+                    elementType = default;
+
                     Type enumerableType = enumerable.GetType();
 
                     if (!(enumerableType.IsValueType && enumerableType.IsGenericType))
@@ -73,30 +102,84 @@ public sealed class SequenceEqualityComparerGenerator
                         return false;
                     }
 
-                    Type immutableArrayType = enumerableType.GetGenericTypeDefinition();
+                    Type genericTypeDefinition = enumerableType.GetGenericTypeDefinition();
 
-                    if (!string.Equals(immutableArrayType.FullName, ImmutableArrayGenericTypeFullName, StringComparison.Ordinal))
+                    if (!string.Equals(genericTypeDefinition.FullName, ImmutableArrayGenericTypeFullName, StringComparison.Ordinal))
                     {
                         return false;
                     }
 
+                    Type[] arguments = enumerableType.GetGenericArguments();
+
+                    if (arguments.Length != 1)
+                    {
+                        return false;
+                    }
+
+                    elementType = arguments[0];
+
+                    return true;
+                }
+
+                private static bool TryGetIsDefault(IEnumerable enumerable, out bool isDefault)
+                {
+                    isDefault = false;
+
+                    Type enumerableType = enumerable.GetType();
                     PropertyInfo isDefaultProperty = GetImmutableArrayIsDefaultProperty(enumerableType);
 
-                    if (isDefaultProperty == null)
+                    if (isDefaultProperty is null)
                     {
                         return false;
                     }
 
-                    object isDefaultValue = isDefaultProperty.GetValue(enumerable, null);
+                    object value = isDefaultProperty.GetValue(enumerable, default);
 
-                    return isDefaultValue is bool && (bool)isDefaultValue;
+                    if (!(value is bool flag))
+                    {
+                        return false;
+                    }
+
+                    isDefault = flag;
+
+                    return true;
+                }
+
+                private static bool TryGetEmptyImmutableArray(Type constructedImmutableArrayType, out IEnumerable emptyImmutableArray)
+                {
+                    emptyImmutableArray = default;
+
+                    PropertyInfo emptyProperty = GetImmutableArrayEmptyProperty(constructedImmutableArrayType);
+
+                    if (emptyProperty is null)
+                    {
+                        return false;
+                    }
+
+                    object value = emptyProperty.GetValue(default, default);
+
+                    if (!(value is IEnumerable sequence))
+                    {
+                        return false;
+                    }
+
+                    emptyImmutableArray = sequence;
+
+                    return true;
                 }
 
                 private static PropertyInfo GetImmutableArrayIsDefaultProperty(Type immutableArrayType)
                 {
-                    return Properties.GetOrAdd(
+                    return IsDefaultProperties.GetOrAdd(
                         immutableArrayType,
-                        immutableArrayType.GetProperty(ImmutableArrayIsDefaultPropertyName));
+                        type => type.GetProperty(ImmutableArrayIsDefaultPropertyName));
+                }
+
+                private static PropertyInfo GetImmutableArrayEmptyProperty(Type constructedImmutableArrayType)
+                {
+                    return EmptyProperties.GetOrAdd(
+                        constructedImmutableArrayType,
+                        type => type.GetProperty(ImmutableArrayEmptyPropertyName, BindingFlags.Public | BindingFlags.Static));
                 }
 
                 private static bool Equals(IEnumerator left, IEnumerator right)
@@ -107,13 +190,13 @@ public sealed class SequenceEqualityComparerGenerator
                         {
                             return false;
                         }
-        
-                        if (!Equals(left.Current, right.Current))
+
+                        if (!object.Equals(left.Current, right.Current))
                         {
                             return false;
                         }
                     }
-        
+
                     return !right.MoveNext();
                 }
             }
