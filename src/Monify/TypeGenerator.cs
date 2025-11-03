@@ -86,18 +86,16 @@ public sealed class TypeGenerator
 
     private static string GetEqualityOperator(Subject subject)
     {
-        if (IsImmutableArray(subject.Value))
-        {
-            return $$"""
-                {{FieldStrategy.Name}}.IsDefault
-                    ? other.IsDefault
-                    : !other.IsDefault && global::Monify.Internal.SequenceEqualityComparer.Default.Equals({{FieldStrategy.Name}}, other)
-                """;
-        }
-
         if (subject.IsSequence)
         {
-            return $"global::Monify.Internal.SequenceEqualityComparer.Default.Equals({FieldStrategy.Name}, other)";
+            string check = $"global::Monify.Internal.SequenceEqualityComparer.Default.Equals({FieldStrategy.Name}, other)";
+
+            if (IsImmutableArray(subject.Value))
+            {
+                check = $"{FieldStrategy.Name}.IsDefault ? other.IsDefault : !other.IsDefault && {check}";
+            }
+
+            return check;
         }
 
         return $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)";
