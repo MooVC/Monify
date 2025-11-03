@@ -1,5 +1,6 @@
 ﻿namespace Monify;
 
+using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Monify.Model;
@@ -85,12 +86,26 @@ public sealed class TypeGenerator
 
     private static string GetEqualityOperator(Subject subject)
     {
+        if (IsImmutableArray(subject.Value))
+        {
+            return $$"""
+                {{FieldStrategy.Name}}.IsDefault
+                    ? other.IsDefault
+                    : !other.IsDefault && global::Monify.Internal.SequenceEqualityComparer.Default.Equals({{FieldStrategy.Name}}, other)
+                """;
+        }
+
         if (subject.IsSequence)
         {
             return $"global::Monify.Internal.SequenceEqualityComparer.Default.Equals({FieldStrategy.Name}, other)";
         }
 
         return $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)";
+    }
+
+    private static bool IsImmutableArray(string value)
+    {
+        return value.StartsWith("global::System.Collections.Immutable.ImmutableArray<", StringComparison.Ordinal);
     }
 
     private static string GetHint(Source source, Subject subject)
