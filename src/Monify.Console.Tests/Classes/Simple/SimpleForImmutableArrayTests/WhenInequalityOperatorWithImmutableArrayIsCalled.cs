@@ -21,6 +21,20 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
     }
 
     [Fact]
+    public static void GivenDefaultValueThenReturnFalse()
+    {
+        // Arrange
+        ImmutableArray<string> value = default;
+        SimpleForImmutableArray subject = new(value);
+
+        // Act
+        bool actual = subject != value;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
