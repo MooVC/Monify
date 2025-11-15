@@ -22,7 +22,7 @@ internal sealed class ConvertToStrategy
 
             string hint = index == 0
                 ? "ConvertTo"
-                : $"ConvertTo.Nested.{index - 1}";
+                : $"ConvertTo.Nested.Level{index:D2}";
 
             yield return new Source(CreateConversion(subject, conversion.Type), hint);
         }

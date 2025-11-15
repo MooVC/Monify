@@ -1,6 +1,5 @@
 namespace Monify;
 
-using System.Collections.Immutable;
 using Monify.Model;
 
 internal static class TestSubject
@@ -9,10 +8,7 @@ internal static class TestSubject
     {
         return new()
         {
-            Conversions = ImmutableArray.Create(new Conversion
-            {
-                Type = "int",
-            }),
+            Conversions = [new Conversion { Type = "int" }],
             Declaration = "class",
             Name = "Sample",
             Namespace = string.Empty,

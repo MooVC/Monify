@@ -10,11 +10,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Conversions = ImmutableArray.Create(new Conversion
-        {
-            HasConversionFrom = true,
-            Type = "int",
-        });
+        subject.Conversions = [new Conversion { HasConversionFrom = true, Type = "int" }];
         var strategy = new ConvertFromStrategy();
 
         // Act
@@ -44,9 +40,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Conversions = ImmutableArray.Create(
-            new Conversion { Type = "int" },
-            new Conversion { Type = "string" });
+        subject.Conversions = [new Conversion { Type = "int" }, new Conversion { Type = "string" }];
         var strategy = new ConvertFromStrategy();
 
         // Act

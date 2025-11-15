@@ -52,7 +52,7 @@ public sealed class WhenToSubjectIsCalled
             MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
         ];
 
-        CSharpCompilation compilation = CSharpCompilation.Create(
+        var compilation = CSharpCompilation.Create(
             "Sample",
             trees,
             references,
@@ -61,14 +61,14 @@ public sealed class WhenToSubjectIsCalled
         SemanticModel model = compilation.GetSemanticModel(trees[1]);
         INamedTypeSymbol? outer = compilation.GetTypeByMetadataName("Sample.Outer");
 
-        outer.ShouldNotBeNull();
+        _ = outer.ShouldNotBeNull();
         outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        Subject? subject = outer.ToSubject(compilation, ImmutableArray<Nesting>.Empty, value);
+        var subject = outer.ToSubject(compilation, [], value);
 
         // Assert
-        subject.ShouldNotBeNull();
+        _ = subject.ShouldNotBeNull();
         subject!.Conversions.Length.ShouldBe(2);
         subject.Conversions[0].Type.ShouldBe("global::Sample.Inner");
         subject.Conversions[0].HasConversionFrom.ShouldBeFalse();
@@ -122,7 +122,7 @@ public sealed class WhenToSubjectIsCalled
             MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
         ];
 
-        CSharpCompilation compilation = CSharpCompilation.Create(
+        var compilation = CSharpCompilation.Create(
             "Sample",
             trees,
             references,
@@ -131,14 +131,14 @@ public sealed class WhenToSubjectIsCalled
         SemanticModel model = compilation.GetSemanticModel(trees[1]);
         INamedTypeSymbol? outer = compilation.GetTypeByMetadataName("Sample.Outer");
 
-        outer.ShouldNotBeNull();
+        _ = outer.ShouldNotBeNull();
         outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        Subject? subject = outer.ToSubject(compilation, ImmutableArray<Nesting>.Empty, value);
+        var subject = outer.ToSubject(compilation, [], value);
 
         // Assert
-        subject.ShouldNotBeNull();
+        _ = subject.ShouldNotBeNull();
         subject!.Conversions.Length.ShouldBe(1);
         subject.Conversions[0].Type.ShouldBe("global::Sample.Inner");
         subject.Conversions[0].HasConversionFrom.ShouldBeFalse();

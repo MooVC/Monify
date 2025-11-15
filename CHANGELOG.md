@@ -4,14 +4,10 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.2.0] - TBC
 
 ### Added
-- Documented how nested wrappers gain implicit conversions while Monify guards against circular references (#34).
-- Added console demo wrappers and tests that exercise the nested conversion chain end-to-end (#34).
-
-### Fixed
-- Prevented circular conversion discovery loops by halting nested conversion traversal once a wrapper type repeats, ensuring mutually-referencing types no longer generate ambiguous operators (#34).
+- When the encapsulated type is for a type that also uses `Monify`, implicit conversion operators to enable conversion directly to the nested encapsulated type (#34).
 
 # [1.1.4] - 2025-11-03
 
