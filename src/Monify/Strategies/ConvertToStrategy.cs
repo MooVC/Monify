@@ -11,21 +11,33 @@ internal sealed class ConvertToStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (subject.HasConversionTo)
+        for (int index = 0; index < subject.Conversions.Length; index++)
         {
-            yield break;
-        }
+            Conversion conversion = subject.Conversions[index];
 
-        string code = $$"""
+            if (conversion.HasConversionTo)
+            {
+                continue;
+            }
+
+            string hint = index == 0
+                ? "ConvertTo"
+                : $"ConvertTo.Nested.{index - 1}";
+
+            yield return new Source(CreateConversion(subject, conversion.Type), hint);
+        }
+    }
+
+    private static string CreateConversion(Subject subject, string value)
+    {
+        return $$"""
             {{subject.Declaration}} {{subject.Qualification}}
             {
-                public static implicit operator {{subject.Qualification}}({{subject.Value}} value)
+                public static implicit operator {{subject.Qualification}}({{value}} value)
                 {
                     return new {{subject.Qualification}}(value);
                 }
             }
             """;
-
-        yield return new Source(code, "ConvertTo");
     }
 }

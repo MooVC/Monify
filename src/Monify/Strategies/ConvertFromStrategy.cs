@@ -11,15 +11,29 @@ internal sealed class ConvertFromStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (subject.HasConversionFrom)
+        for (int index = 0; index < subject.Conversions.Length; index++)
         {
-            yield break;
-        }
+            Conversion conversion = subject.Conversions[index];
 
-        string code = $$"""
+            if (conversion.HasConversionFrom)
+            {
+                continue;
+            }
+
+            string hint = index == 0
+                ? "ConvertFrom"
+                : $"ConvertFrom.Nested.{index - 1}";
+
+            yield return new Source(CreateConversion(subject, conversion.Type), hint);
+        }
+    }
+
+    private static string CreateConversion(Subject subject, string value)
+    {
+        return $$"""
             {{subject.Declaration}} {{subject.Qualification}}
             {
-                public static implicit operator {{subject.Value}}({{subject.Qualification}} subject)
+                public static implicit operator {{value}}({{subject.Qualification}} subject)
                 {
                     if (ReferenceEquals(subject, null))
                     {
@@ -30,7 +44,5 @@ internal sealed class ConvertFromStrategy
                 }
             }
             """;
-
-        yield return new Source(code, "ConvertFrom");
     }
 }

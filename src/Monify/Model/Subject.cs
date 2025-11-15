@@ -35,6 +35,14 @@ internal sealed partial class Subject
     public bool CanOverrideToString { get; set; }
 
     /// <summary>
+    /// Gets or sets the conversions that should be generated in addition to the conversion for the encapsulated value.
+    /// </summary>
+    /// <value>
+    /// The additional conversions that should be generated.
+    /// </value>
+    public ImmutableArray<Conversion> Conversions { get; set; } = ImmutableArray<Conversion>.Empty;
+
+    /// <summary>
     /// Gets or sets the type declaration of the subject, be it a class, record or struct.
     /// </summary>
     /// <value>
@@ -49,22 +57,6 @@ internal sealed partial class Subject
     /// A value indicating whether or not the subject defines a constructor for the encapsulated value.
     /// </value>
     public bool HasConstructorForEncapsulatedValue { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject defines a cast to the encapsulating type.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject defines a cast to the encapsulating type.
-    /// </value>
-    public bool HasConversionFrom { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject defines a cast from the encapsulating type.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject defines a cast from the encapsulating type.
-    /// </value>
-    public bool HasConversionTo { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
