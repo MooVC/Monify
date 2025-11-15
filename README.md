@@ -60,6 +60,12 @@ if (age == value)
 
 Classes annotated with `Monify` are `sealed` automatically to preserve immutability. Types must be `partial` and cannot declare additional state; the included analyzers will warn when these guidelines are not followed.
 
+### Nested wrappers and circular guards
+
+Monify also follows chains of nested wrappers and automatically emits the necessary implicit conversions so the outermost wrapper can convert directly to and from the innermost value type. For example, if `Money` wraps `Amount` and `Amount` wraps `decimal`, conversions will be generated for every hop, allowing callers to cast `Money` to `decimal` (and vice versa) without manual glue code.
+
+To keep the generator safe, conversion discovery halts as soon as a type repeats in the chain. This prevents circular relationships (e.g. `Outer` wrapping `Inner` while `Inner` wraps `Outer`) from producing infinite loops or ambiguous operators while still supporting arbitrarily deep, non-circular nesting.
+
 ## Analyzers
 
 Monify includes several analyzers to assist engineers with its usage. These are:
