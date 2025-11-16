@@ -11,19 +11,21 @@ using Monify.Model;
 internal static partial class INamedTypeSymbolExtensions
 {
     /// <summary>
-    /// Gets the additional conversions that should be generated for the <paramref name="subject"/> based on the encapsulated value.
+    /// Gets the operator metadata that should be generated for the <paramref name="subject"/> based on the encapsulated value.
     /// </summary>
     /// <param name="subject">The subject to inspect.</param>
     /// <param name="value">The encapsulated value.</param>
-    /// <returns>The conversions that should be generated.</returns>
-    public static ImmutableArray<Conversion> GetConversions(this INamedTypeSymbol subject, ITypeSymbol value)
+    /// <returns>The operator metadata for the conversions and passthrough operators that should be generated.</returns>
+    public static ImmutableArray<Operators> GetOperators(this INamedTypeSymbol subject, ITypeSymbol value)
     {
-        ImmutableArray<Conversion>.Builder builder = ImmutableArray.CreateBuilder<Conversion>();
+        ImmutableArray<Operators>.Builder builder = ImmutableArray.CreateBuilder<Operators>();
 
-        builder.Add(new Conversion
+        builder.Add(new Operators
         {
             HasConversionFrom = subject.HasConversion(subject, value),
             HasConversionTo = subject.HasConversion(value, subject),
+            HasEqualityOperator = subject.HasEqualityOperator(type: value),
+            HasInequalityOperator = subject.HasInequalityOperator(type: value),
             Type = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
         });
 
@@ -45,10 +47,12 @@ internal static partial class INamedTypeSymbolExtensions
                 break;
             }
 
-            builder.Add(new Conversion
+            builder.Add(new Operators
             {
                 HasConversionFrom = subject.HasConversion(subject, nested),
                 HasConversionTo = subject.HasConversion(nested, subject),
+                HasEqualityOperator = subject.HasEqualityOperator(type: nested),
+                HasInequalityOperator = subject.HasInequalityOperator(type: nested),
                 Type = nested.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
             });
 

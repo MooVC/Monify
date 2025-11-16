@@ -8,7 +8,7 @@ internal static class TestSubject
     {
         return new()
         {
-            Conversions = [new Conversion { Type = "int" }],
+            Operators = [new Operators { Type = "int" }],
             Declaration = "class",
             Name = "Sample",
             Namespace = string.Empty,

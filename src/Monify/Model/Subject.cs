@@ -35,12 +35,12 @@ internal sealed partial class Subject
     public bool CanOverrideToString { get; set; }
 
     /// <summary>
-    /// Gets or sets the conversions that should be generated in addition to the conversion for the encapsulated value.
+    /// Gets or sets the operator metadata for each related type, including conversion data.
     /// </summary>
     /// <value>
-    /// The additional conversions that should be generated.
+    /// The related types that should be generated.
     /// </value>
-    public ImmutableArray<Conversion> Conversions { get; set; } = ImmutableArray<Conversion>.Empty;
+    public ImmutableArray<Operators> Operators { get; set; } = ImmutableArray<Operators>.Empty;
 
     /// <summary>
     /// Gets or sets the type declaration of the subject, be it a class, record or struct.

@@ -11,9 +11,9 @@ internal sealed class ConvertToStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        for (int index = 0; index < subject.Conversions.Length; index++)
+        for (int index = 0; index < subject.Operators.Length; index++)
         {
-            Conversion conversion = subject.Conversions[index];
+            Operators conversion = subject.Operators[index];
 
             if (conversion.HasConversionTo)
             {

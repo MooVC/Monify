@@ -19,8 +19,7 @@ public sealed class TypeGenerator
         new ConstructorStrategy(),
         new ConvertFromStrategy(),
         new ConvertToStrategy(),
-        new EqualityStrategy(subject => !subject.HasEqualityOperatorForSelf, "Self", subject => subject.Qualification),
-        new EqualityStrategy(subject => !subject.HasEqualityOperatorForValue, "Value", subject => subject.Value),
+        new EqualityStrategy(),
         new EqualsStrategy(),
         new EquatableStrategy(
             subject => !subject.IsEquatableToSelf,
@@ -36,8 +35,7 @@ public sealed class TypeGenerator
             subject => subject.Value),
         new FieldStrategy(),
         new GetHashCodeStrategy(),
-        new InequalityStrategy(subject => !subject.HasInequalityOperatorForSelf, "Self", subject => subject.Qualification),
-        new InequalityStrategy(subject => !subject.HasInequalityOperatorForValue, "Value", subject => subject.Value),
+        new InequalityStrategy(),
         new ToStringStrategy(),
     };
 

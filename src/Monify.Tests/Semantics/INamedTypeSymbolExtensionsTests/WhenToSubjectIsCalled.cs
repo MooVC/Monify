@@ -69,13 +69,17 @@ public sealed class WhenToSubjectIsCalled
 
         // Assert
         _ = subject.ShouldNotBeNull();
-        subject!.Conversions.Length.ShouldBe(2);
-        subject.Conversions[0].Type.ShouldBe("global::Sample.Inner");
-        subject.Conversions[0].HasConversionFrom.ShouldBeFalse();
-        subject.Conversions[0].HasConversionTo.ShouldBeFalse();
-        subject.Conversions[1].Type.ShouldBe("string");
-        subject.Conversions[1].HasConversionFrom.ShouldBeFalse();
-        subject.Conversions[1].HasConversionTo.ShouldBeFalse();
+        subject!.Operators.Length.ShouldBe(2);
+        subject.Operators[0].Type.ShouldBe("global::Sample.Inner");
+        subject.Operators[0].HasConversionFrom.ShouldBeFalse();
+        subject.Operators[0].HasConversionTo.ShouldBeFalse();
+        subject.Operators[0].HasEqualityOperator.ShouldBeFalse();
+        subject.Operators[0].HasInequalityOperator.ShouldBeFalse();
+        subject.Operators[1].Type.ShouldBe("string");
+        subject.Operators[1].HasConversionFrom.ShouldBeFalse();
+        subject.Operators[1].HasConversionTo.ShouldBeFalse();
+        subject.Operators[1].HasEqualityOperator.ShouldBeFalse();
+        subject.Operators[1].HasInequalityOperator.ShouldBeFalse();
     }
 
     [Fact]
@@ -139,9 +143,11 @@ public sealed class WhenToSubjectIsCalled
 
         // Assert
         _ = subject.ShouldNotBeNull();
-        subject!.Conversions.Length.ShouldBe(1);
-        subject.Conversions[0].Type.ShouldBe("global::Sample.Inner");
-        subject.Conversions[0].HasConversionFrom.ShouldBeFalse();
-        subject.Conversions[0].HasConversionTo.ShouldBeFalse();
+        subject!.Operators.Length.ShouldBe(1);
+        subject.Operators[0].Type.ShouldBe("global::Sample.Inner");
+        subject.Operators[0].HasConversionFrom.ShouldBeFalse();
+        subject.Operators[0].HasConversionTo.ShouldBeFalse();
+        subject.Operators[0].HasEqualityOperator.ShouldBeFalse();
+        subject.Operators[0].HasInequalityOperator.ShouldBeFalse();
     }
 }

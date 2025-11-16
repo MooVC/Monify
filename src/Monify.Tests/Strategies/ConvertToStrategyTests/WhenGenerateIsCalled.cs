@@ -10,7 +10,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Conversions = [new Conversion { HasConversionTo = true, Type = "int" }];
+        subject.Operators = [new Operators { HasConversionTo = true, Type = "int" }];
         var strategy = new ConvertToStrategy();
 
         // Act
@@ -40,7 +40,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Conversions = [new Conversion { Type = "int" }, new Conversion { Type = "string" }];
+        subject.Operators = [new Operators { Type = "int" }, new Operators { Type = "string" }];
         var strategy = new ConvertToStrategy();
 
         // Act

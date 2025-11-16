@@ -52,7 +52,7 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
             CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
-            Conversions = subject.GetConversions(value),
+            Operators = subject.GetOperators(value),
             HasConstructorForEncapsulatedValue = hasConstructorForEncapsulatedValue,
             HasEqualityOperatorForSelf = subject.HasEqualityOperator(),
             HasEqualityOperatorForValue = subject.HasEqualityOperator(type: value),

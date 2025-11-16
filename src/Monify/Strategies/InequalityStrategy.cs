@@ -1,5 +1,6 @@
-﻿namespace Monify.Strategies;
+namespace Monify.Strategies;
 
+using System.Collections.Generic;
 using Monify.Model;
 
 /// <summary>
@@ -8,34 +9,39 @@ using Monify.Model;
 internal sealed class InequalityStrategy
     : IStrategy
 {
-    private readonly Predicate<Subject> _condition;
-    private readonly string _name;
-    private readonly Func<Subject, string> _type;
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="InequalityStrategy"/>.
-    /// </summary>
-    /// <param name="condition">The condition for which, when <see langword="true" />, will result in code generation.</param>
-    /// <param name="name">The name of the inequality operator, used as part of the hint name for the generated code.</param>
-    /// <param name="type">The qualification for the type which serves as the subject for comparison.</param>
-    public InequalityStrategy(Predicate<Subject> condition, string name, Func<Subject, string> type)
-    {
-        _condition = condition;
-        _name = name;
-        _type = type;
-    }
-
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (!_condition(subject))
+        foreach (InequalityOperation operation in GetOperations(subject))
         {
-            yield break;
+            if (operation.HasOperator)
+            {
+                continue;
+            }
+
+            yield return new Source(CreateInequality(subject, operation.Type), operation.Hint);
         }
+    }
 
-        string type = _type(subject);
+    private static IEnumerable<InequalityOperation> GetOperations(Subject subject)
+    {
+        yield return new InequalityOperation(subject.HasInequalityOperatorForSelf, subject.Qualification, "Inequality.Self");
+        yield return new InequalityOperation(subject.HasInequalityOperatorForValue, subject.Value, "Inequality.Value");
 
-        string code = $$"""
+        for (int index = 1; index < subject.Operators.Length; index++)
+        {
+            Operators conversion = subject.Operators[index];
+
+            yield return new InequalityOperation(
+                conversion.HasInequalityOperator,
+                conversion.Type,
+                GetPassthroughHint(index));
+        }
+    }
+
+    private static string CreateInequality(Subject subject, string type)
+    {
+        return $$"""
             {{subject.Declaration}} {{subject.Qualification}}
             {
                 public static bool operator !=({{subject.Qualification}} left, {{type}} right)
@@ -44,7 +50,17 @@ internal sealed class InequalityStrategy
                 }
             }
             """;
-
-        yield return new Source(code, $"Inequality.{_name}");
     }
+
+    private static string GetPassthroughHint(int index)
+    {
+        if (index == 1)
+        {
+            return "Inequality.Passthrough";
+        }
+
+        return $"Inequality.Passthrough.Level{index:D2}";
+    }
+
+    private readonly record struct InequalityOperation(bool HasOperator, string Type, string Hint);
 }
