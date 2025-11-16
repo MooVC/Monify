@@ -9,7 +9,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.HasFieldForEncapsulatedValue = true;
+        subject.HasField = true;
         var strategy = new FieldStrategy();
 
         // Act

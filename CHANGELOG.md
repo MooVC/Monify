@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - When the encapsulated type is for a type that also uses `Monify`, implicit conversion operators to enable conversion directly to the nested encapsulated type (#34).
+- Equality and inequality operators now participate in passthrough comparisons when the encapsulated type also applies `Monify`.
 
 # [1.1.4] - 2025-11-03
 

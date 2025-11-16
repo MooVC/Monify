@@ -1,4 +1,4 @@
-﻿namespace Monify.Strategies;
+namespace Monify.Strategies;
 
 using System.Collections.Generic;
 using Monify.Model;
@@ -6,43 +6,46 @@ using Monify.Model;
 /// <summary>
 /// Generates the source needed to support the equality operator.
 /// </summary>
-internal sealed class EqualityStrategy
+internal sealed partial class EqualityStrategy
     : IStrategy
 {
-    private readonly Predicate<Subject> _condition;
-    private readonly string _name;
-    private readonly Func<Subject, string> _type;
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="EqualityStrategy"/>.
-    /// </summary>
-    /// <param name="condition">
-    /// The condition for which, when <see langword="true" />, will result in code generation.
-    /// </param>
-    /// <param name="name">
-    /// The name of the equality operator, used as part of the hint name for the generated code.
-    /// </param>
-    /// <param name="type">
-    /// The qualification for the type which serves as the subject for comparison.
-    /// </param>
-    public EqualityStrategy(Predicate<Subject> condition, string name, Func<Subject, string> type)
-    {
-        _condition = condition;
-        _name = name;
-        _type = type;
-    }
+    private const int IndexForEncapsulatedValue = 0;
 
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (!_condition(subject))
+        foreach (Operation operation in GetOperations(subject))
         {
-            yield break;
+            if (operation.HasOperator)
+            {
+                continue;
+            }
+
+            string code = CreateEquality(subject, operation.Type);
+
+            yield return new Source(code, operation.Hint);
         }
+    }
 
-        string type = _type(subject);
+    private static IEnumerable<Operation> GetOperations(Subject subject)
+    {
+        yield return new Operation(subject.HasEqualityOperator, "Equality.Self", false, subject.Qualification);
 
-        string code = $$"""
+        for (int index = 0; index < subject.Encapsulated.Length; index++)
+        {
+            Encapsulated conversion = subject.Encapsulated[index];
+
+            string hint = index == IndexForEncapsulatedValue
+                ? "Equality.Value"
+                : $"Equality.Passthrough.Level{index:D2}";
+
+            yield return new Operation(conversion.HasEqualityOperator, hint, true, conversion.Type);
+        }
+    }
+
+    private static string CreateEquality(Subject subject, string type)
+    {
+        return $$"""
             {{subject.Declaration}} {{subject.Qualification}}
             {
                 public static bool operator ==({{subject.Qualification}} left, {{type}} right)
@@ -61,7 +64,5 @@ internal sealed class EqualityStrategy
                 }
             }
             """;
-
-        yield return new Source(code, $"Equality.{_name}");
     }
 }

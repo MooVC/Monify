@@ -5,11 +5,15 @@ using Monify.Model;
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenConditionsWhenFalseThenNoSourceIsGenerated()
+    public void GivenSubjectWhenHasEquatablesThenNoSourceIsGenerated()
     {
         // Arrange
+        var strategy = new EquatableStrategy();
         Subject subject = TestSubject.Create();
-        var strategy = new EquatableStrategy(_ => false, _ => "true", _ => false, "Self", subject => subject.Qualification);
+
+        subject.Encapsulated = subject.Encapsulated.Clear();
+        subject.IsEquatable = true;
+        subject.HasEquatable = true;
 
         // Act
         IEnumerable<Source> result = strategy.Generate(subject);
@@ -19,11 +23,13 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenConditionsWhenTrueThenTwoSourcesAreReturned()
+    public void GivenSubjectWhenDoesNotHaveEquatableThenTwoSourcesAreReturned()
     {
         // Arrange
+        var strategy = new EquatableStrategy();
         Subject subject = TestSubject.Create();
-        var strategy = new EquatableStrategy(_ => true, _ => "true", _ => true, "Self", subject => subject.Qualification);
+
+        subject.Encapsulated = subject.Encapsulated.Clear();
 
         // Act
         Source[] sources = strategy.Generate(subject).ToArray();

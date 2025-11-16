@@ -16,7 +16,7 @@ internal sealed class FieldStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (subject.HasFieldForEncapsulatedValue)
+        if (subject.HasField)
         {
             yield break;
         }

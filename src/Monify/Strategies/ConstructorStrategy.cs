@@ -16,7 +16,7 @@ internal sealed class ConstructorStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (subject.HasConstructorForEncapsulatedValue)
+        if (subject.HasConstructor)
         {
             yield break;
         }

@@ -1,9 +1,7 @@
 namespace Monify.Semantics.INamedTypeSymbolExtensionsTests;
 
-using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Monify.Model;
 using Monify.Semantics;
 
 public sealed class WhenToSubjectIsCalled
@@ -69,13 +67,17 @@ public sealed class WhenToSubjectIsCalled
 
         // Assert
         _ = subject.ShouldNotBeNull();
-        subject!.Conversions.Length.ShouldBe(2);
-        subject.Conversions[0].Type.ShouldBe("global::Sample.Inner");
-        subject.Conversions[0].HasConversionFrom.ShouldBeFalse();
-        subject.Conversions[0].HasConversionTo.ShouldBeFalse();
-        subject.Conversions[1].Type.ShouldBe("string");
-        subject.Conversions[1].HasConversionFrom.ShouldBeFalse();
-        subject.Conversions[1].HasConversionTo.ShouldBeFalse();
+        subject!.Encapsulated.Length.ShouldBe(2);
+        subject.Encapsulated[0].Type.ShouldBe("global::Sample.Inner");
+        subject.Encapsulated[0].HasConversionFrom.ShouldBeFalse();
+        subject.Encapsulated[0].HasConversionTo.ShouldBeFalse();
+        subject.Encapsulated[0].HasEqualityOperator.ShouldBeFalse();
+        subject.Encapsulated[0].HasInequalityOperator.ShouldBeFalse();
+        subject.Encapsulated[1].Type.ShouldBe("string");
+        subject.Encapsulated[1].HasConversionFrom.ShouldBeFalse();
+        subject.Encapsulated[1].HasConversionTo.ShouldBeFalse();
+        subject.Encapsulated[1].HasEqualityOperator.ShouldBeFalse();
+        subject.Encapsulated[1].HasInequalityOperator.ShouldBeFalse();
     }
 
     [Fact]
@@ -139,9 +141,11 @@ public sealed class WhenToSubjectIsCalled
 
         // Assert
         _ = subject.ShouldNotBeNull();
-        subject!.Conversions.Length.ShouldBe(1);
-        subject.Conversions[0].Type.ShouldBe("global::Sample.Inner");
-        subject.Conversions[0].HasConversionFrom.ShouldBeFalse();
-        subject.Conversions[0].HasConversionTo.ShouldBeFalse();
+        subject!.Encapsulated.Length.ShouldBe(1);
+        subject.Encapsulated[0].Type.ShouldBe("global::Sample.Inner");
+        subject.Encapsulated[0].HasConversionFrom.ShouldBeFalse();
+        subject.Encapsulated[0].HasConversionTo.ShouldBeFalse();
+        subject.Encapsulated[0].HasEqualityOperator.ShouldBeFalse();
+        subject.Encapsulated[0].HasInequalityOperator.ShouldBeFalse();
     }
 }
