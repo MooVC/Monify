@@ -39,4 +39,54 @@ public sealed class WhenGenerateIsCalled
         sources[0].Hint.ShouldBe("IEquatable.Self");
         sources[1].Hint.ShouldBe("IEquatable.Self.Equals");
     }
+
+    [Fact]
+    public void GivenSequenceEncapsulatedValueThenImmutableArrayCheckIsGenerated()
+    {
+        // Arrange
+        var strategy = new EquatableStrategy();
+        Subject subject = TestSubject.Create();
+
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                HasEquatable = false,
+                IsEquatable = true,
+                IsSequence = true,
+                Type = "global::System.Collections.Immutable.ImmutableArray<int>",
+            },
+        ];
+
+        // Act
+        Source[] sources = strategy.Generate(subject).ToArray();
+
+        // Assert
+        sources.ShouldContain(source => source.Code.Contains("IsDefault ? other.IsDefault"));
+    }
+
+    [Fact]
+    public void GivenPassthroughEncapsulatedSequenceThenSequenceComparerIsUsed()
+    {
+        // Arrange
+        var strategy = new EquatableStrategy();
+        Subject subject = TestSubject.Create();
+
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                HasEquatable = false,
+                IsEquatable = true,
+                IsSequence = true,
+                Type = "global::System.Collections.Generic.IEnumerable<int>",
+            },
+        ];
+
+        // Act
+        Source[] sources = strategy.Generate(subject).ToArray();
+
+        // Assert
+        sources.ShouldContain(source => source.Code.Contains("SequenceEqualityComparer.Default.Equals"));
+    }
 }
