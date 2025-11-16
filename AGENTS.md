@@ -8,7 +8,7 @@ This repository hosts **Monify**, a .NET source generator and analyzers solution
 
 ## Build and Test
 
-- Use the .NET SDK **9.0**. The latest SDK can be found at [dotnet.microsoft.com](https://dotnet.microsoft.com/).
+- Use the .NET SDK **10.0**. The latest SDK can be found at [dotnet.microsoft.com](https://dotnet.microsoft.com/).
 - Restore packages with `dotnet restore`.
 - Run `dotnet test` to execute the test suite. This is the primary check before committing.
 - Tests are configured via `.runsettings` and use xUnit.
