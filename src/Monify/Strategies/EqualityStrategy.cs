@@ -6,37 +6,40 @@ using Monify.Model;
 /// <summary>
 /// Generates the source needed to support the equality operator.
 /// </summary>
-internal sealed class EqualityStrategy
+internal sealed partial class EqualityStrategy
     : IStrategy
 {
+    private const int IndexForEncapsulatedValue = 0;
+
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        foreach (EqualityOperation operation in GetOperations(subject))
+        foreach (Operation operation in GetOperations(subject))
         {
             if (operation.HasOperator)
             {
                 continue;
             }
 
-            string code = operation.IsPassthrough
-                ? CreatePassthroughEquality(subject, operation.Type)
-                : CreateEquality(subject, operation.Type);
+            string code = CreateEquality(subject, operation.Type);
 
             yield return new Source(code, operation.Hint);
         }
     }
 
-    private static IEnumerable<EqualityOperation> GetOperations(Subject subject)
+    private static IEnumerable<Operation> GetOperations(Subject subject)
     {
-        yield return new EqualityOperation(subject.HasEqualityOperatorForSelf, subject.Qualification, "Equality.Self", false);
-        yield return new EqualityOperation(subject.HasEqualityOperatorForValue, subject.Value, "Equality.Value", false);
+        yield return new Operation(subject.HasEqualityOperator, "Equality.Self", false, subject.Qualification);
 
-        for (int index = 1; index < subject.Operators.Length; index++)
+        for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
-            Operators conversion = subject.Operators[index];
+            Encapsulated conversion = subject.Encapsulated[index];
 
-            yield return new EqualityOperation(conversion.HasEqualityOperator, conversion.Type, GetPassthroughHint(index), true);
+            string hint = index == IndexForEncapsulatedValue
+                ? "Equality.Value"
+                : $"Equality.Passthrough.Level{index:D2}";
+
+            yield return new Operation(conversion.HasEqualityOperator, hint, true, conversion.Type);
         }
     }
 
@@ -62,39 +65,4 @@ internal sealed class EqualityStrategy
             }
             """;
     }
-
-    private static string CreatePassthroughEquality(Subject subject, string type)
-    {
-        return $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
-            {
-                public static bool operator ==({{subject.Qualification}} left, {{type}} right)
-                {
-                    if (ReferenceEquals(left, right))
-                    {
-                        return true;
-                    }
-
-                    if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-                    {
-                        return false;
-                    }
-
-                    return left == ({{subject.Value}})right;
-                }
-            }
-            """;
-    }
-
-    private static string GetPassthroughHint(int index)
-    {
-        if (index == 1)
-        {
-            return "Equality.Passthrough";
-        }
-
-        return $"Equality.Passthrough.Level{index:D2}";
-    }
-
-    private readonly record struct EqualityOperation(bool HasOperator, string Type, string Hint, bool IsPassthrough);
 }

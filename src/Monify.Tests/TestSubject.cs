@@ -8,13 +8,12 @@ internal static class TestSubject
     {
         return new()
         {
-            Operators = [new Operators { Type = "int" }],
+            Encapsulated = [new Encapsulated { Type = "int" }],
             Declaration = "class",
             Name = "Sample",
             Namespace = string.Empty,
             Nesting = [],
             Qualification = "Sample",
-            Value = "int",
         };
     }
 }

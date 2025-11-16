@@ -1,9 +1,7 @@
 namespace Monify.Semantics.INamedTypeSymbolExtensionsTests;
 
-using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Monify.Model;
 using Monify.Semantics;
 
 public sealed class WhenToSubjectIsCalled
@@ -69,17 +67,17 @@ public sealed class WhenToSubjectIsCalled
 
         // Assert
         _ = subject.ShouldNotBeNull();
-        subject!.Operators.Length.ShouldBe(2);
-        subject.Operators[0].Type.ShouldBe("global::Sample.Inner");
-        subject.Operators[0].HasConversionFrom.ShouldBeFalse();
-        subject.Operators[0].HasConversionTo.ShouldBeFalse();
-        subject.Operators[0].HasEqualityOperator.ShouldBeFalse();
-        subject.Operators[0].HasInequalityOperator.ShouldBeFalse();
-        subject.Operators[1].Type.ShouldBe("string");
-        subject.Operators[1].HasConversionFrom.ShouldBeFalse();
-        subject.Operators[1].HasConversionTo.ShouldBeFalse();
-        subject.Operators[1].HasEqualityOperator.ShouldBeFalse();
-        subject.Operators[1].HasInequalityOperator.ShouldBeFalse();
+        subject!.Encapsulated.Length.ShouldBe(2);
+        subject.Encapsulated[0].Type.ShouldBe("global::Sample.Inner");
+        subject.Encapsulated[0].HasConversionFrom.ShouldBeFalse();
+        subject.Encapsulated[0].HasConversionTo.ShouldBeFalse();
+        subject.Encapsulated[0].HasEqualityOperator.ShouldBeFalse();
+        subject.Encapsulated[0].HasInequalityOperator.ShouldBeFalse();
+        subject.Encapsulated[1].Type.ShouldBe("string");
+        subject.Encapsulated[1].HasConversionFrom.ShouldBeFalse();
+        subject.Encapsulated[1].HasConversionTo.ShouldBeFalse();
+        subject.Encapsulated[1].HasEqualityOperator.ShouldBeFalse();
+        subject.Encapsulated[1].HasInequalityOperator.ShouldBeFalse();
     }
 
     [Fact]
@@ -143,11 +141,11 @@ public sealed class WhenToSubjectIsCalled
 
         // Assert
         _ = subject.ShouldNotBeNull();
-        subject!.Operators.Length.ShouldBe(1);
-        subject.Operators[0].Type.ShouldBe("global::Sample.Inner");
-        subject.Operators[0].HasConversionFrom.ShouldBeFalse();
-        subject.Operators[0].HasConversionTo.ShouldBeFalse();
-        subject.Operators[0].HasEqualityOperator.ShouldBeFalse();
-        subject.Operators[0].HasInequalityOperator.ShouldBeFalse();
+        subject!.Encapsulated.Length.ShouldBe(1);
+        subject.Encapsulated[0].Type.ShouldBe("global::Sample.Inner");
+        subject.Encapsulated[0].HasConversionFrom.ShouldBeFalse();
+        subject.Encapsulated[0].HasConversionTo.ShouldBeFalse();
+        subject.Encapsulated[0].HasEqualityOperator.ShouldBeFalse();
+        subject.Encapsulated[0].HasInequalityOperator.ShouldBeFalse();
     }
 }

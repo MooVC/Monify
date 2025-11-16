@@ -6,13 +6,15 @@ using Monify.Model;
 /// <summary>
 /// Generates the source needed to support the inequality operator.
 /// </summary>
-internal sealed class InequalityStrategy
+internal sealed partial class InequalityStrategy
     : IStrategy
 {
+    private const int IndexForEncapsulatedValue = 0;
+
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        foreach (InequalityOperation operation in GetOperations(subject))
+        foreach (Operation operation in GetOperations(subject))
         {
             if (operation.HasOperator)
             {
@@ -23,19 +25,19 @@ internal sealed class InequalityStrategy
         }
     }
 
-    private static IEnumerable<InequalityOperation> GetOperations(Subject subject)
+    private static IEnumerable<Operation> GetOperations(Subject subject)
     {
-        yield return new InequalityOperation(subject.HasInequalityOperatorForSelf, subject.Qualification, "Inequality.Self");
-        yield return new InequalityOperation(subject.HasInequalityOperatorForValue, subject.Value, "Inequality.Value");
+        yield return new Operation(subject.HasInequalityOperator, "Inequality.Self", subject.Qualification);
 
-        for (int index = 1; index < subject.Operators.Length; index++)
+        for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
-            Operators conversion = subject.Operators[index];
+            Encapsulated conversion = subject.Encapsulated[index];
 
-            yield return new InequalityOperation(
-                conversion.HasInequalityOperator,
-                conversion.Type,
-                GetPassthroughHint(index));
+            string hint = index == IndexForEncapsulatedValue
+                ? "Inequality.Value"
+                : $"Inequality.Passthrough.Level{index:D2}";
+
+            yield return new Operation(conversion.HasInequalityOperator, hint, conversion.Type);
         }
     }
 
@@ -51,16 +53,4 @@ internal sealed class InequalityStrategy
             }
             """;
     }
-
-    private static string GetPassthroughHint(int index)
-    {
-        if (index == 1)
-        {
-            return "Inequality.Passthrough";
-        }
-
-        return $"Inequality.Passthrough.Level{index:D2}";
-    }
-
-    private readonly record struct InequalityOperation(bool HasOperator, string Type, string Hint);
 }

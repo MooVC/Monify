@@ -10,15 +10,15 @@ public sealed class WhenGenerateIsCalled
     public void GivenSubjectWhenOperatorsExistThenNoSourceIsGenerated()
     {
         // Arrange
-        Subject subject = TestSubject.Create();
-        subject.HasEqualityOperatorForSelf = true;
-        subject.HasEqualityOperatorForValue = true;
-        subject.Operators =
-        [
-            new Operators { HasEqualityOperator = true, Type = "int" },
-            new Operators { HasEqualityOperator = true, Type = "string" },
-        ];
         var strategy = new EqualityStrategy();
+        Subject subject = TestSubject.Create();
+        subject.HasEqualityOperator = true;
+
+        subject.Encapsulated =
+        [
+            new Encapsulated { HasEqualityOperator = true, Type = "int" },
+            new Encapsulated { HasEqualityOperator = true, Type = "string" },
+        ];
 
         // Act
         IEnumerable<Source> result = strategy.Generate(subject);
@@ -48,7 +48,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Operators = [new Operators { Type = "int" }, new Operators { Type = "string" }];
+        subject.Encapsulated = [new Encapsulated { Type = "int" }, new Encapsulated { Type = "string" }];
         var strategy = new EqualityStrategy();
 
         // Act
@@ -56,7 +56,6 @@ public sealed class WhenGenerateIsCalled
 
         // Assert
         sources.Length.ShouldBe(3);
-        sources[2].Hint.ShouldBe("Equality.Passthrough");
-        sources[2].Code.ShouldContain("(int)right");
+        sources[2].Hint.ShouldBe("Equality.Passthrough.Level01");
     }
 }

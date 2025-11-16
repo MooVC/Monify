@@ -1,6 +1,7 @@
 ﻿namespace Monify.Strategies;
 
 using Monify.Model;
+using static Monify.Model.Subject;
 
 /// <summary>
 /// Generates the source needed to allow for the encapsulated type to be implicitly cast from the encapsulating type.
@@ -11,18 +12,18 @@ internal sealed class ConvertToStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        for (int index = 0; index < subject.Operators.Length; index++)
+        for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
-            Operators conversion = subject.Operators[index];
+            Encapsulated conversion = subject.Encapsulated[index];
 
             if (conversion.HasConversionTo)
             {
                 continue;
             }
 
-            string hint = index == 0
+            string hint = index == IndexForEncapsulatedValue
                 ? "ConvertTo"
-                : $"ConvertTo.Nested.Level{index:D2}";
+                : $"ConvertTo.Passthrough.Level{index:D2}";
 
             yield return new Source(CreateConversion(subject, conversion.Type), hint);
         }

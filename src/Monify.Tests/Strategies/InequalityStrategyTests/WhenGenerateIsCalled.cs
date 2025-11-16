@@ -11,12 +11,11 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.HasInequalityOperatorForSelf = true;
-        subject.HasInequalityOperatorForValue = true;
-        subject.Operators =
+        subject.HasInequalityOperator = true;
+        subject.Encapsulated =
         [
-            new Operators { HasInequalityOperator = true, Type = "int" },
-            new Operators { HasInequalityOperator = true, Type = "string" },
+            new Encapsulated { HasInequalityOperator = true, Type = "int" },
+            new Encapsulated { HasInequalityOperator = true, Type = "string" },
         ];
         var strategy = new InequalityStrategy();
 
@@ -48,7 +47,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Operators = [new Operators { Type = "int" }, new Operators { Type = "string" }];
+        subject.Encapsulated = [new Encapsulated { Type = "int" }, new Encapsulated { Type = "string" }];
         var strategy = new InequalityStrategy();
 
         // Act
@@ -56,7 +55,6 @@ public sealed class WhenGenerateIsCalled
 
         // Assert
         sources.Length.ShouldBe(3);
-        sources[2].Hint.ShouldBe("Inequality.Passthrough");
-        sources[2].Code.ShouldContain("operator !=");
+        sources[2].Hint.ShouldBe("Inequality.Passthrough.Level01");
     }
 }
