@@ -250,7 +250,12 @@ internal static partial class Nested
                         {
                             public override bool Equals(object other)
                             {
-                                return Equals((Inner)other);
+                                if (other is Inner)
+                                {
+                                    return Equals((Inner)other);
+                                }
+
+                                return false;
                             }
                         }
                     }

@@ -1,6 +1,7 @@
 ﻿namespace Monify.Strategies;
 
 using Monify.Model;
+using static Monify.Model.Subject;
 
 /// <summary>
 /// Generates the source needed to support <see cref="IEquatable{T}"/>.
@@ -8,56 +9,59 @@ using Monify.Model;
 internal sealed class EquatableStrategy
     : IStrategy
 {
-    private readonly Predicate<Subject> _declaration;
-    private readonly Func<Subject, string> _equality;
-    private readonly Predicate<Subject> _implementation;
-    private readonly string _name;
-    private readonly Func<Subject, string> _type;
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="EquatableStrategy"/>.
-    /// </summary>
-    /// <param name="declaration">
-    /// The condition for which, when <see langword="true" />, will result in generation of the contract declaration.
-    /// </param>
-    /// <param name="equality">
-    /// The means by which equality is compared.
-    /// </param>
-    /// <param name="implementation">
-    /// The condition for which, when <see langword="true" />, will result in generation of the implementation.
-    /// </param>
-    /// <param name="name">
-    /// The name of the equality operator, used as part of the hint name for the generated code.
-    /// </param>
-    /// <param name="type">
-    /// The qualification for the type which serves as the subject for comparison.
-    /// </param>
-    public EquatableStrategy(Predicate<Subject> declaration, Func<Subject, string> equality, Predicate<Subject> implementation, string name, Func<Subject, string> type)
-    {
-        _declaration = declaration;
-        _equality = equality;
-        _implementation = implementation;
-        _name = name;
-        _type = type;
-    }
-
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        string type = _type(subject);
+        IEnumerable<Source> equatables = GetEquatables(
+            () => $"Equals(other.{FieldStrategy.Name})",
+            subject.IsEquatable,
+            subject.HasEquatable,
+            "Self",
+            subject,
+            subject.Qualification);
 
-        if (_declaration(subject))
+        for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
-            yield return GenerateContract(subject, type);
+            Encapsulated encapsulated = subject.Encapsulated[index];
+
+            string hint = index == IndexForEncapsulatedValue
+                ? "Value"
+                : $"Passthrough.{index:D2}";
+
+            IEnumerable<Source> field = GetEquatables(
+                () => GetEqualityOperator(encapsulated),
+                encapsulated.IsEquatable,
+                encapsulated.HasEquatable,
+                hint,
+                subject,
+                encapsulated.Type);
+
+            equatables = equatables.Concat(field);
         }
 
-        if (_implementation(subject))
+        return equatables;
+    }
+
+    private static IEnumerable<Source> GetEquatables(
+        Func<string> implementation,
+        bool isEquatable,
+        bool hasEquatable,
+        string name,
+        Subject subject,
+        string type)
+    {
+        if (!isEquatable)
         {
-            yield return GenerateImplementation(subject, type);
+            yield return GenerateContract(name, subject, type);
+        }
+
+        if (!hasEquatable)
+        {
+            yield return GenerateImplementation(implementation, name, subject, type);
         }
     }
 
-    private Source GenerateContract(Subject subject, string type)
+    private static Source GenerateContract(string name, Subject subject, string type)
     {
         string code = $$"""
             {{subject.Declaration}} {{subject.Qualification}} : IEquatable<{{type}}>
@@ -65,10 +69,27 @@ internal sealed class EquatableStrategy
             }
             """;
 
-        return new Source(code, $"{nameof(IEquatable<Subject>)}.{_name}");
+        return new Source(code, $"{nameof(IEquatable<Subject>)}.{name}");
     }
 
-    private Source GenerateImplementation(Subject subject, string type)
+    private static string GetEqualityOperator(Encapsulated encapsulated)
+    {
+        if (encapsulated.IsSequence)
+        {
+            string check = $"global::Monify.Internal.SequenceEqualityComparer.Default.Equals({FieldStrategy.Name}, other)";
+
+            if (IsImmutableArray(encapsulated.Type))
+            {
+                check = $"{FieldStrategy.Name}.IsDefault ? other.IsDefault : !other.IsDefault && {check}";
+            }
+
+            return check;
+        }
+
+        return $"global::System.Collections.Generic.EqualityComparer<{encapsulated.Type}>.Default.Equals({FieldStrategy.Name}, other)";
+    }
+
+    private static Source GenerateImplementation(Func<string> implementation, string name, Subject subject, string type)
     {
         string code = $$"""
             {{subject.Declaration}} {{subject.Qualification}}
@@ -85,11 +106,16 @@ internal sealed class EquatableStrategy
                         return false;
                     }
 
-                    return {{_equality(subject)}};
+                    return {{implementation()}};
                 }
             }
             """;
 
-        return new Source(code, $"{nameof(IEquatable<Subject>)}.{_name}.{nameof(Equals)}");
+        return new Source(code, $"{nameof(IEquatable<Subject>)}.{name}.{nameof(Equals)}");
+    }
+
+    private static bool IsImmutableArray(string value)
+    {
+        return value.StartsWith("global::System.Collections.Immutable.ImmutableArray<", StringComparison.Ordinal);
     }
 }

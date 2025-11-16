@@ -5,11 +5,15 @@ using Monify.Model;
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenConditionsWhenFalseThenNoSourceIsGenerated()
+    public void GivenSubjectWhenHasEquatablesThenNoSourceIsGenerated()
     {
         // Arrange
+        var strategy = new EquatableStrategy();
         Subject subject = TestSubject.Create();
-        var strategy = new EquatableStrategy(_ => false, _ => "true", _ => false, "Self", subject => subject.Qualification);
+
+        subject.Encapsulated = subject.Encapsulated.Clear();
+        subject.IsEquatable = true;
+        subject.HasEquatable = true;
 
         // Act
         IEnumerable<Source> result = strategy.Generate(subject);
@@ -19,11 +23,13 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenConditionsWhenTrueThenTwoSourcesAreReturned()
+    public void GivenSubjectWhenDoesNotHaveEquatableThenTwoSourcesAreReturned()
     {
         // Arrange
+        var strategy = new EquatableStrategy();
         Subject subject = TestSubject.Create();
-        var strategy = new EquatableStrategy(_ => true, _ => "true", _ => true, "Self", subject => subject.Qualification);
+
+        subject.Encapsulated = subject.Encapsulated.Clear();
 
         // Act
         Source[] sources = strategy.Generate(subject).ToArray();
@@ -32,5 +38,55 @@ public sealed class WhenGenerateIsCalled
         sources.Length.ShouldBe(2);
         sources[0].Hint.ShouldBe("IEquatable.Self");
         sources[1].Hint.ShouldBe("IEquatable.Self.Equals");
+    }
+
+    [Fact]
+    public void GivenSequenceEncapsulatedValueThenImmutableArrayCheckIsGenerated()
+    {
+        // Arrange
+        var strategy = new EquatableStrategy();
+        Subject subject = TestSubject.Create();
+
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                HasEquatable = false,
+                IsEquatable = true,
+                IsSequence = true,
+                Type = "global::System.Collections.Immutable.ImmutableArray<int>",
+            },
+        ];
+
+        // Act
+        Source[] sources = strategy.Generate(subject).ToArray();
+
+        // Assert
+        sources.ShouldContain(source => source.Code.Contains("IsDefault ? other.IsDefault"));
+    }
+
+    [Fact]
+    public void GivenPassthroughEncapsulatedSequenceThenSequenceComparerIsUsed()
+    {
+        // Arrange
+        var strategy = new EquatableStrategy();
+        Subject subject = TestSubject.Create();
+
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                HasEquatable = false,
+                IsEquatable = true,
+                IsSequence = true,
+                Type = "global::System.Collections.Generic.IEnumerable<int>",
+            },
+        ];
+
+        // Act
+        Source[] sources = strategy.Generate(subject).ToArray();
+
+        // Assert
+        sources.ShouldContain(source => source.Code.Contains("SequenceEqualityComparer.Default.Equals"));
     }
 }

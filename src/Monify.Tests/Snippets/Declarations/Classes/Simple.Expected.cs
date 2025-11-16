@@ -225,7 +225,12 @@ internal static partial class Simple
                 {
                     public override bool Equals(object other)
                     {
-                        return Equals((Simple)other);
+                        if (other is Simple)
+                        {
+                            return Equals((Simple)other);
+                        }
+
+                        return false;
                     }
                 }
 

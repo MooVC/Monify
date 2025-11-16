@@ -5,16 +5,16 @@ public static class WhenEqualsWithObjectIsCalled
     private const int SampleValue = 42;
 
     [Fact]
-    public static void GivenNullThenThrowNullReferenceException()
+    public static void GivenNullThenReturnsFalse()
     {
         // Arrange
         IOutterForInt<int>.Inner subject = new(SampleValue);
 
         // Act
-        Action act = () => subject.Equals((object?)default);
+        bool result = subject.Equals((object?)default);
 
         // Assert
-        _ = Should.Throw<NullReferenceException>(act);
+        result.ShouldBeFalse();
     }
 
     [Fact]
@@ -32,16 +32,16 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenThrowInvalidCastException()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         IOutterForInt<int>.Inner subject = new(SampleValue);
         object other = string.Empty;
 
         // Act
-        Action act = () => subject.Equals(other);
+        bool result = subject.Equals(other);
 
         // Assert
-        _ = Should.Throw<InvalidCastException>(act);
+        result.ShouldBeFalse();
     }
 }

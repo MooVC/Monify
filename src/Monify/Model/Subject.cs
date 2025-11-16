@@ -11,6 +11,15 @@ using Valuify;
 internal sealed partial class Subject
 {
     /// <summary>
+    /// Represents the index used to access the encapsulated value within a collection or structure.
+    /// </summary>
+    /// <remarks>
+    /// Use this constant when referencing the position of the encapsulated value to ensure
+    /// consistency and readability throughout the codebase.
+    /// </remarks>
+    public const int IndexForEncapsulatedValue = 0;
+
+    /// <summary>
     /// Gets or sets a value indicating whether or not the subject can override <see cref="object.Equals(object)"/>.
     /// </summary>
     /// <value>
@@ -35,6 +44,14 @@ internal sealed partial class Subject
     public bool CanOverrideToString { get; set; }
 
     /// <summary>
+    /// Gets or sets the metadata for each encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The metadata for each encapsulated type.
+    /// </value>
+    public ImmutableArray<Encapsulated> Encapsulated { get; set; } = ImmutableArray<Encapsulated>.Empty;
+
+    /// <summary>
     /// Gets or sets the type declaration of the subject, be it a class, record or struct.
     /// </summary>
     /// <value>
@@ -43,44 +60,12 @@ internal sealed partial class Subject
     public string Declaration { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not the subject defines a constructor for the encapsulated value.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject defines a constructor for the encapsulated value.
-    /// </value>
-    public bool HasConstructorForEncapsulatedValue { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject defines a cast to the encapsulating type.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject defines a cast to the encapsulating type.
-    /// </value>
-    public bool HasConversionFrom { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject defines a cast from the encapsulating type.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject defines a cast from the encapsulating type.
-    /// </value>
-    public bool HasConversionTo { get; set; }
-
-    /// <summary>
     /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
     /// </summary>
     /// <value>
     /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
     /// </value>
-    public bool HasEquatableForSelf { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for the encapsulated value.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for the encapsulated value.
-    /// </value>
-    public bool HasEquatableForValue { get; set; }
+    public bool HasEquatable { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether or not the subject declares an equality operator for its own type.
@@ -88,15 +73,7 @@ internal sealed partial class Subject
     /// <value>
     /// A value indicating whether or not the subject declares an equality operator for its own type.
     /// </value>
-    public bool HasEqualityOperatorForSelf { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject declares an equality operator for the encapsulated value.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject declares an equality operator for the encapsulated value.
-    /// </value>
-    public bool HasEqualityOperatorForValue { get; set; }
+    public bool HasEqualityOperator { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether or not the subject defines a field for the encapsulated value.
@@ -104,7 +81,7 @@ internal sealed partial class Subject
     /// <value>
     /// A value indicating whether or not the subject defines a field for the encapsulated value.
     /// </value>
-    public bool HasFieldForEncapsulatedValue { get; set; }
+    public bool HasField { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether or not the subject declares an inequality operator for its own type.
@@ -112,15 +89,7 @@ internal sealed partial class Subject
     /// <value>
     /// A value indicating whether or not the subject declares an inequality operator for its own type.
     /// </value>
-    public bool HasInequalityOperatorForSelf { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject declares an inequality operator for the encapsulated value.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject declares an inequality operator for the encapsulated value.
-    /// </value>
-    public bool HasInequalityOperatorForValue { get; set; }
+    public bool HasInequalityOperator { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for its own type.
@@ -128,15 +97,7 @@ internal sealed partial class Subject
     /// <value>
     /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/>for its own type.
     /// </value>
-    public bool IsEquatableToSelf { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for the encapsulated value.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for the encapsulated value.
-    /// </value>
-    public bool IsEquatableToValue { get; set; }
+    public bool IsEquatable { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether or not the subject belongs to the global namespace.
@@ -145,14 +106,6 @@ internal sealed partial class Subject
     /// A value indicating whether or not the subject belongs to the global namespace.
     /// </value>
     public bool IsGlobal => string.IsNullOrEmpty(Namespace);
-
-    /// <summary>
-    /// Gets or sets a value indicating whether or not the encapsulated type is deemed to be a sequence.
-    /// </summary>
-    /// <value>
-    /// The value indicating whether or not the encapsulated type is deemed to be a sequence.
-    /// </value>
-    public bool IsSequence { get; set; }
 
     /// <summary>
     /// Gets or sets the name of the subject.
@@ -187,10 +140,10 @@ internal sealed partial class Subject
     public string Qualification { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the qualified name of the value that is encapsulated by the subject.
+    /// Gets the qualified name of the value that is encapsulated by the subject.
     /// </summary>
     /// <value>
     /// The qualified name of the value that is encapsulated by the subject.
     /// </value>
-    public string Value { get; set; } = string.Empty;
+    public string Value => Encapsulated[IndexForEncapsulatedValue].Type;
 }

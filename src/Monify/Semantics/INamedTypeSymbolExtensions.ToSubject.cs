@@ -40,8 +40,7 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (declaration is null
          || subject.Equals(value, SymbolEqualityComparer.IncludeNullability)
-         || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue)
-         || !subject.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
+         || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue))
         {
             return default;
         }
@@ -52,24 +51,16 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
             CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
-            HasConstructorForEncapsulatedValue = hasConstructorForEncapsulatedValue,
-            HasConversionFrom = subject.HasConversion(subject),
-            HasConversionTo = subject.HasConversion(value),
-            HasEqualityOperatorForSelf = subject.HasEqualityOperator(),
-            HasEqualityOperatorForValue = subject.HasEqualityOperator(type: value),
-            HasEquatableForSelf = subject.HasEquatable(),
-            HasEquatableForValue = subject.HasEquatable(type: value),
-            HasFieldForEncapsulatedValue = hasFieldForEncapsulatedValue,
-            HasInequalityOperatorForSelf = subject.HasInequalityOperator(),
-            HasInequalityOperatorForValue = subject.HasInequalityOperator(type: value),
-            IsEquatableToSelf = subject.IsEquatable(compilation),
-            IsEquatableToValue = subject.IsEquatable(compilation, type: value),
-            IsSequence = value.IsSequence(),
+            Encapsulated = subject.GetEncapsulated(compilation, value),
+            HasEqualityOperator = subject.HasEqualityOperator(),
+            HasEquatable = subject.HasEquatable(),
+            HasField = hasFieldForEncapsulatedValue,
+            HasInequalityOperator = subject.HasInequalityOperator(),
+            IsEquatable = subject.IsEquatable(compilation),
             Name = subject.Name,
             Namespace = @namespace,
             Nesting = nesting,
             Qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
-            Value = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
         };
     }
 }

@@ -16,21 +16,30 @@ internal sealed class ConstructorStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
-        if (subject.HasConstructorForEncapsulatedValue)
+        for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
-            yield break;
-        }
+            Encapsulated encapsulated = subject.Encapsulated[index];
 
-        string code = $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
+            if (encapsulated.HasConstructor)
             {
-                public {{subject.Name}}({{subject.Value}} value)
-                {
-                    {{FieldStrategy.Name}} = value;
-                }
+                continue;
             }
-            """;
 
-        yield return new Source(code, Name);
+            string hint = index == Subject.IndexForEncapsulatedValue
+                ? Name
+                : $"{Name}.Passthrough.{index:D2}";
+
+            string code = $$"""
+                {{subject.Declaration}} {{subject.Qualification}}
+                {
+                    public {{subject.Name}}({{encapsulated.Type}} value)
+                    {
+                        {{FieldStrategy.Name}} = value;
+                    }
+                }
+                """;
+
+            yield return new Source(code, hint);
+        }
     }
 }

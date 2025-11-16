@@ -19,25 +19,12 @@ public sealed class TypeGenerator
         new ConstructorStrategy(),
         new ConvertFromStrategy(),
         new ConvertToStrategy(),
-        new EqualityStrategy(subject => !subject.HasEqualityOperatorForSelf, "Self", subject => subject.Qualification),
-        new EqualityStrategy(subject => !subject.HasEqualityOperatorForValue, "Value", subject => subject.Value),
+        new EqualityStrategy(),
         new EqualsStrategy(),
-        new EquatableStrategy(
-            subject => !subject.IsEquatableToSelf,
-            _ => $"Equals(other.{FieldStrategy.Name})",
-            subject => !subject.HasEquatableForSelf,
-            "Self",
-            subject => subject.Qualification),
-        new EquatableStrategy(
-            subject => !subject.IsEquatableToValue,
-            GetEqualityOperator,
-            subject => !subject.HasEquatableForValue,
-            "Value",
-            subject => subject.Value),
+        new EquatableStrategy(),
         new FieldStrategy(),
         new GetHashCodeStrategy(),
-        new InequalityStrategy(subject => !subject.HasInequalityOperatorForSelf, "Self", subject => subject.Qualification),
-        new InequalityStrategy(subject => !subject.HasInequalityOperatorForValue, "Value", subject => subject.Value),
+        new InequalityStrategy(),
         new ToStringStrategy(),
     };
 
@@ -82,28 +69,6 @@ public sealed class TypeGenerator
                 }
             }
         }
-    }
-
-    private static string GetEqualityOperator(Subject subject)
-    {
-        if (subject.IsSequence)
-        {
-            string check = $"global::Monify.Internal.SequenceEqualityComparer.Default.Equals({FieldStrategy.Name}, other)";
-
-            if (IsImmutableArray(subject.Value))
-            {
-                check = $"{FieldStrategy.Name}.IsDefault ? other.IsDefault : !other.IsDefault && {check}";
-            }
-
-            return check;
-        }
-
-        return $"global::System.Collections.Generic.EqualityComparer<{subject.Value}>.Default.Equals({FieldStrategy.Name}, other)";
-    }
-
-    private static bool IsImmutableArray(string value)
-    {
-        return value.StartsWith("global::System.Collections.Immutable.ImmutableArray<", StringComparison.Ordinal);
     }
 
     private static string GetHint(Source source, Subject subject)

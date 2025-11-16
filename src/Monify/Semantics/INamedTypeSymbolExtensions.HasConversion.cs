@@ -11,18 +11,21 @@ internal static partial class INamedTypeSymbolExtensions
     private const int ExpectedParametersForConversion = 1;
 
     /// <summary>
-    /// Determines whether or not the <paramref name="subject"/> declares an its own conversion for <paramref name="type"/>.
+    /// Determines whether or not the <paramref name="subject"/> declares an implicit conversion with the provided signature.
     /// </summary>
     /// <param name="subject">
     /// The <paramref name="subject"/> to be checked.
     /// </param>
-    /// <param name="type">
-    /// The type from which the conversion is made.
+    /// <param name="parameter">
+    /// The parameter type associated with the conversion.
+    /// </param>
+    /// <param name="result">
+    /// The return type associated with the conversion.
     /// </param>
     /// <returns>
     /// <see langword="true"/> if the <paramref name="subject"/> declares the conversion, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool HasConversion(this INamedTypeSymbol subject, ITypeSymbol type)
+    public static bool HasConversion(this INamedTypeSymbol subject, ITypeSymbol parameter, ITypeSymbol result)
     {
         return subject
             .GetMembers()
@@ -30,6 +33,7 @@ internal static partial class INamedTypeSymbolExtensions
             .Any(method => method.MethodKind == MethodKind.Conversion
                         && method.Name == ImplciitOperatorName
                         && method.Parameters.Length == ExpectedParametersForConversion
-                        && method.Parameters[0].Type.Equals(type, SymbolEqualityComparer.IncludeNullability));
+                        && method.Parameters[0].Type.Equals(parameter, SymbolEqualityComparer.IncludeNullability)
+                        && method.ReturnType.Equals(result, SymbolEqualityComparer.IncludeNullability));
     }
 }

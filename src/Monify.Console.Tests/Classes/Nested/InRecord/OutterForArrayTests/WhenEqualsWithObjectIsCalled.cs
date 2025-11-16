@@ -32,16 +32,16 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenThrowInvalidCastException()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
         object other = string.Empty;
 
         // Act
-        Action act = () => subject.Equals(other);
+        bool result = subject.Equals(other);
 
         // Assert
-        _ = Should.Throw<InvalidCastException>(act);
+        result.ShouldBeFalse();
     }
 }
