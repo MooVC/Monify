@@ -22,21 +22,23 @@ internal static partial class INamedTypeSymbolExtensions
     public static ImmutableArray<Encapsulated> GetEncapsulated(this INamedTypeSymbol subject, Compilation compilation, ITypeSymbol value)
     {
         ImmutableArray<Encapsulated>.Builder builder = ImmutableArray.CreateBuilder<Encapsulated>();
+        IMethodSymbol[] constructors = subject.GetConstructors();
 
-        builder.Add(Catalog(compilation, subject, value));
+        builder.Add(Catalog(constructors, compilation, subject, value));
 
         if (value is INamedTypeSymbol named)
         {
-            GetPassthroughEncapsulations(builder, compilation, subject, named);
+            GetPassthroughEncapsulations(builder, constructors, compilation, subject, named);
         }
 
         return builder.ToImmutable();
     }
 
-    private static Encapsulated Catalog(Compilation compilation, INamedTypeSymbol subject, ITypeSymbol value)
+    private static Encapsulated Catalog(IMethodSymbol[] constructors, Compilation compilation, INamedTypeSymbol subject, ITypeSymbol value)
     {
         return new Encapsulated
         {
+            HasConstructor = value.HasConstructorFor(constructors),
             HasConversionFrom = subject.HasConversion(subject, value),
             HasConversionTo = subject.HasConversion(value, subject),
             HasEqualityOperator = subject.HasEqualityOperator(type: value),
@@ -50,6 +52,7 @@ internal static partial class INamedTypeSymbolExtensions
 
     private static void GetPassthroughEncapsulations(
         ImmutableArray<Encapsulated>.Builder builder,
+        IMethodSymbol[] constructors,
         Compilation compilation,
         INamedTypeSymbol subject,
         INamedTypeSymbol named)
@@ -67,7 +70,7 @@ internal static partial class INamedTypeSymbolExtensions
                 break;
             }
 
-            builder.Add(Catalog(compilation, subject, nested));
+            builder.Add(Catalog(constructors, compilation, subject, nested));
 
             if (nested is not INamedTypeSymbol inner)
             {

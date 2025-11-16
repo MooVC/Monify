@@ -9,6 +9,14 @@ using Valuify;
 internal sealed partial class Encapsulated
 {
     /// <summary>
+    /// Gets or sets a value indicating whether or not the subject defines a constructor for the encapsulated value.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject defines a constructor for the encapsulated value.
+    /// </value>
+    public bool HasConstructor { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether a conversion from the subject to <see cref="Type"/> already exists.
     /// </summary>
     public bool HasConversionFrom { get; set; }

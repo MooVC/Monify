@@ -60,14 +60,6 @@ internal sealed partial class Subject
     public string Declaration { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not the subject defines a constructor for the encapsulated value.
-    /// </summary>
-    /// <value>
-    /// A value indicating whether or not the subject defines a constructor for the encapsulated value.
-    /// </value>
-    public bool HasConstructor { get; set; }
-
-    /// <summary>
     /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
     /// </summary>
     /// <value>
@@ -148,7 +140,7 @@ internal sealed partial class Subject
     public string Qualification { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the qualified name of the value that is encapsulated by the subject.
+    /// Gets the qualified name of the value that is encapsulated by the subject.
     /// </summary>
     /// <value>
     /// The qualified name of the value that is encapsulated by the subject.

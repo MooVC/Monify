@@ -40,8 +40,7 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (declaration is null
          || subject.Equals(value, SymbolEqualityComparer.IncludeNullability)
-         || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue)
-         || !subject.IsConstructable(value, out bool hasConstructorForEncapsulatedValue))
+         || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue))
         {
             return default;
         }
@@ -53,7 +52,6 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
             Encapsulated = subject.GetEncapsulated(compilation, value),
-            HasConstructor = hasConstructorForEncapsulatedValue,
             HasEqualityOperator = subject.HasEqualityOperator(),
             HasEquatable = subject.HasEquatable(),
             HasField = hasFieldForEncapsulatedValue,

@@ -9,7 +9,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.HasConstructor = true;
+        subject.Encapsulated[0].HasConstructor = true;
         var strategy = new ConstructorStrategy();
 
         // Act

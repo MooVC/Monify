@@ -7,16 +7,16 @@ public static class WhenEqualsWithObjectIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenNullThenThrowNullReferenceException()
+    public static void GivenNullThenReturnsFalse()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);
 
         // Act
-        Action act = () => subject.Equals((object?)default);
+        bool result = subject.Equals((object?)default);
 
         // Assert
-        _ = Should.Throw<NullReferenceException>(act);
+        result.ShouldBeFalse();
     }
 
     [Fact]
@@ -34,16 +34,16 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenThrowInvalidCastException()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);
         object other = string.Empty;
 
         // Act
-        Action act = () => subject.Equals(other);
+        bool result = subject.Equals(other);
 
         // Assert
-        _ = Should.Throw<InvalidCastException>(act);
+        result.ShouldBeFalse();
     }
 }
