@@ -29,7 +29,7 @@ internal sealed partial class EqualityStrategy
 
     private static IEnumerable<Operation> GetOperations(Subject subject)
     {
-        yield return new Operation(subject.HasEqualityOperator, "Equality.Self", false, subject.Qualification);
+        yield return new Operation(subject.HasEqualityOperator, "Equality.Self", subject.Qualification);
 
         for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
@@ -39,7 +39,7 @@ internal sealed partial class EqualityStrategy
                 ? "Equality.Value"
                 : $"Equality.Passthrough.Level{index:D2}";
 
-            yield return new Operation(conversion.HasEqualityOperator, hint, true, conversion.Type);
+            yield return new Operation(conversion.HasEqualityOperator, hint, conversion.Type);
         }
     }
 

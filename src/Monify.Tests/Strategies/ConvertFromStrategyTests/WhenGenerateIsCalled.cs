@@ -1,6 +1,5 @@
 namespace Monify.Strategies.ConvertFromStrategyTests;
 
-using System.Collections.Immutable;
 using Monify.Model;
 
 public sealed class WhenGenerateIsCalled

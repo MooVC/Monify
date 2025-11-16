@@ -1,7 +1,6 @@
 ﻿namespace Monify.Semantics;
 
 using Microsoft.CodeAnalysis;
-using Monify.Strategies;
 
 /// <summary>
 /// Provides extensions relating to <see cref="ITypeSymbol"/>.
