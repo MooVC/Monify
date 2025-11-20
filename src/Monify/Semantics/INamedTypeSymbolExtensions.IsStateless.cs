@@ -35,6 +35,7 @@ internal static partial class INamedTypeSymbolExtensions
             .GetMembers()
             .Where(member => member.Kind == SymbolKind.Field && !member.IsStatic)
             .OfType<IFieldSymbol>()
+            .Where(field => !field.IsImplicitlyDeclared || IsExplicitlyDeclaredBackingField(field))
             .ToArray();
 
         hasFieldForEncapsulatedValue = false;
@@ -52,5 +53,10 @@ internal static partial class INamedTypeSymbolExtensions
         }
 
         return hasFieldForEncapsulatedValue;
+    }
+
+    private static bool IsExplicitlyDeclaredBackingField(IFieldSymbol field)
+    {
+        return field.AssociatedSymbol is IPropertySymbol property && !property.IsImplicitlyDeclared;
     }
 }

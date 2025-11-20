@@ -1,5 +1,6 @@
 ﻿namespace Monify.AttributeAnalyzerTests;
 
+using System.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
@@ -75,6 +76,30 @@ public sealed class WhenExecuted
 
         test.ExpectedDiagnostics.Add(GetExpectedSelfReferenceRule(new LinePosition(2, 5), SelfReferencedClass.Declaration.Name));
         expectations.IsDeclaredIn(test.TestState);
+
+        // Act
+        Func<Task> act = () => test.RunAsync();
+
+        // Assert
+        await act.ShouldNotThrowAsync();
+    }
+
+    [Theory]
+    [Frameworks(Language = LanguageVersion.CSharp9)]
+    public async Task GivenAPositionalRecordWhenOnlyImplicitStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    {
+        // Arrange
+        var test = new AnalyzerTest(assembly, language);
+
+        test.TestState.Sources.Add(
+            SourceText.From(
+                """
+                namespace MonifyTests;
+
+                [Monify<int>]
+                public partial record Age(int Value);
+                """,
+                Encoding.UTF8));
 
         // Act
         Func<Task> act = () => test.RunAsync();
