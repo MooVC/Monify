@@ -1,5 +1,6 @@
 ﻿namespace Monify.AttributeAnalyzerTests;
 
+using System.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
@@ -81,6 +82,56 @@ public sealed class WhenExecuted
 
         // Assert
         await act.ShouldNotThrowAsync();
+    }
+
+    [Theory]
+    [Frameworks(Language = LanguageVersion.CSharp11)]
+    public async Task GivenAClassWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    {
+        // Arrange
+        var test = new AnalyzerTest(assembly, language);
+
+        test.TestState.Sources.Add(
+            SourceText.From(
+                """
+                namespace Monify.Tests;
+
+                [Monify<string>]
+                public partial class Inner
+                {
+                }
+                """,
+                Encoding.UTF8));
+
+        // Act
+        Func<Task> act = () => test.RunAsync();
+
+        // Assert
+        await act.ShouldNotThrowAsync();
+    }
+
+    [Theory]
+    [Frameworks(Language = LanguageVersion.CSharp11)]
+    public async Task GivenAPositionalRecordWhenOnlyImplicitStateExistsThenCapturesStateRuleIsRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    {
+        // Arrange
+        var test = new AnalyzerTest(assembly, language);
+
+        test.TestState.Sources.Add(
+            SourceText.From(
+                """
+                namespace Monify.Tests;
+
+                [Monify<int>]
+                public partial record Age(int Amount);
+                """,
+                Encoding.UTF8));
+
+        // Act
+        Func<Task> act = () => test.RunAsync();
+
+        // Assert
+        _ = await act.ShouldThrowAsync<InvalidOperationException>();
     }
 
     private static DiagnosticResult GetExpectedPartialTypeRule(LinePosition position, string @class)

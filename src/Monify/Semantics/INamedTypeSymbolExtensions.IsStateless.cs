@@ -1,6 +1,7 @@
 ﻿namespace Monify.Semantics;
 
 using Microsoft.CodeAnalysis;
+using Monify.Strategies;
 
 /// <summary>
 /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -35,6 +36,7 @@ internal static partial class INamedTypeSymbolExtensions
             .GetMembers()
             .Where(member => member.Kind == SymbolKind.Field && !member.IsStatic)
             .OfType<IFieldSymbol>()
+            .Where(field => !field.IsImplicitlyDeclared || IsExplicitlyDeclaredBackingField(field))
             .ToArray();
 
         hasFieldForEncapsulatedValue = false;
@@ -48,9 +50,15 @@ internal static partial class INamedTypeSymbolExtensions
         {
             IFieldSymbol field = fields[OffsetForFieldWhenAlreadyDefined];
 
-            hasFieldForEncapsulatedValue = SymbolEqualityComparer.IncludeNullability.Equals(field.Type, value);
+            hasFieldForEncapsulatedValue = field.Name.Equals(FieldStrategy.Name)
+                && SymbolEqualityComparer.IncludeNullability.Equals(field.Type, value);
         }
 
         return hasFieldForEncapsulatedValue;
+    }
+
+    private static bool IsExplicitlyDeclaredBackingField(IFieldSymbol field)
+    {
+        return field.AssociatedSymbol is IPropertySymbol property && !property.IsImplicitlyDeclared;
     }
 }
