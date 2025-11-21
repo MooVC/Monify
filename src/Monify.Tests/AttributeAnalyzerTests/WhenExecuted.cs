@@ -85,7 +85,7 @@ public sealed class WhenExecuted
     }
 
     [Theory]
-    [Frameworks(Language = LanguageVersion.CSharp10)]
+    [Frameworks(Language = LanguageVersion.CSharp11)]
     public async Task GivenARecordWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
         // Arrange
@@ -109,7 +109,7 @@ public sealed class WhenExecuted
     }
 
     [Theory]
-    [Frameworks(Language = LanguageVersion.CSharp10)]
+    [Frameworks(Language = LanguageVersion.CSharp11)]
     public async Task GivenAPositionalRecordWhenOnlyImplicitStateExistsThenCapturesStateRuleIsRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
         // Arrange
