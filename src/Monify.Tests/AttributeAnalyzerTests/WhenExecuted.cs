@@ -86,7 +86,7 @@ public sealed class WhenExecuted
 
     [Theory]
     [Frameworks(Language = LanguageVersion.CSharp9)]
-    public async Task GivenAPositionalRecordWhenOnlyImplicitStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    public async Task GivenARecordWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
         // Arrange
         var test = new AnalyzerTest(assembly, language);
@@ -94,10 +94,10 @@ public sealed class WhenExecuted
         test.TestState.Sources.Add(
             SourceText.From(
                 """
-                namespace MonifyTests;
+                namespace Monify.Tests;
 
                 [Monify<int>]
-                public partial record Age(int Value);
+                public partial record Age;
                 """,
                 Encoding.UTF8));
 
@@ -106,6 +106,30 @@ public sealed class WhenExecuted
 
         // Assert
         await act.ShouldNotThrowAsync();
+    }
+
+    [Theory]
+    [Frameworks(Language = LanguageVersion.CSharp9)]
+    public async Task GivenAPositionalRecordWhenOnlyImplicitStateExistsThenCapturesStateRuleIsRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    {
+        // Arrange
+        var test = new AnalyzerTest(assembly, language);
+
+        test.TestState.Sources.Add(
+            SourceText.From(
+                """
+                namespace Monify.Tests;
+
+                [Monify<int>]
+                public partial record Age(int Amount);
+                """,
+                Encoding.UTF8));
+
+        // Act
+        Func<Task> act = () => test.RunAsync();
+
+        // Assert
+        _ = await act.ShouldThrowAsync<InvalidOperationException>();
     }
 
     private static DiagnosticResult GetExpectedPartialTypeRule(LinePosition position, string @class)
