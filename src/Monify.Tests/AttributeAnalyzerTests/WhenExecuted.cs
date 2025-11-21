@@ -86,7 +86,7 @@ public sealed class WhenExecuted
 
     [Theory]
     [Frameworks(Language = LanguageVersion.CSharp11)]
-    public async Task GivenARecordWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
+    public async Task GivenAClassWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
         // Arrange
         var test = new AnalyzerTest(assembly, language);
@@ -96,8 +96,10 @@ public sealed class WhenExecuted
                 """
                 namespace Monify.Tests;
 
-                [Monify<int>]
-                public partial record Age;
+                [Monify<string>]
+                public partial class Inner
+                {
+                }
                 """,
                 Encoding.UTF8));
 
