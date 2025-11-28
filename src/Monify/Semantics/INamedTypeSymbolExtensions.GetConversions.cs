@@ -44,7 +44,8 @@ internal static partial class INamedTypeSymbolExtensions
             ITypeSymbol parameter = isParameterEncapsulated ? subject : method.Parameters[0].Type;
             ITypeSymbol result = isReturnEncapsulated ? subject : method.ReturnType;
 
-            if (subject.HasConversion(parameter, result, method.Name))
+            if (parameter.Equals(result, SymbolEqualityComparer.Default)
+             || subject.HasConversion(parameter, result, method.Name))
             {
                 continue;
             }
