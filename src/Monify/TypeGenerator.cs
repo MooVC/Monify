@@ -16,6 +16,7 @@ public sealed class TypeGenerator
 {
     private static readonly IStrategy[] _strategies = new IStrategy[]
     {
+        new BinaryOperatorStrategy(),
         new ConstructorStrategy(),
         new ConversionOperatorStrategy(),
         new ConvertFromStrategy(),
