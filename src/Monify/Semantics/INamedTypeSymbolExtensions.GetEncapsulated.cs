@@ -36,8 +36,16 @@ internal static partial class INamedTypeSymbolExtensions
 
     private static Encapsulated Catalog(IMethodSymbol[] constructors, Compilation compilation, INamedTypeSymbol subject, ITypeSymbol value)
     {
+        ImmutableArray<Conversion> conversions = ImmutableArray<Conversion>.Empty;
+
+        if (value is INamedTypeSymbol namedEncapsulated)
+        {
+            conversions = namedEncapsulated.GetConversions(subject);
+        }
+
         return new Encapsulated
         {
+            Conversions = conversions,
             HasConstructor = value.HasConstructorFor(constructors),
             HasConversionFrom = subject.HasConversion(subject, value),
             HasConversionTo = subject.HasConversion(value, subject),

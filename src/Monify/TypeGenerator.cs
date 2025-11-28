@@ -19,6 +19,7 @@ public sealed class TypeGenerator
         new ConstructorStrategy(),
         new ConvertFromStrategy(),
         new ConvertToStrategy(),
+        new ConversionOperatorStrategy(),
         new EqualityStrategy(),
         new EqualsStrategy(),
         new EquatableStrategy(),
