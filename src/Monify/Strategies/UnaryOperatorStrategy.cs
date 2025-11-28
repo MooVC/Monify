@@ -4,6 +4,7 @@ using System;
 using Monify.Model;
 using static Monify.Model.Subject;
 using static Monify.Strategies.UnaryOperatorStrategy_Resources;
+
 /// <summary>
 /// Generates operators to forward unary operators supported by the encapsulated type.
 /// </summary>
