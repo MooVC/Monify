@@ -2,6 +2,7 @@ namespace Monify.Semantics;
 
 using System;
 using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Monify.Model;
 
@@ -60,6 +61,10 @@ internal static partial class INamedTypeSymbolExtensions
             });
         }
 
-        return conversions.ToImmutable();
+        return conversions
+            .OrderBy(conversion => conversion.Operator)
+            .ThenBy(conversion => conversion.Parameter)
+            .ThenBy(conversion => conversion.Return)
+            .ToImmutableArray();
     }
 }
