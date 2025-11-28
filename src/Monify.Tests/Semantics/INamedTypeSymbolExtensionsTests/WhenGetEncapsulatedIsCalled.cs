@@ -145,4 +145,92 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Conversions[1].Parameter.ShouldBe("string");
         encapsulated[0].Conversions[1].Return.ShouldBe("global::Sample.Wrapper");
     }
+
+    [Fact]
+    public void GivenEncapsulatedTypeWithUnaryOperatorsThenTheyAreCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+            {
+            }
+
+            public sealed class Value
+            {
+                public static Value operator +(Value value) => value;
+
+                public static Value operator -(Value value) => value;
+
+                public static Value operator !(Value value) => value;
+
+                public static Value operator ~(Value value) => value;
+
+                public static Value operator ++(Value value) => value;
+
+                public static Value operator --(Value value) => value;
+
+                public static bool operator true(Value value) => true;
+
+                public static bool operator false(Value value) => false;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, value);
+
+        // Assert
+        encapsulated[0].UnaryOperators.Length.ShouldBe(8);
+
+        encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_UnaryPlus"
+            && @operator.IsReturnSubject
+            && @operator.Return == "global::Sample.Wrapper"
+            && @operator.Symbol == "+");
+
+        encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_True"
+            && !@operator.IsReturnSubject
+            && @operator.Return == "bool"
+            && @operator.Symbol == "true");
+    }
 }

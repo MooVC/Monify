@@ -17,9 +17,9 @@ public sealed class TypeGenerator
     private static readonly IStrategy[] _strategies = new IStrategy[]
     {
         new ConstructorStrategy(),
+        new ConversionOperatorStrategy(),
         new ConvertFromStrategy(),
         new ConvertToStrategy(),
-        new ConversionOperatorStrategy(),
         new EqualityStrategy(),
         new EqualsStrategy(),
         new EquatableStrategy(),
@@ -27,6 +27,7 @@ public sealed class TypeGenerator
         new GetHashCodeStrategy(),
         new InequalityStrategy(),
         new ToStringStrategy(),
+        new UnaryOperatorStrategy(),
     };
 
     /// <inheritdoc/>
