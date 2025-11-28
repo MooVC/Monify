@@ -26,26 +26,27 @@ internal sealed partial class Encapsulated
     public bool HasConstructor { get; set; }
 
     /// <summary>
-    /// Gets or sets the unary operators supported by the encapsulated type.
-    /// </summary>
-    /// <value>
-    /// The unary operators supported by the encapsulated type.
-    /// </value>
-    public ImmutableArray<UnaryOperator> UnaryOperators { get; set; } = ImmutableArray<UnaryOperator>.Empty;
-
-    /// <summary>
     /// Gets or sets a value indicating whether a conversion from the subject to <see cref="Type"/> already exists.
     /// </summary>
+    /// <value>
+    /// A value indicating whether a conversion from the subject to <see cref="Type"/> already exists.
+    /// </value>
     public bool HasConversionFrom { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether a conversion from <see cref="Type"/> to the subject already exists.
     /// </summary>
+    /// <value>
+    /// A value indicating whether a conversion from <see cref="Type"/> to the subject already exists.
+    /// </value>
     public bool HasConversionTo { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the subject already defines an equality operator for <see cref="Type"/>.
     /// </summary>
+    /// <value>
+    /// A value indicating whether the subject already defines an equality operator for <see cref="Type"/>.
+    /// </value>
     public bool HasEqualityOperator { get; set; }
 
     /// <summary>
@@ -59,6 +60,9 @@ internal sealed partial class Encapsulated
     /// <summary>
     /// Gets or sets a value indicating whether the subject already defines an inequality operator for <see cref="Type"/>.
     /// </summary>
+    /// <value>
+    /// A value indicating whether the subject already defines an inequality operator for <see cref="Type"/>.
+    /// </value>
     public bool HasInequalityOperator { get; set; }
 
     /// <summary>
@@ -80,5 +84,16 @@ internal sealed partial class Encapsulated
     /// <summary>
     /// Gets or sets the fully qualified name of the related type these operator checks apply to.
     /// </summary>
+    /// <value>
+    /// The fully qualified name of the related type these operator checks apply to.
+    /// </value>
     public string Type { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the unary operators supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The unary operators supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<UnaryOperator> UnaryOperators { get; set; } = ImmutableArray<UnaryOperator>.Empty;
 }

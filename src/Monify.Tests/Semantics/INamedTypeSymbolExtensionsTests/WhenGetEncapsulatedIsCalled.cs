@@ -222,13 +222,15 @@ public sealed class WhenGetEncapsulatedIsCalled
 
         // Assert
         encapsulated[0].UnaryOperators.Length.ShouldBe(8);
-        encapsulated[0].UnaryOperators.ShouldContain(operator => operator.Operator == "op_UnaryPlus"
-            && operator.IsReturnSubject
-            && operator.Return == "global::Sample.Wrapper"
-            && operator.Symbol == "+");
-        encapsulated[0].UnaryOperators.ShouldContain(operator => operator.Operator == "op_True"
-            && !operator.IsReturnSubject
-            && operator.Return == "bool"
-            && operator.Symbol == "true");
+
+        encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_UnaryPlus"
+            && @operator.IsReturnSubject
+            && @operator.Return == "global::Sample.Wrapper"
+            && @operator.Symbol == "+");
+
+        encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_True"
+            && !@operator.IsReturnSubject
+            && @operator.Return == "bool"
+            && @operator.Symbol == "true");
     }
 }

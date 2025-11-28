@@ -3,14 +3,13 @@ namespace Monify.Strategies;
 using System;
 using Monify.Model;
 using static Monify.Model.Subject;
-
+using static Monify.Strategies.UnaryOperatorStrategy_Resources;
 /// <summary>
 /// Generates operators to forward unary operators supported by the encapsulated type.
 /// </summary>
 internal sealed class UnaryOperatorStrategy
     : IStrategy
 {
-
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
@@ -43,7 +42,11 @@ internal sealed class UnaryOperatorStrategy
     {
         (string operand, bool requiresValueCopy) = GetOperand(unary.Symbol);
         string operation = ApplyOperator(unary.Symbol, operand);
-        string returnType = unary.IsReturnSubject ? subject.Qualification : unary.Return;
+
+        string returnType = unary.IsReturnSubject
+            ? subject.Qualification
+            : unary.Return;
+
         string result = unary.IsReturnSubject
             ? $"return new {subject.Qualification}({operation});"
             : $"return ({returnType}){operation};";
@@ -96,7 +99,7 @@ internal sealed class UnaryOperatorStrategy
             "+" => $"+{operand}",
             "true" => $"{operand} ? true : false",
             "false" => $"{operand} ? false : true",
-            _ => throw new NotSupportedException($"Unsupported unary operator: {symbol}"),
+            _ => throw new NotSupportedException(string.Format(ApplyOperatorNotSupported, symbol)),
         };
     }
 

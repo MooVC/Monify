@@ -4,27 +4,37 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+# [Unreleased]
 
-### Fixed
+## Added
+
+- Conversions supported by the encapsulated type are now propagated to the `Monify` type (#44).
+- Unary operators supported by the encapsulated type are now propagated to the `Monify` type (#44).
+
+## Fixed
+
 - MONFY03 should no longer be raised for types that do not explicitly capture state (#22).
 
-## [1.2.0] - 2025-11-16
+# [1.2.0] - 2025-11-16
 
-### Added
+## Added
+
 - When the encapsulated type is for a type that also uses `Monify`, constructors, equality checks and implicit conversion operators to enable conversion directly to the nested encapsulated type (#34).
 
-### Fixed
+## Fixed
+
 - Equality checks now correctly handle null values for reference types.
 
 # [1.1.4] - 2025-11-03
 
 ## Fixed
+
 - Instances of `ImmutableArray<>` are now explicitly checked for default as part of the equality checks (#29).
 
 # [1.1.3] - 2025-10-31
 
 ## Fixed
+
 - MONFY03 is no longer raised if the encapsulated type cannot be determined (#22).
 - Equality checks involing an encapsulated array containing identical values now yield true (#19).
 - `ToString` no longer throws a `FormatException`.
@@ -32,16 +42,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # [1.1.2] - 2025-10-20
 
 ## Fixed
+
 - ConvertFrom now uses `ReferenceEquals` instead of `==` to avoid ambiguity when the encapsulated type is a reference type (#17).
 
 # [1.1.1] - 2025-10-17
 
 ## Fixed
+
 - Set **Valuify** to Version **1.7.0** instead of **1.7.0-rc.1**.
 
 # [1.1.0] - 2025-10-17
 
 ## Changed
+
 - Reverted **Microsoft.CodeAnalysis.Analyzers** to Version **3.11.0** to maximize compatibility with Visual Studio 2022.
 - Reverted **Microsoft.CodeAnalysis.CSharp** to Version **4.4.0** to maximize compatibility with Visual Studio 2022.
 - Reverted **Microsoft.CodeAnalysis.CSharp.Workspaces** Version **4.4.0** to maximize compatibility with Visual Studio 2022.

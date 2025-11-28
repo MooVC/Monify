@@ -1,6 +1,5 @@
 namespace Monify.Semantics;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
@@ -11,7 +10,9 @@ using Monify.Model;
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
-    private static readonly IReadOnlyDictionary<string, string> SupportedUnaryOperators = new Dictionary<string, string>
+    private const int ExpectedParametersForUnaryOperator = 1;
+
+    private static readonly IReadOnlyDictionary<string, string> _supported = new Dictionary<string, string>
     {
         ["op_Decrement"] = "--",
         ["op_Increment"] = "++",
@@ -22,8 +23,6 @@ internal static partial class INamedTypeSymbolExtensions
         ["op_UnaryNegation"] = "-",
         ["op_UnaryPlus"] = "+",
     };
-
-    private const int ExpectedParametersForUnaryOperator = 1;
 
     /// <summary>
     /// Identifies the unary operators declared by the <paramref name="encapsulated"/> type.
@@ -42,7 +41,7 @@ internal static partial class INamedTypeSymbolExtensions
                 continue;
             }
 
-            if (!SupportedUnaryOperators.TryGetValue(method.Name, out string symbol))
+            if (!_supported.TryGetValue(method.Name, out string symbol))
             {
                 continue;
             }

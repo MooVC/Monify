@@ -17,17 +17,17 @@ public sealed class TypeGenerator
     private static readonly IStrategy[] _strategies = new IStrategy[]
     {
         new ConstructorStrategy(),
+        new ConversionOperatorStrategy(),
         new ConvertFromStrategy(),
         new ConvertToStrategy(),
-        new ConversionOperatorStrategy(),
         new EqualityStrategy(),
         new EqualsStrategy(),
         new EquatableStrategy(),
         new FieldStrategy(),
         new GetHashCodeStrategy(),
         new InequalityStrategy(),
-        new UnaryOperatorStrategy(),
         new ToStringStrategy(),
+        new UnaryOperatorStrategy(),
     };
 
     /// <inheritdoc/>
