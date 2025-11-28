@@ -140,9 +140,9 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Conversions.Length.ShouldBe(2);
         encapsulated[0].Conversions[0].IsParameterSubject.ShouldBeTrue();
         encapsulated[0].Conversions[0].Parameter.ShouldBe("global::Sample.Wrapper");
-        encapsulated[0].Conversions[0].Return.ShouldBe("global::System.String");
+        encapsulated[0].Conversions[0].Return.ShouldBe("string");
         encapsulated[0].Conversions[1].IsReturnSubject.ShouldBeTrue();
-        encapsulated[0].Conversions[1].Parameter.ShouldBe("global::System.String");
+        encapsulated[0].Conversions[1].Parameter.ShouldBe("string");
         encapsulated[0].Conversions[1].Return.ShouldBe("global::Sample.Wrapper");
     }
 }

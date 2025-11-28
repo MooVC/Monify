@@ -17,7 +17,7 @@ public sealed class WhenExecuted
     ];
 
     [Theory]
-    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(Simple)])]
+    [Snippets(exclusions: [typeof(Attributes)])]
     public async Task GivenATypeTheExpectedSourceIsGenerated(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange

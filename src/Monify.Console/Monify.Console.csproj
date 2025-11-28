@@ -3,8 +3,10 @@
     <IsPackable>false</IsPackable>
     <OutputType>Exe</OutputType>
     <NoWarn>S2326</NoWarn>
-    <TargetFrameworks>net10.0</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Monify\Monify.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>

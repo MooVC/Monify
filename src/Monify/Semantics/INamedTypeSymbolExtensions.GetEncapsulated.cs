@@ -38,9 +38,9 @@ internal static partial class INamedTypeSymbolExtensions
     {
         ImmutableArray<Conversion> conversions = ImmutableArray<Conversion>.Empty;
 
-        if (value is INamedTypeSymbol namedEncapsulated)
+        if (value is INamedTypeSymbol encapsulated)
         {
-            conversions = namedEncapsulated.GetConversions(subject);
+            conversions = encapsulated.GetConversions(subject);
         }
 
         return new Encapsulated

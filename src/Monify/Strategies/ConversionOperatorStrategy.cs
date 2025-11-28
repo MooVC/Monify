@@ -1,6 +1,5 @@
 namespace Monify.Strategies;
 
-using System;
 using Monify.Model;
 using static Monify.Model.Subject;
 
@@ -11,7 +10,6 @@ internal sealed class ConversionOperatorStrategy
     : IStrategy
 {
     private const string ExplicitOperatorName = "op_Explicit";
-    private const string ImplicitOperatorName = "op_Implicit";
 
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)

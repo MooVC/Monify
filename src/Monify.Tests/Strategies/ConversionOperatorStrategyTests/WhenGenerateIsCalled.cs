@@ -1,6 +1,5 @@
 namespace Monify.Strategies.ConversionOperatorStrategyTests;
 
-using System.Collections.Immutable;
 using Monify.Model;
 using Monify.Strategies;
 
@@ -11,7 +10,7 @@ public sealed class WhenGenerateIsCalled
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Encapsulated = [new Encapsulated { Conversions = ImmutableArray<Conversion>.Empty, Type = "int" }];
+        subject.Encapsulated = [new Encapsulated { Conversions = [], Type = "int" }];
         var strategy = new ConversionOperatorStrategy();
 
         // Act
