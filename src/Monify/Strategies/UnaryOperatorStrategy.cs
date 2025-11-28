@@ -10,7 +10,6 @@ using static Monify.Model.Subject;
 internal sealed class UnaryOperatorStrategy
     : IStrategy
 {
-    private const string Indentation = "            ";
 
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
@@ -45,12 +44,29 @@ internal sealed class UnaryOperatorStrategy
         (string operand, bool requiresValueCopy) = GetOperand(unary.Symbol);
         string operation = ApplyOperator(unary.Symbol, operand);
         string returnType = unary.IsReturnSubject ? subject.Qualification : unary.Return;
-        string valueDeclaration = requiresValueCopy
-            ? $"{encapsulated.Type} value = subject._value;{Environment.NewLine}{Environment.NewLine}{Indentation}"
-            : string.Empty;
         string result = unary.IsReturnSubject
             ? $"return new {subject.Qualification}({operation});"
             : $"return ({returnType}){operation};";
+
+        if (requiresValueCopy)
+        {
+            return $$"""
+                {{subject.Declaration}} {{subject.Qualification}}
+                {
+                    public static {{returnType}} operator {{unary.Symbol}}({{subject.Qualification}} subject)
+                    {
+                        if (ReferenceEquals(subject, null))
+                        {
+                            throw new ArgumentNullException("subject");
+                        }
+
+                        {{encapsulated.Type}} value = subject._value;
+
+                        {{result}}
+                    }
+                }
+                """;
+        }
 
         return $$"""
             {{subject.Declaration}} {{subject.Qualification}}
@@ -62,7 +78,7 @@ internal sealed class UnaryOperatorStrategy
                         throw new ArgumentNullException("subject");
                     }
 
-                    {{valueDeclaration}}{{result}}
+                    {{result}}
                 }
             }
             """;
