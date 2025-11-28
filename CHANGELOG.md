@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
+- Binary operators supported by the encapsulated type are now propagated to the `Monify` type (#44).
 - Conversions supported by the encapsulated type are now propagated to the `Monify` type (#44).
 - Unary operators supported by the encapsulated type are now propagated to the `Monify` type (#44).
-- Binary operators supported by the encapsulated type are now propagated to the `Monify` type.
 
 ## Fixed
 

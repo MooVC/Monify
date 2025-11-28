@@ -1,6 +1,5 @@
 namespace Monify.Strategies;
 
-using System;
 using Monify.Model;
 using static Monify.Model.Subject;
 
