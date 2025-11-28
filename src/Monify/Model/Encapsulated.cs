@@ -26,6 +26,14 @@ internal sealed partial class Encapsulated
     public bool HasConstructor { get; set; }
 
     /// <summary>
+    /// Gets or sets the unary operators supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The unary operators supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<UnaryOperator> UnaryOperators { get; set; } = ImmutableArray<UnaryOperator>.Empty;
+
+    /// <summary>
     /// Gets or sets a value indicating whether a conversion from the subject to <see cref="Type"/> already exists.
     /// </summary>
     public bool HasConversionFrom { get; set; }

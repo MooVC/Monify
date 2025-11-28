@@ -26,6 +26,7 @@ public sealed class TypeGenerator
         new FieldStrategy(),
         new GetHashCodeStrategy(),
         new InequalityStrategy(),
+        new UnaryOperatorStrategy(),
         new ToStringStrategy(),
     };
 
