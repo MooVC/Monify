@@ -1,5 +1,6 @@
 namespace Monify.Model;
 
+using System.Collections.Immutable;
 using Valuify;
 
 /// <summary>
@@ -8,6 +9,14 @@ using Valuify;
 [Valuify]
 internal sealed partial class Encapsulated
 {
+    /// <summary>
+    /// Gets or sets the conversions supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The conversions supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<Conversion> Conversions { get; set; } = ImmutableArray<Conversion>.Empty;
+
     /// <summary>
     /// Gets or sets a value indicating whether or not the subject defines a constructor for the encapsulated value.
     /// </summary>
