@@ -233,4 +233,101 @@ public sealed class WhenGetEncapsulatedIsCalled
             && @operator.Return == "bool"
             && @operator.Symbol == "true");
     }
+
+    [Fact]
+    public void GivenEncapsulatedTypeWithBinaryOperatorsThenTheyAreCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+            {
+            }
+
+            public sealed class Value
+            {
+                public static Value operator +(Value left, Value right) => left;
+
+                public static Value operator -(Value left, int right) => left;
+
+                public static bool operator <(Value left, Value right) => true;
+
+                public static bool operator >=(int left, Value right) => true;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, value);
+
+        // Assert
+        encapsulated[0].BinaryOperators.Length.ShouldBe(4);
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
+            && @operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Symbol == "+");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Subtraction"
+            && @operator.IsLeftSubject
+            && !@operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Right == "int"
+            && @operator.Symbol == "-");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_LessThan"
+            && @operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && !@operator.IsReturnSubject
+            && @operator.Return == "bool"
+            && @operator.Symbol == "<");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_GreaterThanOrEqual"
+            && !@operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && !@operator.IsReturnSubject
+            && @operator.Left == "int"
+            && @operator.Symbol == ">=");
+    }
 }

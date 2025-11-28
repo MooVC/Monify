@@ -90,6 +90,14 @@ internal sealed partial class Encapsulated
     public string Type { get; set; } = string.Empty;
 
     /// <summary>
+    /// Gets or sets the binary operators supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The binary operators supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<BinaryOperator> BinaryOperators { get; set; } = ImmutableArray<BinaryOperator>.Empty;
+
+    /// <summary>
     /// Gets or sets the unary operators supported by the encapsulated type.
     /// </summary>
     /// <value>

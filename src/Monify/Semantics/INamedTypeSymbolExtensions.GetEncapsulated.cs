@@ -37,11 +37,13 @@ internal static partial class INamedTypeSymbolExtensions
     private static Encapsulated Catalog(IMethodSymbol[] constructors, Compilation compilation, INamedTypeSymbol subject, ITypeSymbol value)
     {
         ImmutableArray<Conversion> conversions = ImmutableArray<Conversion>.Empty;
+        ImmutableArray<BinaryOperator> binaryOperators = ImmutableArray<BinaryOperator>.Empty;
         ImmutableArray<UnaryOperator> unaryOperators = ImmutableArray<UnaryOperator>.Empty;
 
         if (value is INamedTypeSymbol encapsulated)
         {
             conversions = encapsulated.GetConversions(subject);
+            binaryOperators = encapsulated.GetBinaryOperators(subject);
             unaryOperators = encapsulated.GetUnaryOperators(subject);
         }
 
@@ -57,6 +59,7 @@ internal static partial class INamedTypeSymbolExtensions
             IsEquatable = subject.IsEquatable(compilation, type: value),
             IsSequence = value.IsSequence(),
             Type = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+            BinaryOperators = binaryOperators,
             UnaryOperators = unaryOperators,
         };
     }
