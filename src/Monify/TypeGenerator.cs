@@ -1,6 +1,7 @@
 ﻿namespace Monify;
 
 using System;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Monify.Model;
@@ -76,17 +77,14 @@ public sealed class TypeGenerator
 
     private static string GetHint(Source source, Subject subject)
     {
-        string name = subject.Name;
-
-        if (subject.Nesting.Length > 0)
-        {
-            IEnumerable<string> names = subject.Nesting
-                .Reverse()
-                .Select(parent => parent.Name)
-                .Union(new[] { name });
-
-            name = string.Join(".", names);
-        }
+        string name = subject.Nesting
+            .Select(parent => parent.Name)
+            .Concat(new[] { subject.Name })
+            .Aggregate(
+                string.Empty,
+                (current, next) => string.IsNullOrEmpty(current)
+                    ? next
+                    : $"{current}.{next}");
 
         string separator = source.Hint.StartsWith(".")
             ? string.Empty
@@ -112,7 +110,7 @@ public sealed class TypeGenerator
 
     private static string Nest(string code, Subject subject)
     {
-        foreach (Nesting parent in subject.Nesting)
+        foreach (Nesting parent in subject.Nesting.Reverse())
         {
             code = code.Indent();
 

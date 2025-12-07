@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Monify.Snippets;
 using Monify.Snippets.Declarations;
-using Monify.Snippets.Declarations.Structs;
 
 public sealed class WhenExecuted
 {
@@ -24,9 +23,9 @@ public sealed class WhenExecuted
         var test = new GeneratorTest<TypeGenerator>(assembly, language, _generators);
 
         Attributes.IsExpectedIn(test.TestState, language);
-        expectations.IsDeclaredIn(test.TestState);
         Internal.HashCode.IsExpectedIn(test.TestState);
         Internal.SequenceEqualityComparer.IsExpectedIn(test.TestState);
+        expectations.IsDeclaredIn(test.TestState);
 
         // Act
         Func<Task> act = () => test.RunAsync();
