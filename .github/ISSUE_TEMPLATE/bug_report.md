@@ -20,9 +20,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
-- Monify Version: [e.g. 1.0.0]
-- .NET Version (Your Project): [e.g. NET 8]
- - IDE: [e.g. Visual Studio 2022]
+- Monify Version: [1.3.1]
+- .NET Version (Your Project): [NET 10]
+ - IDE: [Visual Studio 2022 v18.0.2]
 
 **Additional context**
 Add any other context about the problem here.

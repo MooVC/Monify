@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Monify.Snippets;
 using Monify.Snippets.Declarations;
-using Monify.Snippets.Declarations.Structs;
 
 public sealed class WhenExecuted
 {
