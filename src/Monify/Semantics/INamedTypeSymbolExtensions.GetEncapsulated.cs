@@ -17,24 +17,36 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="compilation">
     /// The <see cref="Compilation"/> used to source the symbol for <see cref="IEquatable{T}"/>.
     /// </param>
+    /// <param name="model">
+    /// The semantic model based for the current execution context.
+    /// </param>
     /// <param name="value">The encapsulated value.</param>
     /// <returns>The metadata for the conversions and passthrough operators that should be generated.</returns>
-    public static ImmutableArray<Encapsulated> GetEncapsulated(this INamedTypeSymbol subject, Compilation compilation, ITypeSymbol value)
+    public static ImmutableArray<Encapsulated> GetEncapsulated(
+        this INamedTypeSymbol subject,
+        Compilation compilation,
+        SemanticModel model,
+        ITypeSymbol value)
     {
         ImmutableArray<Encapsulated>.Builder builder = ImmutableArray.CreateBuilder<Encapsulated>();
         IMethodSymbol[] constructors = subject.GetConstructors();
 
-        builder.Add(Catalog(constructors, compilation, subject, value));
+        builder.Add(Catalog(constructors, compilation, model, subject, value));
 
         if (value is INamedTypeSymbol named)
         {
-            GetPassthroughEncapsulations(builder, constructors, compilation, subject, named);
+            GetPassthroughEncapsulations(builder, constructors, compilation, model, subject, named);
         }
 
         return builder.ToImmutable();
     }
 
-    private static Encapsulated Catalog(IMethodSymbol[] constructors, Compilation compilation, INamedTypeSymbol subject, ITypeSymbol value)
+    private static Encapsulated Catalog(
+        IMethodSymbol[] constructors,
+        Compilation compilation,
+        SemanticModel model,
+        INamedTypeSymbol subject,
+        ITypeSymbol value)
     {
         ImmutableArray<Conversion> conversions = ImmutableArray<Conversion>.Empty;
         ImmutableArray<BinaryOperator> binaryOperators = ImmutableArray<BinaryOperator>.Empty;
@@ -43,7 +55,7 @@ internal static partial class INamedTypeSymbolExtensions
         if (value is INamedTypeSymbol encapsulated)
         {
             binaryOperators = encapsulated.GetBinaryOperators(subject);
-            conversions = encapsulated.GetConversions(subject);
+            conversions = encapsulated.GetConversions(model, subject);
             unaryOperators = encapsulated.GetUnaryOperators(subject);
         }
 
@@ -68,6 +80,7 @@ internal static partial class INamedTypeSymbolExtensions
         ImmutableArray<Encapsulated>.Builder builder,
         IMethodSymbol[] constructors,
         Compilation compilation,
+        SemanticModel model,
         INamedTypeSymbol subject,
         INamedTypeSymbol named)
     {
@@ -84,7 +97,7 @@ internal static partial class INamedTypeSymbolExtensions
                 break;
             }
 
-            builder.Add(Catalog(constructors, compilation, subject, nested));
+            builder.Add(Catalog(constructors, compilation, model, subject, nested));
 
             if (nested is not INamedTypeSymbol inner)
             {

@@ -63,7 +63,7 @@ public sealed class WhenToSubjectIsCalled
         outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        var subject = outer.ToSubject(compilation, [], value);
+        var subject = outer.ToSubject(compilation, model, [], value);
 
         // Assert
         _ = subject.ShouldNotBeNull();
@@ -137,7 +137,7 @@ public sealed class WhenToSubjectIsCalled
         outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        var subject = outer.ToSubject(compilation, [], value);
+        var subject = outer.ToSubject(compilation, model, [], value);
 
         // Assert
         _ = subject.ShouldNotBeNull();

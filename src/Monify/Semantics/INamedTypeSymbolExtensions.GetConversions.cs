@@ -17,15 +17,13 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="encapsulated">The encapsulated type whose operators are to be inspected.</param>
     /// <param name="subject">The subject type being generated.</param>
     /// <returns>The conversions that should be forwarded to the subject.</returns>
-    public static ImmutableArray<Conversion> GetConversions(this INamedTypeSymbol encapsulated, INamedTypeSymbol subject)
+    public static ImmutableArray<Conversion> GetConversions(this INamedTypeSymbol encapsulated, SemanticModel model, INamedTypeSymbol subject)
     {
         ImmutableArray<Conversion>.Builder conversions = ImmutableArray.CreateBuilder<Conversion>();
 
         foreach (IMethodSymbol method in encapsulated.GetMembers().OfType<IMethodSymbol>())
         {
-            if (!(method.IsOperator() && method.IsConversion())
-               || method.IsSelfConversion(encapsulated, subject)
-               || method.IsSelfConversion(subject, encapsulated))
+            if (!(method.IsOperator() && method.IsConversion()))
             {
                 continue;
             }
@@ -42,7 +40,8 @@ internal static partial class INamedTypeSymbolExtensions
             ITypeSymbol result = isReturnEncapsulated ? subject : method.ReturnType;
 
             if (parameter.Equals(result, SymbolEqualityComparer.Default)
-             || subject.HasConversion(parameter, result, method.Name))
+             || subject.HasConversion(parameter, result, method.Name)
+             || IsDuplicateOfMonifyConversions(encapsulated, model, method, isParameterEncapsulated, isReturnEncapsulated))
             {
                 continue;
             }
@@ -69,15 +68,21 @@ internal static partial class INamedTypeSymbolExtensions
         return method.MethodKind == MethodKind.Conversion && method.Parameters.Length == ExpectedParametersForConversion;
     }
 
+    private static bool IsDuplicateOfMonifyConversions(
+        INamedTypeSymbol encapsulated,
+        SemanticModel model,
+        IMethodSymbol method,
+        bool isParameterEncapsulated,
+        bool isReturnEncapsulated)
+    {
+        return encapsulated.HasMonify(model, out ITypeSymbol inner)
+            && ((isReturnEncapsulated && method.Parameters[0].Type.Equals(inner, SymbolEqualityComparer.IncludeNullability))
+             || (isParameterEncapsulated && method.ReturnType.Equals(inner, SymbolEqualityComparer.IncludeNullability)));
+    }
+
     private static bool IsOperator(this IMethodSymbol method)
     {
         return method.Name.Equals(ImplicitOperatorName, StringComparison.Ordinal)
             || method.Name.Equals(ExplicitOperatorName, StringComparison.Ordinal);
-    }
-
-    private static bool IsSelfConversion(this IMethodSymbol method, INamedTypeSymbol from, INamedTypeSymbol to)
-    {
-        return method.Parameters[0].Type.Equals(from, SymbolEqualityComparer.IncludeNullability)
-            && method.ReturnType.Equals(to, SymbolEqualityComparer.IncludeNullability);
     }
 }

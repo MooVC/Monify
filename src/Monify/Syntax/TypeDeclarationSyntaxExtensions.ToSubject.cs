@@ -48,6 +48,6 @@ internal static partial class TypeDeclarationSyntaxExtensions
             return default;
         }
 
-        return type.ToSubject(compilation, ImmutableArray.ToImmutableArray(nesting), value);
+        return type.ToSubject(compilation, model, ImmutableArray.ToImmutableArray(nesting), value);
     }
 }

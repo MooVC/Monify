@@ -66,7 +66,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        ImmutableArray<Encapsulated> encapsulated = outer.GetEncapsulated(compilation, value);
+        ImmutableArray<Encapsulated> encapsulated = outer.GetEncapsulated(compilation, model, value);
 
         // Assert
         encapsulated.Length.ShouldBe(2);
@@ -134,7 +134,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, value);
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
 
         // Assert
         encapsulated[0].Conversions.Length.ShouldBe(2);
@@ -218,7 +218,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, value);
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
 
         // Assert
         encapsulated[0].UnaryOperators.Length.ShouldBe(8);
@@ -298,7 +298,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, value);
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
 
         // Assert
         encapsulated[0].BinaryOperators.Length.ShouldBe(4);
