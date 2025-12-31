@@ -42,13 +42,14 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (value is INamedTypeSymbol encapsulated)
         {
-            conversions = encapsulated.GetConversions(subject);
             binaryOperators = encapsulated.GetBinaryOperators(subject);
+            conversions = encapsulated.GetConversions(subject);
             unaryOperators = encapsulated.GetUnaryOperators(subject);
         }
 
         return new Encapsulated
         {
+            BinaryOperators = binaryOperators,
             Conversions = conversions,
             HasConstructor = value.HasConstructorFor(constructors),
             HasConversionFrom = subject.HasConversion(subject, value),
@@ -59,7 +60,6 @@ internal static partial class INamedTypeSymbolExtensions
             IsEquatable = subject.IsEquatable(compilation, type: value),
             IsSequence = value.IsSequence(),
             Type = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-            BinaryOperators = binaryOperators,
             UnaryOperators = unaryOperators,
         };
     }

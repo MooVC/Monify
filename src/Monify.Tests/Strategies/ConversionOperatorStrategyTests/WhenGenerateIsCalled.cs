@@ -48,7 +48,7 @@ public sealed class WhenGenerateIsCalled
         Source source = strategy.Generate(subject).Single();
 
         // Assert
-        source.Hint.ShouldBe("ConversionOperators.00");
+        source.Hint.ShouldBe("Conversions.00");
         source.Code.ShouldContain("implicit operator string(Sample subject)");
         source.Code.ShouldContain("(string)subject._value");
     }
@@ -81,7 +81,7 @@ public sealed class WhenGenerateIsCalled
         Source source = strategy.Generate(subject).Single();
 
         // Assert
-        source.Hint.ShouldBe("ConversionOperators.00");
+        source.Hint.ShouldBe("Conversions.00");
         source.Code.ShouldContain("explicit operator Sample(string value)");
         source.Code.ShouldContain("new Sample((int)value)");
     }

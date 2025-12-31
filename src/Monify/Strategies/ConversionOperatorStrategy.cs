@@ -24,8 +24,8 @@ internal sealed class ConversionOperatorStrategy
             }
 
             string hintPrefix = index == IndexForEncapsulatedValue
-                ? "ConversionOperators"
-                : $"ConversionOperators.Passthrough.Level{index:D2}";
+                ? "Conversions"
+                : $"Conversions.Passthrough.Level{index:D2}";
 
             for (int conversionIndex = 0; conversionIndex < encapsulated.Conversions.Length; conversionIndex++)
             {

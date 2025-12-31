@@ -23,13 +23,9 @@ internal static partial class INamedTypeSymbolExtensions
 
         foreach (IMethodSymbol method in encapsulated.GetMembers().OfType<IMethodSymbol>())
         {
-            if (method.MethodKind != MethodKind.Conversion || method.Parameters.Length != ExpectedParametersForConversion)
-            {
-                continue;
-            }
-
-            if (!method.Name.Equals(ImplicitOperatorName, StringComparison.Ordinal)
-             && !method.Name.Equals(ExplicitOperatorName, StringComparison.Ordinal))
+            if (!(method.IsOperator() && method.IsConversion())
+               || method.IsSelfConversion(encapsulated, subject)
+               || method.IsSelfConversion(subject, encapsulated))
             {
                 continue;
             }
@@ -66,5 +62,22 @@ internal static partial class INamedTypeSymbolExtensions
             .ThenBy(conversion => conversion.Parameter)
             .ThenBy(conversion => conversion.Return)
             .ToImmutableArray();
+    }
+
+    private static bool IsConversion(this IMethodSymbol method)
+    {
+        return method.MethodKind == MethodKind.Conversion && method.Parameters.Length == ExpectedParametersForConversion;
+    }
+
+    private static bool IsOperator(this IMethodSymbol method)
+    {
+        return method.Name.Equals(ImplicitOperatorName, StringComparison.Ordinal)
+            || method.Name.Equals(ExplicitOperatorName, StringComparison.Ordinal);
+    }
+
+    private static bool IsSelfConversion(this IMethodSymbol method, INamedTypeSymbol from, INamedTypeSymbol to)
+    {
+        return method.Parameters[0].Type.Equals(from, SymbolEqualityComparer.IncludeNullability)
+            && method.ReturnType.Equals(to, SymbolEqualityComparer.IncludeNullability);
     }
 }
