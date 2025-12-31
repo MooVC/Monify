@@ -18,6 +18,9 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="compilation">
     /// The <see cref="Compilation"/> used to source the symbol for <see cref="IEquatable{T}"/>.
     /// </param>
+    /// <param name="model">
+    /// The semantic model based for the current execution context.
+    /// </param>
     /// <param name="nesting">
     /// The declaration syntax for the parents of the <paramref name="syntax"/>.
     /// </param>
@@ -30,7 +33,12 @@ internal static partial class INamedTypeSymbolExtensions
     /// <remarks>
     /// If the declaration associated with the type cannot be determined, the method will return <see langword="null" />.
     /// </remarks>
-    public static Subject? ToSubject(this INamedTypeSymbol subject, Compilation compilation, ImmutableArray<Nesting> nesting, ITypeSymbol value)
+    public static Subject? ToSubject(
+        this INamedTypeSymbol subject,
+        Compilation compilation,
+        SemanticModel model,
+        ImmutableArray<Nesting> nesting,
+        ITypeSymbol value)
     {
         string @namespace = subject.ContainingNamespace.IsGlobalNamespace
            ? string.Empty
@@ -51,7 +59,7 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
             CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
-            Encapsulated = subject.GetEncapsulated(compilation, value),
+            Encapsulated = subject.GetEncapsulated(compilation, model, value),
             HasEqualityOperator = subject.HasEqualityOperator(),
             HasEquatable = subject.HasEquatable(),
             HasField = hasFieldForEncapsulatedValue,
