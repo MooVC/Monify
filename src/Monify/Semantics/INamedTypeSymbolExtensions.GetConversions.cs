@@ -23,9 +23,7 @@ internal static partial class INamedTypeSymbolExtensions
 
         foreach (IMethodSymbol method in encapsulated.GetMembers().OfType<IMethodSymbol>())
         {
-            if (!(method.IsOperator() && method.IsConversion())
-               || method.IsSelfConversion(encapsulated, subject)
-               || method.IsSelfConversion(subject, encapsulated))
+            if (!(method.IsOperator() && method.IsConversion()))
             {
                 continue;
             }
@@ -42,6 +40,8 @@ internal static partial class INamedTypeSymbolExtensions
             ITypeSymbol result = isReturnEncapsulated ? subject : method.ReturnType;
 
             if (parameter.Equals(result, SymbolEqualityComparer.Default)
+             || (isReturnEncapsulated && method.Parameters[0].Type.Equals(encapsulated, SymbolEqualityComparer.IncludeNullability))
+             || (isParameterEncapsulated && method.ReturnType.Equals(encapsulated, SymbolEqualityComparer.IncludeNullability))
              || subject.HasConversion(parameter, result, method.Name))
             {
                 continue;
@@ -73,11 +73,5 @@ internal static partial class INamedTypeSymbolExtensions
     {
         return method.Name.Equals(ImplicitOperatorName, StringComparison.Ordinal)
             || method.Name.Equals(ExplicitOperatorName, StringComparison.Ordinal);
-    }
-
-    private static bool IsSelfConversion(this IMethodSymbol method, INamedTypeSymbol from, INamedTypeSymbol to)
-    {
-        return method.Parameters[0].Type.Equals(from, SymbolEqualityComparer.IncludeNullability)
-            && method.ReturnType.Equals(to, SymbolEqualityComparer.IncludeNullability);
     }
 }

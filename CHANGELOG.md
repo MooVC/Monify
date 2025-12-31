@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
-- Self conversion opertors from passthrough instances are no longer duplicated when the encapsulated type is located in a separate project.
+- Self conversion operators from passthrough instances are no longer duplicated when the encapsulated type is located in a separate project.
 
 # [1.3.1] - 2025-12-07
 
