@@ -23,7 +23,7 @@ permissions:
 jobs:
   build:
     name: Build, Test & Publish
-    runs-on: windows-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       semantic: ${{ steps.extract-version.outputs.semantic }}
