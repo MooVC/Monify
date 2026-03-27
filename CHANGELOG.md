@@ -4,6 +4,12 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [Unreleased]
+
+## Changed
+
+- Improved package and repository discoverability for engineers evaluating Monify for encapsulated functional value types (including monad-style wrappers) by updating NuGet tags, package description, README positioning, and a new monad onboarding guide.
+
 # [1.3.2] - 2025-12-31
 
 ## Fixed
