@@ -31,6 +31,7 @@ The project enforces strong C# coding conventions through `.editorconfig`, [Styl
 - Use `nameof` for member names in exceptions and logging.
 - Use `string.Empty` instead of `""` for empty strings.
 - When possible, place declarations in alphabetical order (e.g. fields, parameters, properties, methods).
+- File may not end with a newline character.
 
 ### Unit Testing Conventions
 
