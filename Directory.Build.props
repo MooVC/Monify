@@ -12,7 +12,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MooVC/monify</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>Analyzer;Analyzers;CSharp;DDD;Domain;Dotnet;Generator;Roslyn;Source;Value;ValueType</PackageTags>
+    <PackageTags>Analyzer;Analyzers;CSharp;DDD;Domain;Dotnet;Functional;Generator;Monad;Roslyn;Source;Value;ValueType</PackageTags>
     <Product>Monify</Product>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
