@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 
 /// <summary>
-/// Provides extensions relating to <see cref="string"/>.
+/// Provides extensions relating to <see langword="string"/>.
 /// </summary>
 internal static partial class StringExtensions
 {
