@@ -18,6 +18,7 @@ public static class WhenEqualsWithSimpleForIntIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenOtherHasSameValueThenReturnTrue()
     {
@@ -45,5 +46,4 @@ public static class WhenEqualsWithSimpleForIntIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
-
 }

@@ -17,6 +17,7 @@ public static class WhenInequalityOperatorWithIntArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnFalse()
     {
@@ -42,5 +43,4 @@ public static class WhenInequalityOperatorWithIntArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

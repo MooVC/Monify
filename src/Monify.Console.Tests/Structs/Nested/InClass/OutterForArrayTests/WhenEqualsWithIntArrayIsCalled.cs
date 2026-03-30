@@ -17,6 +17,7 @@ public static class WhenEqualsWithIntArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
@@ -29,5 +30,4 @@ public static class WhenEqualsWithIntArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

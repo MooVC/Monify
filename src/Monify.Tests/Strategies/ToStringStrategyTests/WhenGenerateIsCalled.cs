@@ -19,6 +19,7 @@ public sealed class WhenGenerateIsCalled
         source.Hint.ShouldBe(nameof(ToString));
         source.Code.ShouldContain("public override string ToString()");
     }
+
     [Fact]
     public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
     {
@@ -32,5 +33,4 @@ public sealed class WhenGenerateIsCalled
         // Assert
         result.ShouldBeEmpty();
     }
-
 }

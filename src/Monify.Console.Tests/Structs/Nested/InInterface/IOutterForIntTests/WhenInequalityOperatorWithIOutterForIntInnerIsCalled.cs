@@ -18,6 +18,7 @@ public static class WhenInequalityOperatorWithIOutterForIntInnerIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnFalse()
     {
@@ -31,5 +32,4 @@ public static class WhenInequalityOperatorWithIOutterForIntInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
-
 }

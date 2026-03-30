@@ -19,6 +19,7 @@ public static class WhenEqualsWithObjectIsCalled
         // Assert
         result.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenEquivalentOutterForImmutableArrayInnerThenReturnTrue()
     {
@@ -45,5 +46,4 @@ public static class WhenEqualsWithObjectIsCalled
         // Assert
         result.ShouldBeFalse();
     }
-
 }

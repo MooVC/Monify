@@ -17,6 +17,7 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
@@ -42,5 +43,4 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
-
 }

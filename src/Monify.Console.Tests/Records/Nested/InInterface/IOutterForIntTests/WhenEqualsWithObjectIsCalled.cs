@@ -17,6 +17,7 @@ public static class WhenEqualsWithObjectIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenEquivalentIOutterForIntInnerThenReturnTrue()
     {
@@ -43,5 +44,4 @@ public static class WhenEqualsWithObjectIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
-
 }

@@ -25,6 +25,7 @@ public sealed class WhenGenerateIsCalled
         source.Hint.ShouldBe(".ctor.Passthrough.01");
         source.Code.ShouldContain("public Sample(string value)");
     }
+
     [Fact]
     public void GivenSubjectWhenHasConstructorThenNoSourceIsGenerated()
     {
@@ -54,5 +55,4 @@ public sealed class WhenGenerateIsCalled
         source.Hint.ShouldBe(ConstructorStrategy.Name);
         source.Code.ShouldContain("public Sample(int value)");
     }
-
 }

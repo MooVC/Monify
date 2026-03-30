@@ -37,6 +37,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("explicit operator Sample(string value)");
         source.Code.ShouldContain("new Sample((int)value)");
     }
+
     [Fact]
     public void GivenImplicitConversionFromSubjectThenSourceIsGenerated()
     {
@@ -84,5 +85,4 @@ public sealed class WhenGenerateIsCalled
         // Assert
         result.ShouldBeEmpty();
     }
-
 }

@@ -18,6 +18,7 @@ public static class WhenEqualsWithOutterForIntInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
@@ -31,5 +32,4 @@ public static class WhenEqualsWithOutterForIntInnerIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

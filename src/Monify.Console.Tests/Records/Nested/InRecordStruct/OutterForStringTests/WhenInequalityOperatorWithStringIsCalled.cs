@@ -17,6 +17,7 @@ public static class WhenInequalityOperatorWithStringIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
     [Fact]
     public static void GivenEquivalentValueThenReturnFalse()
     {
@@ -57,5 +58,4 @@ public static class WhenInequalityOperatorWithStringIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

@@ -28,6 +28,7 @@ public sealed class WhenGenerateIsCalled
         // Assert
         sources.ShouldContain(source => source.Code.Contains("SequenceEqualityComparer.Default.Equals"));
     }
+
     [Fact]
     public void GivenSequenceEncapsulatedValueThenImmutableArrayCheckIsGenerated()
     {
@@ -88,5 +89,4 @@ public sealed class WhenGenerateIsCalled
         // Assert
         result.ShouldBeEmpty();
     }
-
 }

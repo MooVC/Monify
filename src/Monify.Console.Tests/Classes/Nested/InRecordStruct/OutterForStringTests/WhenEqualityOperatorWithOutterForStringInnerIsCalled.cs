@@ -32,6 +32,7 @@ public static class WhenEqualityOperatorWithOutterForStringInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenEquivalentValuesThenReturnTrue()
     {
@@ -75,5 +76,4 @@ public static class WhenEqualityOperatorWithOutterForStringInnerIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

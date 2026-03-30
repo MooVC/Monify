@@ -17,6 +17,7 @@ public sealed class WhenIsPartialIsCalled
         // Assert
         result.ShouldBeFalse();
     }
+
     [Fact]
     public void GivenPartialTypeDeclarationThenReturnsTrue()
     {
@@ -33,5 +34,4 @@ public sealed class WhenIsPartialIsCalled
         // Assert
         result.ShouldBeTrue();
     }
-
 }

@@ -34,6 +34,7 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenEquivalentValuesThenReturnTrue()
     {
@@ -77,5 +78,4 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

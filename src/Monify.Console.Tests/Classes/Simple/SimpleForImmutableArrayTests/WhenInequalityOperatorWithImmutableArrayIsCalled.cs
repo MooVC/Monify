@@ -33,6 +33,7 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnFalse()
     {
@@ -58,5 +59,4 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

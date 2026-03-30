@@ -74,6 +74,7 @@ public sealed class WhenToSubjectIsCalled
         subject.Encapsulated[0].HasEqualityOperator.ShouldBeFalse();
         subject.Encapsulated[0].HasInequalityOperator.ShouldBeFalse();
     }
+
     [Fact]
     public void GivenSubjectEncapsulatingMonifiedTypeThenConversionsAreIncluded()
     {
@@ -147,5 +148,4 @@ public sealed class WhenToSubjectIsCalled
         subject.Encapsulated[1].HasEqualityOperator.ShouldBeFalse();
         subject.Encapsulated[1].HasInequalityOperator.ShouldBeFalse();
     }
-
 }

@@ -18,6 +18,7 @@ public static class WhenInequalityOperatorWithOutterForArrayInnerIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
     [Fact]
     public static void GivenEquivalentValuesThenReturnFalse()
     {
@@ -47,5 +48,4 @@ public static class WhenInequalityOperatorWithOutterForArrayInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
-
 }

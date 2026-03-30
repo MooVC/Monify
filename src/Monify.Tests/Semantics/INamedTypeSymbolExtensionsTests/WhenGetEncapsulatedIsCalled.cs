@@ -104,6 +104,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && @operator.Left == "int"
             && @operator.Symbol == ">=");
     }
+
     [Fact]
     public void GivenEncapsulatedTypeWithConversionsThenTheyAreCaptured()
     {
@@ -329,5 +330,4 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Type.ShouldBe("global::Sample.Inner");
         encapsulated[1].Type.ShouldBe("string");
     }
-
 }

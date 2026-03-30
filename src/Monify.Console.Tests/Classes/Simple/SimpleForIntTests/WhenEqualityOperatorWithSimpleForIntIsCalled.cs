@@ -32,6 +32,7 @@ public static class WhenEqualityOperatorWithSimpleForIntIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
@@ -59,5 +60,4 @@ public static class WhenEqualityOperatorWithSimpleForIntIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

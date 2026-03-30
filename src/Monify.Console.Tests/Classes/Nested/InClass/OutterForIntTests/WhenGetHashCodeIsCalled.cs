@@ -19,6 +19,7 @@ public static class WhenGetHashCodeIsCalled
         // Assert
         firstHash.ShouldNotBe(secondHash);
     }
+
     [Fact]
     public static void GivenSameValuesThenReturnSameHashCode()
     {
@@ -33,5 +34,4 @@ public static class WhenGetHashCodeIsCalled
         // Assert
         firstHash.ShouldBe(secondHash);
     }
-
 }

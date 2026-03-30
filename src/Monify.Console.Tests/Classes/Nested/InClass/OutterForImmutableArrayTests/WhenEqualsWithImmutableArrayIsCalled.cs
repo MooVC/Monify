@@ -19,6 +19,7 @@ public static class WhenEqualsWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
@@ -31,5 +32,4 @@ public static class WhenEqualsWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

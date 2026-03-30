@@ -19,6 +19,7 @@ public sealed class WhenGenerateIsCalled
         source.Hint.ShouldBe(nameof(object.GetHashCode));
         source.Code.ShouldContain("public override int GetHashCode()");
     }
+
     [Fact]
     public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
     {
@@ -32,5 +33,4 @@ public sealed class WhenGenerateIsCalled
         // Assert
         result.ShouldBeEmpty();
     }
-
 }

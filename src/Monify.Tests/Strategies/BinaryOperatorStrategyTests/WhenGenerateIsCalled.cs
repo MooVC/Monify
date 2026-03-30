@@ -69,6 +69,7 @@ public sealed class WhenGenerateIsCalled
         sources[2].Code.ShouldContain("operator >(int left, Sample right)");
         sources[2].Code.ShouldContain("return (bool)(left > right._value);");
     }
+
     [Fact]
     public void GivenNoBinaryOperatorsThenNoSourceIsGenerated()
     {
@@ -83,5 +84,4 @@ public sealed class WhenGenerateIsCalled
         // Assert
         result.ShouldBeEmpty();
     }
-
 }

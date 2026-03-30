@@ -20,6 +20,7 @@ public static class WhenEqualsWithIOutterForImmutableArrayInnerIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
@@ -33,5 +34,4 @@ public static class WhenEqualsWithIOutterForImmutableArrayInnerIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }

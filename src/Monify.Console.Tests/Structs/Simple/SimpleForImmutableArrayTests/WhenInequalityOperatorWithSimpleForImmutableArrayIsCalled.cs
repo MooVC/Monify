@@ -20,6 +20,7 @@ public static class WhenInequalityOperatorWithSimpleForImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+
     [Fact]
     public static void GivenEquivalentValuesThenReturnFalse()
     {
@@ -49,5 +50,4 @@ public static class WhenInequalityOperatorWithSimpleForImmutableArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
-
 }

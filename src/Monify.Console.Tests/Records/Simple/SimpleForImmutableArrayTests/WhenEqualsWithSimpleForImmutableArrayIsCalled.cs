@@ -20,6 +20,7 @@ public static class WhenEqualsWithSimpleForImmutableArrayIsCalled
         // Assert
         actual.ShouldBeFalse();
     }
+
     [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
@@ -33,5 +34,4 @@ public static class WhenEqualsWithSimpleForImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
-
 }
