@@ -20,6 +20,36 @@ public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        OutterForArray<int>.Inner left = new(_sampleValue);
+        OutterForArray<int>.Inner right = new(_differentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnFalse()
+    {
+        // Arrange
+        int[] leftValues = [1, 2, 3];
+        int[] rightValues = [1, 2, 3];
+        OutterForArray<int>.Inner left = new(leftValues);
+        OutterForArray<int>.Inner right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -45,35 +75,5 @@ public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
 
         // Assert
         actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
-    {
-        // Arrange
-        int[] leftValues = [1, 2, 3];
-        int[] rightValues = [1, 2, 3];
-        OutterForArray<int>.Inner left = new(leftValues);
-        OutterForArray<int>.Inner right = new(rightValues);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        OutterForArray<int>.Inner left = new(_sampleValue);
-        OutterForArray<int>.Inner right = new(_differentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
     }
 }

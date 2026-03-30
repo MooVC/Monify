@@ -6,20 +6,6 @@ public static class WhenInequalityOperatorWithSimpleForIntIsCalled
     private const int SampleValue = 63;
 
     [Fact]
-    public static void GivenSameValueThenReturnFalse()
-    {
-        // Arrange
-        SimpleForInt left = new(SampleValue);
-        SimpleForInt right = new(SampleValue);
-
-        // Act
-        bool actual = left != right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
-
-    [Fact]
     public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
@@ -31,5 +17,19 @@ public static class WhenInequalityOperatorWithSimpleForIntIsCalled
 
         // Assert
         actual.ShouldBeTrue();
+    }
+
+    [Fact]
+    public static void GivenSameValueThenReturnFalse()
+    {
+        // Arrange
+        SimpleForInt left = new(SampleValue);
+        SimpleForInt right = new(SampleValue);
+
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        actual.ShouldBeFalse();
     }
 }

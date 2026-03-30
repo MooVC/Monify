@@ -22,6 +22,36 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        SimpleForImmutableArray left = new(_sampleValue);
+        SimpleForImmutableArray right = new(_differentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnFalse()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
+        ImmutableArray<string> rightValues = ["Alpha", "Beta", "Gamma"];
+        SimpleForImmutableArray left = new(leftValues);
+        SimpleForImmutableArray right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -47,35 +77,5 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
 
         // Assert
         actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
-    {
-        // Arrange
-        ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
-        ImmutableArray<string> rightValues = ["Alpha", "Beta", "Gamma"];
-        SimpleForImmutableArray left = new(leftValues);
-        SimpleForImmutableArray right = new(rightValues);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        SimpleForImmutableArray left = new(_sampleValue);
-        SimpleForImmutableArray right = new(_differentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
     }
 }

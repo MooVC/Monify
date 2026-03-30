@@ -20,6 +20,36 @@ public static class WhenEqualityOperatorWithSimpleForStringIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        SimpleForString left = new(SampleValue);
+        SimpleForString right = new(DifferentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnTrue()
+    {
+        // Arrange
+        string leftValue = new(SampleValue.ToCharArray());
+        string rightValue = new(SampleValue.ToCharArray());
+        SimpleForString left = new(leftValue);
+        SimpleForString right = new(rightValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -45,35 +75,5 @@ public static class WhenEqualityOperatorWithSimpleForStringIsCalled
 
         // Assert
         actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
-    {
-        // Arrange
-        string leftValue = new(SampleValue.ToCharArray());
-        string rightValue = new(SampleValue.ToCharArray());
-        SimpleForString left = new(leftValue);
-        SimpleForString right = new(rightValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        SimpleForString left = new(SampleValue);
-        SimpleForString right = new(DifferentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
     }
 }

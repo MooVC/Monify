@@ -6,13 +6,13 @@ public static class WhenInequalityOperatorWithIntIsCalled
     private const int SampleValue = 7;
 
     [Fact]
-    public static void GivenSubjectIsNullThenReturnTrue()
+    public static void GivenDifferentValueThenReturnTrue()
     {
         // Arrange
-        SimpleForInt? subject = default;
+        SimpleForInt subject = new(SampleValue);
 
         // Act
-        bool actual = subject != SampleValue;
+        bool actual = subject != DifferentValue;
 
         // Assert
         actual.ShouldBeTrue();
@@ -32,13 +32,13 @@ public static class WhenInequalityOperatorWithIntIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValueThenReturnTrue()
+    public static void GivenSubjectIsNullThenReturnTrue()
     {
         // Arrange
-        SimpleForInt subject = new(SampleValue);
+        SimpleForInt? subject = default;
 
         // Act
-        bool actual = subject != DifferentValue;
+        bool actual = subject != SampleValue;
 
         // Assert
         actual.ShouldBeTrue();

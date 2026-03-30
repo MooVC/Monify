@@ -6,13 +6,13 @@ public static class WhenEqualityOperatorWithIntIsCalled
     private const int SampleValue = 42;
 
     [Fact]
-    public static void GivenSubjectIsNullThenReturnFalse()
+    public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
-        IOutterForInt<int>.Inner? subject = default;
+        IOutterForInt<int>.Inner subject = new(SampleValue);
 
         // Act
-        bool actual = subject == SampleValue;
+        bool actual = subject == DifferentValue;
 
         // Assert
         actual.ShouldBeFalse();
@@ -32,13 +32,13 @@ public static class WhenEqualityOperatorWithIntIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    public static void GivenSubjectIsNullThenReturnFalse()
     {
         // Arrange
-        IOutterForInt<int>.Inner subject = new(SampleValue);
+        IOutterForInt<int>.Inner? subject = default;
 
         // Act
-        bool actual = subject == DifferentValue;
+        bool actual = subject == SampleValue;
 
         // Assert
         actual.ShouldBeFalse();

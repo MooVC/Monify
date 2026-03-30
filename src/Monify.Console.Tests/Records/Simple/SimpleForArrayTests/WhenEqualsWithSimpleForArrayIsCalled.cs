@@ -6,20 +6,6 @@ public static class WhenEqualsWithSimpleForArrayIsCalled
     private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
-    public static void GivenSameValueThenReturnTrue()
-    {
-        // Arrange
-        SimpleForArray left = new(_sampleValue);
-        SimpleForArray right = new(_sampleValue);
-
-        // Act
-        bool actual = left.Equals(right);
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
@@ -31,5 +17,19 @@ public static class WhenEqualsWithSimpleForArrayIsCalled
 
         // Assert
         actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenSameValueThenReturnTrue()
+    {
+        // Arrange
+        SimpleForArray left = new(_sampleValue);
+        SimpleForArray right = new(_sampleValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeTrue();
     }
 }

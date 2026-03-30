@@ -7,13 +7,14 @@ public static class WhenEqualsWithObjectIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenNullThenReturnsFalse()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);
+        object other = string.Empty;
 
         // Act
-        bool result = subject.Equals((object?)default);
+        bool result = subject.Equals(other);
 
         // Assert
         result.ShouldBeFalse();
@@ -34,14 +35,13 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenReturnsFalse()
+    public static void GivenNullThenReturnsFalse()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);
-        object other = string.Empty;
 
         // Act
-        bool result = subject.Equals(other);
+        bool result = subject.Equals((object?)default);
 
         // Assert
         result.ShouldBeFalse();

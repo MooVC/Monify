@@ -22,6 +22,36 @@ public static class WhenEqualityOperatorWithIOutterForImmutableArrayInnerIsCalle
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        IOutterForImmutableArray<int>.Inner left = new(_sampleValue);
+        IOutterForImmutableArray<int>.Inner right = new(_differentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnFalse()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
+        ImmutableArray<string> rightValues = ["Alpha", "Beta", "Gamma"];
+        IOutterForImmutableArray<int>.Inner left = new(leftValues);
+        IOutterForImmutableArray<int>.Inner right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -47,35 +77,5 @@ public static class WhenEqualityOperatorWithIOutterForImmutableArrayInnerIsCalle
 
         // Assert
         actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
-    {
-        // Arrange
-        ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
-        ImmutableArray<string> rightValues = ["Alpha", "Beta", "Gamma"];
-        IOutterForImmutableArray<int>.Inner left = new(leftValues);
-        IOutterForImmutableArray<int>.Inner right = new(rightValues);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        IOutterForImmutableArray<int>.Inner left = new(_sampleValue);
-        IOutterForImmutableArray<int>.Inner right = new(_differentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
     }
 }

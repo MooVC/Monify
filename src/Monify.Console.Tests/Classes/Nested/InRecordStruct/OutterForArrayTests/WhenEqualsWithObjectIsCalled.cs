@@ -5,16 +5,17 @@ public static class WhenEqualsWithObjectIsCalled
     private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
-    public static void GivenNullThenReturnFalse()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
+        object other = string.Empty;
 
         // Act
-        bool actual = subject.Equals((object?)default);
+        bool result = subject.Equals(other);
 
         // Assert
-        actual.ShouldBeFalse();
+        result.ShouldBeFalse();
     }
 
     [Fact]
@@ -32,16 +33,15 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenReturnsFalse()
+    public static void GivenNullThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
-        object other = string.Empty;
 
         // Act
-        bool result = subject.Equals(other);
+        bool actual = subject.Equals((object?)default);
 
         // Assert
-        result.ShouldBeFalse();
+        actual.ShouldBeFalse();
     }
 }

@@ -6,29 +6,16 @@ public static class WhenEqualityOperatorWithStringIsCalled
     private const string DifferentValue = "Different";
 
     [Fact]
-    public static void GivenSubjectIsNullThenReturnFalse()
-    {
-        // Arrange
-        Outer? subject = default;
-
-        // Act
-        bool actual = subject == SampleValue;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
-
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         Outer subject = new(SampleValue);
 
         // Act
-        bool actual = subject == SampleValue;
+        bool actual = subject == DifferentValue;
 
         // Assert
-        actual.ShouldBeTrue();
+        actual.ShouldBeFalse();
     }
 
     [Fact]
@@ -47,13 +34,26 @@ public static class WhenEqualityOperatorWithStringIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
         Outer subject = new(SampleValue);
 
         // Act
-        bool actual = subject == DifferentValue;
+        bool actual = subject == SampleValue;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
+    public static void GivenSubjectIsNullThenReturnFalse()
+    {
+        // Arrange
+        Outer? subject = default;
+
+        // Act
+        bool actual = subject == SampleValue;
 
         // Assert
         actual.ShouldBeFalse();

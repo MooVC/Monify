@@ -6,20 +6,6 @@ public static class WhenEqualsWithOuterIsCalled
     private const string DifferentValue = "Different";
 
     [Fact]
-    public static void GivenSameValueThenReturnTrue()
-    {
-        // Arrange
-        Outer left = new(SampleValue);
-        Outer right = new(SampleValue);
-
-        // Act
-        bool actual = left.Equals(right);
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
@@ -31,5 +17,19 @@ public static class WhenEqualsWithOuterIsCalled
 
         // Assert
         actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenSameValueThenReturnTrue()
+    {
+        // Arrange
+        Outer left = new(SampleValue);
+        Outer right = new(SampleValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeTrue();
     }
 }

@@ -20,6 +20,20 @@ public static class WhenEqualityOperatorWithSimpleForIntIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        SimpleForInt left = new(SampleValue);
+        SimpleForInt right = new(DifferentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -45,19 +59,5 @@ public static class WhenEqualityOperatorWithSimpleForIntIsCalled
 
         // Assert
         actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        SimpleForInt left = new(SampleValue);
-        SimpleForInt right = new(DifferentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
     }
 }

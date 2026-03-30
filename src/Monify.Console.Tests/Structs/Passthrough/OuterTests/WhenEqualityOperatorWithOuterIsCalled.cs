@@ -20,6 +20,36 @@ public static class WhenEqualityOperatorWithOuterIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        Outer left = new(SampleValue);
+        Outer right = new(DifferentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnTrue()
+    {
+        // Arrange
+        string leftValue = new(SampleValue.ToCharArray());
+        string rightValue = new(SampleValue.ToCharArray());
+        Outer left = new(leftValue);
+        Outer right = new(rightValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -45,35 +75,5 @@ public static class WhenEqualityOperatorWithOuterIsCalled
 
         // Assert
         actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
-    {
-        // Arrange
-        string leftValue = new(SampleValue.ToCharArray());
-        string rightValue = new(SampleValue.ToCharArray());
-        Outer left = new(leftValue);
-        Outer right = new(rightValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        Outer left = new(SampleValue);
-        Outer right = new(DifferentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
     }
 }

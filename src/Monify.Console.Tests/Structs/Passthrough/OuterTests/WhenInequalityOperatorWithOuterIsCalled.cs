@@ -6,17 +6,17 @@ public static class WhenInequalityOperatorWithOuterIsCalled
     private const string DifferentValue = "Different";
 
     [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         Outer left = new(SampleValue);
-        Outer right = new(SampleValue);
+        Outer right = new(DifferentValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeFalse();
+        actual.ShouldBeTrue();
     }
 
     [Fact]
@@ -36,16 +36,16 @@ public static class WhenInequalityOperatorWithOuterIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
         Outer left = new(SampleValue);
-        Outer right = new(DifferentValue);
+        Outer right = new(SampleValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeTrue();
+        actual.ShouldBeFalse();
     }
 }

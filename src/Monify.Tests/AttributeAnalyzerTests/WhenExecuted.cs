@@ -51,40 +51,6 @@ public sealed class WhenExecuted
     }
 
     [Theory]
-    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(UnsupportedClass), typeof(UnsupportedRecord), typeof(UnsupportedStruct)])]
-    public async Task GivenATypeWhenNotPartialThenPartialTypeRuleIsRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
-    {
-        // Arrange
-        var test = new AnalyzerTest(assembly, language);
-
-        test.ExpectedDiagnostics.Add(GetExpectedPartialTypeRule(new LinePosition(2, 5), UnsupportedStruct.Declaration.Name));
-        expectations.IsDeclaredIn(test.TestState);
-
-        // Act
-        Func<Task> act = () => test.RunAsync();
-
-        // Assert
-        await act.ShouldNotThrowAsync();
-    }
-
-    [Theory]
-    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(SelfReferencedClass), typeof(SelfReferencedRecord), typeof(SelfReferencedStruct)])]
-    public async Task GivenATypeWhenSelfReferencedThenSelfReferencingRuleIsRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
-    {
-        // Arrange
-        var test = new AnalyzerTest(assembly, language);
-
-        test.ExpectedDiagnostics.Add(GetExpectedSelfReferenceRule(new LinePosition(2, 5), SelfReferencedClass.Declaration.Name));
-        expectations.IsDeclaredIn(test.TestState);
-
-        // Act
-        Func<Task> act = () => test.RunAsync();
-
-        // Assert
-        await act.ShouldNotThrowAsync();
-    }
-
-    [Theory]
     [Frameworks(Language = LanguageVersion.CSharp11)]
     public async Task GivenAClassWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
@@ -132,6 +98,40 @@ public sealed class WhenExecuted
 
         // Assert
         _ = await act.ShouldThrowAsync<InvalidOperationException>();
+    }
+
+    [Theory]
+    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(UnsupportedClass), typeof(UnsupportedRecord), typeof(UnsupportedStruct)])]
+    public async Task GivenATypeWhenNotPartialThenPartialTypeRuleIsRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
+    {
+        // Arrange
+        var test = new AnalyzerTest(assembly, language);
+
+        test.ExpectedDiagnostics.Add(GetExpectedPartialTypeRule(new LinePosition(2, 5), UnsupportedStruct.Declaration.Name));
+        expectations.IsDeclaredIn(test.TestState);
+
+        // Act
+        Func<Task> act = () => test.RunAsync();
+
+        // Assert
+        await act.ShouldNotThrowAsync();
+    }
+
+    [Theory]
+    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(SelfReferencedClass), typeof(SelfReferencedRecord), typeof(SelfReferencedStruct)])]
+    public async Task GivenATypeWhenSelfReferencedThenSelfReferencingRuleIsRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
+    {
+        // Arrange
+        var test = new AnalyzerTest(assembly, language);
+
+        test.ExpectedDiagnostics.Add(GetExpectedSelfReferenceRule(new LinePosition(2, 5), SelfReferencedClass.Declaration.Name));
+        expectations.IsDeclaredIn(test.TestState);
+
+        // Act
+        Func<Task> act = () => test.RunAsync();
+
+        // Assert
+        await act.ShouldNotThrowAsync();
     }
 
     private static DiagnosticResult GetExpectedPartialTypeRule(LinePosition position, string @class)

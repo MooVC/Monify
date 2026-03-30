@@ -8,19 +8,6 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenSubjectIsNullThenReturnTrue()
-    {
-        // Arrange
-        IOutterForImmutableArray<int>.Inner? subject = default;
-
-        // Act
-        bool actual = subject != _sampleValue;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
     public static void GivenDefaultValueThenReturnFalse()
     {
         // Arrange
@@ -32,6 +19,19 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
 
         // Assert
         actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenDifferentValueThenReturnTrue()
+    {
+        // Arrange
+        IOutterForImmutableArray<int>.Inner subject = new(_sampleValue);
+
+        // Act
+        bool actual = subject != _differentValue;
+
+        // Assert
+        actual.ShouldBeTrue();
     }
 
     [Fact]
@@ -48,13 +48,13 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValueThenReturnTrue()
+    public static void GivenSubjectIsNullThenReturnTrue()
     {
         // Arrange
-        IOutterForImmutableArray<int>.Inner subject = new(_sampleValue);
+        IOutterForImmutableArray<int>.Inner? subject = default;
 
         // Act
-        bool actual = subject != _differentValue;
+        bool actual = subject != _sampleValue;
 
         // Assert
         actual.ShouldBeTrue();

@@ -8,19 +8,6 @@ public static class WhenEqualsWithImmutableArrayIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenSameValueThenReturnTrue()
-    {
-        // Arrange
-        SimpleForImmutableArray subject = new(_sampleValue);
-
-        // Act
-        bool actual = subject.Equals(_sampleValue);
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
     public static void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
@@ -31,5 +18,18 @@ public static class WhenEqualsWithImmutableArrayIsCalled
 
         // Assert
         actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenSameValueThenReturnTrue()
+    {
+        // Arrange
+        SimpleForImmutableArray subject = new(_sampleValue);
+
+        // Act
+        bool actual = subject.Equals(_sampleValue);
+
+        // Assert
+        actual.ShouldBeTrue();
     }
 }

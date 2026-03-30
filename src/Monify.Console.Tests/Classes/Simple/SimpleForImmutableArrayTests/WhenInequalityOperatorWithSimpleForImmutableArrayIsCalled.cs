@@ -8,17 +8,17 @@ public static class WhenInequalityOperatorWithSimpleForImmutableArrayIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         SimpleForImmutableArray left = new(_sampleValue);
-        SimpleForImmutableArray right = new(_sampleValue);
+        SimpleForImmutableArray right = new(_differentValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeFalse();
+        actual.ShouldBeTrue();
     }
 
     [Fact]
@@ -38,16 +38,16 @@ public static class WhenInequalityOperatorWithSimpleForImmutableArrayIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
         SimpleForImmutableArray left = new(_sampleValue);
-        SimpleForImmutableArray right = new(_differentValue);
+        SimpleForImmutableArray right = new(_sampleValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeTrue();
+        actual.ShouldBeFalse();
     }
 }

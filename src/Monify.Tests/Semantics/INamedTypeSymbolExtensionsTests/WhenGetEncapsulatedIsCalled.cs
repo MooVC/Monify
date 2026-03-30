@@ -9,7 +9,7 @@ using Monify.Semantics;
 public sealed class WhenGetEncapsulatedIsCalled
 {
     [Fact]
-    public void GivenMonifyAttributesWithNamedArgumentsThenPassthroughValuesAreCaptured()
+    public void GivenEncapsulatedTypeWithBinaryOperatorsThenTheyAreCaptured()
     {
         // Arrange
         const string attribute = """
@@ -30,14 +30,20 @@ public sealed class WhenGetEncapsulatedIsCalled
 
             namespace Sample;
 
-            [Monify(Type = typeof(Inner))]
-            public sealed partial class Outer
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
             {
             }
 
-            [Monify(Type = typeof(string))]
-            public sealed partial class Inner
+            public sealed class Value
             {
+                public static Value operator +(Value left, Value right) => left;
+
+                public static Value operator -(Value left, int right) => left;
+
+                public static bool operator <(Value left, Value right) => true;
+
+                public static bool operator >=(int left, Value right) => true;
             }
             """;
 
@@ -60,18 +66,43 @@ public sealed class WhenGetEncapsulatedIsCalled
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
         SemanticModel model = compilation.GetSemanticModel(trees[1]);
-        INamedTypeSymbol? outer = compilation.GetTypeByMetadataName("Sample.Outer");
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
 
-        _ = outer.ShouldNotBeNull();
-        outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        ImmutableArray<Encapsulated> encapsulated = outer.GetEncapsulated(compilation, model, value);
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
 
         // Assert
-        encapsulated.Length.ShouldBe(2);
-        encapsulated[0].Type.ShouldBe("global::Sample.Inner");
-        encapsulated[1].Type.ShouldBe("string");
+        encapsulated[0].BinaryOperators.Length.ShouldBe(4);
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
+            && @operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Symbol == "+");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Subtraction"
+            && @operator.IsLeftSubject
+            && !@operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Right == "int"
+            && @operator.Symbol == "-");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_LessThan"
+            && @operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && !@operator.IsReturnSubject
+            && @operator.Return == "bool"
+            && @operator.Symbol == "<");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_GreaterThanOrEqual"
+            && !@operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && !@operator.IsReturnSubject
+            && @operator.Left == "int"
+            && @operator.Symbol == ">=");
     }
 
     [Fact]
@@ -235,7 +266,7 @@ public sealed class WhenGetEncapsulatedIsCalled
     }
 
     [Fact]
-    public void GivenEncapsulatedTypeWithBinaryOperatorsThenTheyAreCaptured()
+    public void GivenMonifyAttributesWithNamedArgumentsThenPassthroughValuesAreCaptured()
     {
         // Arrange
         const string attribute = """
@@ -256,20 +287,14 @@ public sealed class WhenGetEncapsulatedIsCalled
 
             namespace Sample;
 
-            [Monify(Type = typeof(Value))]
-            public sealed partial class Wrapper
+            [Monify(Type = typeof(Inner))]
+            public sealed partial class Outer
             {
             }
 
-            public sealed class Value
+            [Monify(Type = typeof(string))]
+            public sealed partial class Inner
             {
-                public static Value operator +(Value left, Value right) => left;
-
-                public static Value operator -(Value left, int right) => left;
-
-                public static bool operator <(Value left, Value right) => true;
-
-                public static bool operator >=(int left, Value right) => true;
             }
             """;
 
@@ -292,42 +317,17 @@ public sealed class WhenGetEncapsulatedIsCalled
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
         SemanticModel model = compilation.GetSemanticModel(trees[1]);
-        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+        INamedTypeSymbol? outer = compilation.GetTypeByMetadataName("Sample.Outer");
 
-        _ = wrapper.ShouldNotBeNull();
-        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+        _ = outer.ShouldNotBeNull();
+        outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
 
         // Act
-        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+        ImmutableArray<Encapsulated> encapsulated = outer.GetEncapsulated(compilation, model, value);
 
         // Assert
-        encapsulated[0].BinaryOperators.Length.ShouldBe(4);
-
-        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
-            && @operator.IsLeftSubject
-            && @operator.IsRightSubject
-            && @operator.IsReturnSubject
-            && @operator.Symbol == "+");
-
-        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Subtraction"
-            && @operator.IsLeftSubject
-            && !@operator.IsRightSubject
-            && @operator.IsReturnSubject
-            && @operator.Right == "int"
-            && @operator.Symbol == "-");
-
-        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_LessThan"
-            && @operator.IsLeftSubject
-            && @operator.IsRightSubject
-            && !@operator.IsReturnSubject
-            && @operator.Return == "bool"
-            && @operator.Symbol == "<");
-
-        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_GreaterThanOrEqual"
-            && !@operator.IsLeftSubject
-            && @operator.IsRightSubject
-            && !@operator.IsReturnSubject
-            && @operator.Left == "int"
-            && @operator.Symbol == ">=");
+        encapsulated.Length.ShouldBe(2);
+        encapsulated[0].Type.ShouldBe("global::Sample.Inner");
+        encapsulated[1].Type.ShouldBe("string");
     }
 }
