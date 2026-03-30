@@ -6,6 +6,19 @@ public static class WhenEqualsWithSimpleForIntIsCalled
     private const int SampleValue = 51;
 
     [Fact]
+    public static void GivenOtherHasDifferentValueThenReturnFalse()
+    {
+        // Arrange
+        SimpleForInt subject = new(SampleValue);
+        SimpleForInt other = new(DifferentValue);
+
+        // Act
+        bool actual = subject.Equals(other);
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
     public static void GivenOtherHasSameValueThenReturnTrue()
     {
         // Arrange
@@ -33,17 +46,4 @@ public static class WhenEqualsWithSimpleForIntIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenOtherHasDifferentValueThenReturnFalse()
-    {
-        // Arrange
-        SimpleForInt subject = new(SampleValue);
-        SimpleForInt other = new(DifferentValue);
-
-        // Act
-        bool actual = subject.Equals(other);
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

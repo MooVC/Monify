@@ -6,20 +6,37 @@ using Monify.Strategies;
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenNoConversionsThenNoSourceIsGenerated()
+    public void GivenExplicitConversionToSubjectThenSourceIsGenerated()
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Encapsulated = [new Encapsulated { Conversions = [], Type = "int" }];
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                Conversions =
+                [
+                    new Conversion
+                    {
+                        IsReturnSubject = true,
+                        Operator = "op_Explicit",
+                        Parameter = "string",
+                        Return = subject.Qualification,
+                    },
+                ],
+                Type = "int",
+            },
+        ];
         var strategy = new ConversionOperatorStrategy();
 
         // Act
-        IEnumerable<Source> result = strategy.Generate(subject);
+        Source source = strategy.Generate(subject).Single();
 
         // Assert
-        result.ShouldBeEmpty();
+        source.Hint.ShouldBe("Conversions.00");
+        source.Code.ShouldContain("explicit operator Sample(string value)");
+        source.Code.ShouldContain("new Sample((int)value)");
     }
-
     [Fact]
     public void GivenImplicitConversionFromSubjectThenSourceIsGenerated()
     {
@@ -54,35 +71,18 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
-    public void GivenExplicitConversionToSubjectThenSourceIsGenerated()
+    public void GivenNoConversionsThenNoSourceIsGenerated()
     {
         // Arrange
         Subject subject = TestSubject.Create();
-        subject.Encapsulated =
-        [
-            new Encapsulated
-            {
-                Conversions =
-                [
-                    new Conversion
-                    {
-                        IsReturnSubject = true,
-                        Operator = "op_Explicit",
-                        Parameter = "string",
-                        Return = subject.Qualification,
-                    },
-                ],
-                Type = "int",
-            },
-        ];
+        subject.Encapsulated = [new Encapsulated { Conversions = [], Type = "int" }];
         var strategy = new ConversionOperatorStrategy();
 
         // Act
-        Source source = strategy.Generate(subject).Single();
+        IEnumerable<Source> result = strategy.Generate(subject);
 
         // Assert
-        source.Hint.ShouldBe("Conversions.00");
-        source.Code.ShouldContain("explicit operator Sample(string value)");
-        source.Code.ShouldContain("new Sample((int)value)");
+        result.ShouldBeEmpty();
     }
+
 }

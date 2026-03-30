@@ -6,6 +6,19 @@ public static class WhenEqualsWithIOutterForStringInnerIsCalled
     private const string DifferentValue = "Different";
 
     [Fact]
+    public static void GivenDifferentValueThenReturnFalse()
+    {
+        // Arrange
+        IOutterForString<int>.Inner left = new(SampleValue);
+        IOutterForString<int>.Inner right = new(DifferentValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
@@ -19,17 +32,4 @@ public static class WhenEqualsWithIOutterForStringInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
-    {
-        // Arrange
-        IOutterForString<int>.Inner left = new(SampleValue);
-        IOutterForString<int>.Inner right = new(DifferentValue);
-
-        // Act
-        bool actual = left.Equals(right);
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

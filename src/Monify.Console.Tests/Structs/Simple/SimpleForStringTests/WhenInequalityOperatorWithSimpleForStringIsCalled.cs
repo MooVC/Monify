@@ -6,19 +6,18 @@ public static class WhenInequalityOperatorWithSimpleForStringIsCalled
     private const string DifferentValue = "Different";
 
     [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         SimpleForString left = new(SampleValue);
-        SimpleForString right = new(SampleValue);
+        SimpleForString right = new(DifferentValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeFalse();
+        actual.ShouldBeTrue();
     }
-
     [Fact]
     public static void GivenEquivalentValuesThenReturnFalse()
     {
@@ -36,16 +35,17 @@ public static class WhenInequalityOperatorWithSimpleForStringIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
         SimpleForString left = new(SampleValue);
-        SimpleForString right = new(DifferentValue);
+        SimpleForString right = new(SampleValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeTrue();
+        actual.ShouldBeFalse();
     }
+
 }

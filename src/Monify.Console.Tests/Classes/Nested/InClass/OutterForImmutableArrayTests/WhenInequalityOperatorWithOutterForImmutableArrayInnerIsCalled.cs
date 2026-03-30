@@ -8,19 +8,18 @@ public static class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCall
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner left = new(_sampleValue);
-        OutterForImmutableArray<int>.Inner right = new(_sampleValue);
+        OutterForImmutableArray<int>.Inner right = new(_differentValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeFalse();
+        actual.ShouldBeTrue();
     }
-
     [Fact]
     public static void GivenEquivalentValuesThenReturnFalse()
     {
@@ -38,16 +37,17 @@ public static class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCall
     }
 
     [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner left = new(_sampleValue);
-        OutterForImmutableArray<int>.Inner right = new(_differentValue);
+        OutterForImmutableArray<int>.Inner right = new(_sampleValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeTrue();
+        actual.ShouldBeFalse();
     }
+
 }

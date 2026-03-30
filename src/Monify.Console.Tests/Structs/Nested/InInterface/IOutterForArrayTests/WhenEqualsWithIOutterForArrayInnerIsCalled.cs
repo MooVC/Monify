@@ -6,6 +6,19 @@ public static class WhenEqualsWithIOutterForArrayInnerIsCalled
     private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
+    public static void GivenDifferentValueThenReturnFalse()
+    {
+        // Arrange
+        IOutterForArray<int>.Inner left = new(_sampleValue);
+        IOutterForArray<int>.Inner right = new(_differentValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
@@ -19,17 +32,4 @@ public static class WhenEqualsWithIOutterForArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
-    {
-        // Arrange
-        IOutterForArray<int>.Inner left = new(_sampleValue);
-        IOutterForArray<int>.Inner right = new(_differentValue);
-
-        // Act
-        bool actual = left.Equals(right);
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

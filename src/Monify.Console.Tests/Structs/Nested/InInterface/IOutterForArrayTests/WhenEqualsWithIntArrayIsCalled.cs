@@ -6,6 +6,18 @@ public static class WhenEqualsWithIntArrayIsCalled
     private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
+    public static void GivenDifferentValueThenReturnFalse()
+    {
+        // Arrange
+        IOutterForArray<int>.Inner subject = new(_sampleValue);
+
+        // Act
+        bool actual = subject.Equals(_differentValue);
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
@@ -18,16 +30,4 @@ public static class WhenEqualsWithIntArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
-    {
-        // Arrange
-        IOutterForArray<int>.Inner subject = new(_sampleValue);
-
-        // Act
-        bool actual = subject.Equals(_differentValue);
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

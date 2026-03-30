@@ -7,18 +7,18 @@ public static class WhenEqualsWithObjectIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenNullThenReturnFalse()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
+        object other = string.Empty;
 
         // Act
-        bool actual = subject.Equals((object?)default);
+        bool result = subject.Equals(other);
 
         // Assert
-        actual.ShouldBeFalse();
+        result.ShouldBeFalse();
     }
-
     [Fact]
     public static void GivenEquivalentOutterForImmutableArrayInnerThenReturnTrue()
     {
@@ -34,16 +34,16 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenReturnsFalse()
+    public static void GivenNullThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
-        object other = string.Empty;
 
         // Act
-        bool result = subject.Equals(other);
+        bool actual = subject.Equals((object?)default);
 
         // Assert
-        result.ShouldBeFalse();
+        actual.ShouldBeFalse();
     }
+
 }

@@ -6,31 +6,17 @@ public static class WhenInequalityOperatorWithStringIsCalled
     private const string DifferentValue = "Different";
 
     [Fact]
-    public static void GivenSubjectIsNullThenReturnTrue()
-    {
-        // Arrange
-        IOutterForString<int>.Inner? subject = default;
-
-        // Act
-        bool actual = subject != SampleValue;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    public static void GivenDifferentValueThenReturnTrue()
     {
         // Arrange
         IOutterForString<int>.Inner subject = new(SampleValue);
 
         // Act
-        bool actual = subject != SampleValue;
+        bool actual = subject != DifferentValue;
 
         // Assert
-        actual.ShouldBeFalse();
+        actual.ShouldBeTrue();
     }
-
     [Fact]
     public static void GivenEquivalentValueThenReturnFalse()
     {
@@ -47,15 +33,29 @@ public static class WhenInequalityOperatorWithStringIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValueThenReturnTrue()
+    public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
         IOutterForString<int>.Inner subject = new(SampleValue);
 
         // Act
-        bool actual = subject != DifferentValue;
+        bool actual = subject != SampleValue;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenSubjectIsNullThenReturnTrue()
+    {
+        // Arrange
+        IOutterForString<int>.Inner? subject = default;
+
+        // Act
+        bool actual = subject != SampleValue;
 
         // Assert
         actual.ShouldBeTrue();
     }
+
 }

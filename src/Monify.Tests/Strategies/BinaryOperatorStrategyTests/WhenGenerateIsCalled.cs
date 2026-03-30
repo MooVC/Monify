@@ -7,21 +7,6 @@ using Monify.Strategies;
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenNoBinaryOperatorsThenNoSourceIsGenerated()
-    {
-        // Arrange
-        Subject subject = TestSubject.Create();
-        subject.Encapsulated = [new Encapsulated { Type = "int", BinaryOperators = [] }];
-        var strategy = new BinaryOperatorStrategy();
-
-        // Act
-        IEnumerable<Source> result = strategy.Generate(subject);
-
-        // Assert
-        result.ShouldBeEmpty();
-    }
-
-    [Fact]
     public void GivenBinaryOperatorsThenSourceIsGenerated()
     {
         // Arrange
@@ -84,4 +69,19 @@ public sealed class WhenGenerateIsCalled
         sources[2].Code.ShouldContain("operator >(int left, Sample right)");
         sources[2].Code.ShouldContain("return (bool)(left > right._value);");
     }
+    [Fact]
+    public void GivenNoBinaryOperatorsThenNoSourceIsGenerated()
+    {
+        // Arrange
+        Subject subject = TestSubject.Create();
+        subject.Encapsulated = [new Encapsulated { Type = "int", BinaryOperators = [] }];
+        var strategy = new BinaryOperatorStrategy();
+
+        // Act
+        IEnumerable<Source> result = strategy.Generate(subject);
+
+        // Assert
+        result.ShouldBeEmpty();
+    }
+
 }

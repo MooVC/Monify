@@ -20,6 +20,19 @@ public static class WhenEqualityOperatorWithIOutterForIntInnerIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        IOutterForInt<int>.Inner left = new(SampleValue);
+        IOutterForInt<int>.Inner right = new(DifferentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -47,17 +60,4 @@ public static class WhenEqualityOperatorWithIOutterForIntInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        IOutterForInt<int>.Inner left = new(SampleValue);
-        IOutterForInt<int>.Inner right = new(DifferentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

@@ -6,6 +6,18 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 public sealed class WhenIsPartialIsCalled
 {
     [Fact]
+    public void GivenNonPartialTypeDeclarationThenReturnsFalse()
+    {
+        // Arrange
+        TypeDeclarationSyntax syntax = SyntaxFactory.StructDeclaration("Sample");
+
+        // Act
+        bool result = syntax.IsPartial();
+
+        // Assert
+        result.ShouldBeFalse();
+    }
+    [Fact]
     public void GivenPartialTypeDeclarationThenReturnsTrue()
     {
         // Arrange
@@ -22,16 +34,4 @@ public sealed class WhenIsPartialIsCalled
         result.ShouldBeTrue();
     }
 
-    [Fact]
-    public void GivenNonPartialTypeDeclarationThenReturnsFalse()
-    {
-        // Arrange
-        TypeDeclarationSyntax syntax = SyntaxFactory.StructDeclaration("Sample");
-
-        // Act
-        bool result = syntax.IsPartial();
-
-        // Assert
-        result.ShouldBeFalse();
-    }
 }

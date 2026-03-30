@@ -8,19 +8,6 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
-    public static void GivenSubjectIsNullThenReturnTrue()
-    {
-        // Arrange
-        OutterForImmutableArray<int>.Inner? subject = default;
-
-        // Act
-        bool actual = subject != _sampleValue;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
     public static void GivenDefaultValueThenReturnFalse()
     {
         // Arrange
@@ -29,19 +16,6 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
 
         // Act
         bool actual = subject != value;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
-
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
-    {
-        // Arrange
-        OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
-
-        // Act
-        bool actual = subject != _sampleValue;
 
         // Assert
         actual.ShouldBeFalse();
@@ -59,4 +33,30 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         // Assert
         actual.ShouldBeTrue();
     }
+    [Fact]
+    public static void GivenSameValueThenReturnFalse()
+    {
+        // Arrange
+        OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
+
+        // Act
+        bool actual = subject != _sampleValue;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+
+    [Fact]
+    public static void GivenSubjectIsNullThenReturnTrue()
+    {
+        // Arrange
+        OutterForImmutableArray<int>.Inner? subject = default;
+
+        // Act
+        bool actual = subject != _sampleValue;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
 }

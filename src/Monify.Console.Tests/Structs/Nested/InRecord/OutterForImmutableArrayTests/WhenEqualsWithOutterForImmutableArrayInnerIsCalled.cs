@@ -8,6 +8,19 @@ public static class WhenEqualsWithOutterForImmutableArrayInnerIsCalled
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]
+    public static void GivenDifferentValueThenReturnFalse()
+    {
+        // Arrange
+        OutterForImmutableArray<int>.Inner left = new(_sampleValue);
+        OutterForImmutableArray<int>.Inner right = new(_differentValue);
+
+        // Act
+        bool actual = left.Equals(right);
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
     public static void GivenSameValueThenReturnTrue()
     {
         // Arrange
@@ -21,17 +34,4 @@ public static class WhenEqualsWithOutterForImmutableArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
-    {
-        // Arrange
-        OutterForImmutableArray<int>.Inner left = new(_sampleValue);
-        OutterForImmutableArray<int>.Inner right = new(_differentValue);
-
-        // Act
-        bool actual = left.Equals(right);
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

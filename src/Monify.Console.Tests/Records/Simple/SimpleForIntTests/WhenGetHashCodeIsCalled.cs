@@ -6,6 +6,20 @@ public static class WhenGetHashCodeIsCalled
     private const int SecondValue = 9;
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
+    {
+        // Arrange
+        SimpleForInt first = new(FirstValue);
+        SimpleForInt second = new(SecondValue);
+
+        // Act
+        int firstHash = first.GetHashCode();
+        int secondHash = second.GetHashCode();
+
+        // Assert
+        firstHash.ShouldNotBe(secondHash);
+    }
+    [Fact]
     public static void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
@@ -20,18 +34,4 @@ public static class WhenGetHashCodeIsCalled
         firstHash.ShouldBe(secondHash);
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
-    {
-        // Arrange
-        SimpleForInt first = new(FirstValue);
-        SimpleForInt second = new(SecondValue);
-
-        // Act
-        int firstHash = first.GetHashCode();
-        int secondHash = second.GetHashCode();
-
-        // Assert
-        firstHash.ShouldNotBe(secondHash);
-    }
 }

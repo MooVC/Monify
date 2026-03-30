@@ -6,19 +6,18 @@ public static class WhenInequalityOperatorWithSimpleForArrayIsCalled
     private static readonly int[] _sampleValue = [1, 2, 3];
 
     [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    public static void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         SimpleForArray left = new(_sampleValue);
-        SimpleForArray right = new(_sampleValue);
+        SimpleForArray right = new(_differentValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeFalse();
+        actual.ShouldBeTrue();
     }
-
     [Fact]
     public static void GivenEquivalentValuesThenReturnFalse()
     {
@@ -36,16 +35,17 @@ public static class WhenInequalityOperatorWithSimpleForArrayIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
         SimpleForArray left = new(_sampleValue);
-        SimpleForArray right = new(_differentValue);
+        SimpleForArray right = new(_sampleValue);
 
         // Act
         bool actual = left != right;
 
         // Assert
-        actual.ShouldBeTrue();
+        actual.ShouldBeFalse();
     }
+
 }

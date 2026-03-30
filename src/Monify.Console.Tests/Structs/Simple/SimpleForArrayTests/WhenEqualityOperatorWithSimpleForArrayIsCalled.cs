@@ -20,6 +20,35 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        SimpleForArray left = new(_sampleValue);
+        SimpleForArray right = new(_differentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnTrue()
+    {
+        // Arrange
+        int[] leftValues = [1, 2, 3];
+        int[] rightValues = [1, 2, 3];
+        SimpleForArray left = new(leftValues);
+        SimpleForArray right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -47,33 +76,4 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
-    {
-        // Arrange
-        int[] leftValues = [1, 2, 3];
-        int[] rightValues = [1, 2, 3];
-        SimpleForArray left = new(leftValues);
-        SimpleForArray right = new(rightValues);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        SimpleForArray left = new(_sampleValue);
-        SimpleForArray right = new(_differentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

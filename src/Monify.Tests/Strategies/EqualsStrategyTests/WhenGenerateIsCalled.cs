@@ -5,20 +5,6 @@ using Monify.Model;
 public sealed class WhenGenerateIsCalled
 {
     [Fact]
-    public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
-    {
-        // Arrange
-        Subject subject = TestSubject.Create();
-        var strategy = new EqualsStrategy();
-
-        // Act
-        IEnumerable<Source> result = strategy.Generate(subject);
-
-        // Assert
-        result.ShouldBeEmpty();
-    }
-
-    [Fact]
     public void GivenOverridesWhenAllowedThenSourceIsReturned()
     {
         // Arrange
@@ -33,4 +19,18 @@ public sealed class WhenGenerateIsCalled
         source.Hint.ShouldBe(nameof(Equals));
         source.Code.ShouldContain("public override bool Equals(object other)");
     }
+    [Fact]
+    public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
+    {
+        // Arrange
+        Subject subject = TestSubject.Create();
+        var strategy = new EqualsStrategy();
+
+        // Act
+        IEnumerable<Source> result = strategy.Generate(subject);
+
+        // Assert
+        result.ShouldBeEmpty();
+    }
+
 }

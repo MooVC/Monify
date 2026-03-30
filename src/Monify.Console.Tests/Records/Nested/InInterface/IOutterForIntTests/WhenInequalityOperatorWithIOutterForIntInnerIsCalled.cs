@@ -6,6 +6,19 @@ public static class WhenInequalityOperatorWithIOutterForIntInnerIsCalled
     private const int SampleValue = 42;
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnTrue()
+    {
+        // Arrange
+        IOutterForInt<int>.Inner left = new(SampleValue);
+        IOutterForInt<int>.Inner right = new(DifferentValue);
+
+        // Act
+        bool actual = left != right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+    [Fact]
     public static void GivenSameValueThenReturnFalse()
     {
         // Arrange
@@ -19,17 +32,4 @@ public static class WhenInequalityOperatorWithIOutterForIntInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
-    {
-        // Arrange
-        IOutterForInt<int>.Inner left = new(SampleValue);
-        IOutterForInt<int>.Inner right = new(DifferentValue);
-
-        // Act
-        bool actual = left != right;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
 }

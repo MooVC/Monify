@@ -22,6 +22,35 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
     }
 
     [Fact]
+    public static void GivenDifferentValuesThenReturnFalse()
+    {
+        // Arrange
+        OutterForImmutableArray<int>.Inner left = new(_sampleValue);
+        OutterForImmutableArray<int>.Inner right = new(_differentValue);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeFalse();
+    }
+    [Fact]
+    public static void GivenEquivalentValuesThenReturnTrue()
+    {
+        // Arrange
+        ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
+        ImmutableArray<string> rightValues = ["Alpha", "Beta", "Gamma"];
+        OutterForImmutableArray<int>.Inner left = new(leftValues);
+        OutterForImmutableArray<int>.Inner right = new(rightValues);
+
+        // Act
+        bool actual = left == right;
+
+        // Assert
+        actual.ShouldBeTrue();
+    }
+
+    [Fact]
     public static void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
@@ -49,33 +78,4 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
-    {
-        // Arrange
-        ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
-        ImmutableArray<string> rightValues = ["Alpha", "Beta", "Gamma"];
-        OutterForImmutableArray<int>.Inner left = new(leftValues);
-        OutterForImmutableArray<int>.Inner right = new(rightValues);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeTrue();
-    }
-
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
-    {
-        // Arrange
-        OutterForImmutableArray<int>.Inner left = new(_sampleValue);
-        OutterForImmutableArray<int>.Inner right = new(_differentValue);
-
-        // Act
-        bool actual = left == right;
-
-        // Assert
-        actual.ShouldBeFalse();
-    }
 }

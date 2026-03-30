@@ -5,18 +5,18 @@ public static class WhenEqualsWithObjectIsCalled
     private const int SampleValue = 42;
 
     [Fact]
-    public static void GivenNullThenReturnsFalse()
+    public static void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         OutterForInt<int>.Inner subject = new(SampleValue);
+        object other = string.Empty;
 
         // Act
-        bool result = subject.Equals((object?)default);
+        bool result = subject.Equals(other);
 
         // Assert
         result.ShouldBeFalse();
     }
-
     [Fact]
     public static void GivenEquivalentOutterForIntInnerThenReturnTrue()
     {
@@ -32,16 +32,16 @@ public static class WhenEqualsWithObjectIsCalled
     }
 
     [Fact]
-    public static void GivenDifferentTypeThenReturnsFalse()
+    public static void GivenNullThenReturnsFalse()
     {
         // Arrange
         OutterForInt<int>.Inner subject = new(SampleValue);
-        object other = string.Empty;
 
         // Act
-        bool result = subject.Equals(other);
+        bool result = subject.Equals((object?)default);
 
         // Assert
         result.ShouldBeFalse();
     }
+
 }
