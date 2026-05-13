@@ -10,6 +10,7 @@
     <NoWarn>$(NoWarn);CS0618;NU5105</NoWarn>
     <Nullable>enable</Nullable>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/MooVC/monify</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Analyzer;Analyzers;CSharp;DDD;Domain;Dotnet;Functional;Generator;Monad;Roslyn;Source;Value;ValueType</PackageTags>
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="" />
+    <None Include="../../icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <Import Condition="'$(IsLibraryProject)' == 'true'" Project="build/Libraries.props" />
   <Import Condition="'$(IsRoslynProject)' == 'true'" Project="build/Roslyn.props" />

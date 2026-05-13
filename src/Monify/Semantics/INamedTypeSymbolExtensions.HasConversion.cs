@@ -41,7 +41,7 @@ internal static partial class INamedTypeSymbolExtensions
             .Any(method => method.MethodKind == MethodKind.Conversion
                         && method.Name == operatorName
                         && method.Parameters.Length == ExpectedParametersForConversion
-                        && method.Parameters[0].Type.Equals(parameter, SymbolEqualityComparer.IncludeNullability)
-                        && method.ReturnType.Equals(result, SymbolEqualityComparer.IncludeNullability));
+                        && method.Parameters[0].Type.Equals(parameter, SymbolEqualityComparer.Default)
+                        && method.ReturnType.Equals(result, SymbolEqualityComparer.Default));
     }
 }
