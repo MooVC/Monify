@@ -4,11 +4,29 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [1.3.3] - 2025-05-13
+# [1.4.0] - 2026-05-14
+
+## Changed
+
+- Stateful types annotated with `Monify` will now support code generation, with the onus on the engineer to ensure that the state is properly assigned, either by default or via the single parameter constructor for the encapsulated type.
+
+# [1.3.5] - 2026-05-13
 
 ## Fixed
 
 - Implicit conversion operators are no longer duplicated when explicitly defined.
+
+# [1.3.4] - 2026-03-13
+
+## Fixed
+
+- Applied latest hotfix for `System.Collections.Immutable`.
+
+# [1.3.3] - 2026-03-11
+
+## Fixed
+
+- Applied latest hotfix for `System.Collections.Immutable`.
 
 # [1.3.2] - 2025-12-31
 

@@ -39,14 +39,16 @@ internal static partial class INamedTypeSymbolExtensions
             .Where(field => !field.IsImplicitlyDeclared || IsExplicitlyDeclaredBackingField(field))
             .ToArray();
 
-        hasFieldForEncapsulatedValue = false;
+        hasFieldForEncapsulatedValue = value is object
+            && fields.Any(field => field.Name.Equals(FieldStrategy.Name)
+                && SymbolEqualityComparer.IncludeNullability.Equals(field.Type, value));
 
         if (fields.Length == ExpectedFieldsForStatelessType)
         {
             return true;
         }
 
-        if (value is not null && fields.Length == ExpectedFieldsWhenFieldIsAlreadyDefined)
+        if (value is object && fields.Length == ExpectedFieldsWhenFieldIsAlreadyDefined)
         {
             IFieldSymbol field = fields[OffsetForFieldWhenAlreadyDefined];
 

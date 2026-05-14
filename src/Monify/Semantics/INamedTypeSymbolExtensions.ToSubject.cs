@@ -46,12 +46,12 @@ internal static partial class INamedTypeSymbolExtensions
 
         string? declaration = subject.GetDeclaration();
 
-        if (declaration is null
-         || subject.Equals(value, SymbolEqualityComparer.IncludeNullability)
-         || !subject.IsStateless(value, out bool hasFieldForEncapsulatedValue))
+        if (declaration is null || subject.Equals(value, SymbolEqualityComparer.IncludeNullability))
         {
             return default;
         }
+
+        _ = subject.IsStateless(value, out bool hasFieldForEncapsulatedValue);
 
         return new Subject
         {

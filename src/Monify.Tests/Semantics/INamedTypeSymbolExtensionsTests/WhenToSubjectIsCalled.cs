@@ -7,6 +7,66 @@ using Monify.Semantics;
 public sealed class WhenToSubjectIsCalled
 {
     [Fact]
+    public void GivenStatefulTypeThenSubjectIsStillCreated()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute<T> : Attribute
+                {
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify<int>]
+            public sealed partial class Outer
+            {
+                private readonly string _name;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? outer = compilation.GetTypeByMetadataName("Sample.Outer");
+
+        _ = outer.ShouldNotBeNull();
+        outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        var subject = outer.ToSubject(compilation, model, [], value);
+
+        // Assert
+        _ = subject.ShouldNotBeNull();
+        subject!.HasField.ShouldBeFalse();
+    }
+
+    [Fact]
     public void GivenCircularEncapsulationThenConversionDetectionIsTerminated()
     {
         // Arrange
