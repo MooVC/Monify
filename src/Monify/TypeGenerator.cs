@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Monify.Model;
 using Monify.Strategies;
@@ -40,37 +41,42 @@ public sealed class TypeGenerator
             .CreateSyntaxProvider(predicate: IsMatch, transform: Transform)
             .Where(record => record is not null);
 
-        IncrementalValuesProvider<Subject?> subjects = classes
+        IncrementalValueProvider<bool> supportsNullableReferenceTypes = context.CompilationProvider
+            .Select(static (compilation, _) => IsNullableReferenceTypesSupported(compilation));
+
+        IncrementalValuesProvider<(Subject? Subject, bool SupportsNullableReferenceTypes)> subjects = classes
            .Combine(context.CompilationProvider)
-           .Select(static (match, cancellationToken) => Parse(match.Left, match.Right, cancellationToken))
-           .Where(subject => subject is not null);
+           .Combine(supportsNullableReferenceTypes)
+           .Select(static (match, cancellationToken) => (Parse(match.Left.Left, match.Left.Right, cancellationToken), match.Right));
 
         context.RegisterSourceOutput(subjects, Generate);
     }
 
-    private static void Generate(SourceProductionContext context, Subject? subject)
+    private static void Generate(SourceProductionContext context, (Subject? Subject, bool SupportsNullableReferenceTypes) match)
     {
-        if (subject is not null)
+        if (match.Subject is null)
         {
+            return;
+        }
+
 #if DEBUG
-            Dictionary<string, string> files = new();
+        Dictionary<string, string> files = new();
 #endif
 
-            foreach (IStrategy strategy in _strategies)
+        foreach (IStrategy strategy in _strategies)
+        {
+            IEnumerable<Source> sources = strategy.Generate(match.Subject);
+
+            foreach (Source source in sources)
             {
-                IEnumerable<Source> sources = strategy.Generate(subject);
-
-                foreach (Source source in sources)
-                {
-                    string code = Wrap(source.Code, subject);
-                    string hint = GetHint(source, subject);
+                string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes);
+                string hint = GetHint(source, match.Subject);
 
 #if DEBUG
-                    files[hint] = code;
+                files[hint] = code;
 #endif
 
-                    context.AddSource(hint, code);
-                }
+                context.AddSource(hint, code);
             }
         }
     }
@@ -96,6 +102,18 @@ public sealed class TypeGenerator
     private static bool IsMatch(SyntaxNode node, CancellationToken cancellationToken)
     {
         return node is TypeDeclarationSyntax type && type.AttributeLists.Count > 0;
+    }
+
+    private static bool IsNullableReferenceTypesSupported(Compilation compilation)
+    {
+        SyntaxTree syntax = compilation.SyntaxTrees.FirstOrDefault();
+
+        if (syntax is null)
+        {
+            return false;
+        }
+
+        return syntax.Options is CSharpParseOptions options && options.LanguageVersion >= LanguageVersion.CSharp8;
     }
 
     private static Subject? Parse(TypeDeclarationSyntax? syntax, Compilation compilation, CancellationToken cancellationToken)
@@ -125,23 +143,28 @@ public sealed class TypeGenerator
         return code;
     }
 
-    private static string Wrap(string code, Subject subject)
+    private static string Wrap(string code, Subject subject, bool supportsNullableReferenceTypes)
     {
         code = Nest(code, subject);
+
+        if (supportsNullableReferenceTypes)
+        {
+            code = $"""
+                #nullable disable
+                #pragma warning disable CS8625
+
+                {code}
+                
+                #pragma warning restore CS8625
+                #nullable restore
+                """;
+        }
 
         code = $"""
             using System;
             using System.Collections.Generic;
 
-            #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-            #nullable disable
-            #endif
-
             {code}
-
-            #if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-            #nullable restore
-            #endif
             """;
 
         if (subject.IsGlobal)

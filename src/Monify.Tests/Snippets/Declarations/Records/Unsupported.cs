@@ -6,7 +6,7 @@ using static Monify.Snippets.Snippets;
 internal static class Unsupported
 {
     public static readonly Snippets Declaration = new(
-        Simple.Declaration.Body,
+        Simple.NonNullable.Body,
         new(
             $$"""
             namespace Monify.Testing.Records

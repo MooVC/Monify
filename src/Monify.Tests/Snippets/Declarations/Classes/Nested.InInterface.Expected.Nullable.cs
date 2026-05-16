@@ -1,0 +1,472 @@
+﻿namespace Monify.Snippets.Declarations.Classes;
+
+internal static partial class Nested
+{
+    public static partial class InInterface
+    {
+        public static partial class Expected
+        {
+            public static class Nullable
+            {
+                public static readonly Generated ConstructorForEncapsulatedValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public Inner(int value)
+                                {
+                                    _value = value;
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasConstructorForEncapsulatedValue,
+                    "Monify.Testing.Classes.IOutter.Inner.ctor");
+
+                public static readonly Generated ConversionFromValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static implicit operator int(Inner subject)
+                                {
+                                    if (ReferenceEquals(subject, null))
+                                    {
+                                        throw new ArgumentNullException("subject");
+                                    }
+
+                                    return subject._value;
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasConversionFrom,
+                    "Monify.Testing.Classes.IOutter.Inner.ConvertFrom");
+
+                public static readonly Generated ConversionToValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static implicit operator Inner(int value)
+                                {
+                                    return new Inner(value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasConversionTo,
+                    "Monify.Testing.Classes.IOutter.Inner.ConvertTo");
+
+                public static readonly Generated EquatableForSelf = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner : IEquatable<Inner>
+                            {
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasEquatableForSelf,
+                    "Monify.Testing.Classes.IOutter.Inner.IEquatable.Self");
+
+                public static readonly Generated EquatableForValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner : IEquatable<int>
+                            {
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasEquatableForValue,
+                    "Monify.Testing.Classes.IOutter.Inner.IEquatable.Value");
+
+                public static readonly Generated EqualityOperatorForSelf = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static bool operator ==(Inner left, Inner right)
+                                {
+                                    if (ReferenceEquals(left, right))
+                                    {
+                                        return true;
+                                    }
+
+                                    if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+                                    {
+                                        return false;
+                                    }
+
+                                    return left.Equals(right);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasEqualityOperatorForSelf,
+                    "Monify.Testing.Classes.IOutter.Inner.Equality.Self");
+
+                public static readonly Generated EqualityOperatorForValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static bool operator ==(Inner left, int right)
+                                {
+                                    if (ReferenceEquals(left, right))
+                                    {
+                                        return true;
+                                    }
+
+                                    if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+                                    {
+                                        return false;
+                                    }
+
+                                    return left.Equals(right);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasEqualityOperatorForValue,
+                    "Monify.Testing.Classes.IOutter.Inner.Equality.Value");
+
+                public static new readonly Generated Equals = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public override bool Equals(object other)
+                                {
+                                    if (other is Inner)
+                                    {
+                                        return Equals((Inner)other);
+                                    }
+
+                                    return false;
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasEqualsOverride,
+                    "Monify.Testing.Classes.IOutter.Inner.Equals");
+
+                public static readonly Generated FieldForEncapsulatedValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                private readonly int _value;
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasFieldForEncapsulatedValue,
+                    "Monify.Testing.Classes.IOutter.Inner._value");
+
+                public static new readonly Generated GetHashCode = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public override int GetHashCode()
+                                {
+                                    return global::Monify.Internal.HashCode.Combine(_value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasGetHashCodeOverride,
+                    "Monify.Testing.Classes.IOutter.Inner.GetHashCode");
+
+                public static readonly Generated InequalityOperatorForSelf = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static bool operator !=(Inner left, Inner right)
+                                {
+                                    return !(left == right);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasInequalityOperatorForSelf,
+                    "Monify.Testing.Classes.IOutter.Inner.Inequality.Self");
+
+                public static readonly Generated InequalityOperatorForValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static bool operator !=(Inner left, int right)
+                                {
+                                    return !(left == right);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasInequalityOperatorForValue,
+                    "Monify.Testing.Classes.IOutter.Inner.Inequality.Value");
+
+                public static new readonly Generated ToString = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public override string ToString()
+                                {
+                                    return string.Format("Inner {{ {0} }}", _value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.HasToStringOverride,
+                    "Monify.Testing.Classes.IOutter.Inner.ToString");
+
+                public static readonly Generated EquatableToSelf = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public bool Equals(Inner other)
+                                {
+                                    if (ReferenceEquals(this, other))
+                                    {
+                                        return true;
+                                    }
+
+                                    if (ReferenceEquals(other, null))
+                                    {
+                                        return false;
+                                    }
+
+                                    return Equals(other._value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.IsEquatableToSelf,
+                    "Monify.Testing.Classes.IOutter.Inner.IEquatable.Self.Equals");
+
+                public static readonly Generated EquatableToValue = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public bool Equals(int other)
+                                {
+                                    if (ReferenceEquals(this, other))
+                                    {
+                                        return true;
+                                    }
+
+                                    if (ReferenceEquals(other, null))
+                                    {
+                                        return false;
+                                    }
+
+                                    return global::System.Collections.Generic.EqualityComparer<int>.Default.Equals(_value, other);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.IsEquatableToValue,
+                    "Monify.Testing.Classes.IOutter.Inner.IEquatable.Value.Equals");
+            }
+        }
+    }
+}
