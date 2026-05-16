@@ -10,12 +10,14 @@ public sealed class FrameworksAttribute
 {
     public LanguageVersion Language { get; set; } = LanguageVersion.CSharp2;
 
+    public LanguageVersion Maximum { get; set; } = LanguageVersion.Latest;
+
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
 #if CI
-        return Frameworks.All(Language);
+        return Frameworks.All(Language, Maximum);
 #else
-        return Frameworks.Supported(Language);
+        return Frameworks.Supported(Language, Maximum);
 #endif
     }
 }

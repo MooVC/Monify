@@ -43,7 +43,7 @@ public sealed class SnippetsAttribute
         Languages = _languages;
     }
 
-    private delegate IEnumerable<object[]> GetFrameworks(LanguageVersion minimum, Func<ReferenceAssemblies, LanguageVersion, object[]?>? prepare);
+    private delegate IEnumerable<object[]> GetFrameworks(LanguageVersion minimum, LanguageVersion maximum, Func<ReferenceAssemblies, LanguageVersion, object[]?>? prepare);
 
     public IReadOnlyList<ReferenceAssemblies> Assemblies { get; }
 
@@ -79,7 +79,7 @@ public sealed class SnippetsAttribute
                         return default;
                     }
 
-                    foreach (object[] theory in _frameworks(expectation.Minimum, Prepare))
+                    foreach (object[] theory in _frameworks(expectation.Minimum, expectation.Maximum, Prepare))
                     {
                         yield return theory;
                     }

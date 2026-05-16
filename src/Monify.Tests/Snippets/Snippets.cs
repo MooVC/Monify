@@ -5,7 +5,14 @@ using Microsoft.CodeAnalysis.CSharp;
 using Arrangements = Monify.Snippets.Extensions;
 
 [DebuggerDisplay("{Name,nq}")]
-public sealed record Snippets(Content[] Body, Content Declaration, Generated[] Expected, Extension[] Extensions, string Name)
+public sealed record Snippets(
+    Content[] Body,
+    Content Declaration,
+    Generated[] Expected,
+    Extension[] Extensions,
+    string Name,
+    LanguageVersion Minimum = LanguageVersion.CSharp1,
+    LanguageVersion Maximum = LanguageVersion.Latest)
 {
     public const string BodyTag = "__BODY__";
 
@@ -31,17 +38,34 @@ public sealed record Snippets(Content[] Body, Content Declaration, Generated[] E
     {
         if (Body.Length == 0)
         {
-            yield return Declaration;
+            foreach (Content content in Compose(Declaration))
+            {
+                yield return content;
+            }
         }
         else
         {
             foreach (Content body in Body)
             {
                 string declaration = Declaration.Body.Replace(BodyTag, body.Body);
-                LanguageVersion minimum = Highest(body.Minimum, Declaration.Minimum);
+                Content content = new(declaration, body.Minimum, body.Maximum);
 
-                yield return new(declaration, minimum);
+                foreach (Content composition in Compose(content))
+                {
+                    yield return composition;
+                }
             }
+        }
+    }
+
+    private IEnumerable<Content> Compose(Content body)
+    {
+        LanguageVersion minimum = Highest(Highest(body.Minimum, Declaration.Minimum), Minimum);
+        LanguageVersion maximum = Lowest(Lowest(body.Maximum, Declaration.Maximum), Maximum);
+
+        if (minimum <= maximum)
+        {
+            yield return new(body.Body, minimum, maximum);
         }
     }
 
@@ -60,13 +84,20 @@ public sealed record Snippets(Content[] Body, Content Declaration, Generated[] E
         {
             string[] contents = [declaration.Body, .. extensions];
 
-            yield return new Expectations(contents, expectations, declaration.Minimum);
+            yield return new Expectations(contents, expectations, declaration.Minimum, declaration.Maximum);
         }
     }
 
     private static LanguageVersion Highest(LanguageVersion first, LanguageVersion second)
     {
         return first > second
+            ? first
+            : second;
+    }
+
+    private static LanguageVersion Lowest(LanguageVersion first, LanguageVersion second)
+    {
+        return first < second
             ? first
             : second;
     }
