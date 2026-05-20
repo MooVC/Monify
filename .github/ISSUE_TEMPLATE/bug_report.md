@@ -22,7 +22,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment (please complete the following information):**
 - Monify Version: [1.4.0]
 - .NET Version (Your Project): [NET 10]
- - IDE: [Visual Studio 2026 v18.6.0]
+ - IDE: [Visual Studio 2026 v18.6.1]
 
 **Additional context**
 Add any other context about the problem here.

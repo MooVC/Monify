@@ -65,7 +65,10 @@ internal static partial class INamedTypeSymbolExtensions
 
     private static bool IsConversion(this IMethodSymbol method)
     {
-        return method.MethodKind == MethodKind.Conversion && method.Parameters.Length == ExpectedParametersForConversion;
+        bool isOperator = method.MethodKind == MethodKind.Conversion || method.MethodKind == MethodKind.BuiltinOperator;
+        bool hasExpectedParameters = method.Parameters.Length == ExpectedParametersForConversion;
+
+        return isOperator && hasExpectedParameters;
     }
 
     private static bool IsDuplicateOfMonifyConversions(

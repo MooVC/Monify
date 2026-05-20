@@ -53,9 +53,14 @@ internal static partial class INamedTypeSymbolExtensions
         return subject
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Any(method => method.MethodKind == MethodKind.UserDefinedOperator
-                        && method.Name == @operator
-                        && method.Parameters.Length == ExpectedParametersForOperator
-                        && condition(method));
+            .Any(method => method.IsOperator(condition, @operator));
+    }
+
+    private static bool IsOperator(this IMethodSymbol method, Predicate<IMethodSymbol> condition, string @operator)
+    {
+        return (method.MethodKind == MethodKind.UserDefinedOperator || method.MethodKind == MethodKind.BuiltinOperator)
+            && method.Name == @operator
+            && method.Parameters.Length == ExpectedParametersForOperator
+            && condition(method);
     }
 }

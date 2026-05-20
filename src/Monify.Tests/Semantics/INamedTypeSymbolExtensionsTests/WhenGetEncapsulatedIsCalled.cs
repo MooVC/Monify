@@ -9,6 +9,134 @@ using Monify.Semantics;
 public sealed class WhenGetEncapsulatedIsCalled
 {
     [Fact]
+    public void GivenEncapsulatedStringThenBuiltInBinaryOperatorsAreCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(string))]
+            public sealed partial class Wrapper
+            {
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
+            && @operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Symbol == "+");
+    }
+
+    [Fact]
+    public void GivenEncapsulatedIntThenBuiltInUnaryOperatorsAreCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(int))]
+            public sealed partial class Wrapper
+            {
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_UnaryPlus"
+            && @operator.IsReturnSubject
+            && @operator.Symbol == "+");
+
+        encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_UnaryNegation"
+            && @operator.IsReturnSubject
+            && @operator.Symbol == "-");
+    }
+
+    [Fact]
     public void GivenEncapsulatedTypeWithBinaryOperatorsThenTheyAreCaptured()
     {
         // Arrange

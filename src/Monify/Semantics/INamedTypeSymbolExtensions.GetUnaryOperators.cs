@@ -37,23 +37,16 @@ internal static partial class INamedTypeSymbolExtensions
 
         foreach (IMethodSymbol method in encapsulated.GetMembers().OfType<IMethodSymbol>())
         {
-            if (method.MethodKind != MethodKind.UserDefinedOperator || method.Parameters.Length != ExpectedParametersForUnaryOperator)
-            {
-                continue;
-            }
-
-            if (!_supported.TryGetValue(method.Name, out string symbol))
-            {
-                continue;
-            }
-
-            if (!method.Parameters[0].Type.Equals(encapsulated, SymbolEqualityComparer.IncludeNullability))
+            if (!method.IsUnaryOperatorCandidate(encapsulated, out string symbol))
             {
                 continue;
             }
 
             bool isReturnSubject = method.ReturnType.Equals(encapsulated, SymbolEqualityComparer.IncludeNullability);
-            ITypeSymbol returnType = isReturnSubject ? subject : method.ReturnType;
+
+            ITypeSymbol returnType = isReturnSubject
+                ? subject
+                : method.ReturnType;
 
             if (subject.HasUnaryOperator(method.Name, returnType))
             {
@@ -73,5 +66,18 @@ internal static partial class INamedTypeSymbolExtensions
             .OrderBy(@operator => @operator.Operator)
             .ThenBy(@operator => @operator.Return)
             .ToImmutableArray();
+    }
+
+    private static bool IsUnaryOperatorCandidate(this IMethodSymbol method, INamedTypeSymbol encapsulated, out string symbol)
+    {
+        bool isOperator = method.MethodKind == MethodKind.UserDefinedOperator || method.MethodKind == MethodKind.BuiltinOperator;
+        bool hasExpectedParameters = method.Parameters.Length == ExpectedParametersForUnaryOperator;
+
+        symbol = string.Empty;
+
+        return isOperator
+            && hasExpectedParameters
+            && _supported.TryGetValue(method.Name, out symbol)
+            && method.Parameters[0].Type.Equals(encapsulated, SymbolEqualityComparer.IncludeNullability);
     }
 }

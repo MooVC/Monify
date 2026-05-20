@@ -38,10 +38,15 @@ internal static partial class INamedTypeSymbolExtensions
         return subject
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Any(method => method.MethodKind == MethodKind.Conversion
-                        && method.Name == operatorName
-                        && method.Parameters.Length == ExpectedParametersForConversion
-                        && method.Parameters[0].Type.Equals(parameter, SymbolEqualityComparer.Default)
-                        && method.ReturnType.Equals(result, SymbolEqualityComparer.Default));
+            .Any(method => method.IsConversion(operatorName, parameter, result));
+    }
+
+    private static bool IsConversion(this IMethodSymbol method, string operatorName, ITypeSymbol parameter, ITypeSymbol result)
+    {
+        return (method.MethodKind == MethodKind.Conversion || method.MethodKind == MethodKind.BuiltinOperator)
+            && method.Name == operatorName
+            && method.Parameters.Length == ExpectedParametersForConversion
+            && method.Parameters[0].Type.Equals(parameter, SymbolEqualityComparer.Default)
+            && method.ReturnType.Equals(result, SymbolEqualityComparer.Default);
     }
 }

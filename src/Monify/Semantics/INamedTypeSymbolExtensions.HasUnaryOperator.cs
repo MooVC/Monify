@@ -27,10 +27,15 @@ internal static partial class INamedTypeSymbolExtensions
         return subject
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Any(method => method.MethodKind == MethodKind.UserDefinedOperator
-                        && method.Name == @operator
-                        && method.Parameters.Length == ExpectedParametersForUnaryOperator
-                        && method.Parameters[0].Type.Equals(subject, SymbolEqualityComparer.IncludeNullability)
-                        && method.ReturnType.Equals(returnType, SymbolEqualityComparer.IncludeNullability));
+            .Any(method => method.IsUnaryOperator(@operator, returnType));
+    }
+
+    private static bool IsUnaryOperator(this IMethodSymbol method, string @operator, ITypeSymbol returnType)
+    {
+        return (method.MethodKind == MethodKind.UserDefinedOperator || method.MethodKind == MethodKind.BuiltinOperator)
+            && method.Name == @operator
+            && method.Parameters.Length == ExpectedParametersForUnaryOperator
+            && method.Parameters[0].Type.Equals(method.ContainingType, SymbolEqualityComparer.IncludeNullability)
+            && method.ReturnType.Equals(returnType, SymbolEqualityComparer.IncludeNullability);
     }
 }

@@ -23,10 +23,15 @@ internal static partial class INamedTypeSymbolExtensions
         return subject
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Any(method => method.MethodKind == MethodKind.UserDefinedOperator
-                        && method.Name == @operator
-                        && method.Parameters.Length == ExpectedParametersForOperator
-                        && method.Parameters[OffsetForLeftOperand].Type.Equals(left, SymbolEqualityComparer.IncludeNullability)
-                        && method.Parameters[OffsetForRightOperand].Type.Equals(right, SymbolEqualityComparer.IncludeNullability));
+            .Any(method => method.IsBinaryOperator(@operator, left, right));
+    }
+
+    private static bool IsBinaryOperator(this IMethodSymbol method, string @operator, ITypeSymbol left, ITypeSymbol right)
+    {
+        return (method.MethodKind == MethodKind.UserDefinedOperator || method.MethodKind == MethodKind.BuiltinOperator)
+            && method.Name == @operator
+            && method.Parameters.Length == ExpectedParametersForOperator
+            && method.Parameters[OffsetForLeftOperand].Type.Equals(left, SymbolEqualityComparer.IncludeNullability)
+            && method.Parameters[OffsetForRightOperand].Type.Equals(right, SymbolEqualityComparer.IncludeNullability);
     }
 }

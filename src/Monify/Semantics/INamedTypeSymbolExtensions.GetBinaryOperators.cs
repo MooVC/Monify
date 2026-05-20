@@ -43,12 +43,7 @@ internal static partial class INamedTypeSymbolExtensions
 
         foreach (IMethodSymbol method in encapsulated.GetMembers().OfType<IMethodSymbol>())
         {
-            if (method.MethodKind != MethodKind.UserDefinedOperator || method.Parameters.Length != ExpectedParametersForBinaryOperator)
-            {
-                continue;
-            }
-
-            if (!_supportedBinaryOperators.TryGetValue(method.Name, out string symbol))
+            if (!method.IsBinaryOperatorCandidate(out string symbol))
             {
                 continue;
             }
@@ -90,5 +85,15 @@ internal static partial class INamedTypeSymbolExtensions
             .ThenBy(@operator => @operator.Right)
             .ThenBy(@operator => @operator.Return)
             .ToImmutableArray();
+    }
+
+    private static bool IsBinaryOperatorCandidate(this IMethodSymbol method, out string symbol)
+    {
+        bool isOperator = method.MethodKind == MethodKind.UserDefinedOperator || method.MethodKind == MethodKind.BuiltinOperator;
+        bool hasExpectedParameterCount = method.Parameters.Length == ExpectedParametersForBinaryOperator;
+
+        symbol = string.Empty;
+
+        return isOperator && hasExpectedParameterCount && _supportedBinaryOperators.TryGetValue(method.Name, out symbol);
     }
 }
