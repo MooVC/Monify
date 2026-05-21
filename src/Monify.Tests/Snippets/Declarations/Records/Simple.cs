@@ -2,6 +2,7 @@
 
 using Microsoft.CodeAnalysis.CSharp;
 using static Monify.Snippets.Declarations.Attributes.Annotations;
+using static Monify.Snippets.Declarations.BuiltInInt32Operators;
 
 internal static partial class Simple
 {
@@ -9,6 +10,13 @@ internal static partial class Simple
         [Generic, NonGeneric],
         Declarations.Main,
         [
+            .. CreateBinaryOperators(
+                "Monify.Testing.Records",
+                "Monify.Testing.Records.Simple",
+                [],
+                "sealed partial record",
+                "Simple",
+                supportsNullableReferenceTypes: false),
             Expected.NonNullable.ConstructorForEncapsulatedValue,
             Expected.NonNullable.ConversionFromValue,
             Expected.NonNullable.ConversionToValue,
@@ -17,8 +25,13 @@ internal static partial class Simple
             Expected.NonNullable.EquatableToValue,
             Expected.NonNullable.FieldForEncapsulatedValue,
             Expected.NonNullable.InequalityOperatorForValue,
-            Expected.NonNullable.UnaryNegationOperator,
-            Expected.NonNullable.UnaryPlusOperator,
+            .. CreateUnaryOperators(
+                "Monify.Testing.Records",
+                "Monify.Testing.Records.Simple",
+                [],
+                "sealed partial record",
+                "Simple",
+                supportsNullableReferenceTypes: false),
         ],
         [
             new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -37,6 +50,13 @@ internal static partial class Simple
         [Generic, NonGeneric],
         Declarations.Main,
         [
+            .. CreateBinaryOperators(
+                "Monify.Testing.Records",
+                "Monify.Testing.Records.Simple",
+                [],
+                "sealed partial record",
+                "Simple",
+                supportsNullableReferenceTypes: true),
             Expected.Nullable.ConstructorForEncapsulatedValue,
             Expected.Nullable.ConversionFromValue,
             Expected.Nullable.ConversionToValue,
@@ -45,8 +65,13 @@ internal static partial class Simple
             Expected.Nullable.EquatableToValue,
             Expected.Nullable.FieldForEncapsulatedValue,
             Expected.Nullable.InequalityOperatorForValue,
-            Expected.Nullable.UnaryNegationOperator,
-            Expected.Nullable.UnaryPlusOperator,
+            .. CreateUnaryOperators(
+                "Monify.Testing.Records",
+                "Monify.Testing.Records.Simple",
+                [],
+                "sealed partial record",
+                "Simple",
+                supportsNullableReferenceTypes: true),
         ],
         [
             new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),

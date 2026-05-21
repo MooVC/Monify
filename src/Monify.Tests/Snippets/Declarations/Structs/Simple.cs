@@ -2,6 +2,7 @@
 
 using Microsoft.CodeAnalysis.CSharp;
 using static Monify.Snippets.Declarations.Attributes.Annotations;
+using static Monify.Snippets.Declarations.BuiltInInt32Operators;
 
 internal static partial class Simple
 {
@@ -9,6 +10,13 @@ internal static partial class Simple
         [Generic, NonGeneric],
         Declarations.Main,
         [
+            .. CreateBinaryOperators(
+                "Monify.Testing.Structs",
+                "Monify.Testing.Structs.Simple",
+                [],
+                "partial struct",
+                "Simple",
+                supportsNullableReferenceTypes: false),
             Expected.NonNullable.ConstructorForEncapsulatedValue,
             Expected.NonNullable.ConversionFromValue,
             Expected.NonNullable.ConversionToValue,
@@ -24,8 +32,13 @@ internal static partial class Simple
             Expected.NonNullable.InequalityOperatorForSelf,
             Expected.NonNullable.InequalityOperatorForValue,
             Expected.NonNullable.ToString,
-            Expected.NonNullable.UnaryNegationOperator,
-            Expected.NonNullable.UnaryPlusOperator,
+            .. CreateUnaryOperators(
+                "Monify.Testing.Structs",
+                "Monify.Testing.Structs.Simple",
+                [],
+                "partial struct",
+                "Simple",
+                supportsNullableReferenceTypes: false),
         ],
         [
             new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -51,6 +64,13 @@ internal static partial class Simple
         [Generic, NonGeneric],
         Declarations.Main,
         [
+            .. CreateBinaryOperators(
+                "Monify.Testing.Structs",
+                "Monify.Testing.Structs.Simple",
+                [],
+                "partial struct",
+                "Simple",
+                supportsNullableReferenceTypes: true),
             Expected.Nullable.ConstructorForEncapsulatedValue,
             Expected.Nullable.ConversionFromValue,
             Expected.Nullable.ConversionToValue,
@@ -66,8 +86,13 @@ internal static partial class Simple
             Expected.Nullable.InequalityOperatorForSelf,
             Expected.Nullable.InequalityOperatorForValue,
             Expected.Nullable.ToString,
-            Expected.Nullable.UnaryNegationOperator,
-            Expected.Nullable.UnaryPlusOperator,
+            .. CreateUnaryOperators(
+                "Monify.Testing.Structs",
+                "Monify.Testing.Structs.Simple",
+                [],
+                "partial struct",
+                "Simple",
+                supportsNullableReferenceTypes: true),
         ],
         [
             new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
