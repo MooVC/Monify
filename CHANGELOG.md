@@ -4,6 +4,12 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [Unreleased]
+
+## Fixed
+
+- Built-in string addition and integer unary operators are now propagated to generated `Monify` types.
+
 # [1.4.1] - 2026-05-16
 
 ## Fixed

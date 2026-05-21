@@ -54,9 +54,9 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (value is INamedTypeSymbol encapsulated)
         {
-            binaryOperators = encapsulated.GetBinaryOperators(subject);
+            binaryOperators = encapsulated.GetBinaryOperators(compilation, subject);
             conversions = encapsulated.GetConversions(model, subject);
-            unaryOperators = encapsulated.GetUnaryOperators(subject);
+            unaryOperators = encapsulated.GetUnaryOperators(compilation, subject);
         }
 
         return new Encapsulated

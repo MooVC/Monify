@@ -189,6 +189,66 @@ internal static partial class Simple
                 Extensions.HasInequalityOperatorForValue,
                 "Monify.Testing.Records.Simple.Inequality.Value");
 
+            public static readonly Generated UnaryNegationOperator = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial record Simple
+                    {
+                        public static Simple operator -(Simple subject)
+                        {
+                            if (ReferenceEquals(subject, null))
+                            {
+                                throw new ArgumentNullException("subject");
+                            }
+
+                            return new Simple(-subject._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.UnaryOperators.00");
+
+            public static readonly Generated UnaryPlusOperator = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial record Simple
+                    {
+                        public static Simple operator +(Simple subject)
+                        {
+                            if (ReferenceEquals(subject, null))
+                            {
+                                throw new ArgumentNullException("subject");
+                            }
+
+                            return new Simple(+subject._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.UnaryOperators.01");
+
             public static readonly Generated EquatableToValue = new(
                 """
                 namespace Monify.Testing.Records

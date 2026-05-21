@@ -430,6 +430,78 @@ internal static partial class Nested
                     Extensions.HasToStringOverride,
                     "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.ToString");
 
+                public static readonly Generated UnaryNegationOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator -(InlineStyle subject)
+                                    {
+                                        if (ReferenceEquals(subject, null))
+                                        {
+                                            throw new ArgumentNullException("subject");
+                                        }
+
+                                        return new InlineStyle(-subject._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.00");
+
+                public static readonly Generated UnaryPlusOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator +(InlineStyle subject)
+                                    {
+                                        if (ReferenceEquals(subject, null))
+                                        {
+                                            throw new ArgumentNullException("subject");
+                                        }
+
+                                        return new InlineStyle(+subject._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.01");
+
                 public static readonly Generated EquatableToSelf = new(
                     """
                     namespace Monify.Testing.Classes

@@ -391,6 +391,72 @@ internal static partial class Nested
                     Extensions.HasToStringOverride,
                     "Monify.Testing.Classes.IOutter.Inner.ToString");
 
+                public static readonly Generated UnaryNegationOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static Inner operator -(Inner subject)
+                                {
+                                    if (ReferenceEquals(subject, null))
+                                    {
+                                        throw new ArgumentNullException("subject");
+                                    }
+
+                                    return new Inner(-subject._value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.IOutter.Inner.UnaryOperators.00");
+
+                public static readonly Generated UnaryPlusOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            sealed partial class Inner
+                            {
+                                public static Inner operator +(Inner subject)
+                                {
+                                    if (ReferenceEquals(subject, null))
+                                    {
+                                        throw new ArgumentNullException("subject");
+                                    }
+
+                                    return new Inner(+subject._value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.IOutter.Inner.UnaryOperators.01");
+
                 public static readonly Generated EquatableToSelf = new(
                     """
                     namespace Monify.Testing.Classes

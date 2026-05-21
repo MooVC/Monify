@@ -24,6 +24,8 @@ internal static partial class Simple
             Expected.NonNullable.InequalityOperatorForSelf,
             Expected.NonNullable.InequalityOperatorForValue,
             Expected.NonNullable.ToString,
+            Expected.NonNullable.UnaryNegationOperator,
+            Expected.NonNullable.UnaryPlusOperator,
         ],
         [
             new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -64,6 +66,8 @@ internal static partial class Simple
             Expected.Nullable.InequalityOperatorForSelf,
             Expected.Nullable.InequalityOperatorForValue,
             Expected.Nullable.ToString,
+            Expected.Nullable.UnaryNegationOperator,
+            Expected.Nullable.UnaryPlusOperator,
         ],
         [
             new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),

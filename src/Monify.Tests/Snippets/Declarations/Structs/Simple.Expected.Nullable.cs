@@ -350,6 +350,66 @@ internal static partial class Simple
                 Extensions.HasToStringOverride,
                 "Monify.Testing.Structs.Simple.ToString");
 
+            public static readonly Generated UnaryNegationOperator = new(
+                """
+                namespace Monify.Testing.Structs
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    partial struct Simple
+                    {
+                        public static Simple operator -(Simple subject)
+                        {
+                            if (ReferenceEquals(subject, null))
+                            {
+                                throw new ArgumentNullException("subject");
+                            }
+
+                            return new Simple(-subject._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Structs.Simple.UnaryOperators.00");
+
+            public static readonly Generated UnaryPlusOperator = new(
+                """
+                namespace Monify.Testing.Structs
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    partial struct Simple
+                    {
+                        public static Simple operator +(Simple subject)
+                        {
+                            if (ReferenceEquals(subject, null))
+                            {
+                                throw new ArgumentNullException("subject");
+                            }
+
+                            return new Simple(+subject._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Structs.Simple.UnaryOperators.01");
+
             public static readonly Generated EquatableToSelf = new(
                 """
                 namespace Monify.Testing.Structs

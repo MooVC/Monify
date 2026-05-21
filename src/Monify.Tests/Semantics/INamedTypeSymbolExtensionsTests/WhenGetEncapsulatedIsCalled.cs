@@ -64,11 +64,51 @@ public sealed class WhenGetEncapsulatedIsCalled
         ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
 
         // Assert
+        encapsulated[0].BinaryOperators.Length.ShouldBe(3);
+
         encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
             && @operator.IsLeftSubject
             && @operator.IsRightSubject
             && @operator.IsReturnSubject
             && @operator.Symbol == "+");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
+            && @operator.IsLeftSubject
+            && !@operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Right == "object"
+            && @operator.Symbol == "+");
+
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition"
+            && !@operator.IsLeftSubject
+            && @operator.IsRightSubject
+            && @operator.IsReturnSubject
+            && @operator.Left == "object"
+            && @operator.Symbol == "+");
+    }
+
+    [Fact]
+    public void GivenEncapsulatedBoolThenBuiltInOperatorsAreCaptured()
+    {
+        // Arrange
+        Encapsulated encapsulated = GetEncapsulatedFor("bool");
+
+        // Act
+        ImmutableArray<BinaryOperator> binaryOperators = encapsulated.BinaryOperators;
+        ImmutableArray<UnaryOperator> unaryOperators = encapsulated.UnaryOperators;
+
+        // Assert
+        binaryOperators.Length.ShouldBe(3);
+
+        ShouldContainBinaryOperator(binaryOperators, "op_BitwiseAnd", "&", isReturnSubject: true);
+        ShouldContainBinaryOperator(binaryOperators, "op_BitwiseOr", "|", isReturnSubject: true);
+        ShouldContainBinaryOperator(binaryOperators, "op_ExclusiveOr", "^", isReturnSubject: true);
+
+        unaryOperators.Length.ShouldBe(3);
+
+        ShouldContainUnaryOperator(unaryOperators, "op_LogicalNot", "!", isReturnSubject: true);
+        ShouldContainUnaryOperator(unaryOperators, "op_False", "false", isReturnSubject: false, returnType: "bool");
+        ShouldContainUnaryOperator(unaryOperators, "op_True", "true", isReturnSubject: false, returnType: "bool");
     }
 
     [Fact]
@@ -134,6 +174,110 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].UnaryOperators.ShouldContain(@operator => @operator.Operator == "op_UnaryNegation"
             && @operator.IsReturnSubject
             && @operator.Symbol == "-");
+    }
+
+    [Fact]
+    public void GivenEncapsulatedNumericTypesThenBuiltInBinaryOperatorsAreCaptured()
+    {
+        // Arrange
+        (string Type, bool IsIntegral, bool IsPromoted)[] cases =
+        {
+            (Type: "byte", IsIntegral: true, IsPromoted: true),
+            (Type: "char", IsIntegral: true, IsPromoted: true),
+            (Type: "decimal", IsIntegral: false, IsPromoted: false),
+            (Type: "double", IsIntegral: false, IsPromoted: false),
+            (Type: "float", IsIntegral: false, IsPromoted: false),
+            (Type: "int", IsIntegral: true, IsPromoted: false),
+            (Type: "long", IsIntegral: true, IsPromoted: false),
+            (Type: "sbyte", IsIntegral: true, IsPromoted: true),
+            (Type: "short", IsIntegral: true, IsPromoted: true),
+            (Type: "uint", IsIntegral: true, IsPromoted: false),
+            (Type: "ulong", IsIntegral: true, IsPromoted: false),
+            (Type: "ushort", IsIntegral: true, IsPromoted: true),
+        };
+
+        foreach ((string type, bool isIntegral, bool isPromoted) in cases)
+        {
+            Encapsulated encapsulated = GetEncapsulatedFor(type);
+            int expectedCount = isIntegral ? 14 : 9;
+            string expectedReturn = isPromoted ? "int" : "global::Sample.Wrapper";
+
+            // Act
+            ImmutableArray<BinaryOperator> binaryOperators = encapsulated.BinaryOperators;
+
+            // Assert
+            binaryOperators.Length.ShouldBe(expectedCount);
+
+            ShouldContainBinaryOperator(binaryOperators, "op_Addition", "+", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_Division", "/", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_Modulus", "%", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_Multiply", "*", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_Subtraction", "-", isReturnSubject: !isPromoted, returnType: expectedReturn);
+
+            ShouldContainBinaryOperator(binaryOperators, "op_GreaterThan", ">", isReturnSubject: false, returnType: "bool");
+            ShouldContainBinaryOperator(binaryOperators, "op_GreaterThanOrEqual", ">=", isReturnSubject: false, returnType: "bool");
+            ShouldContainBinaryOperator(binaryOperators, "op_LessThan", "<", isReturnSubject: false, returnType: "bool");
+            ShouldContainBinaryOperator(binaryOperators, "op_LessThanOrEqual", "<=", isReturnSubject: false, returnType: "bool");
+
+            if (!isIntegral)
+            {
+                continue;
+            }
+
+            ShouldContainBinaryOperator(binaryOperators, "op_BitwiseAnd", "&", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_BitwiseOr", "|", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_ExclusiveOr", "^", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_LeftShift", "<<", isRightSubject: false, isReturnSubject: !isPromoted, rightType: "int", returnType: expectedReturn);
+            ShouldContainBinaryOperator(binaryOperators, "op_RightShift", ">>", isRightSubject: false, isReturnSubject: !isPromoted, rightType: "int", returnType: expectedReturn);
+        }
+    }
+
+    [Fact]
+    public void GivenEncapsulatedNumericTypesThenBuiltInUnaryOperatorsAreCaptured()
+    {
+        // Arrange
+        (string Type, bool IsIntegral, bool IsPromoted, bool HasNegation)[] cases =
+        {
+            (Type: "byte", IsIntegral: true, IsPromoted: true, HasNegation: true),
+            (Type: "char", IsIntegral: true, IsPromoted: true, HasNegation: true),
+            (Type: "decimal", IsIntegral: false, IsPromoted: false, HasNegation: true),
+            (Type: "double", IsIntegral: false, IsPromoted: false, HasNegation: true),
+            (Type: "float", IsIntegral: false, IsPromoted: false, HasNegation: true),
+            (Type: "int", IsIntegral: true, IsPromoted: false, HasNegation: true),
+            (Type: "long", IsIntegral: true, IsPromoted: false, HasNegation: true),
+            (Type: "sbyte", IsIntegral: true, IsPromoted: true, HasNegation: true),
+            (Type: "short", IsIntegral: true, IsPromoted: true, HasNegation: true),
+            (Type: "uint", IsIntegral: true, IsPromoted: false, HasNegation: false),
+            (Type: "ulong", IsIntegral: true, IsPromoted: false, HasNegation: false),
+            (Type: "ushort", IsIntegral: true, IsPromoted: true, HasNegation: true),
+        };
+
+        foreach ((string type, bool isIntegral, bool isPromoted, bool hasNegation) in cases)
+        {
+            Encapsulated encapsulated = GetEncapsulatedFor(type);
+            int expectedCount = 3 + (isIntegral ? 1 : 0) + (hasNegation ? 1 : 0);
+            string expectedReturn = isPromoted ? "int" : "global::Sample.Wrapper";
+
+            // Act
+            ImmutableArray<UnaryOperator> unaryOperators = encapsulated.UnaryOperators;
+
+            // Assert
+            unaryOperators.Length.ShouldBe(expectedCount);
+
+            ShouldContainUnaryOperator(unaryOperators, "op_Decrement", "--", isReturnSubject: true);
+            ShouldContainUnaryOperator(unaryOperators, "op_Increment", "++", isReturnSubject: true);
+            ShouldContainUnaryOperator(unaryOperators, "op_UnaryPlus", "+", isReturnSubject: !isPromoted, returnType: expectedReturn);
+
+            if (hasNegation)
+            {
+                ShouldContainUnaryOperator(unaryOperators, "op_UnaryNegation", "-", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            }
+
+            if (isIntegral)
+            {
+                ShouldContainUnaryOperator(unaryOperators, "op_OnesComplement", "~", isReturnSubject: !isPromoted, returnType: expectedReturn);
+            }
+        }
     }
 
     [Fact]
@@ -457,5 +601,92 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated.Length.ShouldBe(2);
         encapsulated[0].Type.ShouldBe("global::Sample.Inner");
         encapsulated[1].Type.ShouldBe("string");
+    }
+
+    private static Encapsulated GetEncapsulatedFor(string type)
+    {
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        string declarations = $$"""
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof({{type}}))]
+            public sealed partial class Wrapper
+            {
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        return wrapper.GetEncapsulated(compilation, model, value)[0];
+    }
+
+    private static void ShouldContainBinaryOperator(
+        ImmutableArray<BinaryOperator> binaryOperators,
+        string operatorName,
+        string symbol,
+        bool isLeftSubject = true,
+        bool isRightSubject = true,
+        bool isReturnSubject = true,
+        string leftType = "global::Sample.Wrapper",
+        string rightType = "global::Sample.Wrapper",
+        string returnType = "global::Sample.Wrapper")
+    {
+        binaryOperators.ShouldContain(@operator => @operator.Operator == operatorName
+            && @operator.IsLeftSubject == isLeftSubject
+            && @operator.IsRightSubject == isRightSubject
+            && @operator.IsReturnSubject == isReturnSubject
+            && @operator.Left == leftType
+            && @operator.Right == rightType
+            && @operator.Return == returnType
+            && @operator.Symbol == symbol);
+    }
+
+    private static void ShouldContainUnaryOperator(
+        ImmutableArray<UnaryOperator> unaryOperators,
+        string operatorName,
+        string symbol,
+        bool isReturnSubject = true,
+        string returnType = "global::Sample.Wrapper")
+    {
+        unaryOperators.ShouldContain(@operator => @operator.Operator == operatorName
+            && @operator.IsReturnSubject == isReturnSubject
+            && @operator.Return == returnType
+            && @operator.Symbol == symbol);
     }
 }

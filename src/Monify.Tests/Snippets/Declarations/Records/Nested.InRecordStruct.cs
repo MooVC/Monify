@@ -19,6 +19,8 @@ internal static partial class Nested
                 Expected.NonNullable.EquatableToValue,
                 Expected.NonNullable.FieldForEncapsulatedValue,
                 Expected.NonNullable.InequalityOperatorForValue,
+                Expected.NonNullable.UnaryNegationOperator,
+                Expected.NonNullable.UnaryPlusOperator,
             ],
             [
                 new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -45,6 +47,8 @@ internal static partial class Nested
                 Expected.Nullable.EquatableToValue,
                 Expected.Nullable.FieldForEncapsulatedValue,
                 Expected.Nullable.InequalityOperatorForValue,
+                Expected.Nullable.UnaryNegationOperator,
+                Expected.Nullable.UnaryPlusOperator,
             ],
             [
                 new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
