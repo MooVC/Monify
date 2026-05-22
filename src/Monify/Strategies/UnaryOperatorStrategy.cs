@@ -27,11 +27,9 @@ internal sealed class UnaryOperatorStrategy
                 ? "UnaryOperators"
                 : $"UnaryOperators.Passthrough.Level{index:D2}";
 
-            for (int unaryIndex = 0; unaryIndex < encapsulated.UnaryOperators.Length; unaryIndex++)
+            foreach (UnaryOperator unary in encapsulated.UnaryOperators)
             {
-                UnaryOperator unary = encapsulated.UnaryOperators[unaryIndex];
-
-                string hint = $"{hintPrefix}.{unaryIndex:D2}";
+                string hint = $"{hintPrefix}.{unary.Operator}";
                 string code = CreateOperator(subject, encapsulated, unary);
 
                 yield return new Source(code, hint);

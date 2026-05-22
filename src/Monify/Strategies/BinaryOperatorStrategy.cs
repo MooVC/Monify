@@ -25,11 +25,9 @@ internal sealed class BinaryOperatorStrategy
                 ? "BinaryOperators"
                 : $"BinaryOperators.Passthrough.Level{index:D2}";
 
-            for (int binaryIndex = 0; binaryIndex < encapsulated.BinaryOperators.Length; binaryIndex++)
+            foreach (BinaryOperator binary in encapsulated.BinaryOperators)
             {
-                BinaryOperator binary = encapsulated.BinaryOperators[binaryIndex];
-
-                string hint = $"{hintPrefix}.{binaryIndex:D2}";
+                string hint = $"{hintPrefix}.{binary.Operator}";
                 string code = CreateOperator(subject, binary);
 
                 yield return new Source(code, hint);

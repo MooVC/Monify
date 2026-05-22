@@ -350,6 +350,472 @@ internal static partial class Simple
                 Extensions.HasToStringOverride,
                 "Monify.Testing.Classes.Simple.ToString");
 
+            public static readonly Generated BinaryAdditionOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator +(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value + right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_Addition");
+
+            public static readonly Generated BinaryBitwiseAndOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator &(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value & right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_BitwiseAnd");
+
+            public static readonly Generated BinaryBitwiseOrOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator |(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value | right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_BitwiseOr");
+
+            public static readonly Generated BinaryDivisionOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator /(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value / right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_Division");
+
+            public static readonly Generated BinaryExclusiveOrOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator ^(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value ^ right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_ExclusiveOr");
+
+            public static readonly Generated BinaryGreaterThanOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static bool operator >(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return (bool)(left._value > right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_GreaterThan");
+
+            public static readonly Generated BinaryGreaterThanOrEqualOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static bool operator >=(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return (bool)(left._value >= right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_GreaterThanOrEqual");
+
+            public static readonly Generated BinaryLeftShiftOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator <<(Simple left, int right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            return new Simple(left._value << right);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_LeftShift");
+
+            public static readonly Generated BinaryLessThanOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static bool operator <(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return (bool)(left._value < right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_LessThan");
+
+            public static readonly Generated BinaryLessThanOrEqualOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static bool operator <=(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return (bool)(left._value <= right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_LessThanOrEqual");
+
+            public static readonly Generated BinaryModulusOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator %(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value % right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_Modulus");
+
+            public static readonly Generated BinaryMultiplyOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator *(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value * right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_Multiply");
+
+            public static readonly Generated BinaryRightShiftOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator >>(Simple left, int right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            return new Simple(left._value >> right);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_RightShift");
+
+            public static readonly Generated BinarySubtractionOperator = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public static Simple operator -(Simple left, Simple right)
+                        {
+                            if (ReferenceEquals(left, null))
+                            {
+                                throw new ArgumentNullException("left");
+                            }
+                            if (ReferenceEquals(right, null))
+                            {
+                                throw new ArgumentNullException("right");
+                            }
+
+                            return new Simple(left._value - right._value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.BinaryOperators.op_Subtraction");
+
             public static readonly Generated UnaryNegationOperator = new(
                 """
                 namespace Monify.Testing.Classes

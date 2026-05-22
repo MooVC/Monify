@@ -2,7 +2,6 @@
 
 using Microsoft.CodeAnalysis.CSharp;
 using static Monify.Snippets.Declarations.Attributes.Annotations;
-using static Monify.Snippets.Declarations.BuiltInInt32Operators;
 
 internal static partial class Nested
 {
@@ -12,15 +11,6 @@ internal static partial class Nested
             [Generic, NonGeneric],
             Declarations.Main,
             [
-                .. CreateBinaryOperators(
-                    "Monify.Testing.Records",
-                    "Monify.Testing.Records.Outter.Inner",
-                    [
-                        new Nesting("readonly ref partial struct", "Outter<T>"),
-                    ],
-                    "sealed partial record",
-                    "Inner",
-                    supportsNullableReferenceTypes: false),
                 Expected.NonNullable.ConstructorForEncapsulatedValue,
                 Expected.NonNullable.ConversionFromValue,
                 Expected.NonNullable.ConversionToValue,
@@ -29,15 +19,8 @@ internal static partial class Nested
                 Expected.NonNullable.EquatableToValue,
                 Expected.NonNullable.FieldForEncapsulatedValue,
                 Expected.NonNullable.InequalityOperatorForValue,
-                .. CreateUnaryOperators(
-                    "Monify.Testing.Records",
-                    "Monify.Testing.Records.Outter.Inner",
-                    [
-                        new Nesting("readonly ref partial struct", "Outter<T>"),
-                    ],
-                    "sealed partial record",
-                    "Inner",
-                    supportsNullableReferenceTypes: false),
+                Expected.NonNullable.UnaryNegationOperator,
+                Expected.NonNullable.UnaryPlusOperator,
             ],
             [
                 new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -56,15 +39,6 @@ internal static partial class Nested
             [Generic, NonGeneric],
             Declarations.Main,
             [
-                .. CreateBinaryOperators(
-                    "Monify.Testing.Records",
-                    "Monify.Testing.Records.Outter.Inner",
-                    [
-                        new Nesting("readonly ref partial struct", "Outter<T>"),
-                    ],
-                    "sealed partial record",
-                    "Inner",
-                    supportsNullableReferenceTypes: true),
                 Expected.Nullable.ConstructorForEncapsulatedValue,
                 Expected.Nullable.ConversionFromValue,
                 Expected.Nullable.ConversionToValue,
@@ -73,15 +47,8 @@ internal static partial class Nested
                 Expected.Nullable.EquatableToValue,
                 Expected.Nullable.FieldForEncapsulatedValue,
                 Expected.Nullable.InequalityOperatorForValue,
-                .. CreateUnaryOperators(
-                    "Monify.Testing.Records",
-                    "Monify.Testing.Records.Outter.Inner",
-                    [
-                        new Nesting("readonly ref partial struct", "Outter<T>"),
-                    ],
-                    "sealed partial record",
-                    "Inner",
-                    supportsNullableReferenceTypes: true),
+                Expected.Nullable.UnaryNegationOperator,
+                Expected.Nullable.UnaryPlusOperator,
             ],
             [
                 new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
