@@ -164,6 +164,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -192,6 +193,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -220,6 +222,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -248,6 +251,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -276,6 +280,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -304,6 +309,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -332,6 +338,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -383,6 +390,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -411,6 +419,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -439,6 +448,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -467,6 +477,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");
@@ -518,6 +529,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             if (ReferenceEquals(right, null))
                             {
                                 throw new ArgumentNullException("right");

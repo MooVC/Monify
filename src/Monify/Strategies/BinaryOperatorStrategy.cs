@@ -53,9 +53,14 @@ internal sealed class BinaryOperatorStrategy
             ? $"return new {subject.Qualification}({operation});"
             : $"return ({returnType})({operation});";
 
-        string guard = string.Concat(
-            CreateGuard(binary.IsLeftSubject, "left"),
-            CreateGuard(binary.IsRightSubject, "right"));
+        string leftGuard = CreateGuard(binary.IsLeftSubject, "left");
+        string rightGuard = CreateGuard(binary.IsRightSubject, "right");
+
+        string guardSeparator = leftGuard.Length > 0 && rightGuard.Length > 0
+            ? "\n"
+            : string.Empty;
+
+        string guard = $"{leftGuard}{guardSeparator}{rightGuard}";
 
         string separator = binary.IsLeftSubject && binary.IsRightSubject
             ? "\n"
