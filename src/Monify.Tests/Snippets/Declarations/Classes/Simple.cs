@@ -2,7 +2,6 @@
 
 using Microsoft.CodeAnalysis.CSharp;
 using static Monify.Snippets.Declarations.Attributes.Annotations;
-using static Monify.Snippets.Declarations.BuiltInInt32Operators;
 
 internal static partial class Simple
 {
@@ -10,13 +9,20 @@ internal static partial class Simple
         [Generic, NonGeneric],
         Declarations.Main,
         [
-            .. CreateBinaryOperators(
-                "Monify.Testing.Classes",
-                "Monify.Testing.Classes.Simple",
-                [],
-                "sealed partial class",
-                "Simple",
-                supportsNullableReferenceTypes: false),
+            Expected.NonNullable.BinaryAdditionOperator,
+            Expected.NonNullable.BinaryBitwiseAndOperator,
+            Expected.NonNullable.BinaryBitwiseOrOperator,
+            Expected.NonNullable.BinaryDivisionOperator,
+            Expected.NonNullable.BinaryExclusiveOrOperator,
+            Expected.NonNullable.BinaryGreaterThanOperator,
+            Expected.NonNullable.BinaryGreaterThanOrEqualOperator,
+            Expected.NonNullable.BinaryLeftShiftOperator,
+            Expected.NonNullable.BinaryLessThanOperator,
+            Expected.NonNullable.BinaryLessThanOrEqualOperator,
+            Expected.NonNullable.BinaryModulusOperator,
+            Expected.NonNullable.BinaryMultiplyOperator,
+            Expected.NonNullable.BinaryRightShiftOperator,
+            Expected.NonNullable.BinarySubtractionOperator,
             Expected.NonNullable.ConstructorForEncapsulatedValue,
             Expected.NonNullable.ConversionFromValue,
             Expected.NonNullable.ConversionToValue,
@@ -32,13 +38,8 @@ internal static partial class Simple
             Expected.NonNullable.InequalityOperatorForSelf,
             Expected.NonNullable.InequalityOperatorForValue,
             Expected.NonNullable.ToString,
-            .. CreateUnaryOperators(
-                "Monify.Testing.Classes",
-                "Monify.Testing.Classes.Simple",
-                [],
-                "sealed partial class",
-                "Simple",
-                supportsNullableReferenceTypes: false),
+            Expected.NonNullable.UnaryNegationOperator,
+            Expected.NonNullable.UnaryPlusOperator,
         ],
         [
             new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -64,13 +65,20 @@ internal static partial class Simple
         [Generic, NonGeneric],
         Declarations.Main,
         [
-            .. CreateBinaryOperators(
-                "Monify.Testing.Classes",
-                "Monify.Testing.Classes.Simple",
-                [],
-                "sealed partial class",
-                "Simple",
-                supportsNullableReferenceTypes: true),
+            Expected.Nullable.BinaryAdditionOperator,
+            Expected.Nullable.BinaryBitwiseAndOperator,
+            Expected.Nullable.BinaryBitwiseOrOperator,
+            Expected.Nullable.BinaryDivisionOperator,
+            Expected.Nullable.BinaryExclusiveOrOperator,
+            Expected.Nullable.BinaryGreaterThanOperator,
+            Expected.Nullable.BinaryGreaterThanOrEqualOperator,
+            Expected.Nullable.BinaryLeftShiftOperator,
+            Expected.Nullable.BinaryLessThanOperator,
+            Expected.Nullable.BinaryLessThanOrEqualOperator,
+            Expected.Nullable.BinaryModulusOperator,
+            Expected.Nullable.BinaryMultiplyOperator,
+            Expected.Nullable.BinaryRightShiftOperator,
+            Expected.Nullable.BinarySubtractionOperator,
             Expected.Nullable.ConstructorForEncapsulatedValue,
             Expected.Nullable.ConversionFromValue,
             Expected.Nullable.ConversionToValue,
@@ -86,13 +94,8 @@ internal static partial class Simple
             Expected.Nullable.InequalityOperatorForSelf,
             Expected.Nullable.InequalityOperatorForValue,
             Expected.Nullable.ToString,
-            .. CreateUnaryOperators(
-                "Monify.Testing.Classes",
-                "Monify.Testing.Classes.Simple",
-                [],
-                "sealed partial class",
-                "Simple",
-                supportsNullableReferenceTypes: true),
+            Expected.Nullable.UnaryNegationOperator,
+            Expected.Nullable.UnaryPlusOperator,
         ],
         [
             new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),

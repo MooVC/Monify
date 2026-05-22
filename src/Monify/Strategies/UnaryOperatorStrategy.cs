@@ -27,17 +27,17 @@ internal sealed class UnaryOperatorStrategy
                 ? "UnaryOperators"
                 : $"UnaryOperators.Passthrough.Level{index:D2}";
 
-            for (int unaryIndex = 0; unaryIndex < encapsulated.UnaryOperators.Length; unaryIndex++)
+            foreach (UnaryOperator unary in encapsulated.UnaryOperators)
             {
-                UnaryOperator unary = encapsulated.UnaryOperators[unaryIndex];
-
-                string hint = $"{hintPrefix}.{unaryIndex:D2}";
+                string subjectHint = subject.Qualification.NormalizeTypeForHint();
+                string hint = $"{hintPrefix}.{unary.Operator}.{subjectHint}";
                 string code = CreateOperator(subject, encapsulated, unary);
 
                 yield return new Source(code, hint);
             }
         }
     }
+
 
     private static string CreateOperator(Subject subject, Encapsulated encapsulated, UnaryOperator unary)
     {
