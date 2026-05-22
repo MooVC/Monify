@@ -39,7 +39,6 @@ internal sealed class BinaryOperatorStrategy
         }
     }
 
-
     private static string CreateOperator(Subject subject, BinaryOperator binary)
     {
         string leftType = binary.IsLeftSubject ? subject.Qualification : binary.Left;

@@ -38,7 +38,6 @@ internal sealed class UnaryOperatorStrategy
         }
     }
 
-
     private static string CreateOperator(Subject subject, Encapsulated encapsulated, UnaryOperator unary)
     {
         (string operand, bool requiresValueCopy) = GetOperand(unary.Symbol);

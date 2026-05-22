@@ -8,24 +8,6 @@ internal static partial class Simple
     {
         public static class Nullable
         {
-            public static Generated[] BinaryOperators =>
-            [
-                BinaryAdditionOperator,
-                BinaryBitwiseAndOperator,
-                BinaryBitwiseOrOperator,
-                BinaryDivisionOperator,
-                BinaryExclusiveOrOperator,
-                BinaryGreaterThanOperator,
-                BinaryGreaterThanOrEqualOperator,
-                BinaryLeftShiftOperator,
-                BinaryLessThanOperator,
-                BinaryLessThanOrEqualOperator,
-                BinaryModulusOperator,
-                BinaryMultiplyOperator,
-                BinaryRightShiftOperator,
-                BinarySubtractionOperator,
-            ];
-
             public static readonly Generated ConstructorForEncapsulatedValue = new(
                 """
                 namespace Monify.Testing.Classes

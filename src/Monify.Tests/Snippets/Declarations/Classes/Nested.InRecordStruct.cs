@@ -28,13 +28,6 @@ internal static partial class Nested
                 Expected.NonNullable.ToString,
                 Expected.NonNullable.UnaryNegationOperator,
                 Expected.NonNullable.UnaryPlusOperator,
-                    "Monify.Testing.Classes.Outter.Inner",
-                    [
-                        new Nesting("readonly partial record struct", "Outter<T>"),
-                    ],
-                    "sealed partial class",
-                    "Inner",
-                    supportsNullableReferenceTypes: false),
             ],
             [
                 new(Expected.NonNullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
@@ -70,13 +63,6 @@ internal static partial class Nested
                 Expected.Nullable.EquatableToSelf,
                 Expected.Nullable.UnaryNegationOperator,
                 Expected.Nullable.UnaryPlusOperator,
-                    "Monify.Testing.Classes.Outter.Inner",
-                    [
-                        new Nesting("readonly partial record struct", "Outter<T>"),
-                    ],
-                    "sealed partial class",
-                    "Inner",
-                    supportsNullableReferenceTypes: true),
             ],
             [
                 new(Expected.Nullable.ConstructorForEncapsulatedValue.Content, Extensions.HasConstructorForEncapsulatedValue),
