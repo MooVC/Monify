@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Classes;
+namespace Monify.Snippets.Declarations.Classes;
 
 using Microsoft.CodeAnalysis.CSharp;
 using static Monify.Snippets.Declarations.Attributes.Annotations;
@@ -38,6 +38,9 @@ internal static partial class Simple
             Expected.NonNullable.InequalityOperatorForSelf,
             Expected.NonNullable.InequalityOperatorForValue,
             Expected.NonNullable.ToString,
+            Expected.NonNullable.UnaryDecrementOperator,
+            Expected.NonNullable.UnaryIncrementOperator,
+            Expected.NonNullable.UnaryOnesComplementOperator,
             Expected.NonNullable.UnaryNegationOperator,
             Expected.NonNullable.UnaryPlusOperator,
         ],
@@ -94,6 +97,9 @@ internal static partial class Simple
             Expected.Nullable.InequalityOperatorForSelf,
             Expected.Nullable.InequalityOperatorForValue,
             Expected.Nullable.ToString,
+            Expected.Nullable.UnaryDecrementOperator,
+            Expected.Nullable.UnaryIncrementOperator,
+            Expected.Nullable.UnaryOnesComplementOperator,
             Expected.Nullable.UnaryNegationOperator,
             Expected.Nullable.UnaryPlusOperator,
         ],

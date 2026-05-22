@@ -57,8 +57,12 @@ internal sealed class BinaryOperatorStrategy
             CreateGuard(binary.IsLeftSubject, "left"),
             CreateGuard(binary.IsRightSubject, "right"));
 
+        string separator = binary.IsLeftSubject && binary.IsRightSubject
+            ? "\n"
+            : string.Empty;
+
         string body = guard.Length > 0
-            ? $"{guard}        {result}"
+            ? $"{guard}{separator}        {result}"
             : $"        {result}";
 
         if (guard.Length > 0)
@@ -68,7 +72,7 @@ internal sealed class BinaryOperatorStrategy
                 {
                     public static {{returnType}} operator {{binary.Symbol}}({{leftType}} left, {{rightType}} right)
                     {
-                        {{body}}
+                {{body}}
                     }
                 }
                 """;
@@ -79,7 +83,7 @@ internal sealed class BinaryOperatorStrategy
             {
                 public static {{returnType}} operator {{binary.Symbol}}({{leftType}} left, {{rightType}} right)
                 {
-                    {{body}}
+            {{body}}
                 }
             }
             """;
@@ -93,10 +97,10 @@ internal sealed class BinaryOperatorStrategy
         }
 
         return $$"""
-            if (ReferenceEquals({{parameter}}, null))
-            {
-                throw new ArgumentNullException("{{parameter}}");
-            }
+                if (ReferenceEquals({{parameter}}, null))
+                {
+                    throw new ArgumentNullException("{{parameter}}");
+                }
 
         """;
     }

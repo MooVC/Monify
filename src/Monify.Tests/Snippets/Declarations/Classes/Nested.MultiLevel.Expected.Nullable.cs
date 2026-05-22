@@ -1,4 +1,4 @@
-﻿namespace Monify.Snippets.Declarations.Classes;
+namespace Monify.Snippets.Declarations.Classes;
 
 internal static partial class Nested
 {
@@ -430,6 +430,668 @@ internal static partial class Nested
                     Extensions.HasToStringOverride,
                     "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.ToString");
 
+                public static readonly Generated BinaryAdditionOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator +(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value + right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Addition.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryBitwiseAndOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator &(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value & right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_BitwiseAnd.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryBitwiseOrOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator |(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value | right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_BitwiseOr.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryDivisionOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator /(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value / right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Division.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryExclusiveOrOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator ^(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value ^ right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_ExclusiveOr.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryGreaterThanOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static bool operator >(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return (bool)(left._value > right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_GreaterThan.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryGreaterThanOrEqualOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static bool operator >=(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return (bool)(left._value >= right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_GreaterThanOrEqual.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryLeftShiftOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator <<(InlineStyle left, int right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        return new InlineStyle(left._value << right);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_LeftShift.InlineStyle-int");
+
+                public static readonly Generated BinaryLessThanOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static bool operator <(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return (bool)(left._value < right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_LessThan.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryLessThanOrEqualOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static bool operator <=(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return (bool)(left._value <= right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_LessThanOrEqual.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryModulusOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator %(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value % right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Modulus.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryMultiplyOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator *(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value * right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Multiply.InlineStyle-InlineStyle");
+
+                public static readonly Generated BinaryRightShiftOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator >>(InlineStyle left, int right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        return new InlineStyle(left._value >> right);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_RightShift.InlineStyle-int");
+
+                public static readonly Generated BinarySubtractionOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator -(InlineStyle left, InlineStyle right)
+                                    {
+                                        if (ReferenceEquals(left, null))
+                                        {
+                                            throw new ArgumentNullException("left");
+                                        }
+                                        if (ReferenceEquals(right, null))
+                                        {
+                                            throw new ArgumentNullException("right");
+                                        }
+
+                                        return new InlineStyle(left._value - right._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Subtraction.InlineStyle-InlineStyle");
+
+                public static readonly Generated UnaryDecrementOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator --(InlineStyle subject)
+                                    {
+                                        if (ReferenceEquals(subject, null))
+                                        {
+                                            throw new ArgumentNullException("subject");
+                                        }
+
+                                        int value = subject._value;
+
+                                        return new InlineStyle(--value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_Decrement.InlineStyle");
+
+                public static readonly Generated UnaryIncrementOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator ++(InlineStyle subject)
+                                    {
+                                        if (ReferenceEquals(subject, null))
+                                        {
+                                            throw new ArgumentNullException("subject");
+                                        }
+
+                                        int value = subject._value;
+
+                                        return new InlineStyle(++value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_Increment.InlineStyle");
+
+                public static readonly Generated UnaryOnesComplementOperator = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                sealed partial class InlineStyle
+                                {
+                                    public static InlineStyle operator ~(InlineStyle subject)
+                                    {
+                                        if (ReferenceEquals(subject, null))
+                                        {
+                                            throw new ArgumentNullException("subject");
+                                        }
+
+                                        return new InlineStyle(~subject._value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_OnesComplement.InlineStyle");
+
                 public static readonly Generated UnaryNegationOperator = new(
                     """
                     namespace Monify.Testing.Classes
@@ -464,7 +1126,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.00");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_UnaryNegation.InlineStyle");
 
                 public static readonly Generated UnaryPlusOperator = new(
                     """
@@ -500,7 +1162,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.01");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_UnaryPlus.InlineStyle");
 
                 public static readonly Generated EquatableToSelf = new(
                     """
