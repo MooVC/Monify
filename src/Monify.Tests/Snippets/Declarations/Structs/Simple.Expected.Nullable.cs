@@ -370,7 +370,6 @@ internal static partial class Simple
                 Extensions.HasToStringOverride,
                 "Monify.Testing.Structs.Simple.ToString");
 
-
             public static readonly Generated BinaryAdditionOperator = new(
                 """
                 namespace Monify.Testing.Structs

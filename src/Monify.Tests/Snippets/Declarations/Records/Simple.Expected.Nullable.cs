@@ -209,7 +209,6 @@ internal static partial class Simple
                 Extensions.HasInequalityOperatorForValue,
                 "Monify.Testing.Records.Simple.Inequality.Value");
 
-
             public static readonly Generated BinaryAdditionOperator = new(
                 """
                 namespace Monify.Testing.Records
