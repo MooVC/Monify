@@ -16,6 +16,6 @@ public static class WhenToStringIsCalled
         string actual = subject.ToString();
 
         // Assert
-        actual.ShouldBe("Inner { }");
+        actual.ShouldBe("Inner { IsDefault = False, IsDefaultOrEmpty = False, IsEmpty = False, Length = 3 }");
     }
 }

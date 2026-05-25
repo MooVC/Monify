@@ -16,6 +16,6 @@ public static class WhenToStringIsCalled
         string actual = subject.ToString();
 
         // Assert
-        actual.ShouldBe("SimpleForImmutableArray { }");
+        actual.ShouldBe("SimpleForImmutableArray { IsDefault = False, IsDefaultOrEmpty = False, IsEmpty = False, Length = 3 }");
     }
 }
