@@ -66,6 +66,30 @@ internal sealed partial class Encapsulated
     public bool HasInequalityOperator { get; set; }
 
     /// <summary>
+    /// Gets or sets the interfaces supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The interfaces supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<string> Interfaces { get; set; } = ImmutableArray<string>.Empty;
+
+    /// <summary>
+    /// Gets or sets the methods supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The methods supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<PassthroughMethod> Methods { get; set; } = ImmutableArray<PassthroughMethod>.Empty;
+
+    /// <summary>
+    /// Gets or sets the properties supported by the encapsulated type.
+    /// </summary>
+    /// <value>
+    /// The properties supported by the encapsulated type.
+    /// </value>
+    public ImmutableArray<PassthroughProperty> Properties { get; set; } = ImmutableArray<PassthroughProperty>.Empty;
+
+    /// <summary>
     /// Gets or sets a value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for the encapsulated value.
     /// </summary>
     /// <value>

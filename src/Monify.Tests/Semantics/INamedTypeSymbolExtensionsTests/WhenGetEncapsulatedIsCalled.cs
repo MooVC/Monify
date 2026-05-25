@@ -450,6 +450,364 @@ public sealed class WhenGetEncapsulatedIsCalled
     }
 
     [Fact]
+    public void GivenEncapsulatedTypeWithInterfacesThenTheyAreCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using System;
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+            {
+            }
+
+            public interface IMarker
+            {
+            }
+
+            public interface IChild
+                : IMarker
+            {
+            }
+
+            public sealed class Value
+                : IChild,
+                  IComparable<Value>,
+                  IEquatable<Value>,
+                  IEquatable<Wrapper>
+            {
+                public int CompareTo(Value other) => 0;
+
+                public bool Equals(Value other) => true;
+
+                public bool Equals(Wrapper other) => true;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].Interfaces.Length.ShouldBe(3);
+        encapsulated[0].Interfaces.ShouldContain("global::Sample.IChild");
+        encapsulated[0].Interfaces.ShouldContain("global::Sample.IMarker");
+        encapsulated[0].Interfaces.ShouldContain("global::System.IComparable<global::Sample.Value>");
+        encapsulated[0].Interfaces.ShouldNotContain("global::System.IEquatable<global::Sample.Value>");
+        encapsulated[0].Interfaces.ShouldNotContain("global::System.IEquatable<global::Sample.Wrapper>");
+    }
+
+    [Fact]
+    public void GivenEncapsulatedTypeWithMembersThenTheyAreCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+            {
+            }
+
+            public interface IExplicit
+            {
+                int Count { get; }
+
+                string this[int index] { get; set; }
+
+                string Format(int value);
+            }
+
+            public sealed class Value
+                : IExplicit
+            {
+                public string Name { get; set; }
+
+                internal int Number { get; }
+
+                public string Format(string value) => value;
+
+                int IExplicit.Count => 1;
+
+                string IExplicit.this[int index]
+                {
+                    get => index.ToString();
+                    set
+                    {
+                    }
+                }
+
+                string IExplicit.Format(int value) => value.ToString();
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].Properties.Length.ShouldBe(4);
+        encapsulated[0].Properties.ShouldContain(property => property.Accessibility == "public"
+            && property.Name == "Name"
+            && property.Type == "string"
+            && property.HasGetter
+            && property.HasSetter);
+        encapsulated[0].Properties.ShouldContain(property => property.Accessibility == "internal"
+            && property.Name == "Number"
+            && property.Type == "int"
+            && property.HasGetter
+            && !property.HasSetter);
+        encapsulated[0].Properties.ShouldContain(property => property.ExplicitInterface == "global::Sample.IExplicit"
+            && property.Name == "Count"
+            && property.Type == "int"
+            && property.HasGetter
+            && !property.HasSetter);
+        encapsulated[0].Properties.ShouldContain(property => property.ExplicitInterface == "global::Sample.IExplicit"
+            && property.IsIndexer
+            && property.Type == "string"
+            && property.HasGetter
+            && property.HasSetter);
+
+        encapsulated[0].Methods.Length.ShouldBe(2);
+        encapsulated[0].Methods.ShouldContain(method => method.Accessibility == "public"
+            && method.Name == "Format"
+            && method.Return == "string"
+            && method.Parameters[0].Type == "string");
+        encapsulated[0].Methods.ShouldContain(method => method.ExplicitInterface == "global::Sample.IExplicit"
+            && method.Name == "Format"
+            && method.Return == "string"
+            && method.Parameters[0].Type == "int");
+    }
+
+    [Fact]
+    public void GivenAnnotatedTypeWithMatchingMembersThenTheyAreNotCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+            {
+                public string Name { get; }
+
+                public string Format(string value) => value;
+            }
+
+            public sealed class Value
+            {
+                public string Name { get; set; }
+
+                public int Number { get; }
+
+                public string Format(string value) => value;
+
+                public string Other(string value) => value;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].Properties.Length.ShouldBe(1);
+        encapsulated[0].Properties[0].Name.ShouldBe("Number");
+        encapsulated[0].Methods.Length.ShouldBe(1);
+        encapsulated[0].Methods[0].Name.ShouldBe("Other");
+    }
+
+    [Fact]
+    public void GivenEncapsulatedTypeWithStrategyGeneratedMethodsThenTheyAreNotCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+            {
+            }
+
+            public sealed class Value
+            {
+                public bool Equals(Value other) => true;
+
+                public bool Equals(Wrapper other) => true;
+
+                public override bool Equals(object value) => true;
+
+                public string Format() => string.Empty;
+
+                public override int GetHashCode() => 0;
+
+                public override string ToString() => string.Empty;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].Methods.Length.ShouldBe(1);
+        encapsulated[0].Methods[0].Name.ShouldBe("Format");
+    }
+
+    [Fact]
     public void GivenEncapsulatedTypeWithUnaryOperatorsThenTheyAreCaptured()
     {
         // Arrange
@@ -601,6 +959,9 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated.Length.ShouldBe(2);
         encapsulated[0].Type.ShouldBe("global::Sample.Inner");
         encapsulated[1].Type.ShouldBe("string");
+        encapsulated[1].Interfaces.ShouldBeEmpty();
+        encapsulated[1].Methods.ShouldBeEmpty();
+        encapsulated[1].Properties.ShouldBeEmpty();
     }
 
     private static Encapsulated GetEncapsulatedFor(string type)

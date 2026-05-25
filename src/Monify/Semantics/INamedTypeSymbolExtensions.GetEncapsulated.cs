@@ -31,7 +31,7 @@ internal static partial class INamedTypeSymbolExtensions
         ImmutableArray<Encapsulated>.Builder builder = ImmutableArray.CreateBuilder<Encapsulated>();
         IMethodSymbol[] constructors = subject.GetConstructors();
 
-        builder.Add(Catalog(constructors, compilation, model, subject, value));
+        builder.Add(Catalog(constructors, compilation, model, subject, value, includeForwardedMembers: true));
 
         if (value is INamedTypeSymbol named)
         {
@@ -46,9 +46,13 @@ internal static partial class INamedTypeSymbolExtensions
         Compilation compilation,
         SemanticModel model,
         INamedTypeSymbol subject,
-        ITypeSymbol value)
+        ITypeSymbol value,
+        bool includeForwardedMembers)
     {
         ImmutableArray<Conversion> conversions = ImmutableArray<Conversion>.Empty;
+        ImmutableArray<string> interfaces = ImmutableArray<string>.Empty;
+        ImmutableArray<PassthroughMethod> methods = ImmutableArray<PassthroughMethod>.Empty;
+        ImmutableArray<PassthroughProperty> properties = ImmutableArray<PassthroughProperty>.Empty;
         ImmutableArray<BinaryOperator> binaryOperators = ImmutableArray<BinaryOperator>.Empty;
         ImmutableArray<UnaryOperator> unaryOperators = ImmutableArray<UnaryOperator>.Empty;
 
@@ -57,6 +61,13 @@ internal static partial class INamedTypeSymbolExtensions
             binaryOperators = encapsulated.GetBinaryOperators(compilation, subject);
             conversions = encapsulated.GetConversions(model, subject);
             unaryOperators = encapsulated.GetUnaryOperators(compilation, subject);
+
+            if (includeForwardedMembers && encapsulated.SpecialType == SpecialType.None)
+            {
+                interfaces = encapsulated.GetInterfaces(compilation, subject);
+                methods = encapsulated.GetPassthroughMethods(compilation, subject);
+                properties = encapsulated.GetPassthroughProperties(subject);
+            }
         }
 
         return new Encapsulated
@@ -69,8 +80,11 @@ internal static partial class INamedTypeSymbolExtensions
             HasEqualityOperator = subject.HasEqualityOperator(type: value),
             HasEquatable = subject.HasEquatable(type: value),
             HasInequalityOperator = subject.HasInequalityOperator(type: value),
+            Interfaces = interfaces,
             IsEquatable = subject.IsEquatable(compilation, type: value),
             IsSequence = value.IsSequence(),
+            Methods = methods,
+            Properties = properties,
             Type = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
             UnaryOperators = unaryOperators,
         };
@@ -97,7 +111,7 @@ internal static partial class INamedTypeSymbolExtensions
                 break;
             }
 
-            builder.Add(Catalog(constructors, compilation, model, subject, nested));
+            builder.Add(Catalog(constructors, compilation, model, subject, nested, includeForwardedMembers: false));
 
             if (nested is not INamedTypeSymbol inner)
             {

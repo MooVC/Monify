@@ -28,7 +28,9 @@ public sealed class TypeGenerator
         new EquatableStrategy(),
         new FieldStrategy(),
         new GetHashCodeStrategy(),
+        new InterfaceDeclarationStrategy(),
         new InequalityStrategy(),
+        new MemberPassthroughStrategy(),
         new ToStringStrategy(),
         new UnaryOperatorStrategy(),
     };

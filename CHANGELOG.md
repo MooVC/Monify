@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 # [Unreleased]
 
+## Added
+
+- Public and internal members and supported interfaces declared by the top-level encapsulated type are now propagated to generated `Monify` types.
+
 ## Fixed
 
 - Built-in string addition and integer unary operators are now propagated to generated `Monify` types.
