@@ -23,20 +23,24 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="subject">
     /// The subject type being generated.
     /// </param>
+    /// <param name="interfaces">
+    /// The interfaces that will be forwarded.
+    /// </param>
     /// <returns>
     /// The methods that should be forwarded to the encapsulated value.
     /// </returns>
     public static ImmutableArray<PassthroughMethod> GetPassthroughMethods(
         this INamedTypeSymbol encapsulated,
         Compilation compilation,
-        INamedTypeSymbol subject)
+        INamedTypeSymbol subject,
+        ImmutableArray<string> interfaces)
     {
         INamedTypeSymbol? equatable = compilation.GetTypeByMetadataName(EquatableTypeName);
 
         return encapsulated
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Where(method => method.IsPassthroughMethodCandidate(encapsulated, subject, equatable))
+            .Where(method => method.IsPassthroughMethodCandidate(encapsulated, subject, equatable, interfaces))
             .Where(method => !subject.HasPassthroughMethod(method))
             .Select(CreatePassthroughMethod)
             .OrderBy(method => method.ExplicitInterface)
@@ -86,6 +90,18 @@ internal static partial class INamedTypeSymbolExtensions
         }
 
         return false;
+    }
+
+    private static bool CanForwardExplicitImplementation(
+        this IMethodSymbol implementation,
+        INamedTypeSymbol encapsulated,
+        INamedTypeSymbol subject,
+        ImmutableArray<string> interfaces)
+    {
+        string @interface = implementation.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+
+        return implementation.ContainingType.DeclaredAccessibility.CanForward(encapsulated, subject)
+            && interfaces.Contains(@interface);
     }
 
     private static bool IsDuplicateOfGeneratedMethod(
@@ -144,11 +160,13 @@ internal static partial class INamedTypeSymbolExtensions
         this IMethodSymbol method,
         INamedTypeSymbol encapsulated,
         INamedTypeSymbol subject,
-        INamedTypeSymbol? equatable)
+        INamedTypeSymbol? equatable,
+        ImmutableArray<string> interfaces)
     {
         if (method.IsStatic
          || method.AssociatedSymbol is not null
          || method.IsAccessor()
+         || (subject.IsRecord && method.Name == nameof(ICloneable.Clone))
          || method.ReturnsByRef
          || method.ReturnsByRefReadonly
          || !method.HasSourceCompatibleTypeParameterConstraints())
@@ -159,13 +177,51 @@ internal static partial class INamedTypeSymbolExtensions
         if (method.ExplicitInterfaceImplementations.Length > 0)
         {
             return method.MethodKind == MethodKind.ExplicitInterfaceImplementation
-                && method.ExplicitInterfaceImplementations.Any(implementation => implementation.ContainingType.DeclaredAccessibility.CanForward(encapsulated, subject))
+                && method.ExplicitInterfaceImplementations.Any(implementation => implementation.CanForwardExplicitImplementation(encapsulated, subject, interfaces))
                 && !IsDuplicateOfGeneratedMethod(method, encapsulated, subject, equatable);
         }
 
         return method.MethodKind == MethodKind.Ordinary
-            && method.DeclaredAccessibility.CanForward(encapsulated, subject)
+            && method.CanForwardOrdinaryMethod(encapsulated, subject, interfaces)
             && !IsDuplicateOfGeneratedMethod(method, encapsulated, subject, equatable);
+    }
+
+    private static bool CanForwardOrdinaryMethod(
+        this IMethodSymbol method,
+        INamedTypeSymbol encapsulated,
+        INamedTypeSymbol subject,
+        ImmutableArray<string> interfaces)
+    {
+        return method.DeclaredAccessibility.CanForward(encapsulated, subject)
+            && (encapsulated.SpecialType == SpecialType.None || method.ImplementsForwardedInterfaceMember(encapsulated, interfaces));
+    }
+
+    private static bool ImplementsForwardedInterfaceMember(
+        this IMethodSymbol method,
+        INamedTypeSymbol encapsulated,
+        ImmutableArray<string> interfaces)
+    {
+        foreach (INamedTypeSymbol @interface in encapsulated.AllInterfaces)
+        {
+            string interfaceName = @interface.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+
+            if (!interfaces.Contains(interfaceName))
+            {
+                continue;
+            }
+
+            foreach (IMethodSymbol interfaceMember in @interface.GetMembers().OfType<IMethodSymbol>())
+            {
+                ISymbol? implementation = encapsulated.FindImplementationForInterfaceMember(interfaceMember);
+
+                if (SymbolEqualityComparer.Default.Equals(method, implementation))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private static ImmutableArray<string> GetTypeParameterConstraints(this IMethodSymbol method)

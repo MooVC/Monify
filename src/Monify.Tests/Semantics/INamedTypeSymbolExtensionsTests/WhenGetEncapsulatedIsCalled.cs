@@ -88,6 +88,56 @@ public sealed class WhenGetEncapsulatedIsCalled
     }
 
     [Fact]
+    public void GivenEncapsulatedStringThenInterfacesAreCaptured()
+    {
+        // Arrange
+        Encapsulated encapsulated = GetEncapsulatedFor("string");
+
+        // Act
+        ImmutableArray<string> interfaces = encapsulated.Interfaces;
+
+        // Assert
+        interfaces.ShouldContain("global::System.IComparable");
+        interfaces.ShouldContain("global::System.IComparable<string>");
+        interfaces.ShouldNotContain("global::System.IConvertible");
+        interfaces.ShouldNotContain("global::System.IEquatable<string>");
+        interfaces.ShouldNotContain("global::System.IParsable<string>");
+        interfaces.ShouldNotContain("global::System.ISpanParsable<string>");
+        encapsulated.Methods.ShouldContain(method => method.Name == "CompareTo"
+            && method.Parameters.Length == 1
+            && method.Parameters[0].Type == "string");
+    }
+
+    [Fact]
+    public void GivenEncapsulatedSortableSpecialTypesThenInterfacesAreCaptured()
+    {
+        // Arrange
+        (string Type, string InterfaceType)[] cases =
+        {
+            (Type: "byte", InterfaceType: "byte"),
+            (Type: "decimal", InterfaceType: "decimal"),
+            (Type: "int", InterfaceType: "int"),
+        };
+
+        foreach ((string type, string interfaceType) in cases)
+        {
+            Encapsulated encapsulated = GetEncapsulatedFor(type);
+
+            // Act
+            ImmutableArray<string> interfaces = encapsulated.Interfaces;
+
+            // Assert
+            interfaces.ShouldContain("global::System.IComparable");
+            interfaces.ShouldContain($"global::System.IComparable<{interfaceType}>");
+            interfaces.ShouldNotContain("global::System.IConvertible");
+            encapsulated.Methods.ShouldContain(method => method.Name == "CompareTo"
+                && method.Parameters.Length == 1
+                && method.Parameters[0].Type == interfaceType);
+            encapsulated.Properties.ShouldBeEmpty();
+        }
+    }
+
+    [Fact]
     public void GivenEncapsulatedBoolThenBuiltInOperatorsAreCaptured()
     {
         // Arrange

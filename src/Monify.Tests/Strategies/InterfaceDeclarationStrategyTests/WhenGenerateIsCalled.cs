@@ -30,6 +30,8 @@ public sealed class WhenGenerateIsCalled
         sources.Length.ShouldBe(2);
         sources[0].Hint.ShouldBe("Interfaces.global__System_IComparable");
         sources[0].Code.ShouldContain("SuppressMessage(\"Naming\", \"CA1710:Identifiers should have correct suffix\"");
+        sources[0].Code.ShouldContain("SuppressMessage(\"Design\", \"CA1036:Override methods on comparable types\"");
+        sources[0].Code.ShouldContain("SuppressMessage(\"Major Code Smell\", \"S1210:Comparable types should implement comparison operators\"");
         sources[0].Code.ShouldContain(": global::System.IComparable");
         sources[1].Hint.ShouldBe("Interfaces.global__System_IComparable_int_");
         sources[1].Code.ShouldContain(": global::System.IComparable<int>");

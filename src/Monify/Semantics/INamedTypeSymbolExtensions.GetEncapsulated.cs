@@ -62,11 +62,19 @@ internal static partial class INamedTypeSymbolExtensions
             conversions = encapsulated.GetConversions(model, subject);
             unaryOperators = encapsulated.GetUnaryOperators(compilation, subject);
 
-            if (includeForwardedMembers && encapsulated.SpecialType == SpecialType.None)
+            if (includeForwardedMembers)
             {
                 interfaces = encapsulated.GetInterfaces(compilation, subject);
-                methods = encapsulated.GetPassthroughMethods(compilation, subject);
-                properties = encapsulated.GetPassthroughProperties(subject);
+
+                if (CanForwardMembers(encapsulated, interfaces))
+                {
+                    methods = encapsulated.GetPassthroughMethods(compilation, subject, interfaces);
+
+                    if (CanForwardProperties(encapsulated))
+                    {
+                        properties = encapsulated.GetPassthroughProperties(subject);
+                    }
+                }
             }
         }
 
@@ -88,6 +96,17 @@ internal static partial class INamedTypeSymbolExtensions
             Type = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
             UnaryOperators = unaryOperators,
         };
+    }
+
+    private static bool CanForwardMembers(INamedTypeSymbol encapsulated, ImmutableArray<string> interfaces)
+    {
+        return encapsulated.SpecialType == SpecialType.None
+            || !interfaces.IsDefaultOrEmpty;
+    }
+
+    private static bool CanForwardProperties(INamedTypeSymbol encapsulated)
+    {
+        return encapsulated.SpecialType == SpecialType.None;
     }
 
     private static void GetPassthroughEncapsulations(
