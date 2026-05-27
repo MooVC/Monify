@@ -85,6 +85,44 @@ internal static partial class Simple
                 Extensions.HasEquatableForValue,
                 "Monify.Testing.Records.Simple.IEquatable.Value");
 
+            public static readonly Generated ComparableInterface = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    sealed partial record Simple
+                        : global::System.IComparable
+                    {
+                    }
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.Interfaces.global__System_IComparable");
+
+            public static readonly Generated ComparableGenericInterface = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    sealed partial record Simple
+                        : global::System.IComparable<int>
+                    {
+                    }
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.Interfaces.global__System_IComparable_int_");
+
             public static readonly Generated EqualityOperatorForValue = new(
                 """
                 namespace Monify.Testing.Records
@@ -695,6 +733,44 @@ internal static partial class Simple
                 """,
                 Extensions.IsEquatableToValue,
                 "Monify.Testing.Records.Simple.IEquatable.Value.Equals");
+
+            public static readonly Generated CompareToInt = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    sealed partial record Simple
+                    {
+                        public int CompareTo(int value)
+                        {
+                            return _value.CompareTo(value);
+                        }
+                    }
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.Methods.CompareTo.int");
+
+            public static readonly Generated CompareToObject = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    sealed partial record Simple
+                    {
+                        public int CompareTo(object value)
+                        {
+                            return _value.CompareTo(value);
+                        }
+                    }
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.Methods.CompareTo.object");
         }
     }
 }

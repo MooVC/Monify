@@ -130,6 +130,56 @@ internal static partial class Simple
                 Extensions.HasEquatableForValue,
                 "Monify.Testing.Classes.Simple.IEquatable.Value");
 
+            public static readonly Generated ComparableInterface = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    sealed partial class Simple
+                        : global::System.IComparable
+                    {
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.Interfaces.global__System_IComparable");
+
+            public static readonly Generated ComparableGenericInterface = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
+                    sealed partial class Simple
+                        : global::System.IComparable<int>
+                    {
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.Interfaces.global__System_IComparable_int_");
+
             public static readonly Generated EqualityOperatorForSelf = new(
                 """
                 namespace Monify.Testing.Classes
@@ -1053,6 +1103,56 @@ internal static partial class Simple
                 """,
                 Extensions.IsEquatableToValue,
                 "Monify.Testing.Classes.Simple.IEquatable.Value.Equals");
+
+            public static readonly Generated CompareToInt = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public int CompareTo(int value)
+                        {
+                            return _value.CompareTo(value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.Methods.CompareTo.int");
+
+            public static readonly Generated CompareToObject = new(
+                """
+                namespace Monify.Testing.Classes
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    sealed partial class Simple
+                    {
+                        public int CompareTo(object value)
+                        {
+                            return _value.CompareTo(value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Classes.Simple.Methods.CompareTo.object");
         }
     }
 }

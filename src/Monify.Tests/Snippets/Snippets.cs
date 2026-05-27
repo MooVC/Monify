@@ -83,9 +83,7 @@ public sealed record Snippets(
         foreach (Content declaration in declarations)
         {
             string[] contents = [declaration.Body, .. extensions];
-            Generated[] generated = SpecialTypeForwarding.Merge(declaration, expectations);
-
-            yield return new Expectations(contents, generated, declaration.Minimum, declaration.Maximum);
+            yield return new Expectations(contents, expectations, declaration.Minimum, declaration.Maximum);
         }
     }
 
