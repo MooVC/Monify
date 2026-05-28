@@ -1144,6 +1144,11 @@ internal static partial class Nested
                                 {
                                     public int CompareTo(object value)
                                     {
+                                        if (value is InlineStyle)
+                                        {
+                                            value = ((InlineStyle)value)._value;
+                                        }
+
                                         return _value.CompareTo(value);
                                     }
                                 }

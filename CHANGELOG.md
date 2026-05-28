@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
+- Passthrough methods with `object` parameters now unwrap annotated type arguments before forwarding to the encapsulated value.
 - Built-in string addition and integer unary operators are now propagated to generated `Monify` types.
 
 # [1.4.1] - 2026-05-16

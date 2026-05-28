@@ -764,6 +764,11 @@ internal static partial class Simple
                     {
                         public int CompareTo(object value)
                         {
+                            if (value is Simple)
+                            {
+                                value = ((Simple)value)._value;
+                            }
+
                             return _value.CompareTo(value);
                         }
                     }

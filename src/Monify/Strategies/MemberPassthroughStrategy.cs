@@ -34,20 +34,39 @@ internal sealed class MemberPassthroughStrategy
     private static string CreateMethod(Subject subject, PassthroughMethod method)
     {
         string declaration = CreateMethodDeclaration(method);
-        string call = CreateMethodCall(method);
-        string body = method.Return == "void"
-            ? $"{call};"
-            : $"return {call};";
+
+        string body = CreateMethodBody(subject, method)
+            .Indent(skip: 0, whitespace: "        ");
 
         return $$"""
             {{subject.Declaration}} {{subject.Qualification}}
             {
                 {{declaration}}
                 {
-                    {{body}}
+            {{body}}
                 }
             }
             """;
+    }
+
+    private static string CreateMethodBody(Subject subject, PassthroughMethod method)
+    {
+        ImmutableArray<string>.Builder statements = ImmutableArray.CreateBuilder<string>();
+
+        foreach (PassthroughParameter parameter in method.Parameters.Where(IsObjectParameter))
+        {
+            statements.Add(CreateObjectParameterConversion(subject, parameter));
+        }
+
+        string call = CreateMethodCall(method);
+
+        string body = method.Return == "void"
+            ? $"{call};"
+            : $"return {call};";
+
+        statements.Add(body);
+
+        return string.Join("\n\n", statements);
     }
 
     private static string CreateMethodCall(PassthroughMethod method)
@@ -55,10 +74,21 @@ internal sealed class MemberPassthroughStrategy
         string target = method.IsExplicit
             ? $"(({method.ExplicitInterface}){FieldStrategy.Name})"
             : FieldStrategy.Name;
+
         string arguments = CreateArguments(method.Parameters);
         string typeParameters = CreateTypeParameterList(method.TypeParameters);
 
         return $"{target}.{method.Name}{typeParameters}({arguments})";
+    }
+
+    private static string CreateObjectParameterConversion(Subject subject, PassthroughParameter parameter)
+    {
+        return $$"""
+            if ({{parameter.Name}} is {{subject.Qualification}})
+            {
+                {{parameter.Name}} = (({{subject.Qualification}}){{parameter.Name}}).{{FieldStrategy.Name}};
+            }
+            """;
     }
 
     private static string CreateMethodDeclaration(PassthroughMethod method)
@@ -225,5 +255,12 @@ internal sealed class MemberPassthroughStrategy
         return parameters.Length == 0
             ? $"Properties.{name}"
             : $"Properties.{name}.{parameters}";
+    }
+
+    private static bool IsObjectParameter(PassthroughParameter parameter)
+    {
+        return parameter.ArgumentModifier.Length == 0
+            && parameter.DeclarationModifier.Length == 0
+            && parameter.Type is "object" or "global::System.Object";
     }
 }

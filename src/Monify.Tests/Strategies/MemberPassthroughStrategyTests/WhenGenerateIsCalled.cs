@@ -55,6 +55,46 @@ public sealed class WhenGenerateIsCalled
     }
 
     [Fact]
+    public void GivenMethodWithObjectParameterThenAnnotatedValueIsUnwrapped()
+    {
+        // Arrange
+        Subject subject = TestSubject.Create();
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                Methods =
+                [
+                    new PassthroughMethod
+                    {
+                        Accessibility = "public",
+                        Name = "CompareTo",
+                        Parameters =
+                        [
+                            new PassthroughParameter
+                            {
+                                Name = "value",
+                                Type = "object",
+                            },
+                        ],
+                        Return = "int",
+                    },
+                ],
+                Type = "global::Sample.Value",
+            },
+        ];
+        var strategy = new MemberPassthroughStrategy();
+
+        // Act
+        Source source = strategy.Generate(subject).Single();
+
+        // Assert
+        source.Code.ShouldContain("if (value is Sample)");
+        source.Code.ShouldContain("value = ((Sample)value)._value;");
+        source.Code.ShouldContain("return _value.CompareTo(value);");
+    }
+
+    [Fact]
     public void GivenPassthroughLevelMembersThenNoSourceIsGenerated()
     {
         // Arrange

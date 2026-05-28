@@ -1256,6 +1256,11 @@ internal static partial class Nested
                             {
                                 public int CompareTo(object value)
                                 {
+                                    if (value is Inner)
+                                    {
+                                        value = ((Inner)value)._value;
+                                    }
+
                                     return _value.CompareTo(value);
                                 }
                             }
