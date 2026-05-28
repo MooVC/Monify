@@ -665,6 +665,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             return new Simple(left._value << right);
                         }
                     }
@@ -834,6 +835,7 @@ internal static partial class Simple
                             {
                                 throw new ArgumentNullException("left");
                             }
+
                             return new Simple(left._value >> right);
                         }
                     }

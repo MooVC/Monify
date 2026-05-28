@@ -666,6 +666,7 @@ internal static partial class Nested
                                         {
                                             throw new ArgumentNullException("left");
                                         }
+
                                         return new InlineStyle(left._value << right);
                                     }
                                 }
@@ -835,6 +836,7 @@ internal static partial class Nested
                                         {
                                             throw new ArgumentNullException("left");
                                         }
+
                                         return new InlineStyle(left._value >> right);
                                     }
                                 }

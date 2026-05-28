@@ -62,7 +62,7 @@ internal sealed class BinaryOperatorStrategy
 
         string guard = $"{leftGuard}{guardSeparator}{rightGuard}";
 
-        string separator = binary.IsLeftSubject && binary.IsRightSubject
+        string separator = guard.Length > 0
             ? "\n"
             : string.Empty;
 

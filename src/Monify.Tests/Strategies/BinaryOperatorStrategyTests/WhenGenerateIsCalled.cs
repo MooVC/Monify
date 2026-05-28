@@ -58,6 +58,7 @@ public sealed class WhenGenerateIsCalled
 
         // Act
         Source[] sources = strategy.Generate(subject).ToArray();
+        string oneSidedGuardSource = sources[1].Code.Replace("\r\n", "\n");
 
         // Assert
         sources.Length.ShouldBe(3);
@@ -66,6 +67,7 @@ public sealed class WhenGenerateIsCalled
         sources[0].Code.ShouldContain("new Sample(left._value + right._value)");
         sources[1].Code.ShouldContain("operator -(Sample left, int right)");
         sources[1].Code.ShouldContain("throw new ArgumentNullException(\"left\")");
+        oneSidedGuardSource.ShouldContain("throw new ArgumentNullException(\"left\");\n        }\n\n        return new Sample(left._value - right);");
         sources[2].Code.ShouldContain("operator >(int left, Sample right)");
         sources[2].Code.ShouldContain("return (bool)(left > right._value);");
     }

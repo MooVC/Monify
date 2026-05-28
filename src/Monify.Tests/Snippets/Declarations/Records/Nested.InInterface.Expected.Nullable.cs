@@ -733,6 +733,7 @@ internal static partial class Nested
                                     {
                                         throw new ArgumentNullException("left");
                                     }
+
                                     return new Inner(left._value << right);
                                 }
                             }
@@ -917,6 +918,7 @@ internal static partial class Nested
                                     {
                                         throw new ArgumentNullException("left");
                                     }
+
                                     return new Inner(left._value >> right);
                                 }
                             }
