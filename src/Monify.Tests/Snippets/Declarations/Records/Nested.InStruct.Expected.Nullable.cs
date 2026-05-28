@@ -483,7 +483,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_Addition.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_Addition.Inner-Inner");
 
                 public static readonly Generated BinaryBitwiseAndOperator = new(
                     """
@@ -521,7 +521,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_BitwiseAnd.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_BitwiseAnd.Inner-Inner");
 
                 public static readonly Generated BinaryBitwiseOrOperator = new(
                     """
@@ -559,7 +559,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_BitwiseOr.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_BitwiseOr.Inner-Inner");
 
                 public static readonly Generated BinaryDivisionOperator = new(
                     """
@@ -597,7 +597,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_Division.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_Division.Inner-Inner");
 
                 public static readonly Generated BinaryExclusiveOrOperator = new(
                     """
@@ -635,7 +635,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_ExclusiveOr.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_ExclusiveOr.Inner-Inner");
 
                 public static readonly Generated BinaryGreaterThanOperator = new(
                     """
@@ -673,7 +673,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_GreaterThan.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_GreaterThan.Inner-Inner");
 
                 public static readonly Generated BinaryGreaterThanOrEqualOperator = new(
                     """
@@ -711,7 +711,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_GreaterThanOrEqual.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_GreaterThanOrEqual.Inner-Inner");
 
                 public static readonly Generated BinaryLeftShiftOperator = new(
                     """
@@ -744,7 +744,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_LeftShift.Inner-int");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_LeftShift.Inner-int");
 
                 public static readonly Generated BinaryLessThanOperator = new(
                     """
@@ -782,7 +782,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_LessThan.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_LessThan.Inner-Inner");
 
                 public static readonly Generated BinaryLessThanOrEqualOperator = new(
                     """
@@ -820,7 +820,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_LessThanOrEqual.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_LessThanOrEqual.Inner-Inner");
 
                 public static readonly Generated BinaryModulusOperator = new(
                     """
@@ -858,7 +858,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_Modulus.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_Modulus.Inner-Inner");
 
                 public static readonly Generated BinaryMultiplyOperator = new(
                     """
@@ -896,7 +896,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_Multiply.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_Multiply.Inner-Inner");
 
                 public static readonly Generated BinaryRightShiftOperator = new(
                     """
@@ -929,7 +929,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_RightShift.Inner-int");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_RightShift.Inner-int");
 
                 public static readonly Generated BinarySubtractionOperator = new(
                     """
@@ -967,7 +967,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.BinaryOperators.op_Subtraction.Inner-Inner");
+                    "Monify.Testing.Records.Outter.Inner.Binary.op_Subtraction.Inner-Inner");
 
                 public static readonly Generated UnaryDecrementOperator = new(
                     """
@@ -1002,7 +1002,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.UnaryOperators.op_Decrement.Inner");
+                    "Monify.Testing.Records.Outter.Inner.Unary.op_Decrement.Inner");
 
                 public static readonly Generated UnaryIncrementOperator = new(
                     """
@@ -1037,7 +1037,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.UnaryOperators.op_Increment.Inner");
+                    "Monify.Testing.Records.Outter.Inner.Unary.op_Increment.Inner");
 
                 public static readonly Generated UnaryOnesComplementOperator = new(
                     """
@@ -1070,7 +1070,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.UnaryOperators.op_OnesComplement.Inner");
+                    "Monify.Testing.Records.Outter.Inner.Unary.op_OnesComplement.Inner");
 
                 public static readonly Generated UnaryNegationOperator = new(
                     """
@@ -1103,7 +1103,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.UnaryOperators.op_UnaryNegation.Inner");
+                    "Monify.Testing.Records.Outter.Inner.Unary.op_UnaryNegation.Inner");
 
                 public static readonly Generated UnaryPlusOperator = new(
                     """
@@ -1136,7 +1136,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Records.Outter.Inner.UnaryOperators.op_UnaryPlus.Inner");
+                    "Monify.Testing.Records.Outter.Inner.Unary.op_UnaryPlus.Inner");
 
                 public static readonly Generated EquatableToSelf = new(
                     """

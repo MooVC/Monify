@@ -24,8 +24,8 @@ internal sealed class UnaryOperatorStrategy
             }
 
             string hintPrefix = index == IndexForEncapsulatedValue
-                ? "UnaryOperators"
-                : $"UnaryOperators.Passthrough.Level{index:D2}";
+                ? "Unary"
+                : $"Unary.Passthrough.Level{index:D2}";
 
             foreach (UnaryOperator unary in encapsulated.UnaryOperators)
             {

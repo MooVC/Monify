@@ -435,7 +435,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Addition.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_Addition.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryBitwiseAndOperator = new(
                     """
@@ -470,7 +470,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_BitwiseAnd.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_BitwiseAnd.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryBitwiseOrOperator = new(
                     """
@@ -505,7 +505,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_BitwiseOr.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_BitwiseOr.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryDivisionOperator = new(
                     """
@@ -540,7 +540,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Division.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_Division.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryExclusiveOrOperator = new(
                     """
@@ -575,7 +575,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_ExclusiveOr.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_ExclusiveOr.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryGreaterThanOperator = new(
                     """
@@ -610,7 +610,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_GreaterThan.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_GreaterThan.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryGreaterThanOrEqualOperator = new(
                     """
@@ -645,7 +645,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_GreaterThanOrEqual.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_GreaterThanOrEqual.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryLeftShiftOperator = new(
                     """
@@ -675,7 +675,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_LeftShift.InlineStyle-int");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_LeftShift.InlineStyle-int");
 
                 public static readonly Generated BinaryLessThanOperator = new(
                     """
@@ -710,7 +710,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_LessThan.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_LessThan.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryLessThanOrEqualOperator = new(
                     """
@@ -745,7 +745,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_LessThanOrEqual.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_LessThanOrEqual.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryModulusOperator = new(
                     """
@@ -780,7 +780,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Modulus.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_Modulus.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryMultiplyOperator = new(
                     """
@@ -815,7 +815,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Multiply.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_Multiply.InlineStyle-InlineStyle");
 
                 public static readonly Generated BinaryRightShiftOperator = new(
                     """
@@ -845,7 +845,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_RightShift.InlineStyle-int");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_RightShift.InlineStyle-int");
 
                 public static readonly Generated BinarySubtractionOperator = new(
                     """
@@ -880,7 +880,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.BinaryOperators.op_Subtraction.InlineStyle-InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Binary.op_Subtraction.InlineStyle-InlineStyle");
 
                 public static readonly Generated UnaryDecrementOperator = new(
                     """
@@ -912,7 +912,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_Decrement.InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Unary.op_Decrement.InlineStyle");
 
                 public static readonly Generated UnaryIncrementOperator = new(
                     """
@@ -944,7 +944,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_Increment.InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Unary.op_Increment.InlineStyle");
 
                 public static readonly Generated UnaryOnesComplementOperator = new(
                     """
@@ -974,7 +974,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_OnesComplement.InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Unary.op_OnesComplement.InlineStyle");
 
                 public static readonly Generated UnaryNegationOperator = new(
                     """
@@ -1004,7 +1004,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_UnaryNegation.InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Unary.op_UnaryNegation.InlineStyle");
 
                 public static readonly Generated UnaryPlusOperator = new(
                     """
@@ -1034,7 +1034,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.UnaryOperators.op_UnaryPlus.InlineStyle");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Unary.op_UnaryPlus.InlineStyle");
 
                 public static readonly Generated EquatableToSelf = new(
                     """

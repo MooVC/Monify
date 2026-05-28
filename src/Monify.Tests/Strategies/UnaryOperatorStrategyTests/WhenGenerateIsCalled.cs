@@ -64,7 +64,7 @@ public sealed class WhenGenerateIsCalled
 
         // Assert
         sources.Length.ShouldBe(3);
-        sources[0].Hint.ShouldBe("UnaryOperators.op_UnaryNegation.Sample");
+        sources[0].Hint.ShouldBe("Unary.op_UnaryNegation.Sample");
         sources[0].Code.ShouldContain("operator -");
         sources[0].Code.ShouldContain("new Sample(-subject._value)");
         sources[1].Code.ShouldContain("value = subject._value;");

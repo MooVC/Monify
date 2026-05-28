@@ -62,7 +62,7 @@ public sealed class WhenGenerateIsCalled
 
         // Assert
         sources.Length.ShouldBe(3);
-        sources[0].Hint.ShouldBe("BinaryOperators.op_Addition.Sample-Sample");
+        sources[0].Hint.ShouldBe("Binary.op_Addition.Sample-Sample");
         sources[0].Code.ShouldContain("operator +(Sample left, Sample right)");
         sources[0].Code.ShouldContain("new Sample(left._value + right._value)");
         sources[1].Code.ShouldContain("operator -(Sample left, int right)");

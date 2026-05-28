@@ -22,8 +22,8 @@ internal sealed class BinaryOperatorStrategy
             }
 
             string hintPrefix = index == IndexForEncapsulatedValue
-                ? "BinaryOperators"
-                : $"BinaryOperators.Passthrough.Level{index:D2}";
+                ? "Binary"
+                : $"Binary.Passthrough.Level{index:D2}";
 
             foreach (BinaryOperator binary in encapsulated.BinaryOperators)
             {

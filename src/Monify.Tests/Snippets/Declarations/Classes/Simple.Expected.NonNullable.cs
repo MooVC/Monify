@@ -339,7 +339,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_Addition.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_Addition.Simple-Simple");
 
             public static readonly Generated BinaryBitwiseAndOperator = new(
                 """
@@ -368,7 +368,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_BitwiseAnd.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_BitwiseAnd.Simple-Simple");
 
             public static readonly Generated BinaryBitwiseOrOperator = new(
                 """
@@ -397,7 +397,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_BitwiseOr.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_BitwiseOr.Simple-Simple");
 
             public static readonly Generated BinaryDivisionOperator = new(
                 """
@@ -426,7 +426,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_Division.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_Division.Simple-Simple");
 
             public static readonly Generated BinaryExclusiveOrOperator = new(
                 """
@@ -455,7 +455,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_ExclusiveOr.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_ExclusiveOr.Simple-Simple");
 
             public static readonly Generated BinaryGreaterThanOperator = new(
                 """
@@ -484,7 +484,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_GreaterThan.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_GreaterThan.Simple-Simple");
 
             public static readonly Generated BinaryGreaterThanOrEqualOperator = new(
                 """
@@ -513,7 +513,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_GreaterThanOrEqual.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_GreaterThanOrEqual.Simple-Simple");
 
             public static readonly Generated BinaryLeftShiftOperator = new(
                 """
@@ -537,7 +537,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_LeftShift.Simple-int");
+                "Monify.Testing.Classes.Simple.Binary.op_LeftShift.Simple-int");
 
             public static readonly Generated BinaryLessThanOperator = new(
                 """
@@ -566,7 +566,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_LessThan.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_LessThan.Simple-Simple");
 
             public static readonly Generated BinaryLessThanOrEqualOperator = new(
                 """
@@ -595,7 +595,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_LessThanOrEqual.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_LessThanOrEqual.Simple-Simple");
 
             public static readonly Generated BinaryModulusOperator = new(
                 """
@@ -624,7 +624,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_Modulus.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_Modulus.Simple-Simple");
 
             public static readonly Generated BinaryMultiplyOperator = new(
                 """
@@ -653,7 +653,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_Multiply.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_Multiply.Simple-Simple");
 
             public static readonly Generated BinaryRightShiftOperator = new(
                 """
@@ -677,7 +677,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_RightShift.Simple-int");
+                "Monify.Testing.Classes.Simple.Binary.op_RightShift.Simple-int");
 
             public static readonly Generated BinarySubtractionOperator = new(
                 """
@@ -706,7 +706,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.BinaryOperators.op_Subtraction.Simple-Simple");
+                "Monify.Testing.Classes.Simple.Binary.op_Subtraction.Simple-Simple");
 
             public static readonly Generated UnaryDecrementOperator = new(
                 """
@@ -732,7 +732,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.UnaryOperators.op_Decrement.Simple");
+                "Monify.Testing.Classes.Simple.Unary.op_Decrement.Simple");
 
             public static readonly Generated UnaryIncrementOperator = new(
                 """
@@ -758,7 +758,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.UnaryOperators.op_Increment.Simple");
+                "Monify.Testing.Classes.Simple.Unary.op_Increment.Simple");
 
             public static readonly Generated UnaryOnesComplementOperator = new(
                 """
@@ -782,7 +782,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.UnaryOperators.op_OnesComplement.Simple");
+                "Monify.Testing.Classes.Simple.Unary.op_OnesComplement.Simple");
 
             public static readonly Generated UnaryNegationOperator = new(
                 """
@@ -806,7 +806,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.UnaryOperators.op_UnaryNegation.Simple");
+                "Monify.Testing.Classes.Simple.Unary.op_UnaryNegation.Simple");
 
             public static readonly Generated UnaryPlusOperator = new(
                 """
@@ -830,7 +830,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Classes.Simple.UnaryOperators.op_UnaryPlus.Simple");
+                "Monify.Testing.Classes.Simple.Unary.op_UnaryPlus.Simple");
 
             public static readonly Generated EquatableToSelf = new(
                 """
