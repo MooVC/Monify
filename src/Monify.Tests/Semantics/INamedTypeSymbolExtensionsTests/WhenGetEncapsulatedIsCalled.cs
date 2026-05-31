@@ -783,6 +783,86 @@ public sealed class WhenGetEncapsulatedIsCalled
     }
 
     [Fact]
+    public void GivenAnnotatedTypeWithMatchingInterfaceThenPassthroughMembersAreNotCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value))]
+            public sealed partial class Wrapper
+                : IExplicit
+            {
+                public int Count => 0;
+
+                public string Format(int value) => value.ToString();
+            }
+
+            public interface IExplicit
+            {
+                int Count { get; }
+
+                string Format(int value);
+            }
+
+            public sealed class Value
+                : IExplicit
+            {
+                int IExplicit.Count => 1;
+
+                string IExplicit.Format(int value) => value.ToString();
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].Interfaces.ShouldNotContain("global::Sample.IExplicit");
+        encapsulated[0].Methods.ShouldBeEmpty();
+        encapsulated[0].Properties.ShouldBeEmpty();
+    }
+
+    [Fact]
     public void GivenEncapsulatedTypeWithStrategyGeneratedMethodsThenTheyAreNotCaptured()
     {
         // Arrange
@@ -855,6 +935,85 @@ public sealed class WhenGetEncapsulatedIsCalled
         // Assert
         encapsulated[0].Methods.Length.ShouldBe(1);
         encapsulated[0].Methods[0].Name.ShouldBe("Format");
+    }
+
+    [Fact]
+    public void GivenPassthroughTypeWithGeneratedEquatableMembersThenTheyAreNotCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using System;
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Inner))]
+            public sealed partial class Outer
+            {
+            }
+
+            [Monify(Type = typeof(string))]
+            public sealed partial class Inner
+                : IEquatable<Inner>,
+                  IEquatable<string>
+            {
+                public bool Equals(Inner other) => true;
+
+                public bool Equals(string other) => true;
+
+                public string Format() => string.Empty;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? outer = compilation.GetTypeByMetadataName("Sample.Outer");
+
+        _ = outer.ShouldNotBeNull();
+        outer.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = outer.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated.Length.ShouldBe(2);
+        encapsulated[0].Interfaces.ShouldNotContain("global::System.IEquatable<global::Sample.Inner>");
+        encapsulated[0].Interfaces.ShouldNotContain("global::System.IEquatable<string>");
+        encapsulated[0].Methods.ShouldNotContain(method => method.Name == nameof(Equals)
+            && method.Parameters[0].Type == "global::Sample.Inner");
+        encapsulated[0].Methods.ShouldNotContain(method => method.Name == nameof(Equals)
+            && method.Parameters[0].Type == "string");
+        encapsulated[0].Methods.ShouldContain(method => method.Name == "Format");
     }
 
     [Fact]

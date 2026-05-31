@@ -16,32 +16,30 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="encapsulated">
     /// The encapsulated type whose properties are to be inspected.
     /// </param>
+    /// <param name="interfaces">
+    /// The interfaces that will be forwarded.
+    /// </param>
     /// <param name="subject">
     /// The subject type being generated.
     /// </param>
     /// <returns>
     /// The properties that should be forwarded to the encapsulated value.
     /// </returns>
-    public static ImmutableArray<PassthroughProperty> GetPassthroughProperties(
-        this INamedTypeSymbol encapsulated,
-        INamedTypeSymbol subject)
+    public static ImmutableArray<PassthroughProperty> GetPassthroughProperties(this INamedTypeSymbol encapsulated, ImmutableArray<string> interfaces, INamedTypeSymbol subject)
     {
         return encapsulated
             .GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(property => property.IsPassthroughPropertyCandidate(encapsulated, subject))
+            .Where(property => property.IsPassthroughPropertyCandidate(encapsulated, subject, interfaces))
             .Where(property => !subject.HasPassthroughProperty(property))
-            .Select(property => CreatePassthroughProperty(property, encapsulated, subject))
+            .Select(property => property.CreatePassthroughProperty(encapsulated, subject))
             .OrderBy(property => property.ExplicitInterface)
             .ThenBy(property => property.Name)
             .ThenBy(property => string.Join(",", property.Parameters.Select(parameter => parameter.Type)))
             .ToImmutableArray();
     }
 
-    private static PassthroughProperty CreatePassthroughProperty(
-        IPropertySymbol property,
-        INamedTypeSymbol encapsulated,
-        INamedTypeSymbol subject)
+    private static PassthroughProperty CreatePassthroughProperty(this IPropertySymbol property, INamedTypeSymbol encapsulated, INamedTypeSymbol subject)
     {
         IPropertySymbol? explicitImplementation = property.ExplicitInterfaceImplementations.FirstOrDefault();
         IPropertySymbol declaration = explicitImplementation ?? property;
@@ -114,7 +112,8 @@ internal static partial class INamedTypeSymbolExtensions
     private static bool IsPassthroughPropertyCandidate(
         this IPropertySymbol property,
         INamedTypeSymbol encapsulated,
-        INamedTypeSymbol subject)
+        INamedTypeSymbol subject,
+        ImmutableArray<string> interfaces)
     {
         if (property.IsStatic || property.ReturnsByRef || property.ReturnsByRefReadonly)
         {
@@ -123,7 +122,7 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (property.ExplicitInterfaceImplementations.Length > 0)
         {
-            return property.ExplicitInterfaceImplementations.Any(implementation => implementation.ContainingType.DeclaredAccessibility.CanForward(encapsulated, subject));
+            return property.ExplicitInterfaceImplementations.Any(implementation => implementation.CanForwardExplicitImplementation(encapsulated, subject, interfaces));
         }
 
         bool canForwardGetter = property.GetMethod?.DeclaredAccessibility.CanForward(encapsulated, subject) is true;
@@ -131,5 +130,17 @@ internal static partial class INamedTypeSymbolExtensions
 
         return property.DeclaredAccessibility.CanForward(encapsulated, subject)
             && (canForwardGetter || canForwardSetter);
+    }
+
+    private static bool CanForwardExplicitImplementation(
+        this IPropertySymbol implementation,
+        INamedTypeSymbol encapsulated,
+        INamedTypeSymbol subject,
+        ImmutableArray<string> interfaces)
+    {
+        string @interface = implementation.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+
+        return implementation.ContainingType.DeclaredAccessibility.CanForward(encapsulated, subject)
+            && interfaces.Contains(@interface);
     }
 }

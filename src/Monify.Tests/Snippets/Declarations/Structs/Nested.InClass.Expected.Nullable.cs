@@ -435,7 +435,12 @@ internal static partial class Nested
                             {
                                 public override string ToString()
                                 {
-                                    return string.Format("Inner {{ {0} }}", _value);
+                                    if (ReferenceEquals(_value, null))
+                                    {
+                                        return string.Empty;
+                                    }
+
+                                    return _value.ToString();
                                 }
                             }
                         }

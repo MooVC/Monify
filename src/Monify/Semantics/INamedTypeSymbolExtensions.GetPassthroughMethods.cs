@@ -20,11 +20,14 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="compilation">
     /// The compilation used to resolve well-known interface symbols.
     /// </param>
-    /// <param name="subject">
-    /// The subject type being generated.
+    /// <param name="equatables">
+    /// The types for which equatable interfaces should be considered.
     /// </param>
     /// <param name="interfaces">
     /// The interfaces that will be forwarded.
+    /// </param>
+    /// <param name="subject">
+    /// The subject type being generated.
     /// </param>
     /// <returns>
     /// The methods that should be forwarded to the encapsulated value.
@@ -32,15 +35,16 @@ internal static partial class INamedTypeSymbolExtensions
     public static ImmutableArray<PassthroughMethod> GetPassthroughMethods(
         this INamedTypeSymbol encapsulated,
         Compilation compilation,
-        INamedTypeSymbol subject,
-        ImmutableArray<string> interfaces)
+        ImmutableArray<ITypeSymbol> equatables,
+        ImmutableArray<string> interfaces,
+        INamedTypeSymbol subject)
     {
         INamedTypeSymbol? equatable = compilation.GetTypeByMetadataName(EquatableTypeName);
 
         return encapsulated
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Where(method => method.IsPassthroughMethodCandidate(encapsulated, subject, equatable, interfaces))
+            .Where(method => method.IsPassthroughMethodCandidate(encapsulated, subject, equatable, interfaces, equatables))
             .Where(method => !subject.HasPassthroughMethod(method))
             .Select(CreatePassthroughMethod)
             .OrderBy(method => method.ExplicitInterface)
@@ -49,7 +53,7 @@ internal static partial class INamedTypeSymbolExtensions
             .ToImmutableArray();
     }
 
-    private static PassthroughMethod CreatePassthroughMethod(IMethodSymbol method)
+    private static PassthroughMethod CreatePassthroughMethod(this IMethodSymbol method)
     {
         IMethodSymbol? explicitImplementation = method.ExplicitInterfaceImplementations.FirstOrDefault();
         IMethodSymbol declaration = explicitImplementation ?? method;
@@ -106,23 +110,22 @@ internal static partial class INamedTypeSymbolExtensions
 
     private static bool IsDuplicateOfGeneratedMethod(
         IMethodSymbol method,
-        INamedTypeSymbol encapsulated,
-        INamedTypeSymbol subject,
-        INamedTypeSymbol? equatable)
+        INamedTypeSymbol? equatable,
+        ImmutableArray<ITypeSymbol> generatedEquatableTypes)
     {
         IMethodSymbol declaration = method.ExplicitInterfaceImplementations.FirstOrDefault() ?? method;
 
-        if (declaration.Name == nameof(object.GetHashCode) && declaration.Parameters.Length == 0)
+        if (declaration.Name == nameof(GetHashCode) && declaration.Parameters.Length == 0)
         {
             return true;
         }
 
-        if (declaration.Name == nameof(object.ToString) && declaration.Parameters.Length == 0)
+        if (declaration.Name == nameof(ToString) && declaration.Parameters.Length == 0)
         {
             return true;
         }
 
-        if (declaration.Name != nameof(object.Equals) || declaration.Parameters.Length != 1)
+        if (declaration.Name != nameof(Equals) || declaration.Parameters.Length != 1)
         {
             return false;
         }
@@ -130,10 +133,8 @@ internal static partial class INamedTypeSymbolExtensions
         ITypeSymbol parameter = declaration.Parameters[0].Type;
 
         return parameter.SpecialType == SpecialType.System_Object
-            || SymbolEqualityComparer.Default.Equals(parameter, encapsulated)
-            || SymbolEqualityComparer.Default.Equals(parameter, subject)
-            || method.ExplicitInterfaceImplementations.Any(implementation => implementation.ContainingType.IsEquatableFor(equatable, encapsulated))
-            || method.ExplicitInterfaceImplementations.Any(implementation => implementation.ContainingType.IsEquatableFor(equatable, subject));
+            || generatedEquatableTypes.Any(type => SymbolEqualityComparer.Default.Equals(parameter, type))
+            || method.ExplicitInterfaceImplementations.Any(implementation => implementation.ContainingType.IsEquatableForAny(equatable, generatedEquatableTypes));
     }
 
     private static bool IsEquivalentParameter(IParameterSymbol left, IParameterSymbol right)
@@ -161,7 +162,8 @@ internal static partial class INamedTypeSymbolExtensions
         INamedTypeSymbol encapsulated,
         INamedTypeSymbol subject,
         INamedTypeSymbol? equatable,
-        ImmutableArray<string> interfaces)
+        ImmutableArray<string> interfaces,
+        ImmutableArray<ITypeSymbol> generatedEquatableTypes)
     {
         if (method.IsStatic
          || method.AssociatedSymbol is not null
@@ -178,12 +180,12 @@ internal static partial class INamedTypeSymbolExtensions
         {
             return method.MethodKind == MethodKind.ExplicitInterfaceImplementation
                 && method.ExplicitInterfaceImplementations.Any(implementation => implementation.CanForwardExplicitImplementation(encapsulated, subject, interfaces))
-                && !IsDuplicateOfGeneratedMethod(method, encapsulated, subject, equatable);
+                && !IsDuplicateOfGeneratedMethod(method, equatable, generatedEquatableTypes);
         }
 
         return method.MethodKind == MethodKind.Ordinary
             && method.CanForwardOrdinaryMethod(encapsulated, subject, interfaces)
-            && !IsDuplicateOfGeneratedMethod(method, encapsulated, subject, equatable);
+            && !IsDuplicateOfGeneratedMethod(method, equatable, generatedEquatableTypes);
     }
 
     private static bool CanForwardOrdinaryMethod(

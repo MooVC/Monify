@@ -2,6 +2,7 @@ namespace Monify.Semantics;
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Monify.Model;
 
@@ -22,20 +23,37 @@ internal static partial class INamedTypeSymbolExtensions
     /// </param>
     /// <param name="value">The encapsulated value.</param>
     /// <returns>The metadata for the conversions and passthrough operators that should be generated.</returns>
-    public static ImmutableArray<Encapsulated> GetEncapsulated(
-        this INamedTypeSymbol subject,
-        Compilation compilation,
-        SemanticModel model,
-        ITypeSymbol value)
+    public static ImmutableArray<Encapsulated> GetEncapsulated(this INamedTypeSymbol subject, Compilation compilation, SemanticModel model, ITypeSymbol value)
     {
         ImmutableArray<Encapsulated>.Builder builder = ImmutableArray.CreateBuilder<Encapsulated>();
         IMethodSymbol[] constructors = subject.GetConstructors();
+        ImmutableArray<ITypeSymbol> encapsulated = GetEncapsulatedValues(subject, value);
+        ImmutableArray<ITypeSymbol> equatables = GetGeneratedEquatableTypes(subject, encapsulated);
 
-        builder.Add(Catalog(constructors, compilation, model, subject, value, includeForwardedMembers: true));
-
-        if (value is INamedTypeSymbol named)
+        if (encapsulated.IsDefaultOrEmpty)
         {
-            GetPassthroughEncapsulations(builder, constructors, compilation, model, subject, named);
+            return builder.ToImmutable();
+        }
+
+        builder.Add(Catalog(
+            constructors,
+            compilation,
+            equatables,
+            model,
+            subject,
+            encapsulated[0],
+            includeForwardedMembers: true));
+
+        foreach (ITypeSymbol passthrough in encapsulated.Skip(1))
+        {
+            builder.Add(Catalog(
+                constructors,
+                compilation,
+                equatables,
+                model,
+                subject,
+                passthrough,
+                includeForwardedMembers: false));
         }
 
         return builder.ToImmutable();
@@ -44,6 +62,7 @@ internal static partial class INamedTypeSymbolExtensions
     private static Encapsulated Catalog(
         IMethodSymbol[] constructors,
         Compilation compilation,
+        ImmutableArray<ITypeSymbol> equatables,
         SemanticModel model,
         INamedTypeSymbol subject,
         ITypeSymbol value,
@@ -64,15 +83,15 @@ internal static partial class INamedTypeSymbolExtensions
 
             if (includeForwardedMembers)
             {
-                interfaces = encapsulated.GetInterfaces(compilation, subject);
+                interfaces = encapsulated.GetInterfaces(compilation, equatables, subject);
 
                 if (CanForwardMembers(encapsulated, interfaces))
                 {
-                    methods = encapsulated.GetPassthroughMethods(compilation, subject, interfaces);
+                    methods = encapsulated.GetPassthroughMethods(compilation, equatables, interfaces, subject);
 
                     if (CanForwardProperties(encapsulated))
                     {
-                        properties = encapsulated.GetPassthroughProperties(subject);
+                        properties = encapsulated.GetPassthroughProperties(interfaces, subject);
                     }
                 }
             }
@@ -109,19 +128,26 @@ internal static partial class INamedTypeSymbolExtensions
         return encapsulated.SpecialType == SpecialType.None;
     }
 
-    private static void GetPassthroughEncapsulations(
-        ImmutableArray<Encapsulated>.Builder builder,
-        IMethodSymbol[] constructors,
-        Compilation compilation,
-        SemanticModel model,
-        INamedTypeSymbol subject,
-        INamedTypeSymbol named)
+    private static ImmutableArray<ITypeSymbol> GetEncapsulatedValues(INamedTypeSymbol subject, ITypeSymbol value)
     {
+        ImmutableArray<ITypeSymbol>.Builder builder = ImmutableArray.CreateBuilder<ITypeSymbol>();
+
         HashSet<ITypeSymbol> visited = new(SymbolEqualityComparer.IncludeNullability)
         {
             subject,
-            named,
         };
+
+        if (!visited.Add(value))
+        {
+            return builder.ToImmutable();
+        }
+
+        builder.Add(value);
+
+        if (value is not INamedTypeSymbol named)
+        {
+            return builder.ToImmutable();
+        }
 
         while (TryGetEncapsulatedValue(named, out ITypeSymbol nested))
         {
@@ -130,7 +156,7 @@ internal static partial class INamedTypeSymbolExtensions
                 break;
             }
 
-            builder.Add(Catalog(constructors, compilation, model, subject, nested, includeForwardedMembers: false));
+            builder.Add(nested);
 
             if (nested is not INamedTypeSymbol inner)
             {
@@ -139,6 +165,20 @@ internal static partial class INamedTypeSymbolExtensions
 
             named = inner;
         }
+
+        return builder.ToImmutable();
+    }
+
+    private static ImmutableArray<ITypeSymbol> GetGeneratedEquatableTypes(
+        INamedTypeSymbol subject,
+        ImmutableArray<ITypeSymbol> encapsulatedValues)
+    {
+        ImmutableArray<ITypeSymbol>.Builder builder = ImmutableArray.CreateBuilder<ITypeSymbol>();
+
+        builder.Add(subject);
+        builder.AddRange(encapsulatedValues);
+
+        return builder.ToImmutable();
     }
 
     private static bool TryGetEncapsulatedValue(INamedTypeSymbol subject, out ITypeSymbol value)

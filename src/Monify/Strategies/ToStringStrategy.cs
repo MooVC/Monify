@@ -21,7 +21,12 @@ internal sealed class ToStringStrategy
             {
                 public override string ToString()
                 {
-                    return string.Format("{{{subject.Name}}} {{ {0} }}", {{{FieldStrategy.Name}}});
+                    if (ReferenceEquals({{{FieldStrategy.Name}}}, null))
+                    {
+                        return string.Empty;
+                    }
+
+                    return {{{FieldStrategy.Name}}}.ToString();
                 }
             }
             """;

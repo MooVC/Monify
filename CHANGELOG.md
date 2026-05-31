@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Public and internal members and supported interfaces declared by the top-level encapsulated type are now propagated to generated `Monify` types.
 
+## Changed
+
+- Generated `ToString` overrides now return the encapsulated value's `ToString` result, or `string.Empty` when the value is null.
+
 ## Fixed
 
 - Passthrough methods with `object` parameters now unwrap annotated type arguments before forwarding to the encapsulated value.
-- Built-in string addition and integer unary operators are now propagated to generated `Monify` types.
+- Passthrough interfaces and members are no longer duplicated when the annotated type already exposes them or another strategy will generate them.
 
 # [1.4.1] - 2026-05-16
 

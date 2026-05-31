@@ -1,6 +1,7 @@
 namespace Monify.Semantics;
 
 using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 
 /// <summary>
@@ -21,13 +22,16 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="compilation">
     /// The compilation used to resolve well-known interface symbols.
     /// </param>
+    /// <param name="equatables">
+    /// The types for which equatable interfaces should be considered.
+    /// </param>
     /// <param name="subject">
     /// The subject type being generated.
     /// </param>
     /// <returns>
     /// The interfaces that can be forwarded from <paramref name="value"/>.
     /// </returns>
-    public static ImmutableArray<string> GetInterfaces(this INamedTypeSymbol value, Compilation compilation, INamedTypeSymbol subject)
+    public static ImmutableArray<string> GetInterfaces(this INamedTypeSymbol value, Compilation compilation, ImmutableArray<ITypeSymbol> equatables, INamedTypeSymbol subject)
     {
         INamedTypeSymbol? cloneable = compilation.GetTypeByMetadataName(CloneableTypeName);
         INamedTypeSymbol? comparable = compilation.GetTypeByMetadataName(ComparableTypeName);
@@ -39,8 +43,8 @@ internal static partial class INamedTypeSymbolExtensions
             .Where(@interface => @interface.DeclaredAccessibility.CanForward(value, subject))
             .Where(@interface => @interface.CanForwardForSpecialType(value, comparable, comparableGeneric))
             .Where(@interface => @interface.CanForwardInterface(subject, cloneable))
-            .Where(@interface => !@interface.IsEquatableFor(equatable, value))
-            .Where(@interface => !@interface.IsEquatableFor(equatable, subject))
+            .Where(@interface => !subject.HasInterface(@interface))
+            .Where(@interface => !@interface.IsEquatableForAny(equatable, equatables))
             .Select(@interface => @interface.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
             .Distinct()
             .ToImmutableArray();
@@ -79,6 +83,11 @@ internal static partial class INamedTypeSymbolExtensions
             && SymbolEqualityComparer.Default.Equals(@interface, cloneable);
     }
 
+    private static bool HasInterface(this INamedTypeSymbol subject, INamedTypeSymbol @interface)
+    {
+        return subject.AllInterfaces.Any(candidate => SymbolEqualityComparer.Default.Equals(candidate, @interface));
+    }
+
     private static bool IsComparable(this INamedTypeSymbol @interface, INamedTypeSymbol? comparable)
     {
         return comparable is not null
@@ -91,7 +100,12 @@ internal static partial class INamedTypeSymbolExtensions
             && SymbolEqualityComparer.Default.Equals(@interface.ConstructedFrom, comparableGeneric);
     }
 
-    private static bool IsEquatableFor(this INamedTypeSymbol @interface, INamedTypeSymbol? equatable, INamedTypeSymbol value)
+    private static bool IsEquatableForAny(this INamedTypeSymbol @interface, INamedTypeSymbol? equatable, ImmutableArray<ITypeSymbol> values)
+    {
+        return values.Any(value => @interface.IsEquatableFor(equatable, value));
+    }
+
+    private static bool IsEquatableFor(this INamedTypeSymbol @interface, INamedTypeSymbol? equatable, ITypeSymbol value)
     {
         return equatable is not null
             && SymbolEqualityComparer.Default.Equals(@interface.ConstructedFrom, equatable)
