@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Monify.Model;
+using LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion;
 
 /// <summary>
 /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -19,18 +20,25 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="interfaces">
     /// The interfaces that will be forwarded.
     /// </param>
+    /// <param name="languageVersion">
+    /// The language version used by the subject type.
+    /// </param>
     /// <param name="subject">
     /// The subject type being generated.
     /// </param>
     /// <returns>
     /// The properties that should be forwarded to the encapsulated value.
     /// </returns>
-    public static ImmutableArray<PassthroughProperty> GetPassthroughProperties(this INamedTypeSymbol encapsulated, ImmutableArray<string> interfaces, INamedTypeSymbol subject)
+    public static ImmutableArray<PassthroughProperty> GetPassthroughProperties(
+        this INamedTypeSymbol encapsulated,
+        ImmutableArray<string> interfaces,
+        LanguageVersion languageVersion,
+        INamedTypeSymbol subject)
     {
         return encapsulated
             .GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(property => property.IsPassthroughPropertyCandidate(encapsulated, subject, interfaces))
+            .Where(property => property.IsPassthroughPropertyCandidate(encapsulated, subject, interfaces, languageVersion))
             .Where(property => !subject.HasPassthroughProperty(property))
             .Select(property => property.CreatePassthroughProperty(encapsulated, subject))
             .OrderBy(property => property.ExplicitInterface)
@@ -113,9 +121,13 @@ internal static partial class INamedTypeSymbolExtensions
         this IPropertySymbol property,
         INamedTypeSymbol encapsulated,
         INamedTypeSymbol subject,
-        ImmutableArray<string> interfaces)
+        ImmutableArray<string> interfaces,
+        LanguageVersion languageVersion)
     {
-        if (property.IsStatic || property.ReturnsByRef || property.ReturnsByRefReadonly)
+        if (property.IsStatic
+         || property.ReturnsByRef
+         || property.ReturnsByRefReadonly
+         || !property.HasSourceCompatibleSignature(languageVersion))
         {
             return false;
         }

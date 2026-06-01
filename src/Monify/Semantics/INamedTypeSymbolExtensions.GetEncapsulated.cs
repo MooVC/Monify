@@ -5,6 +5,8 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Monify.Model;
+using CSharpParseOptions = Microsoft.CodeAnalysis.CSharp.CSharpParseOptions;
+using LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion;
 
 /// <summary>
 /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -29,6 +31,7 @@ internal static partial class INamedTypeSymbolExtensions
         IMethodSymbol[] constructors = subject.GetConstructors();
         ImmutableArray<ITypeSymbol> encapsulated = GetEncapsulatedValues(subject, value);
         ImmutableArray<ITypeSymbol> equatables = GetGeneratedEquatableTypes(subject, encapsulated);
+        LanguageVersion languageVersion = GetLanguageVersion(model);
 
         if (encapsulated.IsDefaultOrEmpty)
         {
@@ -39,6 +42,7 @@ internal static partial class INamedTypeSymbolExtensions
             constructors,
             compilation,
             equatables,
+            languageVersion,
             model,
             subject,
             encapsulated[0],
@@ -50,6 +54,7 @@ internal static partial class INamedTypeSymbolExtensions
                 constructors,
                 compilation,
                 equatables,
+                languageVersion,
                 model,
                 subject,
                 passthrough,
@@ -63,6 +68,7 @@ internal static partial class INamedTypeSymbolExtensions
         IMethodSymbol[] constructors,
         Compilation compilation,
         ImmutableArray<ITypeSymbol> equatables,
+        LanguageVersion languageVersion,
         SemanticModel model,
         INamedTypeSymbol subject,
         ITypeSymbol value,
@@ -87,11 +93,11 @@ internal static partial class INamedTypeSymbolExtensions
 
                 if (CanForwardMembers(encapsulated, interfaces))
                 {
-                    methods = encapsulated.GetPassthroughMethods(compilation, equatables, interfaces, subject);
+                    methods = encapsulated.GetPassthroughMethods(compilation, equatables, interfaces, languageVersion, subject);
 
                     if (CanForwardProperties(encapsulated))
                     {
-                        properties = encapsulated.GetPassthroughProperties(interfaces, subject);
+                        properties = encapsulated.GetPassthroughProperties(interfaces, languageVersion, subject);
                     }
                 }
             }
@@ -126,6 +132,13 @@ internal static partial class INamedTypeSymbolExtensions
     private static bool CanForwardProperties(INamedTypeSymbol encapsulated)
     {
         return encapsulated.SpecialType == SpecialType.None;
+    }
+
+    private static LanguageVersion GetLanguageVersion(SemanticModel model)
+    {
+        return model.SyntaxTree.Options is CSharpParseOptions options
+            ? options.LanguageVersion
+            : LanguageVersion.Default;
     }
 
     private static ImmutableArray<ITypeSymbol> GetEncapsulatedValues(INamedTypeSymbol subject, ITypeSymbol value)

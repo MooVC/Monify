@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Monify.Model;
+using LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion;
 
 /// <summary>
 /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -26,6 +27,9 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="interfaces">
     /// The interfaces that will be forwarded.
     /// </param>
+    /// <param name="languageVersion">
+    /// The language version used by the subject type.
+    /// </param>
     /// <param name="subject">
     /// The subject type being generated.
     /// </param>
@@ -37,6 +41,7 @@ internal static partial class INamedTypeSymbolExtensions
         Compilation compilation,
         ImmutableArray<ITypeSymbol> equatables,
         ImmutableArray<string> interfaces,
+        LanguageVersion languageVersion,
         INamedTypeSymbol subject)
     {
         INamedTypeSymbol? equatable = compilation.GetTypeByMetadataName(EquatableTypeName);
@@ -44,7 +49,7 @@ internal static partial class INamedTypeSymbolExtensions
         return encapsulated
             .GetMembers()
             .OfType<IMethodSymbol>()
-            .Where(method => method.IsPassthroughMethodCandidate(encapsulated, subject, equatable, interfaces, equatables))
+            .Where(method => method.IsPassthroughMethodCandidate(encapsulated, equatables, subject, equatable, interfaces, languageVersion))
             .Where(method => !subject.HasPassthroughMethod(method))
             .Select(CreatePassthroughMethod)
             .OrderBy(method => method.ExplicitInterface)
@@ -160,10 +165,11 @@ internal static partial class INamedTypeSymbolExtensions
     private static bool IsPassthroughMethodCandidate(
         this IMethodSymbol method,
         INamedTypeSymbol encapsulated,
+        ImmutableArray<ITypeSymbol> equatables,
         INamedTypeSymbol subject,
         INamedTypeSymbol? equatable,
         ImmutableArray<string> interfaces,
-        ImmutableArray<ITypeSymbol> generatedEquatableTypes)
+        LanguageVersion languageVersion)
     {
         if (method.IsStatic
          || method.AssociatedSymbol is not null
@@ -171,7 +177,8 @@ internal static partial class INamedTypeSymbolExtensions
          || (subject.IsRecord && method.Name == nameof(ICloneable.Clone))
          || method.ReturnsByRef
          || method.ReturnsByRefReadonly
-         || !method.HasSourceCompatibleTypeParameterConstraints())
+         || !method.HasSourceCompatibleSignature(languageVersion)
+         || !method.HasSourceCompatibleTypeParameterConstraints(languageVersion))
         {
             return false;
         }
@@ -180,12 +187,12 @@ internal static partial class INamedTypeSymbolExtensions
         {
             return method.MethodKind == MethodKind.ExplicitInterfaceImplementation
                 && method.ExplicitInterfaceImplementations.Any(implementation => implementation.CanForwardExplicitImplementation(encapsulated, subject, interfaces))
-                && !IsDuplicateOfGeneratedMethod(method, equatable, generatedEquatableTypes);
+                && !IsDuplicateOfGeneratedMethod(method, equatable, equatables);
         }
 
         return method.MethodKind == MethodKind.Ordinary
             && method.CanForwardOrdinaryMethod(encapsulated, subject, interfaces)
-            && !IsDuplicateOfGeneratedMethod(method, equatable, generatedEquatableTypes);
+            && !IsDuplicateOfGeneratedMethod(method, equatable, equatables);
     }
 
     private static bool CanForwardOrdinaryMethod(

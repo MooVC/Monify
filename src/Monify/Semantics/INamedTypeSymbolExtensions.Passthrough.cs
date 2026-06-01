@@ -4,12 +4,21 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Monify.Model;
+using LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion;
+using LanguageVersionFacts = Microsoft.CodeAnalysis.CSharp.LanguageVersionFacts;
 
 /// <summary>
 /// Provides extensions relating to symbols.
 /// </summary>
 internal static partial class INamedTypeSymbolExtensions
 {
+    private const int MinimumLanguageVersionForFunctionPointers = 900;
+    private const int MinimumLanguageVersionForInParameters = 720;
+    private const int MinimumLanguageVersionForNotNullConstraints = 800;
+    private const int MinimumLanguageVersionForParamsCollections = 1300;
+    private const int MinimumLanguageVersionForRefStructs = 720;
+    private const int MinimumLanguageVersionForUnmanagedConstraints = 730;
+
     private static bool CanForward(this Accessibility accessibility, INamedTypeSymbol encapsulated, INamedTypeSymbol subject)
     {
         return accessibility == Accessibility.Public
@@ -79,12 +88,71 @@ internal static partial class INamedTypeSymbolExtensions
             : $"where {parameter.Name} : {string.Join(", ", constraints)}";
     }
 
-    private static bool HasSourceCompatibleTypeParameterConstraints(this IMethodSymbol method)
+    private static bool HasSourceCompatibleSignature(this IMethodSymbol method, LanguageVersion languageVersion)
     {
-        return method
-            .TypeParameters
-            .SelectMany(parameter => parameter.ConstraintTypes)
-            .All(IsSourceCompatibleConstraint);
+        return method.ReturnType.HasSourceCompatibleType(languageVersion)
+            && method.Parameters.All(parameter => parameter.HasSourceCompatibleSignature(languageVersion));
+    }
+
+    private static bool HasSourceCompatibleSignature(this IPropertySymbol property, LanguageVersion languageVersion)
+    {
+        return property.Type.HasSourceCompatibleType(languageVersion)
+            && property.Parameters.All(parameter => parameter.HasSourceCompatibleSignature(languageVersion));
+    }
+
+    private static bool HasSourceCompatibleSignature(this IParameterSymbol parameter, LanguageVersion languageVersion)
+    {
+        return IsSourceCompatibleRefKind(parameter.RefKind, languageVersion)
+            && parameter.Type.HasSourceCompatibleType(languageVersion)
+            && (!parameter.IsParams || parameter.Type is IArrayTypeSymbol || SupportsParamsCollections(languageVersion));
+    }
+
+    private static bool HasSourceCompatibleType(this ITypeSymbol type, LanguageVersion languageVersion)
+    {
+        if (type is IArrayTypeSymbol array)
+        {
+            return array.ElementType.HasSourceCompatibleType(languageVersion);
+        }
+
+        if (type is IFunctionPointerTypeSymbol)
+        {
+            return SupportsLanguageVersion(languageVersion, MinimumLanguageVersionForFunctionPointers);
+        }
+
+        if (type is IPointerTypeSymbol pointer)
+        {
+            return pointer.PointedAtType.HasSourceCompatibleType(languageVersion);
+        }
+
+        if (type.IsRefLikeType && !SupportsLanguageVersion(languageVersion, MinimumLanguageVersionForRefStructs))
+        {
+            return false;
+        }
+
+        return type is not INamedTypeSymbol named
+            || named.TypeArguments.All(argument => argument.HasSourceCompatibleType(languageVersion));
+    }
+
+    private static bool HasSourceCompatibleTypeParameterConstraints(this IMethodSymbol method, LanguageVersion languageVersion)
+    {
+        return method.TypeParameters.All(parameter => parameter.HasSourceCompatibleTypeParameterConstraints(languageVersion));
+    }
+
+    private static bool HasSourceCompatibleTypeParameterConstraints(this ITypeParameterSymbol parameter, LanguageVersion languageVersion)
+    {
+        if (parameter.HasNotNullConstraint
+         && !SupportsLanguageVersion(languageVersion, MinimumLanguageVersionForNotNullConstraints))
+        {
+            return false;
+        }
+
+        if (parameter.HasUnmanagedTypeConstraint
+         && !SupportsLanguageVersion(languageVersion, MinimumLanguageVersionForUnmanagedConstraints))
+        {
+            return false;
+        }
+
+        return parameter.ConstraintTypes.All(type => IsSourceCompatibleConstraint(type) && type.HasSourceCompatibleType(languageVersion));
     }
 
     private static bool IsSourceCompatibleConstraint(ITypeSymbol type)
@@ -97,6 +165,28 @@ internal static partial class INamedTypeSymbolExtensions
         return type is INamedTypeSymbol named
             && (named.TypeKind == TypeKind.Interface
              || (named.TypeKind == TypeKind.Class && !named.IsSealed));
+    }
+
+    private static bool IsSourceCompatibleRefKind(RefKind kind, LanguageVersion languageVersion)
+    {
+        return kind switch
+        {
+            RefKind.In => SupportsLanguageVersion(languageVersion, MinimumLanguageVersionForInParameters),
+            RefKind.None or RefKind.Out or RefKind.Ref => true,
+            _ => false,
+        };
+    }
+
+    private static bool SupportsLanguageVersion(LanguageVersion languageVersion, int minimum)
+    {
+        LanguageVersion effective = LanguageVersionFacts.MapSpecifiedToEffectiveVersion(languageVersion);
+
+        return (int)effective >= minimum;
+    }
+
+    private static bool SupportsParamsCollections(LanguageVersion languageVersion)
+    {
+        return SupportsLanguageVersion(languageVersion, MinimumLanguageVersionForParamsCollections);
     }
 
     private static string ToSource(this Accessibility accessibility)

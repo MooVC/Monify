@@ -783,6 +783,76 @@ public sealed class WhenGetEncapsulatedIsCalled
     }
 
     [Fact]
+    public void GivenPassthroughMethodRequiresUnsupportedLanguageVersionThenItIsNotCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public Type Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            namespace Sample
+            {
+                using System.Collections.Immutable;
+                using Monify;
+
+                [Monify(Type = typeof(ImmutableArray<int>))]
+                public sealed partial class Wrapper
+                {
+                }
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp7_3);
+
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(ImmutableArray<>).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value);
+
+        // Assert
+        encapsulated[0].Methods.ShouldContain(method => method.Name == "Add"
+            && method.Parameters.Length == 1
+            && method.Parameters[0].Type == "int");
+
+        encapsulated[0].Methods.ShouldNotContain(method => method.Name == "AddRange"
+            && method.Parameters.Length == 1
+            && method.Parameters[0].DeclarationModifier == "params"
+            && method.Parameters[0].Type == "global::System.ReadOnlySpan<int>");
+    }
+
+    [Fact]
     public void GivenAnnotatedTypeWithMatchingInterfaceThenPassthroughMembersAreNotCaptured()
     {
         // Arrange
