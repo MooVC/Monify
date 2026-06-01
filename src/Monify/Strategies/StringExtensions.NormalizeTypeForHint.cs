@@ -12,7 +12,7 @@ internal static class StringExtensions
         {
             _ = char.IsLetterOrDigit(character)
                 ? builder.Append(character)
-                : builder.Append('_');
+                : builder.Append(string.Empty);
         }
 
         return builder.ToString();

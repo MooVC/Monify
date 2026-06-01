@@ -86,4 +86,72 @@ public sealed class WhenGenerateIsCalled
         // Assert
         result.ShouldBeEmpty();
     }
+
+    [Fact]
+    public void GivenPassthroughBinaryOperatorsDuplicateEarlierSignaturesThenTheyAreSkipped()
+    {
+        // Arrange
+        const string objectType = "object";
+
+        Subject subject = TestSubject.Create();
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                Type = "global::Sample.Inner",
+                BinaryOperators =
+                [
+                    new BinaryOperator
+                    {
+                        IsLeftSubject = false,
+                        IsReturnSubject = true,
+                        IsRightSubject = true,
+                        Left = objectType,
+                        Operator = "op_Addition",
+                        Return = subject.Qualification,
+                        Right = subject.Qualification,
+                        Symbol = "+",
+                    },
+                ],
+            },
+            new Encapsulated
+            {
+                Type = "string",
+                BinaryOperators =
+                [
+                    new BinaryOperator
+                    {
+                        IsLeftSubject = false,
+                        IsReturnSubject = true,
+                        IsRightSubject = true,
+                        Left = objectType,
+                        Operator = "op_Addition",
+                        Return = subject.Qualification,
+                        Right = subject.Qualification,
+                        Symbol = "+",
+                    },
+                    new BinaryOperator
+                    {
+                        IsLeftSubject = true,
+                        IsReturnSubject = true,
+                        IsRightSubject = false,
+                        Left = subject.Qualification,
+                        Operator = "op_Addition",
+                        Return = subject.Qualification,
+                        Right = objectType,
+                        Symbol = "+",
+                    },
+                ],
+            },
+        ];
+        var strategy = new BinaryOperatorStrategy();
+
+        // Act
+        Source[] sources = strategy.Generate(subject).ToArray();
+
+        // Assert
+        sources.Length.ShouldBe(2);
+        sources[0].Hint.ShouldBe("Binary.op_Addition.object-Sample");
+        sources[1].Hint.ShouldBe("Binary.Passthrough.Level01.op_Addition.Sample-object");
+    }
 }

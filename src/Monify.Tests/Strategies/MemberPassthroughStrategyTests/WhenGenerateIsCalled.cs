@@ -49,7 +49,7 @@ public sealed class WhenGenerateIsCalled
         sources[0].Hint.ShouldBe("Methods.Format.int");
         sources[0].Code.ShouldContain("public string Format(int value)");
         sources[0].Code.ShouldContain("return _value.Format(value);");
-        sources[1].Hint.ShouldBe("Methods.global__Sample_IValue.Reset");
+        sources[1].Hint.ShouldBe("Methods.globalSampleIValue.Reset");
         sources[1].Code.ShouldContain("void global::Sample.IValue.Reset()");
         sources[1].Code.ShouldContain("((global::Sample.IValue)_value).Reset();");
     }
@@ -166,7 +166,7 @@ public sealed class WhenGenerateIsCalled
         sources[0].Code.ShouldContain("public string Name");
         sources[0].Code.ShouldContain("return _value.Name;");
         sources[0].Code.ShouldContain("_value.Name = value;");
-        sources[1].Hint.ShouldBe("Properties.global__Sample_IValue.Count");
+        sources[1].Hint.ShouldBe("Properties.globalSampleIValue.Count");
         sources[1].Code.ShouldContain("int global::Sample.IValue.Count");
         sources[1].Code.ShouldContain("return ((global::Sample.IValue)_value).Count;");
     }

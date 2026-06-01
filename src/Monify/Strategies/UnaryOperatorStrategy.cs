@@ -1,6 +1,7 @@
 namespace Monify.Strategies;
 
 using System;
+using System.Collections.Generic;
 using Monify.Model;
 using static Monify.Model.Subject;
 using static Monify.Strategies.UnaryOperatorStrategy_Resources;
@@ -14,6 +15,8 @@ internal sealed class UnaryOperatorStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
+        HashSet<(string Operator, string Parameter)> signatures = new();
+
         for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
             Encapsulated encapsulated = subject.Encapsulated[index];
@@ -29,7 +32,14 @@ internal sealed class UnaryOperatorStrategy
 
             foreach (UnaryOperator unary in encapsulated.UnaryOperators)
             {
-                string subjectHint = subject.Qualification.NormalizeTypeForHint();
+                string parameterType = subject.Qualification;
+
+                if (!signatures.Add((unary.Operator, parameterType)))
+                {
+                    continue;
+                }
+
+                string subjectHint = parameterType.NormalizeTypeForHint();
                 string hint = $"{hintPrefix}.{unary.Operator}.{subjectHint}";
                 string code = CreateOperator(subject, encapsulated, unary);
 

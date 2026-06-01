@@ -153,7 +153,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Interfaces.global__System_IComparable");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Interfaces.globalSystemIComparable");
 
                 public static readonly Generated ComparableGenericInterface = new(
                     """
@@ -178,7 +178,7 @@ internal static partial class Nested
                     }
                     """,
                     Extensions.None,
-                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Interfaces.global__System_IComparable_int_");
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Interfaces.globalSystemIComparableint");
 
                 public static readonly Generated EqualityOperatorForSelf = new(
                     """

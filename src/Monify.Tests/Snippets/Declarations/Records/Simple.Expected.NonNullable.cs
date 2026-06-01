@@ -102,7 +102,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Records.Simple.Interfaces.global__System_IComparable");
+                "Monify.Testing.Records.Simple.Interfaces.globalSystemIComparable");
 
             public static readonly Generated ComparableGenericInterface = new(
                 """
@@ -121,7 +121,7 @@ internal static partial class Simple
                 }
                 """,
                 Extensions.None,
-                "Monify.Testing.Records.Simple.Interfaces.global__System_IComparable_int_");
+                "Monify.Testing.Records.Simple.Interfaces.globalSystemIComparableint");
 
             public static readonly Generated EqualityOperatorForValue = new(
                 """

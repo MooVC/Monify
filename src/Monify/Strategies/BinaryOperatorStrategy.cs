@@ -1,5 +1,6 @@
 namespace Monify.Strategies;
 
+using System.Collections.Generic;
 using Monify.Model;
 using static Monify.Model.Subject;
 
@@ -12,6 +13,8 @@ internal sealed class BinaryOperatorStrategy
     /// <inheritdoc/>
     public IEnumerable<Source> Generate(Subject subject)
     {
+        HashSet<(string Operator, string Left, string Right)> signatures = new();
+
         for (int index = 0; index < subject.Encapsulated.Length; index++)
         {
             Encapsulated encapsulated = subject.Encapsulated[index];
@@ -29,6 +32,12 @@ internal sealed class BinaryOperatorStrategy
             {
                 string leftType = binary.IsLeftSubject ? subject.Qualification : binary.Left;
                 string rightType = binary.IsRightSubject ? subject.Qualification : binary.Right;
+
+                if (!signatures.Add((binary.Operator, leftType, rightType)))
+                {
+                    continue;
+                }
+
                 string leftHint = leftType.NormalizeTypeForHint();
                 string rightHint = rightType.NormalizeTypeForHint();
                 string hint = $"{hintPrefix}.{binary.Operator}.{leftHint}-{rightHint}";
