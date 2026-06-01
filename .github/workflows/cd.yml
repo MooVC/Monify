@@ -88,7 +88,7 @@ jobs:
 
     - name: Publish Packages to GitHub
       if: ${{ github.event_name != 'workflow_dispatch' || inputs.deprecate_only != 'true' }}
-      run: dotnet nuget push **/Monify*.nupkg --source "https://nuget.pkg.github.com/Monify/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push **/Monify*.nupkg --source "https://nuget.pkg.github.com/MooVC/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
