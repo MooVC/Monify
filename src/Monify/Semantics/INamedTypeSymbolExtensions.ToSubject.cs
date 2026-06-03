@@ -27,6 +27,9 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="value">
     /// The type of the value encapsulated by the <see cref="Subject"/>.
     /// </param>
+    /// <param name="generatePassthrough">
+    /// A value indicating whether passthrough interfaces, methods and properties should be generated.
+    /// </param>
     /// <returns>
     /// An instance of <see cref="Subject"/> containing the required semantics.
     /// </returns>
@@ -38,7 +41,8 @@ internal static partial class INamedTypeSymbolExtensions
         Compilation compilation,
         SemanticModel model,
         ImmutableArray<Nesting> nesting,
-        ITypeSymbol value)
+        ITypeSymbol value,
+        bool generatePassthrough = true)
     {
         string @namespace = subject.ContainingNamespace.IsGlobalNamespace
            ? string.Empty
@@ -59,7 +63,7 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
             CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
-            Encapsulated = subject.GetEncapsulated(compilation, model, value),
+            Encapsulated = subject.GetEncapsulated(compilation, model, value, generatePassthrough),
             HasEqualityOperator = subject.HasEqualityOperator(),
             HasEquatable = subject.HasEquatable(),
             HasField = hasFieldForEncapsulatedValue,

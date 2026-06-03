@@ -12,6 +12,7 @@ internal static partial class INamedTypeSymbolExtensions
     private const string EncapsulatedValueTypeArgumentName = "Type";
     private const int ExpectedGenericArgumentCountForMonifyAttribute = 1;
     private const int OffsetForEncapsulatedTypeOnMonifyAttribute = 0;
+    private const string PassthroughArgumentName = "Passthrough";
 
     /// <summary>
     /// Determines whether or not the <paramref name="subject"/> provided is annotated with the Monify attribute.
@@ -30,6 +31,29 @@ internal static partial class INamedTypeSymbolExtensions
     /// </returns>
     public static bool HasMonify(this INamedTypeSymbol subject, SemanticModel model, out ITypeSymbol value)
     {
+        return subject.HasMonify(model, out value, out _);
+    }
+
+    /// <summary>
+    /// Determines whether or not the <paramref name="subject"/> provided is annotated with the Monify attribute.
+    /// </summary>
+    /// <param name="subject">
+    /// The symbol to be checked for the presence of the Monify attribute.
+    /// </param>
+    /// <param name="model">
+    /// Allows asking semantic questions about a tree of syntax nodes in a Compilation.
+    /// </param>
+    /// <param name="value">
+    /// The type of the value to be encapsulated by the <paramref name="subject"/>.
+    /// </param>
+    /// <param name="passthrough">
+    /// A value indicating whether passthrough interfaces, methods and properties should be generated.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> if the Monify attribute is present on the <paramref name="subject"/>, otherwise <see langword="false"/>.
+    /// </returns>
+    public static bool HasMonify(this INamedTypeSymbol subject, SemanticModel model, out ITypeSymbol value, out bool passthrough)
+    {
         AttributeData data = subject
             .GetAttributes()
             .Where(attribute => attribute.AttributeClass is not null && attribute.AttributeClass.IsMonify())
@@ -38,9 +62,12 @@ internal static partial class INamedTypeSymbolExtensions
 
         if (data is not null)
         {
+            passthrough = GetPassthrough(data);
+
             return GetEncapsulatedValueType(data.AttributeClass!, data, model, out value);
         }
 
+        passthrough = true;
         value = subject;
 
         return false;
@@ -101,6 +128,21 @@ internal static partial class INamedTypeSymbolExtensions
         }
 
         value = symbol;
+
+        return true;
+    }
+
+    private static bool GetPassthrough(AttributeData attribute)
+    {
+        foreach (KeyValuePair<string, TypedConstant> argument in attribute.NamedArguments)
+        {
+            if (argument.Key == PassthroughArgumentName
+             && argument.Value.Kind == TypedConstantKind.Primitive
+             && argument.Value.Value is bool passthrough)
+            {
+                return passthrough;
+            }
+        }
 
         return true;
     }

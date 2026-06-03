@@ -24,8 +24,16 @@ internal static partial class INamedTypeSymbolExtensions
     /// The semantic model based for the current execution context.
     /// </param>
     /// <param name="value">The encapsulated value.</param>
+    /// <param name="generatePassthrough">
+    /// A value indicating whether passthrough interfaces, methods and properties should be generated.
+    /// </param>
     /// <returns>The metadata for the conversions and passthrough operators that should be generated.</returns>
-    public static ImmutableArray<Encapsulated> GetEncapsulated(this INamedTypeSymbol subject, Compilation compilation, SemanticModel model, ITypeSymbol value)
+    public static ImmutableArray<Encapsulated> GetEncapsulated(
+        this INamedTypeSymbol subject,
+        Compilation compilation,
+        SemanticModel model,
+        ITypeSymbol value,
+        bool generatePassthrough = true)
     {
         ImmutableArray<Encapsulated>.Builder builder = ImmutableArray.CreateBuilder<Encapsulated>();
         IMethodSymbol[] constructors = subject.GetConstructors();
@@ -46,7 +54,7 @@ internal static partial class INamedTypeSymbolExtensions
             model,
             subject,
             encapsulated[0],
-            includeForwardedMembers: true));
+            includeForwardedMembers: generatePassthrough));
 
         foreach (ITypeSymbol passthrough in encapsulated.Skip(1))
         {

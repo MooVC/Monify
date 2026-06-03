@@ -43,11 +43,13 @@ internal static partial class TypeDeclarationSyntaxExtensions
         SemanticModel model = compilation.GetSemanticModel(syntax.SyntaxTree);
         ISymbol? symbol = model.GetDeclaredSymbol(syntax, cancellationToken: cancellationToken);
 
-        if (symbol is not INamedTypeSymbol type || !type.HasMonify(model, out ITypeSymbol value) || !type.IsSupported(nesting))
+        if (symbol is not INamedTypeSymbol type
+         || !type.HasMonify(model, out ITypeSymbol value, out bool passthrough)
+         || !type.IsSupported(nesting))
         {
             return default;
         }
 
-        return type.ToSubject(compilation, model, ImmutableArray.ToImmutableArray(nesting), value);
+        return type.ToSubject(compilation, model, ImmutableArray.ToImmutableArray(nesting), value, passthrough);
     }
 }

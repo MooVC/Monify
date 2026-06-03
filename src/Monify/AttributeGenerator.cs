@@ -25,6 +25,7 @@ public sealed class AttributeGenerator
             internal sealed class {{Name}}Attribute<T>
                 : Attribute
             {
+                public bool Passthrough { get; set; } = true;
             }
         }
         """;
@@ -42,7 +43,20 @@ public sealed class AttributeGenerator
             internal sealed class {{Name}}Attribute
                 : Attribute
             {
+                private bool _passthrough = true;
                 private Type _type;
+
+                public bool Passthrough
+                {
+                    get
+                    {
+                        return _passthrough;
+                    }
+                    set
+                    {
+                        _passthrough = value;
+                    }
+                }
 
                 public Type Type
                 {

@@ -707,6 +707,88 @@ public sealed class WhenGetEncapsulatedIsCalled
     }
 
     [Fact]
+    public void GivenPassthroughIsFalseThenMembersAndInterfacesAreNotCaptured()
+    {
+        // Arrange
+        const string attribute = """
+            namespace Monify
+            {
+                using System;
+
+                [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+                internal sealed class MonifyAttribute : Attribute
+                {
+                    public bool Passthrough { get; set; } = true;
+
+                    public Type? Type { get; set; }
+                }
+            }
+            """;
+
+        const string declarations = """
+            using Monify;
+
+            namespace Sample;
+
+            [Monify(Type = typeof(Value), Passthrough = false)]
+            public sealed partial class Wrapper
+            {
+            }
+
+            public interface IExplicit
+            {
+                int Number { get; }
+
+                string Format(string value);
+            }
+
+            public sealed class Value
+                : IExplicit
+            {
+                public int Number { get; }
+
+                public string Format(string value) => value;
+
+                public static Value operator +(Value left, Value right) => left;
+            }
+            """;
+
+        CSharpParseOptions options = new(LanguageVersion.CSharp11);
+        SyntaxTree[] trees =
+        [
+            CSharpSyntaxTree.ParseText(attribute, options),
+            CSharpSyntaxTree.ParseText(declarations, options),
+        ];
+
+        MetadataReference[] references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        ];
+
+        var compilation = CSharpCompilation.Create(
+            "Sample",
+            trees,
+            references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+        SemanticModel model = compilation.GetSemanticModel(trees[1]);
+        INamedTypeSymbol? wrapper = compilation.GetTypeByMetadataName("Sample.Wrapper");
+
+        _ = wrapper.ShouldNotBeNull();
+        wrapper.HasMonify(model, out ITypeSymbol value, out bool passthrough).ShouldBeTrue();
+
+        // Act
+        ImmutableArray<Encapsulated> encapsulated = wrapper.GetEncapsulated(compilation, model, value, passthrough);
+
+        // Assert
+        passthrough.ShouldBeFalse();
+        encapsulated[0].Interfaces.ShouldBeEmpty();
+        encapsulated[0].Methods.ShouldBeEmpty();
+        encapsulated[0].Properties.ShouldBeEmpty();
+        encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition");
+    }
+
+    [Fact]
     public void GivenAnnotatedTypeWithMatchingMembersThenTheyAreNotCaptured()
     {
         // Arrange
