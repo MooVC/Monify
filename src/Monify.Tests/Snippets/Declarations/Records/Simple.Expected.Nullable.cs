@@ -216,6 +216,32 @@ internal static partial class Simple
                 Extensions.HasFieldForEncapsulatedValue,
                 "Monify.Testing.Records.Simple._value");
 
+            public static readonly Generated DebuggerDisplay = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    [global::System.Diagnostics.DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
+                    sealed partial record Simple
+                    {
+                        private string GetDebuggerDisplay()
+                        {
+                            return string.Format("Simple {{ {0} }}", _value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.DebuggerDisplay");
+
             public static readonly Generated InequalityOperatorForValue = new(
                 """
                 namespace Monify.Testing.Records

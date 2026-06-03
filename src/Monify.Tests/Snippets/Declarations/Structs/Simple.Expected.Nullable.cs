@@ -302,6 +302,32 @@ internal static partial class Simple
                 Extensions.HasFieldForEncapsulatedValue,
                 "Monify.Testing.Structs.Simple._value");
 
+            public static readonly Generated DebuggerDisplay = new(
+                """
+                namespace Monify.Testing.Structs
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    [global::System.Diagnostics.DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
+                    partial struct Simple
+                    {
+                        private string GetDebuggerDisplay()
+                        {
+                            return string.Format("Simple {{ {0} }}", _value);
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Structs.Simple.DebuggerDisplay");
+
             public static new readonly Generated GetHashCode = new(
                 """
                 namespace Monify.Testing.Structs

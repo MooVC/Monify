@@ -27,6 +27,7 @@ public sealed class TypeGenerator
         new EqualsStrategy(),
         new EquatableStrategy(),
         new FieldStrategy(),
+        new DebuggerDisplayStrategy(),
         new GetHashCodeStrategy(),
         new InterfaceDeclarationStrategy(),
         new InequalityStrategy(),

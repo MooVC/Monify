@@ -25,6 +25,8 @@ public sealed class AttributeGenerator
             internal sealed class {{Name}}Attribute<T>
                 : Attribute
             {
+                public bool DebuggerDisplay { get; set; } = true;
+
                 public bool Passthrough { get; set; } = true;
             }
         }
@@ -43,8 +45,21 @@ public sealed class AttributeGenerator
             internal sealed class {{Name}}Attribute
                 : Attribute
             {
+                private bool _debuggerDisplay = true;
                 private bool _passthrough = true;
                 private Type _type;
+
+                public bool DebuggerDisplay
+                {
+                    get
+                    {
+                        return _debuggerDisplay;
+                    }
+                    set
+                    {
+                        _debuggerDisplay = value;
+                    }
+                }
 
                 public bool Passthrough
                 {

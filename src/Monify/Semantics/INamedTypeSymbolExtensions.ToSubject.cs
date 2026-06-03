@@ -30,6 +30,9 @@ internal static partial class INamedTypeSymbolExtensions
     /// <param name="generatePassthrough">
     /// A value indicating whether passthrough interfaces, methods and properties should be generated.
     /// </param>
+    /// <param name="generateDebuggerDisplay">
+    /// A value indicating whether the debugger display should be generated.
+    /// </param>
     /// <returns>
     /// An instance of <see cref="Subject"/> containing the required semantics.
     /// </returns>
@@ -42,7 +45,8 @@ internal static partial class INamedTypeSymbolExtensions
         SemanticModel model,
         ImmutableArray<Nesting> nesting,
         ITypeSymbol value,
-        bool generatePassthrough = true)
+        bool generatePassthrough = true,
+        bool generateDebuggerDisplay = true)
     {
         string @namespace = subject.ContainingNamespace.IsGlobalNamespace
            ? string.Empty
@@ -64,6 +68,7 @@ internal static partial class INamedTypeSymbolExtensions
             CanOverrideToString = subject.CanOverrideToString(),
             Declaration = declaration,
             Encapsulated = subject.GetEncapsulated(compilation, model, value, generatePassthrough),
+            GenerateDebuggerDisplay = generateDebuggerDisplay,
             HasEqualityOperator = subject.HasEqualityOperator(),
             HasEquatable = subject.HasEquatable(),
             HasField = hasFieldForEncapsulatedValue,

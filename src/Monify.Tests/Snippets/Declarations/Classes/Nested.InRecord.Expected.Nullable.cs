@@ -335,6 +335,35 @@ internal static partial class Nested
                     Extensions.HasFieldForEncapsulatedValue,
                     "Monify.Testing.Classes.Outter.Inner._value");
 
+                public static readonly Generated DebuggerDisplay = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial record Outter<T>
+                        {
+                            [global::System.Diagnostics.DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
+                            sealed partial class Inner
+                            {
+                                private string GetDebuggerDisplay()
+                                {
+                                    return string.Format("Inner {{ {0} }}", _value);
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Outter.Inner.DebuggerDisplay");
+
                 public static new readonly Generated GetHashCode = new(
                     """
                     namespace Monify.Testing.Classes

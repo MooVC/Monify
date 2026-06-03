@@ -44,12 +44,12 @@ internal static partial class TypeDeclarationSyntaxExtensions
         ISymbol? symbol = model.GetDeclaredSymbol(syntax, cancellationToken: cancellationToken);
 
         if (symbol is not INamedTypeSymbol type
-         || !type.HasMonify(model, out ITypeSymbol value, out bool passthrough)
+         || !type.HasMonify(model, out ITypeSymbol value, out bool passthrough, out bool debuggerDisplay)
          || !type.IsSupported(nesting))
         {
             return default;
         }
 
-        return type.ToSubject(compilation, model, ImmutableArray.ToImmutableArray(nesting), value, passthrough);
+        return type.ToSubject(compilation, model, ImmutableArray.ToImmutableArray(nesting), value, passthrough, debuggerDisplay);
     }
 }

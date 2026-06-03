@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
+- `MonifyAttribute` now includes a `DebuggerDisplay` option that can disable generated debugger display support.
 - Public and internal members and supported interfaces declared by the top-level encapsulated type are now propagated to generated `Monify` types.
 - `MonifyAttribute` now includes a `Passthrough` option that can disable generated passthrough interfaces, methods, and properties.
 

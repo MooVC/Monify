@@ -368,6 +368,38 @@ internal static partial class Nested
                     Extensions.HasFieldForEncapsulatedValue,
                     "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle._value");
 
+                public static readonly Generated DebuggerDisplay = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                [global::System.Diagnostics.DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
+                                sealed partial class InlineStyle
+                                {
+                                    private string GetDebuggerDisplay()
+                                    {
+                                        return string.Format("InlineStyle {{ {0} }}", _value);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.DebuggerDisplay");
+
                 public static new readonly Generated GetHashCode = new(
                     """
                     namespace Monify.Testing.Classes

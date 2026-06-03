@@ -52,6 +52,14 @@ internal sealed partial class Subject
     public ImmutableArray<Encapsulated> Encapsulated { get; set; } = ImmutableArray<Encapsulated>.Empty;
 
     /// <summary>
+    /// Gets or sets a value indicating whether or not the subject should generate a debugger display.
+    /// </summary>
+    /// <value>
+    /// A value indicating whether or not the subject should generate a debugger display.
+    /// </value>
+    public bool GenerateDebuggerDisplay { get; set; } = true;
+
+    /// <summary>
     /// Gets or sets the type declaration of the subject, be it a class, record or struct.
     /// </summary>
     /// <value>
