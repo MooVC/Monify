@@ -754,6 +754,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             """;
 
         CSharpParseOptions options = new(LanguageVersion.CSharp11);
+
         SyntaxTree[] trees =
         [
             CSharpSyntaxTree.ParseText(attribute, options),

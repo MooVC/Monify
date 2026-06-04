@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
+- Debugger display support is no longer generated when the annotated type already declares `DebuggerDisplayAttribute`.
 - Passthrough members that require newer C# language features are no longer generated for lower language-version targets.
 - Passthrough methods with `object` parameters now unwrap annotated type arguments before forwarding to the encapsulated value.
 - Passthrough interfaces and members are no longer duplicated when the annotated type already exposes them or another strategy will generate them.

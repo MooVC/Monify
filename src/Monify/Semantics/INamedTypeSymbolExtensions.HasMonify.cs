@@ -55,7 +55,7 @@ internal static partial class INamedTypeSymbolExtensions
     /// </returns>
     public static bool HasMonify(this INamedTypeSymbol subject, SemanticModel model, out ITypeSymbol value, out bool passthrough)
     {
-        return subject.HasMonify(model, out value, out passthrough, out _);
+        return subject.HasMonify(model, out value, out _, out passthrough);
     }
 
     /// <summary>
@@ -79,12 +79,7 @@ internal static partial class INamedTypeSymbolExtensions
     /// <returns>
     /// <see langword="true"/> if the Monify attribute is present on the <paramref name="subject"/>, otherwise <see langword="false"/>.
     /// </returns>
-    public static bool HasMonify(
-        this INamedTypeSymbol subject,
-        SemanticModel model,
-        out ITypeSymbol value,
-        out bool passthrough,
-        out bool debuggerDisplay)
+    public static bool HasMonify(this INamedTypeSymbol subject, SemanticModel model, out ITypeSymbol value, out bool debuggerDisplay, out bool passthrough)
     {
         AttributeData data = subject
             .GetAttributes()
