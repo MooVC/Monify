@@ -1,6 +1,5 @@
 namespace Monify.Semantics
 {
-    using System;
     using Microsoft.CodeAnalysis;
     using Monify.Model;
 

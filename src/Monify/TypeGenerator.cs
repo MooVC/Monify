@@ -66,9 +66,9 @@ namespace Monify
                 return;
             }
 
-    #if DEBUG
+#if DEBUG
             var files = new Dictionary<string, string>();
-    #endif
+#endif
 
             foreach (IStrategy strategy in _strategies)
             {
@@ -79,9 +79,9 @@ namespace Monify
                     string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes);
                     string hint = GetHint(source, match.Subject);
 
-    #if DEBUG
+#if DEBUG
                     files[hint] = code;
-    #endif
+#endif
 
                     context.AddSource(hint, code);
                 }

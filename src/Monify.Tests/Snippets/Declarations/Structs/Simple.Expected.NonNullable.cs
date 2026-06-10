@@ -1,7 +1,5 @@
 namespace Monify.Snippets.Declarations.Structs;
 
-using Monify.Snippets.Declarations;
-
 internal static partial class Simple
 {
     public static partial class Expected

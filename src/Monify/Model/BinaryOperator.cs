@@ -1,6 +1,5 @@
 namespace Monify.Model
 {
-    using System;
     using Valuify;
 
     /// <summary>

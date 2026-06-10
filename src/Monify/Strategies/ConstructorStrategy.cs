@@ -1,6 +1,5 @@
 namespace Monify.Strategies
 {
-    using System;
     using System.Collections.Generic;
     using Monify.Model;
 

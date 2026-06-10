@@ -1,7 +1,5 @@
 namespace Monify.Strategies
 {
-    using System;
-
     /// <summary>
     /// Generates the source needed to support the equality operator.
     /// </summary>

@@ -154,7 +154,7 @@ namespace Monify.Semantics
         {
             ImmutableArray<ITypeSymbol>.Builder builder = ImmutableArray.CreateBuilder<ITypeSymbol>();
 
-            HashSet<ITypeSymbol> visited = new HashSet<ITypeSymbol>(SymbolEqualityComparer.IncludeNullability)
+            var visited = new HashSet<ITypeSymbol>(SymbolEqualityComparer.IncludeNullability)
             {
                 subject,
             };
