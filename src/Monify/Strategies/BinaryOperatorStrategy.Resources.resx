@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="GuardedOperatorSource" xml:space="preserve"><value>{0} {1}&#xD;
+{{&#xD;
+    public static {2} operator {3}({4} left, {5} right)&#xD;
+    {{&#xD;
+{6}&#xD;
+    }}&#xD;
+}}</value></data><data name="OperatorSource" xml:space="preserve"><value>{0} {1}&#xD;
+{{&#xD;
+    public static {2} operator {3}({4} left, {5} right)&#xD;
+    {{&#xD;
+{6}&#xD;
+    }}&#xD;
+}}</value></data><data name="GuardSource" xml:space="preserve"><value>        if (ReferenceEquals({0}, null))&#xD;
+        {{&#xD;
+            throw new ArgumentNullException("{1}");&#xD;
+        }}&#xD;
+</value></data><data name="BodySource" xml:space="preserve"><value>        {0}</value></data><data name="CombinedSource" xml:space="preserve"><value>{0}{1}{2}</value></data><data name="GuardedBodySource" xml:space="preserve"><value>{0}{1}        {2}</value></data><data name="OperationSource" xml:space="preserve"><value>{0} {1} {2}</value></data><data name="SubjectResultSource" xml:space="preserve"><value>return new {0}({1});</value></data><data name="ValueResultSource" xml:space="preserve"><value>return ({0})({1});</value></data></root>

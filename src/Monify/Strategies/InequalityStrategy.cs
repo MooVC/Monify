@@ -1,56 +1,52 @@
-namespace Monify.Strategies;
-
-using System.Collections.Generic;
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to support the inequality operator.
-/// </summary>
-internal sealed partial class InequalityStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    private const int IndexForEncapsulatedValue = 0;
+    using System;
+    using System.Collections.Generic;
+    using Monify.Model;
 
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using static Monify.Strategies.InequalityStrategy_Resources;
+
+    /// <summary>
+    /// Generates the source needed to support the inequality operator.
+    /// </summary>
+    internal sealed partial class InequalityStrategy
+        : IStrategy
     {
-        foreach (Operation operation in GetOperations(subject))
+        private const int IndexForEncapsulatedValue = 0;
+
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            if (operation.HasOperator)
+            foreach (Operation operation in GetOperations(subject))
             {
-                continue;
-            }
-
-            yield return new Source(CreateInequality(subject, operation.Type), operation.Hint);
-        }
-    }
-
-    private static IEnumerable<Operation> GetOperations(Subject subject)
-    {
-        yield return new Operation(subject.HasInequalityOperator, "Inequality.Self", subject.Qualification);
-
-        for (int index = 0; index < subject.Encapsulated.Length; index++)
-        {
-            Encapsulated conversion = subject.Encapsulated[index];
-
-            string hint = index == IndexForEncapsulatedValue
-                ? "Inequality.Value"
-                : $"Inequality.Passthrough.Level{index:D2}";
-
-            yield return new Operation(conversion.HasInequalityOperator, hint, conversion.Type);
-        }
-    }
-
-    private static string CreateInequality(Subject subject, string type)
-    {
-        return $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
-            {
-                public static bool operator !=({{subject.Qualification}} left, {{type}} right)
+                if (operation.HasOperator)
                 {
-                    return !(left == right);
+                    continue;
                 }
+
+                yield return new Source(CreateInequality(subject, operation.Type), operation.Hint);
             }
-            """;
+        }
+
+        private static IEnumerable<Operation> GetOperations(Subject subject)
+        {
+            yield return new Operation(subject.HasInequalityOperator, "Inequality.Self", subject.Qualification);
+
+            for (int index = 0; index < subject.Encapsulated.Length; index++)
+            {
+                Encapsulated conversion = subject.Encapsulated[index];
+
+                string hint = index == IndexForEncapsulatedValue
+                    ? "Inequality.Value"
+                    : $"Inequality.Passthrough.Level{index:D2}";
+
+                yield return new Operation(conversion.HasInequalityOperator, hint, conversion.Type);
+            }
+        }
+
+        private static string CreateInequality(Subject subject, string type)
+        {
+            return string.Format(InequalitySource, subject.Declaration, subject.Qualification, subject.Qualification, type);
+        }
     }
 }

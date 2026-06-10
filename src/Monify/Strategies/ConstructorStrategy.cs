@@ -1,45 +1,42 @@
-﻿namespace Monify.Strategies;
-
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to ensure the type can be contructed.
-/// </summary>
-internal sealed class ConstructorStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
+    using System;
+    using System.Collections.Generic;
+    using Monify.Model;
+
+    using static Monify.Strategies.ConstructorStrategy_Resources;
+
     /// <summary>
-    /// Defines the method name associated with the constructor.
+    /// Generates the source needed to ensure the type can be contructed.
     /// </summary>
-    public const string Name = ".ctor";
-
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    internal sealed class ConstructorStrategy
+        : IStrategy
     {
-        for (int index = 0; index < subject.Encapsulated.Length; index++)
+        /// <summary>
+        /// Defines the method name associated with the constructor.
+        /// </summary>
+        public const string Name = ".ctor";
+
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            Encapsulated encapsulated = subject.Encapsulated[index];
-
-            if (encapsulated.HasConstructor)
+            for (int index = 0; index < subject.Encapsulated.Length; index++)
             {
-                continue;
-            }
+                Encapsulated encapsulated = subject.Encapsulated[index];
 
-            string hint = index == Subject.IndexForEncapsulatedValue
-                ? Name
-                : $"{Name}.Passthrough.{index:D2}";
-
-            string code = $$"""
-                {{subject.Declaration}} {{subject.Qualification}}
+                if (encapsulated.HasConstructor)
                 {
-                    public {{subject.Name}}({{encapsulated.Type}} value)
-                    {
-                        {{FieldStrategy.Name}} = value;
-                    }
+                    continue;
                 }
-                """;
 
-            yield return new Source(code, hint);
+                string hint = index == Subject.IndexForEncapsulatedValue
+                    ? Name
+                    : $"{Name}.Passthrough.{index:D2}";
+
+                string code = string.Format(ConstructorSource, subject.Declaration, subject.Qualification, subject.Name, encapsulated.Type, FieldStrategy.Name);
+
+                yield return new Source(code, hint);
+            }
         }
     }
 }

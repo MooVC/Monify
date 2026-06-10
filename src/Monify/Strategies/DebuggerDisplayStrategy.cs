@@ -1,32 +1,27 @@
-namespace Monify.Strategies;
-
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to support debugger display formatting.
-/// </summary>
-internal sealed class DebuggerDisplayStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using System.Collections.Generic;
+    using Monify.Model;
+
+    using static Monify.Strategies.DebuggerDisplayStrategy_Resources;
+
+    /// <summary>
+    /// Generates the source needed to support debugger display formatting.
+    /// </summary>
+    internal sealed class DebuggerDisplayStrategy
+        : IStrategy
     {
-        if (!subject.GenerateDebuggerDisplay)
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            yield break;
-        }
-
-        string code = $$$"""
-            [global::System.Diagnostics.DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
-            {{{subject.Declaration}}} {{{subject.Qualification}}}
+            if (!subject.GenerateDebuggerDisplay)
             {
-                private string GetDebuggerDisplay()
-                {
-                    return string.Format("{{{subject.Name}}} {{ {0} }}", {{{FieldStrategy.Name}}});
-                }
+                yield break;
             }
-            """;
 
-        yield return new Source(code, "DebuggerDisplay");
+            string code = string.Format(DebuggerDisplaySource, subject.Declaration, subject.Qualification, subject.Name, FieldStrategy.Name);
+
+            yield return new Source(code, "DebuggerDisplay");
+        }
     }
 }

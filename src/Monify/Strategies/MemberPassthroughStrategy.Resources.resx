@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="MethodSource" xml:space="preserve"><value>{0} {1}&#xD;
+{{&#xD;
+    {2}&#xD;
+    {{&#xD;
+{3}&#xD;
+    }}&#xD;
+}}</value></data><data name="ObjectParameterConversionSource" xml:space="preserve"><value>if ({0} is {1})&#xD;
+{{&#xD;
+    {2} = (({3}){4}).{5};&#xD;
+}}</value></data><data name="PropertySource" xml:space="preserve"><value>{0} {1}&#xD;
+{{&#xD;
+    {2}&#xD;
+    {{&#xD;
+{3}&#xD;
+    }}&#xD;
+}}</value></data><data name="GetterSource" xml:space="preserve"><value>        {0}&#xD;
+        {{&#xD;
+            return {1};&#xD;
+        }}</value></data><data name="SetterSource" xml:space="preserve"><value>        {0}&#xD;
+        {{&#xD;
+            {1} = value;&#xD;
+        }}</value></data><data name="AccessorDeclarationSource" xml:space="preserve"><value>{0} {1}</value></data><data name="ArgumentSource" xml:space="preserve"><value>{0} {1}</value></data><data name="ConstraintsSource" xml:space="preserve"><value>&#xD;
+        {0}</value></data><data name="ExplicitMethodPrefixSource" xml:space="preserve"><value>{0} {1}.{2}</value></data><data name="ExplicitPropertyDeclarationSource" xml:space="preserve"><value>{0} {1}.{2}</value></data><data name="ExplicitTargetSource" xml:space="preserve"><value>(({0}){1})</value></data><data name="IndexerAccessSource" xml:space="preserve"><value>{0}[{1}]</value></data><data name="IndexerDeclarationSource" xml:space="preserve"><value>this[{0}]</value></data><data name="MethodCallSource" xml:space="preserve"><value>{0}.{1}{2}({3})</value></data><data name="MethodDeclarationSource" xml:space="preserve"><value>{0}{1}({2}){3}</value></data><data name="MethodPrefixSource" xml:space="preserve"><value>{0} {1} {2}</value></data><data name="ParameterModifierSource" xml:space="preserve"><value>{0} </value></data><data name="ParameterSource" xml:space="preserve"><value>{0}{1} {2}</value></data><data name="PropertyAccessSource" xml:space="preserve"><value>{0}.{1}</value></data><data name="PropertyDeclarationSource" xml:space="preserve"><value>{0} {1} {2}</value></data><data name="ReturnMethodBodySource" xml:space="preserve"><value>return {0};</value></data><data name="TypeParametersSource" xml:space="preserve"><value>&lt;{0}&gt;</value></data><data name="VoidMethodBodySource" xml:space="preserve"><value>{0};</value></data></root>

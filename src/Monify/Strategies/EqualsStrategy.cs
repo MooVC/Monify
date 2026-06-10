@@ -1,36 +1,27 @@
-﻿namespace Monify.Strategies;
-
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to support <see cref="object.Equals(object)"/>.
-/// </summary>
-internal sealed class EqualsStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using System.Collections.Generic;
+    using Monify.Model;
+
+    using static Monify.Strategies.EqualsStrategy_Resources;
+
+    /// <summary>
+    /// Generates the source needed to support <see cref="object.Equals(object)"/>.
+    /// </summary>
+    internal sealed class EqualsStrategy
+        : IStrategy
     {
-        if (!subject.CanOverrideEquals)
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            yield break;
-        }
-
-        string code = $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
+            if (!subject.CanOverrideEquals)
             {
-                public override bool Equals(object other)
-                {
-                    if (other is {{subject.Qualification}})
-                    {
-                        return Equals(({{subject.Qualification}})other);
-                    }
-
-                    return false;
-                }
+                yield break;
             }
-            """;
 
-        yield return new Source(code, nameof(Equals));
+            string code = string.Format(EqualsSource, subject.Declaration, subject.Qualification, subject.Qualification, subject.Qualification);
+
+            yield return new Source(code, nameof(Equals));
+        }
     }
 }

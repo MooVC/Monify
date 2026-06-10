@@ -1,84 +1,68 @@
-namespace Monify.Strategies;
-
-using Monify.Model;
-using static Monify.Model.Subject;
-
-/// <summary>
-/// Generates operators to forward conversions supported by the encapsulated type.
-/// </summary>
-internal sealed class ConversionOperatorStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    private const string ExplicitOperatorName = "op_Explicit";
+    using System;
+    using System.Collections.Generic;
+    using Monify.Model;
+    using static Monify.Model.Subject;
 
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using static Monify.Strategies.ConversionOperatorStrategy_Resources;
+
+    /// <summary>
+    /// Generates operators to forward conversions supported by the encapsulated type.
+    /// </summary>
+    internal sealed class ConversionOperatorStrategy
+        : IStrategy
     {
-        for (int index = 0; index < subject.Encapsulated.Length; index++)
+        private const string ExplicitOperatorName = "op_Explicit";
+
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            Encapsulated encapsulated = subject.Encapsulated[index];
-
-            if (encapsulated.Conversions.IsDefaultOrEmpty)
+            for (int index = 0; index < subject.Encapsulated.Length; index++)
             {
-                continue;
-            }
+                Encapsulated encapsulated = subject.Encapsulated[index];
 
-            string hintPrefix = index == IndexForEncapsulatedValue
-                ? "Conversions"
-                : $"Conversions.Passthrough.Level{index:D2}";
-
-            for (int conversionIndex = 0; conversionIndex < encapsulated.Conversions.Length; conversionIndex++)
-            {
-                Conversion conversion = encapsulated.Conversions[conversionIndex];
-
-                string hint = $"{hintPrefix}.{conversionIndex:D2}";
-                string code = CreateConversion(subject, encapsulated, conversion);
-
-                yield return new Source(code, hint);
-            }
-        }
-    }
-
-    private static string CreateConversion(Subject subject, Encapsulated encapsulated, Conversion conversion)
-    {
-        string operatorName = conversion.Operator == ExplicitOperatorName
-            ? "explicit"
-            : "implicit";
-
-        string parameter = conversion.IsParameterSubject
-            ? subject.Qualification
-            : conversion.Parameter;
-
-        string result = conversion.IsReturnSubject
-            ? subject.Qualification
-            : conversion.Return;
-
-        if (conversion.IsParameterSubject)
-        {
-            return $$"""
-                {{subject.Declaration}} {{subject.Qualification}}
+                if (encapsulated.Conversions.IsDefaultOrEmpty)
                 {
-                    public static {{operatorName}} operator {{result}}({{parameter}} subject)
-                    {
-                        if (ReferenceEquals(subject, null))
-                        {
-                            throw new ArgumentNullException("subject");
-                        }
-
-                        return ({{result}})subject._value;
-                    }
+                    continue;
                 }
-                """;
-        }
 
-        return $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
-            {
-                public static {{operatorName}} operator {{result}}({{parameter}} value)
+                string hintPrefix = index == IndexForEncapsulatedValue
+                    ? "Conversions"
+                    : $"Conversions.Passthrough.Level{index:D2}";
+
+                for (int conversionIndex = 0; conversionIndex < encapsulated.Conversions.Length; conversionIndex++)
                 {
-                    return new {{subject.Qualification}}(({{encapsulated.Type}})value);
+                    Conversion conversion = encapsulated.Conversions[conversionIndex];
+
+                    string hint = $"{hintPrefix}.{conversionIndex:D2}";
+                    string code = CreateConversion(subject, encapsulated, conversion);
+
+                    yield return new Source(code, hint);
                 }
             }
-            """;
+        }
+
+        private static string CreateConversion(Subject subject, Encapsulated encapsulated, Conversion conversion)
+        {
+            string operatorName = conversion.Operator == ExplicitOperatorName
+                ? "explicit"
+                : "implicit";
+
+            string parameter = conversion.IsParameterSubject
+                ? subject.Qualification
+                : conversion.Parameter;
+
+            string result = conversion.IsReturnSubject
+                ? subject.Qualification
+                : conversion.Return;
+
+            if (conversion.IsParameterSubject)
+            {
+                return string.Format(SubjectConversionSource, subject.Declaration, subject.Qualification, operatorName, result, parameter, result);
+            }
+
+            return string.Format(ValueConversionSource, subject.Declaration, subject.Qualification, operatorName, result, parameter, subject.Qualification, encapsulated.Type);
+        }
     }
 }

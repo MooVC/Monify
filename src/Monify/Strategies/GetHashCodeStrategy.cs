@@ -1,31 +1,27 @@
-﻿namespace Monify.Strategies;
-
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to support <see cref="object.Equals(object)"/>.
-/// </summary>
-internal sealed class GetHashCodeStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using System.Collections.Generic;
+    using Monify.Model;
+
+    using static Monify.Strategies.GetHashCodeStrategy_Resources;
+
+    /// <summary>
+    /// Generates the source needed to support <see cref="object.Equals(object)"/>.
+    /// </summary>
+    internal sealed class GetHashCodeStrategy
+        : IStrategy
     {
-        if (!subject.CanOverrideGetHashCode)
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            yield break;
-        }
-
-        string code = $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
+            if (!subject.CanOverrideGetHashCode)
             {
-                public override int GetHashCode()
-                {
-                    return global::Monify.Internal.HashCode.Combine({{FieldStrategy.Name}});
-                }
+                yield break;
             }
-            """;
 
-        yield return new Source(code, nameof(GetHashCode));
+            string code = string.Format(GetHashCodeSource, subject.Declaration, subject.Qualification, FieldStrategy.Name);
+
+            yield return new Source(code, nameof(GetHashCode));
+        }
     }
 }

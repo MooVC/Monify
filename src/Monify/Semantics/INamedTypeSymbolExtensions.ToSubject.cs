@@ -1,83 +1,85 @@
-﻿namespace Monify.Semantics;
-
-using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
-using Monify.Model;
-
-/// <summary>
-/// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
-/// </summary>
-internal static partial class INamedTypeSymbolExtensions
+namespace Monify.Semantics
 {
+    using System;
+    using System.Collections.Immutable;
+    using Microsoft.CodeAnalysis;
+    using Monify.Model;
+
     /// <summary>
-    /// Maps the required Semantics from the <paramref name="subject"/> and places it within an instance of <see cref="Subject"/>.
+    /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
     /// </summary>
-    /// <param name="subject">
-    /// The subject from which the semantics are identified.
-    /// </param>
-    /// <param name="compilation">
-    /// The <see cref="Compilation"/> used to source the symbol for <see cref="IEquatable{T}"/>.
-    /// </param>
-    /// <param name="model">
-    /// The semantic model based for the current execution context.
-    /// </param>
-    /// <param name="nesting">
-    /// The declaration syntax for the parents of the <paramref name="syntax"/>.
-    /// </param>
-    /// <param name="value">
-    /// The type of the value encapsulated by the <see cref="Subject"/>.
-    /// </param>
-    /// <param name="passthrough">
-    /// A value indicating whether passthrough interfaces, methods and properties should be generated.
-    /// </param>
-    /// <param name="debuggerDisplay">
-    /// A value indicating whether the debugger display should be generated.
-    /// </param>
-    /// <returns>
-    /// An instance of <see cref="Subject"/> containing the required semantics.
-    /// </returns>
-    /// <remarks>
-    /// If the declaration associated with the type cannot be determined, the method will return <see langword="null" />.
-    /// </remarks>
-    public static Subject? ToSubject(
-        this INamedTypeSymbol subject,
-        Compilation compilation,
-        SemanticModel model,
-        ImmutableArray<Nesting> nesting,
-        ITypeSymbol value,
-        bool debuggerDisplay = true,
-        bool passthrough = true)
+    internal static partial class INamedTypeSymbolExtensions
     {
-        string @namespace = subject.ContainingNamespace.IsGlobalNamespace
-           ? string.Empty
-           : subject.ContainingNamespace.ToDisplayString();
-
-        string? declaration = subject.GetDeclaration();
-
-        if (declaration is null || subject.Equals(value, SymbolEqualityComparer.IncludeNullability))
+        /// <summary>
+        /// Maps the required Semantics from the <paramref name="subject"/> and places it within an instance of <see cref="Subject"/>.
+        /// </summary>
+        /// <param name="subject">
+        /// The subject from which the semantics are identified.
+        /// </param>
+        /// <param name="compilation">
+        /// The <see cref="Compilation"/> used to source the symbol for <see cref="IEquatable{T}"/>.
+        /// </param>
+        /// <param name="model">
+        /// The semantic model based for the current execution context.
+        /// </param>
+        /// <param name="nesting">
+        /// The declaration syntax for the parents of the <paramref name="syntax"/>.
+        /// </param>
+        /// <param name="value">
+        /// The type of the value encapsulated by the <see cref="Subject"/>.
+        /// </param>
+        /// <param name="passthrough">
+        /// A value indicating whether passthrough interfaces, methods and properties should be generated.
+        /// </param>
+        /// <param name="debuggerDisplay">
+        /// A value indicating whether the debugger display should be generated.
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="Subject"/> containing the required semantics.
+        /// </returns>
+        /// <remarks>
+        /// If the declaration associated with the type cannot be determined, the method will return <see langword="null" />.
+        /// </remarks>
+        public static Subject ToSubject(
+            this INamedTypeSymbol subject,
+            Compilation compilation,
+            SemanticModel model,
+            ImmutableArray<Nesting> nesting,
+            ITypeSymbol value,
+            bool debuggerDisplay = true,
+            bool passthrough = true)
         {
-            return default;
+            string @namespace = subject.ContainingNamespace.IsGlobalNamespace
+               ? string.Empty
+               : subject.ContainingNamespace.ToDisplayString();
+
+            string declaration = subject.GetDeclaration();
+
+            if (declaration is null || subject.Equals(value, SymbolEqualityComparer.IncludeNullability))
+            {
+                return default;
+            }
+
+            _ = subject.IsStateless(value, out bool hasFieldForEncapsulatedValue);
+
+            return new Subject
+            {
+                CanOverrideEquals = subject.CanOverrideEquals(),
+                CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
+                CanOverrideToString = subject.CanOverrideToString(),
+                Declaration = declaration,
+                Encapsulated = subject.GetEncapsulated(compilation, model, value, passthrough),
+                GenerateDebuggerDisplay = debuggerDisplay && !subject.HasDebuggerDisplay(),
+                HasEqualityOperator = subject.HasEqualityOperator(),
+                HasEquatable = subject.HasEquatable(),
+                HasField = hasFieldForEncapsulatedValue,
+                HasInequalityOperator = subject.HasInequalityOperator(),
+                IsEquatable = subject.IsEquatable(compilation),
+                Name = subject.Name,
+                Namespace = @namespace,
+                Nesting = nesting,
+                Qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
+            };
         }
-
-        _ = subject.IsStateless(value, out bool hasFieldForEncapsulatedValue);
-
-        return new Subject
-        {
-            CanOverrideEquals = subject.CanOverrideEquals(),
-            CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
-            CanOverrideToString = subject.CanOverrideToString(),
-            Declaration = declaration,
-            Encapsulated = subject.GetEncapsulated(compilation, model, value, passthrough),
-            GenerateDebuggerDisplay = debuggerDisplay && !subject.HasDebuggerDisplay(),
-            HasEqualityOperator = subject.HasEqualityOperator(),
-            HasEquatable = subject.HasEquatable(),
-            HasField = hasFieldForEncapsulatedValue,
-            HasInequalityOperator = subject.HasInequalityOperator(),
-            IsEquatable = subject.IsEquatable(compilation),
-            Name = subject.Name,
-            Namespace = @namespace,
-            Nesting = nesting,
-            Qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
-        };
     }
 }

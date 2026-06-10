@@ -1,116 +1,54 @@
-﻿namespace Monify;
-
-using System.Text;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
-
-/// <summary>
-/// Generates the Monify attribute, used to denote when a type should serve as a wrapper for a single value.
-/// </summary>
-[Generator(LanguageNames.CSharp)]
-public sealed class AttributeGenerator
-    : IIncrementalGenerator
+namespace Monify
 {
-    /// <summary>
-    /// The source code for the Generic attribute that will be output by the generator.
-    /// </summary>
-    internal const string Generic = $$"""
-        namespace Monify
-        {
-            using System;
-            using System.Diagnostics.CodeAnalysis;
+    using System;
+    using System.Text;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.Text;
 
-            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-            internal sealed class {{Name}}Attribute<T>
-                : Attribute
-            {
-                public bool DebuggerDisplay { get; set; } = true;
-
-                public bool Passthrough { get; set; } = true;
-            }
-        }
-        """;
+    using static Monify.AttributeGenerator_Resources;
 
     /// <summary>
-    /// The source code for the NonGeneric attribute that will be output by the generator.
+    /// Generates the Monify attribute, used to denote when a type should serve as a wrapper for a single value.
     /// </summary>
-    internal const string NonGeneric = $$"""
-        namespace Monify
-        {
-            using System;
-            using System.Diagnostics.CodeAnalysis;
-
-            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-            internal sealed class {{Name}}Attribute
-                : Attribute
-            {
-                private bool _debuggerDisplay = true;
-                private bool _passthrough = true;
-                private Type _type;
-
-                public bool DebuggerDisplay
-                {
-                    get
-                    {
-                        return _debuggerDisplay;
-                    }
-                    set
-                    {
-                        _debuggerDisplay = value;
-                    }
-                }
-
-                public bool Passthrough
-                {
-                    get
-                    {
-                        return _passthrough;
-                    }
-                    set
-                    {
-                        _passthrough = value;
-                    }
-                }
-
-                public Type Type
-                {
-                    get
-                    {
-                        return _type;
-                    }
-                    set
-                    {
-                        _type = value;
-                    }
-                }
-            }
-        }
-        """;
-
-    /// <summary>
-    /// The name of the attribute (without the suffix).
-    /// </summary>
-    internal const string Name = "Monify";
-
-    /// <inheritdoc/>
-    public void Initialize(IncrementalGeneratorInitializationContext context)
+    [Generator(LanguageNames.CSharp)]
+    public sealed class AttributeGenerator
+        : IIncrementalGenerator
     {
-        context.RegisterSourceOutput(context.ParseOptionsProvider, (context, options) =>
+        /// <summary>
+        /// The name of the attribute (without the suffix).
+        /// </summary>
+        internal const string Name = "Monify";
+
+        /// <summary>
+        /// The source code for the Generic attribute that will be output by the generator.
+        /// </summary>
+        internal static readonly string Generic = string.Format(GenericSource, Name);
+
+        /// <summary>
+        /// The source code for the NonGeneric attribute that will be output by the generator.
+        /// </summary>
+        internal static readonly string NonGeneric = string.Format(NonGenericSource, Name);
+
+        /// <inheritdoc/>
+        public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (options is CSharpParseOptions csharp && csharp.LanguageVersion >= LanguageVersion.CSharp11)
+            context.RegisterSourceOutput(context.ParseOptionsProvider, (productionContext, options) =>
             {
-                Generate(Generic, context, "Generic");
-            }
+                if (options is CSharpParseOptions csharp && csharp.LanguageVersion >= LanguageVersion.CSharp11)
+                {
+                    Generate(Generic, productionContext, "Generic");
+                }
 
-            Generate(NonGeneric, context, "NonGeneric");
-        });
-    }
+                Generate(NonGeneric, productionContext, "NonGeneric");
+            });
+        }
 
-    private static void Generate(string content, SourceProductionContext context, string name)
-    {
-        var text = SourceText.From(content, Encoding.UTF8);
+        private static void Generate(string content, SourceProductionContext context, string name)
+        {
+            var text = SourceText.From(content, Encoding.UTF8);
 
-        context.AddSource($"{Name}Attribute.{name}.g.cs", text);
+            context.AddSource($"{Name}Attribute.{name}.g.cs", text);
+        }
     }
 }

@@ -1,33 +1,32 @@
-﻿namespace Monify.Strategies;
-
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to define the field that holds the state of the encapsulated value.
-/// </summary>
-internal sealed class FieldStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
+    using System.Collections.Generic;
+    using Monify.Model;
+
+    using static Monify.Strategies.FieldStrategy_Resources;
+
     /// <summary>
-    /// Defines the name of the field used to store the state of the encapsulared value.
+    /// Generates the source needed to define the field that holds the state of the encapsulated value.
     /// </summary>
-    public const string Name = "_value";
-
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    internal sealed class FieldStrategy
+        : IStrategy
     {
-        if (subject.HasField)
+        /// <summary>
+        /// Defines the name of the field used to store the state of the encapsulared value.
+        /// </summary>
+        public const string Name = "_value";
+
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            yield break;
-        }
-
-        string code = $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
+            if (subject.HasField)
             {
-                private readonly {{subject.Value}} {{Name}};
+                yield break;
             }
-            """;
 
-        yield return new Source(code, Name);
+            string code = string.Format(FieldSource, subject.Declaration, subject.Qualification, subject.Value, Name);
+
+            yield return new Source(code, Name);
+        }
     }
 }

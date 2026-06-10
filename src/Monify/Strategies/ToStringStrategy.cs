@@ -1,36 +1,27 @@
-﻿namespace Monify.Strategies;
-
-using Monify.Model;
-
-/// <summary>
-/// Generates the source needed to support <see cref="object.ToString()"/>.
-/// </summary>
-internal sealed class ToStringStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using System.Collections.Generic;
+    using Monify.Model;
+
+    using static Monify.Strategies.ToStringStrategy_Resources;
+
+    /// <summary>
+    /// Generates the source needed to support <see cref="object.ToString()"/>.
+    /// </summary>
+    internal sealed class ToStringStrategy
+        : IStrategy
     {
-        if (!subject.CanOverrideToString)
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            yield break;
-        }
-
-        string code = $$$"""
-            {{{subject.Declaration}}} {{{subject.Qualification}}}
+            if (!subject.CanOverrideToString)
             {
-                public override string ToString()
-                {
-                    if (ReferenceEquals({{{FieldStrategy.Name}}}, null))
-                    {
-                        return string.Empty;
-                    }
-
-                    return {{{FieldStrategy.Name}}}.ToString();
-                }
+                yield break;
             }
-            """;
 
-        yield return new Source(code, nameof(ToString));
+            string code = string.Format(ToStringSource, subject.Declaration, subject.Qualification, FieldStrategy.Name, FieldStrategy.Name);
+
+            yield return new Source(code, nameof(ToString));
+        }
     }
 }
