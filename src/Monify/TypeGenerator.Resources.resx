@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="NestedTypeSource" xml:space="preserve"><value>{0} {1}&#xD;
-{{&#xD;
-    {2}&#xD;
-}}</value></data><data name="NullableSource" xml:space="preserve"><value>#nullable disable&#xD;
-#pragma warning disable CS8625&#xD;
-&#xD;
-{0}&#xD;
-&#xD;
-#pragma warning restore CS8625&#xD;
-#nullable restore</value></data><data name="UsingsSource" xml:space="preserve"><value>using System;&#xD;
-using System.Collections.Generic;&#xD;
-&#xD;
-{0}</value></data><data name="NamespaceSource" xml:space="preserve"><value>namespace {0}&#xD;
-{{&#xD;
-    {1}&#xD;
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="NestedTypeSource" xml:space="preserve"><value>{0} {1}
+{{
+    {2}
+}}</value></data><data name="NullableSource" xml:space="preserve"><value>#nullable disable
+#pragma warning disable CS8625
+
+{0}
+
+#pragma warning restore CS8625
+#nullable restore</value></data><data name="UsingsSource" xml:space="preserve"><value>using System;
+using System.Collections.Generic;
+
+{0}</value></data><data name="NamespaceSource" xml:space="preserve"><value>namespace {0}
+{{
+    {1}
 }}</value></data></root>

@@ -1,63 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="GenericSource" xml:space="preserve"><value>namespace Monify&#xD;
-{{&#xD;
-    using System;&#xD;
-    using System.Diagnostics.CodeAnalysis;&#xD;
-&#xD;
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]&#xD;
-    internal sealed class {0}Attribute&lt;T&gt;&#xD;
-        : Attribute&#xD;
-    {{&#xD;
-        public bool DebuggerDisplay {{ get; set; }} = true;&#xD;
-&#xD;
-        public bool Passthrough {{ get; set; }} = true;&#xD;
-    }}&#xD;
-}}</value></data><data name="NonGenericSource" xml:space="preserve"><value>namespace Monify&#xD;
-{{&#xD;
-    using System;&#xD;
-    using System.Diagnostics.CodeAnalysis;&#xD;
-&#xD;
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]&#xD;
-    internal sealed class {0}Attribute&#xD;
-        : Attribute&#xD;
-    {{&#xD;
-        private bool _debuggerDisplay = true;&#xD;
-        private bool _passthrough = true;&#xD;
-        private Type _type;&#xD;
-&#xD;
-        public bool DebuggerDisplay&#xD;
-        {{&#xD;
-            get&#xD;
-            {{&#xD;
-                return _debuggerDisplay;&#xD;
-            }}&#xD;
-            set&#xD;
-            {{&#xD;
-                _debuggerDisplay = value;&#xD;
-            }}&#xD;
-        }}&#xD;
-&#xD;
-        public bool Passthrough&#xD;
-        {{&#xD;
-            get&#xD;
-            {{&#xD;
-                return _passthrough;&#xD;
-            }}&#xD;
-            set&#xD;
-            {{&#xD;
-                _passthrough = value;&#xD;
-            }}&#xD;
-        }}&#xD;
-&#xD;
-        public Type Type&#xD;
-        {{&#xD;
-            get&#xD;
-            {{&#xD;
-                return _type;&#xD;
-            }}&#xD;
-            set&#xD;
-            {{&#xD;
-                _type = value;&#xD;
-            }}&#xD;
-        }}&#xD;
-    }}&#xD;
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="GenericSource" xml:space="preserve"><value>namespace Monify
+{{
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+    internal sealed class {0}Attribute&lt;T&gt;
+        : Attribute
+    {{
+        public bool DebuggerDisplay {{ get; set; }} = true;
+
+        public bool Passthrough {{ get; set; }} = true;
+    }}
+}}</value></data><data name="NonGenericSource" xml:space="preserve"><value>namespace Monify
+{{
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+    internal sealed class {0}Attribute
+        : Attribute
+    {{
+        private bool _debuggerDisplay = true;
+        private bool _passthrough = true;
+        private Type _type;
+
+        public bool DebuggerDisplay
+        {{
+            get
+            {{
+                return _debuggerDisplay;
+            }}
+            set
+            {{
+                _debuggerDisplay = value;
+            }}
+        }}
+
+        public bool Passthrough
+        {{
+            get
+            {{
+                return _passthrough;
+            }}
+            set
+            {{
+                _passthrough = value;
+            }}
+        }}
+
+        public Type Type
+        {{
+            get
+            {{
+                return _type;
+            }}
+            set
+            {{
+                _type = value;
+            }}
+        }}
+    }}
 }}</value></data></root>

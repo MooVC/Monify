@@ -1,0 +1,2 @@
+src/Monify/**/*.Resources.resx text eol=lf
+src/Monify.Tests/Snippets/**/*.cs text eol=lf
