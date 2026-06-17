@@ -2,7 +2,7 @@ namespace Monify.Console.Classes.Passthrough.InnerTests;
 
 public static class WhenToStringIsCalled
 {
-    private const string Expected = $"Inner {{ {SampleValue} }}";
+    private const string Expected = SampleValue;
     private const string SampleValue = "Sample";
 
     [Fact]

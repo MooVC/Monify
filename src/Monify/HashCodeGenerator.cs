@@ -1,80 +1,25 @@
-﻿namespace Monify;
-
-using Microsoft.CodeAnalysis;
-
-/// <summary>
-/// Generates an internal HashCode static class that is used to support hash code generation.
-/// </summary>
-[Generator(LanguageNames.CSharp)]
-public sealed class HashCodeGenerator
-    : IIncrementalGenerator
+namespace Monify
 {
+    using Microsoft.CodeAnalysis;
+
+    using static Monify.HashCodeGenerator_Resources;
+
     /// <summary>
-    /// The source code that will be output by the generator.
+    /// Generates an internal HashCode static class that is used to support hash code generation.
     /// </summary>
-    public const string Content = $$"""
-        namespace Monify.Internal
-        {
-            using System;
-            using System.Collections;
-
-            internal static class HashCode
-            {
-                private const int HashSeed = 0x1505;
-                private const int HashPrime = -1521134295;
-
-                public static int Combine(params object[] values)
-                {
-                    int hash = HashSeed;
-
-                    foreach (object value in values)
-                    {
-                        if (value is IEnumerable && !(value is string))
-                        {
-                            IEnumerable enumerable = (IEnumerable)value;
-        
-                            foreach (object element in enumerable)
-                            {
-                                hash = PerformCombine(hash, element);
-                            }
-                        }
-                        else
-                        {
-                            hash = PerformCombine(hash, value);
-                        }
-                    }
-
-                    return hash;
-                }
-        
-                private static int PerformCombine(int hash, object value)
-                {
-                    int other = GetHashCode(value);
-
-                    unchecked
-                    {
-                        return (other * HashPrime) + hash;
-                    }
-                }
-
-                private static int GetHashCode(object value)
-                {
-                    int code = 0;
-
-                    if (value != null)
-                    {
-                        code = value.GetHashCode();
-                    }
-
-                    return code;
-                }
-            }
-        }
-        """;
-
-    /// <inheritdoc/>
-    public void Initialize(IncrementalGeneratorInitializationContext context)
+    [Generator(LanguageNames.CSharp)]
+    public sealed class HashCodeGenerator
+        : IIncrementalGenerator
     {
-        context.RegisterPostInitializationOutput(context => context.AddSource("Monify.Internal.HashCode.g.cs", Content));
+        /// <summary>
+        /// The source code that will be output by the generator.
+        /// </summary>
+        public static readonly string Content = string.Format(GeneratedSource);
+
+        /// <inheritdoc/>
+        public void Initialize(IncrementalGeneratorInitializationContext context)
+        {
+            context.RegisterPostInitializationOutput(productionContext => productionContext.AddSource("Monify.Internal.HashCode.g.cs", Content));
+        }
     }
 }

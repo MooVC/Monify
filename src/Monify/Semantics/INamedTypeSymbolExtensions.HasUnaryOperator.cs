@@ -1,36 +1,43 @@
-namespace Monify.Semantics;
-
-using Microsoft.CodeAnalysis;
-
-/// <summary>
-/// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
-/// </summary>
-internal static partial class INamedTypeSymbolExtensions
+namespace Monify.Semantics
 {
+    using System.Linq;
+    using Microsoft.CodeAnalysis;
+
     /// <summary>
-    /// Determines whether or not the <paramref name="subject"/> declares its own unary operator.
+    /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
     /// </summary>
-    /// <param name="subject">
-    /// The <paramref name="subject"/> to be checked.
-    /// </param>
-    /// <param name="operator">
-    /// The name of the operator to check.
-    /// </param>
-    /// <param name="returnType">
-    /// The return type associated with the operator.
-    /// </param>
-    /// <returns>
-    /// <see langword="true"/> if the <paramref name="subject"/> declares the operator, otherwise <see langword="false"/>.
-    /// </returns>
-    public static bool HasUnaryOperator(this INamedTypeSymbol subject, string @operator, ITypeSymbol returnType)
+    internal static partial class INamedTypeSymbolExtensions
     {
-        return subject
-            .GetMembers()
-            .OfType<IMethodSymbol>()
-            .Any(method => method.MethodKind == MethodKind.UserDefinedOperator
-                        && method.Name == @operator
-                        && method.Parameters.Length == ExpectedParametersForUnaryOperator
-                        && method.Parameters[0].Type.Equals(subject, SymbolEqualityComparer.IncludeNullability)
-                        && method.ReturnType.Equals(returnType, SymbolEqualityComparer.IncludeNullability));
+        /// <summary>
+        /// Determines whether or not the <paramref name="subject"/> declares its own unary operator.
+        /// </summary>
+        /// <param name="subject">
+        /// The <paramref name="subject"/> to be checked.
+        /// </param>
+        /// <param name="operator">
+        /// The name of the operator to check.
+        /// </param>
+        /// <param name="returnType">
+        /// The return type associated with the operator.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the <paramref name="subject"/> declares the operator, otherwise <see langword="false"/>.
+        /// </returns>
+        public static bool HasUnaryOperator(this INamedTypeSymbol subject, string @operator, ITypeSymbol returnType)
+        {
+            return subject
+                .GetMembers()
+                .OfType<IMethodSymbol>()
+                .Any(method => method.IsUnaryOperator(@operator, returnType));
+        }
+
+        private static bool IsUnaryOperator(this IMethodSymbol method, string @operator, ITypeSymbol returnType)
+        {
+            return (method.MethodKind == MethodKind.UserDefinedOperator || method.MethodKind == MethodKind.BuiltinOperator)
+                && method.Name == @operator
+                && method.Parameters.Length == ExpectedParametersForUnaryOperator
+                && method.Parameters[0].Type.Equals(method.ContainingType, SymbolEqualityComparer.IncludeNullability)
+                && method.ReturnType.Equals(returnType, SymbolEqualityComparer.IncludeNullability);
+        }
     }
 }

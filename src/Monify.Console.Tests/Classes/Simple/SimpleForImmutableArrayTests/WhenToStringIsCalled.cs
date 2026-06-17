@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 public static class WhenToStringIsCalled
 {
-    private static readonly string Expected = $"SimpleForImmutableArray {{ {typeof(ImmutableArray<string>)} }}";
+    private static readonly string Expected = typeof(ImmutableArray<string>).ToString();
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
     [Fact]

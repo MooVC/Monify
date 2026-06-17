@@ -58,14 +58,16 @@ public sealed class WhenGenerateIsCalled
 
         // Act
         Source[] sources = strategy.Generate(subject).ToArray();
+        string oneSidedGuardSource = sources[1].Code.Replace("\r\n", "\n");
 
         // Assert
         sources.Length.ShouldBe(3);
-        sources[0].Hint.ShouldBe("BinaryOperators.00");
+        sources[0].Hint.ShouldBe("Binary.op_Addition.Sample-Sample");
         sources[0].Code.ShouldContain("operator +(Sample left, Sample right)");
         sources[0].Code.ShouldContain("new Sample(left._value + right._value)");
         sources[1].Code.ShouldContain("operator -(Sample left, int right)");
         sources[1].Code.ShouldContain("throw new ArgumentNullException(\"left\")");
+        oneSidedGuardSource.ShouldContain("throw new ArgumentNullException(\"left\");\n        }\n\n        return new Sample(left._value - right);");
         sources[2].Code.ShouldContain("operator >(int left, Sample right)");
         sources[2].Code.ShouldContain("return (bool)(left > right._value);");
     }
@@ -83,5 +85,73 @@ public sealed class WhenGenerateIsCalled
 
         // Assert
         result.ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void GivenPassthroughBinaryOperatorsDuplicateEarlierSignaturesThenTheyAreSkipped()
+    {
+        // Arrange
+        const string objectType = "object";
+
+        Subject subject = TestSubject.Create();
+        subject.Encapsulated =
+        [
+            new Encapsulated
+            {
+                Type = "global::Sample.Inner",
+                BinaryOperators =
+                [
+                    new BinaryOperator
+                    {
+                        IsLeftSubject = false,
+                        IsReturnSubject = true,
+                        IsRightSubject = true,
+                        Left = objectType,
+                        Operator = "op_Addition",
+                        Return = subject.Qualification,
+                        Right = subject.Qualification,
+                        Symbol = "+",
+                    },
+                ],
+            },
+            new Encapsulated
+            {
+                Type = "string",
+                BinaryOperators =
+                [
+                    new BinaryOperator
+                    {
+                        IsLeftSubject = false,
+                        IsReturnSubject = true,
+                        IsRightSubject = true,
+                        Left = objectType,
+                        Operator = "op_Addition",
+                        Return = subject.Qualification,
+                        Right = subject.Qualification,
+                        Symbol = "+",
+                    },
+                    new BinaryOperator
+                    {
+                        IsLeftSubject = true,
+                        IsReturnSubject = true,
+                        IsRightSubject = false,
+                        Left = subject.Qualification,
+                        Operator = "op_Addition",
+                        Return = subject.Qualification,
+                        Right = objectType,
+                        Symbol = "+",
+                    },
+                ],
+            },
+        ];
+        var strategy = new BinaryOperatorStrategy();
+
+        // Act
+        Source[] sources = strategy.Generate(subject).ToArray();
+
+        // Assert
+        sources.Length.ShouldBe(2);
+        sources[0].Hint.ShouldBe("Binary.op_Addition.object-Sample");
+        sources[1].Hint.ShouldBe("Binary.Passthrough.Level01.op_Addition.Sample-object");
     }
 }

@@ -4,6 +4,20 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [Unreleased]
+
+# [1.5.0] - 2026-06-17
+
+## Added
+
+- `MonifyAttribute` now includes a `DebuggerDisplay` option that can disable generated debugger display support.
+- Public and internal members and supported interfaces declared by the top-level encapsulated type are now propagated to generated `Monify` types.
+- `MonifyAttribute` now includes a `Passthrough` option that can disable generated passthrough interfaces, methods, and properties.
+
+## Changed
+
+- Generated `ToString` overrides now return the encapsulated value's `ToString` result, or `string.Empty` when the value is null.
+
 # [1.4.1] - 2026-05-16
 
 ## Fixed

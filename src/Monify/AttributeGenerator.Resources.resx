@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="GenericSource" xml:space="preserve"><value>namespace Monify
+{{
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+    internal sealed class {0}Attribute&lt;T&gt;
+        : Attribute
+    {{
+        public bool DebuggerDisplay {{ get; set; }} = true;
+
+        public bool Passthrough {{ get; set; }} = true;
+    }}
+}}</value></data><data name="NonGenericSource" xml:space="preserve"><value>namespace Monify
+{{
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+    internal sealed class {0}Attribute
+        : Attribute
+    {{
+        private bool _debuggerDisplay = true;
+        private bool _passthrough = true;
+        private Type _type;
+
+        public bool DebuggerDisplay
+        {{
+            get
+            {{
+                return _debuggerDisplay;
+            }}
+            set
+            {{
+                _debuggerDisplay = value;
+            }}
+        }}
+
+        public bool Passthrough
+        {{
+            get
+            {{
+                return _passthrough;
+            }}
+            set
+            {{
+                _passthrough = value;
+            }}
+        }}
+
+        public Type Type
+        {{
+            get
+            {{
+                return _type;
+            }}
+            set
+            {{
+                _type = value;
+            }}
+        }}
+    }}
+}}</value></data></root>

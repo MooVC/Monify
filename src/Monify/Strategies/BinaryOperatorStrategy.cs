@@ -1,101 +1,104 @@
-namespace Monify.Strategies;
-
-using Monify.Model;
-using static Monify.Model.Subject;
-
-/// <summary>
-/// Generates operators to forward binary operators supported by the encapsulated type.
-/// </summary>
-internal sealed class BinaryOperatorStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using System.Collections.Generic;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Monify.Model;
+    using static Monify.Model.Subject;
+
+    using static Monify.Strategies.BinaryOperatorStrategy_Resources;
+
+    /// <summary>
+    /// Generates operators to forward binary operators supported by the encapsulated type.
+    /// </summary>
+    internal sealed class BinaryOperatorStrategy
+        : IStrategy
     {
-        for (int index = 0; index < subject.Encapsulated.Length; index++)
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            Encapsulated encapsulated = subject.Encapsulated[index];
+            var signatures = new HashSet<(string Operator, string Left, string Right)>();
 
-            if (encapsulated.BinaryOperators.IsDefaultOrEmpty)
+            for (int index = 0; index < subject.Encapsulated.Length; index++)
             {
-                continue;
-            }
+                Encapsulated encapsulated = subject.Encapsulated[index];
 
-            string hintPrefix = index == IndexForEncapsulatedValue
-                ? "BinaryOperators"
-                : $"BinaryOperators.Passthrough.Level{index:D2}";
-
-            for (int binaryIndex = 0; binaryIndex < encapsulated.BinaryOperators.Length; binaryIndex++)
-            {
-                BinaryOperator binary = encapsulated.BinaryOperators[binaryIndex];
-
-                string hint = $"{hintPrefix}.{binaryIndex:D2}";
-                string code = CreateOperator(subject, binary);
-
-                yield return new Source(code, hint);
-            }
-        }
-    }
-
-    private static string CreateOperator(Subject subject, BinaryOperator binary)
-    {
-        string leftType = binary.IsLeftSubject ? subject.Qualification : binary.Left;
-        string rightType = binary.IsRightSubject ? subject.Qualification : binary.Right;
-        string returnType = binary.IsReturnSubject ? subject.Qualification : binary.Return;
-
-        string leftOperand = binary.IsLeftSubject ? "left._value" : "left";
-        string rightOperand = binary.IsRightSubject ? "right._value" : "right";
-        string operation = $"{leftOperand} {binary.Symbol} {rightOperand}";
-
-        string result = binary.IsReturnSubject
-            ? $"return new {subject.Qualification}({operation});"
-            : $"return ({returnType})({operation});";
-
-        string guard = string.Concat(
-            CreateGuard(binary.IsLeftSubject, "left"),
-            CreateGuard(binary.IsRightSubject, "right"));
-
-        string body = guard.Length > 0
-            ? $"{guard}        {result}"
-            : $"        {result}";
-
-        if (guard.Length > 0)
-        {
-            return $$"""
-                {{subject.Declaration}} {{subject.Qualification}}
+                if (encapsulated.BinaryOperators.IsDefaultOrEmpty)
                 {
-                    public static {{returnType}} operator {{binary.Symbol}}({{leftType}} left, {{rightType}} right)
+                    continue;
+                }
+
+                string hintPrefix = index == IndexForEncapsulatedValue
+                    ? "Binary"
+                    : $"Binary.Passthrough.Level{index:D2}";
+
+                foreach (BinaryOperator binary in encapsulated.BinaryOperators)
+                {
+                    string leftType = binary.IsLeftSubject ? subject.Qualification : binary.Left;
+                    string rightType = binary.IsRightSubject ? subject.Qualification : binary.Right;
+
+                    if (!signatures.Add((binary.Operator, leftType, rightType)))
                     {
-                        {{body}}
+                        continue;
                     }
-                }
-                """;
-        }
 
-        return $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
-            {
-                public static {{returnType}} operator {{binary.Symbol}}({{leftType}} left, {{rightType}} right)
-                {
-                    {{body}}
+                    string leftHint = leftType.NormalizeTypeForHint();
+                    string rightHint = rightType.NormalizeTypeForHint();
+                    string hint = $"{hintPrefix}.{binary.Operator}.{leftHint}-{rightHint}";
+                    string code = CreateOperator(subject, binary);
+
+                    yield return new Source(code, hint);
                 }
             }
-            """;
-    }
+        }
 
-    private static string CreateGuard(bool shouldGuard, string parameter)
-    {
-        if (!shouldGuard)
+        private static string CreateOperator(Subject subject, BinaryOperator binary)
         {
-            return string.Empty;
-        }
+            string leftType = binary.IsLeftSubject ? subject.Qualification : binary.Left;
+            string rightType = binary.IsRightSubject ? subject.Qualification : binary.Right;
+            string returnType = binary.IsReturnSubject ? subject.Qualification : binary.Return;
 
-        return $$"""
-            if (ReferenceEquals({{parameter}}, null))
+            string leftOperand = binary.IsLeftSubject ? "left._value" : "left";
+            string rightOperand = binary.IsRightSubject ? "right._value" : "right";
+            string operation = string.Format(OperationSource, leftOperand, binary.Symbol, rightOperand);
+
+            string result = binary.IsReturnSubject
+                ? string.Format(SubjectResultSource, subject.Qualification, operation)
+                : string.Format(ValueResultSource, returnType, operation);
+
+            string leftGuard = CreateGuard(binary.IsLeftSubject, "left");
+            string rightGuard = CreateGuard(binary.IsRightSubject, "right");
+
+            SyntaxTrivia guardSeparator = leftGuard.Length > 0 && rightGuard.Length > 0
+                ? SyntaxFactory.ElasticLineFeed
+                : SyntaxFactory.ElasticMarker;
+
+            string guard = string.Format(CombinedSource, leftGuard, guardSeparator, rightGuard);
+
+            SyntaxTrivia separator = guard.Length > 0
+                ? SyntaxFactory.ElasticLineFeed
+                : SyntaxFactory.ElasticMarker;
+
+            string body = guard.Length > 0
+                ? string.Format(GuardedBodySource, guard, separator, result)
+                : string.Format(BodySource, result);
+
+            if (guard.Length > 0)
             {
-                throw new ArgumentNullException("{{parameter}}");
+                return string.Format(GuardedOperatorSource, subject.Declaration, subject.Qualification, returnType, binary.Symbol, leftType, rightType, body);
             }
 
-        """;
+            return string.Format(OperatorSource, subject.Declaration, subject.Qualification, returnType, binary.Symbol, leftType, rightType, body);
+        }
+
+        private static string CreateGuard(bool shouldGuard, string parameter)
+        {
+            if (!shouldGuard)
+            {
+                return string.Empty;
+            }
+
+            return string.Format(GuardSource, parameter, parameter);
+        }
     }
 }

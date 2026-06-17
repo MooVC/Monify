@@ -72,7 +72,7 @@ public sealed record Snippets(
     private IEnumerable<Expectations> Expect(Arrangements arrangements, IEnumerable<Content> declarations)
     {
         Generated[] expectations = Expected
-            .Where(extension => !arrangements.HasFlag(extension.Extensions))
+            .Where(extension => extension.Extensions == Arrangements.None || !arrangements.HasFlag(extension.Extensions))
             .ToArray();
 
         string[] extensions = Extensions
@@ -83,7 +83,6 @@ public sealed record Snippets(
         foreach (Content declaration in declarations)
         {
             string[] contents = [declaration.Body, .. extensions];
-
             yield return new Expectations(contents, expectations, declaration.Minimum, declaration.Maximum);
         }
     }

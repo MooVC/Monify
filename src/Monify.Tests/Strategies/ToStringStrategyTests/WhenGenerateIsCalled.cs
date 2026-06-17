@@ -18,6 +18,9 @@ public sealed class WhenGenerateIsCalled
         // Assert
         source.Hint.ShouldBe(nameof(ToString));
         source.Code.ShouldContain("public override string ToString()");
+        source.Code.ShouldContain("if (ReferenceEquals(_value, null))");
+        source.Code.ShouldContain("return string.Empty;");
+        source.Code.ShouldContain("return _value.ToString();");
     }
 
     [Fact]

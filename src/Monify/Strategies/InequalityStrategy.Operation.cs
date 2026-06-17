@@ -1,23 +1,24 @@
-namespace Monify.Strategies;
-
-/// <summary>
-/// Generates the source needed to support the inequality operator.
-/// </summary>
-internal partial class InequalityStrategy
+namespace Monify.Strategies
 {
-    private readonly struct Operation
+    /// <summary>
+    /// Generates the source needed to support the inequality operator.
+    /// </summary>
+    internal partial class InequalityStrategy
     {
-        public Operation(bool hasOperator, string hint, string type)
+        private readonly struct Operation
         {
-            HasOperator = hasOperator;
-            Hint = hint;
-            Type = type;
+            public Operation(bool hasOperator, string hint, string type)
+            {
+                HasOperator = hasOperator;
+                Hint = hint;
+                Type = type;
+            }
+
+            public bool HasOperator { get; }
+
+            public string Hint { get; }
+
+            public string Type { get; }
         }
-
-        public bool HasOperator { get; }
-
-        public string Hint { get; }
-
-        public string Type { get; }
     }
 }

@@ -1,87 +1,53 @@
-﻿namespace Monify;
-
-using System.Text;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
-
-/// <summary>
-/// Generates the Monify attribute, used to denote when a type should serve as a wrapper for a single value.
-/// </summary>
-[Generator(LanguageNames.CSharp)]
-public sealed class AttributeGenerator
-    : IIncrementalGenerator
+namespace Monify
 {
-    /// <summary>
-    /// The source code for the Generic attribute that will be output by the generator.
-    /// </summary>
-    internal const string Generic = $$"""
-        namespace Monify
-        {
-            using System;
-            using System.Diagnostics.CodeAnalysis;
+    using System.Text;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.Text;
 
-            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-            internal sealed class {{Name}}Attribute<T>
-                : Attribute
-            {
-            }
-        }
-        """;
+    using static Monify.AttributeGenerator_Resources;
 
     /// <summary>
-    /// The source code for the NonGeneric attribute that will be output by the generator.
+    /// Generates the Monify attribute, used to denote when a type should serve as a wrapper for a single value.
     /// </summary>
-    internal const string NonGeneric = $$"""
-        namespace Monify
+    [Generator(LanguageNames.CSharp)]
+    public sealed class AttributeGenerator
+        : IIncrementalGenerator
+    {
+        /// <summary>
+        /// The name of the attribute (without the suffix).
+        /// </summary>
+        internal const string Name = "Monify";
+
+        /// <summary>
+        /// The source code for the Generic attribute that will be output by the generator.
+        /// </summary>
+        internal static readonly string Generic = string.Format(GenericSource, Name);
+
+        /// <summary>
+        /// The source code for the NonGeneric attribute that will be output by the generator.
+        /// </summary>
+        internal static readonly string NonGeneric = string.Format(NonGenericSource, Name);
+
+        /// <inheritdoc/>
+        public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            using System;
-            using System.Diagnostics.CodeAnalysis;
-
-            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-            internal sealed class {{Name}}Attribute
-                : Attribute
+            context.RegisterSourceOutput(context.ParseOptionsProvider, (productionContext, options) =>
             {
-                private Type _type;
-
-                public Type Type
+                if (options is CSharpParseOptions csharp && csharp.LanguageVersion >= LanguageVersion.CSharp11)
                 {
-                    get
-                    {
-                        return _type;
-                    }
-                    set
-                    {
-                        _type = value;
-                    }
+                    Generate(Generic, productionContext, "Generic");
                 }
-            }
+
+                Generate(NonGeneric, productionContext, "NonGeneric");
+            });
         }
-        """;
 
-    /// <summary>
-    /// The name of the attribute (without the suffix).
-    /// </summary>
-    internal const string Name = "Monify";
-
-    /// <inheritdoc/>
-    public void Initialize(IncrementalGeneratorInitializationContext context)
-    {
-        context.RegisterSourceOutput(context.ParseOptionsProvider, (context, options) =>
+        private static void Generate(string content, SourceProductionContext context, string name)
         {
-            if (options is CSharpParseOptions csharp && csharp.LanguageVersion >= LanguageVersion.CSharp11)
-            {
-                Generate(Generic, context, "Generic");
-            }
+            var text = SourceText.From(content, Encoding.UTF8);
 
-            Generate(NonGeneric, context, "NonGeneric");
-        });
-    }
-
-    private static void Generate(string content, SourceProductionContext context, string name)
-    {
-        var text = SourceText.From(content, Encoding.UTF8);
-
-        context.AddSource($"{Name}Attribute.{name}.g.cs", text);
+            context.AddSource($"{Name}Attribute.{name}.g.cs", text);
+        }
     }
 }

@@ -1,114 +1,115 @@
-namespace Monify.Strategies;
-
-using System;
-using Monify.Model;
-using static Monify.Model.Subject;
-using static Monify.Strategies.UnaryOperatorStrategy_Resources;
-
-/// <summary>
-/// Generates operators to forward unary operators supported by the encapsulated type.
-/// </summary>
-internal sealed class UnaryOperatorStrategy
-    : IStrategy
+namespace Monify.Strategies
 {
-    /// <inheritdoc/>
-    public IEnumerable<Source> Generate(Subject subject)
+    using System;
+    using System.Collections.Generic;
+    using Monify.Model;
+    using static Monify.Model.Subject;
+    using static Monify.Strategies.UnaryOperatorStrategy_Resources;
+
+    /// <summary>
+    /// Generates operators to forward unary operators supported by the encapsulated type.
+    /// </summary>
+    internal sealed class UnaryOperatorStrategy
+        : IStrategy
     {
-        for (int index = 0; index < subject.Encapsulated.Length; index++)
+        /// <inheritdoc/>
+        public IEnumerable<Source> Generate(Subject subject)
         {
-            Encapsulated encapsulated = subject.Encapsulated[index];
+            var signatures = new HashSet<(string Operator, string Parameter)>();
 
-            if (encapsulated.UnaryOperators.IsDefaultOrEmpty)
+            for (int index = 0; index < subject.Encapsulated.Length; index++)
             {
-                continue;
-            }
+                Encapsulated encapsulated = subject.Encapsulated[index];
 
-            string hintPrefix = index == IndexForEncapsulatedValue
-                ? "UnaryOperators"
-                : $"UnaryOperators.Passthrough.Level{index:D2}";
-
-            for (int unaryIndex = 0; unaryIndex < encapsulated.UnaryOperators.Length; unaryIndex++)
-            {
-                UnaryOperator unary = encapsulated.UnaryOperators[unaryIndex];
-
-                string hint = $"{hintPrefix}.{unaryIndex:D2}";
-                string code = CreateOperator(subject, encapsulated, unary);
-
-                yield return new Source(code, hint);
-            }
-        }
-    }
-
-    private static string CreateOperator(Subject subject, Encapsulated encapsulated, UnaryOperator unary)
-    {
-        (string operand, bool requiresValueCopy) = GetOperand(unary.Symbol);
-        string operation = ApplyOperator(unary.Symbol, operand);
-
-        string returnType = unary.IsReturnSubject
-            ? subject.Qualification
-            : unary.Return;
-
-        string result = unary.IsReturnSubject
-            ? $"return new {subject.Qualification}({operation});"
-            : $"return ({returnType}){operation};";
-
-        if (requiresValueCopy)
-        {
-            return $$"""
-                {{subject.Declaration}} {{subject.Qualification}}
+                if (encapsulated.UnaryOperators.IsDefaultOrEmpty)
                 {
-                    public static {{returnType}} operator {{unary.Symbol}}({{subject.Qualification}} subject)
-                    {
-                        if (ReferenceEquals(subject, null))
-                        {
-                            throw new ArgumentNullException("subject");
-                        }
-
-                        {{encapsulated.Type}} value = subject._value;
-
-                        {{result}}
-                    }
+                    continue;
                 }
-                """;
-        }
 
-        return $$"""
-            {{subject.Declaration}} {{subject.Qualification}}
-            {
-                public static {{returnType}} operator {{unary.Symbol}}({{subject.Qualification}} subject)
+                string hintPrefix = index == IndexForEncapsulatedValue
+                    ? "Unary"
+                    : $"Unary.Passthrough.Level{index:D2}";
+
+                foreach (UnaryOperator unary in encapsulated.UnaryOperators)
                 {
-                    if (ReferenceEquals(subject, null))
+                    string parameterType = subject.Qualification;
+
+                    if (!signatures.Add((unary.Operator, parameterType)))
                     {
-                        throw new ArgumentNullException("subject");
+                        continue;
                     }
 
-                    {{result}}
+                    string subjectHint = parameterType.NormalizeTypeForHint();
+                    string hint = $"{hintPrefix}.{unary.Operator}.{subjectHint}";
+                    string code = CreateOperator(subject, encapsulated, unary);
+
+                    yield return new Source(code, hint);
                 }
             }
-            """;
-    }
+        }
 
-    private static string ApplyOperator(string symbol, string operand)
-    {
-        return symbol switch
+        private static string CreateOperator(Subject subject, Encapsulated encapsulated, UnaryOperator unary)
         {
-            "-" => $"-{operand}",
-            "!" => $"!{operand}",
-            "++" => $"++{operand}",
-            "--" => $"--{operand}",
-            "~" => $"~{operand}",
-            "+" => $"+{operand}",
-            "true" => $"{operand} ? true : false",
-            "false" => $"{operand} ? false : true",
-            _ => throw new NotSupportedException(string.Format(ApplyOperatorNotSupported, symbol)),
-        };
-    }
+            (string operand, bool requiresValueCopy) = GetOperand(unary.Symbol);
+            string operation = ApplyOperator(unary.Symbol, operand);
 
-    private static (string Operand, bool RequiresValueCopy) GetOperand(string symbol)
-    {
-        bool requiresValueCopy = symbol is "++" or "--";
-        string operand = requiresValueCopy ? "value" : "subject._value";
+            string returnType = unary.IsReturnSubject
+                ? subject.Qualification
+                : unary.Return;
 
-        return (operand, requiresValueCopy);
+            string result = unary.IsReturnSubject
+                ? string.Format(SubjectResultSource, subject.Qualification, operation)
+                : string.Format(ValueResultSource, returnType, operation);
+
+            if (requiresValueCopy)
+            {
+                return string.Format(
+                    ValueCopyOperatorSource,
+                    subject.Declaration,
+                    subject.Qualification,
+                    returnType,
+                    unary.Symbol,
+                    subject.Qualification,
+                    encapsulated.Type,
+                    result);
+            }
+
+            return string.Format(OperatorSource, subject.Declaration, subject.Qualification, returnType, unary.Symbol, subject.Qualification, result);
+        }
+
+        private static string ApplyOperator(string symbol, string operand)
+        {
+            switch (symbol)
+            {
+                case "-":
+                case "!":
+                case "++":
+                case "--":
+                case "~":
+                case "+":
+
+                    return string.Format(OperationSource, symbol, operand);
+
+                case "true":
+
+                    return string.Format(TrueOperationSource, operand);
+
+                case "false":
+
+                    return string.Format(FalseOperationSource, operand);
+
+                default:
+
+                    throw new NotSupportedException(string.Format(ApplyOperatorNotSupported, symbol));
+            }
+        }
+
+        private static (string Operand, bool RequiresValueCopy) GetOperand(string symbol)
+        {
+            bool requiresValueCopy = symbol == "++" || symbol == "--";
+            string operand = requiresValueCopy ? "value" : "subject._value";
+
+            return (operand, requiresValueCopy);
+        }
     }
 }

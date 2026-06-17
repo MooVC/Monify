@@ -2,7 +2,7 @@ namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
 public static class WhenToStringIsCalled
 {
-    private const string Expected = "SimpleForInt { 91 }";
+    private const string Expected = "91";
     private const int SampleValue = 91;
 
     [Fact]

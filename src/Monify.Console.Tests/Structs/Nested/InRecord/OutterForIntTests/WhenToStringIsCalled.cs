@@ -2,7 +2,7 @@ namespace Monify.Console.Structs.Nested.InRecord.OutterForIntTests;
 
 public static class WhenToStringIsCalled
 {
-    private const string Expected = "Inner { 42 }";
+    private const string Expected = "42";
     private const int SampleValue = 42;
 
     [Fact]
