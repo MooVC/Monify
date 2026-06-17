@@ -11,14 +11,14 @@ Please provide a brief description of the changes you have made, including the p
 
 Please ensure the following are true for your PR:
 
-- [ ] I have followed the project's [coding style guidelines](/.github/CONTRIBUTING.md).
-- [ ] I have added tests that prove my fix is effective or that my feature works.
-- [ ] I have verified that new and existing unit tests pass locally with my changes.
-- [ ] I have updated the documentation (if applicable).
-- [ ] I have confirmed that my code is free from warnings and errors.
-- [ ] I have reviewed suggestions and determined no actions is required.
-- [ ] I have updated the [CHANGELOG.md](CHANGELOG.md)
-- [ ] I have performed a self-review of my code.
+- [] I have followed the project's [coding style guidelines](/.github/CONTRIBUTING.md).
+- [] I have added tests that prove my fix is effective or that my feature works.
+- [] I have verified that new and existing unit tests pass locally with my changes.
+- [] I have updated the documentation (if applicable).
+- [] I have confirmed that my code is free from warnings and errors.
+- [] I have reviewed suggestions and determined no actions is required.
+- [] I have updated the [CHANGELOG.md](CHANGELOG.md)
+- [] I have performed a self-review of my code.
 
 ## Additional Comments
 
