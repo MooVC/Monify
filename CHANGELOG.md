@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 # [Unreleased]
 
+# [1.5.0] - 2026-06-17
+
 ## Added
 
 - `MonifyAttribute` now includes a `DebuggerDisplay` option that can disable generated debugger display support.
@@ -15,14 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 
 - Generated `ToString` overrides now return the encapsulated value's `ToString` result, or `string.Empty` when the value is null.
-
-## Fixed
-
-- Generated source and test snippets now consistently use LF line endings across operating systems.
-- Debugger display support is no longer generated when the annotated type already declares `DebuggerDisplayAttribute`.
-- Passthrough members that require newer C# language features are no longer generated for lower language-version targets.
-- Passthrough methods with `object` parameters now unwrap annotated type arguments before forwarding to the encapsulated value.
-- Passthrough interfaces and members are no longer duplicated when the annotated type already exposes them or another strategy will generate them.
 
 # [1.4.1] - 2026-05-16
 
