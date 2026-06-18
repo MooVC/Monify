@@ -36,7 +36,14 @@
                     return false;
                 }}
 
-                if (!Equals(left.Current, right.Current))
+                if (ReferenceEquals(left.Current, null))
+                {{
+                    if (!ReferenceEquals(right.Current, null))
+                    {{
+                        return false;
+                    }}
+                }}
+                else if (!left.Current.Equals(right.Current))
                 {{
                     return false;
                 }}

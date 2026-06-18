@@ -2,6 +2,7 @@ namespace Monify
 {
     using System.IO;
     using System.Text;
+    using Microsoft.CodeAnalysis.CSharp;
 
     /// <summary>
     /// Provides extensions relating to <see langword="string"/>.
@@ -40,7 +41,7 @@ namespace Monify
                 }
 
                 builder = builder.Append(line);
-                builder = builder.AppendLine();
+                builder = builder.Append(SyntaxFactory.LineFeed);
             }
 
             return builder

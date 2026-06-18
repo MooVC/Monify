@@ -14,7 +14,7 @@ namespace Monify
         /// <summary>
         /// The source code that will be output by the generator.
         /// </summary>
-        public static readonly string Content = string.Format(GeneratedSource);
+        public static readonly string Content = string.Format(GeneratedSource).NormalizeLineEndings();
 
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)

@@ -28,4 +28,19 @@ public sealed class WhenExecuted
         // Assert
         await act.ShouldNotThrowAsync();
     }
+
+    [Fact]
+    public void GivenGeneratedSourceThenElementsAreComparedWithInstanceEquals()
+    {
+        // Arrange
+        const string expected = "left.Current.Equals(right.Current)";
+
+        // Act
+        string content = SequenceEqualityComparerGenerator.Content;
+
+        // Assert
+        content.ShouldContain("if (ReferenceEquals(left.Current, null))");
+        content.ShouldContain("if (!ReferenceEquals(right.Current, null))");
+        content.ShouldContain(expected);
+    }
 }

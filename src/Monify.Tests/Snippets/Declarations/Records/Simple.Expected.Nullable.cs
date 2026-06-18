@@ -923,7 +923,7 @@ internal static partial class Simple
                                 return false;
                             }
 
-                            return global::System.Collections.Generic.EqualityComparer<int>.Default.Equals(_value, other);
+                            return other.Equals(_value);
                         }
                     }
 

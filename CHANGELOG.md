@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 # [Unreleased]
 
+# [1.5.1] - 2026-06-18
+
+## Fixed
+
+- Equality for the encapsulated now uses the Equals method for the type instead of the default equality comparer, which addresses issues where string values where deemed not equal even when they were.
+
 # [1.5.0] - 2026-06-17
 
 ## Added

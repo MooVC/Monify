@@ -3,7 +3,6 @@ namespace Monify.Strategies
     using System.Collections.Generic;
     using Monify.Model;
     using static Monify.Model.Subject;
-
     using static Monify.Strategies.InterfaceDeclarationStrategy_Resources;
 
     /// <summary>

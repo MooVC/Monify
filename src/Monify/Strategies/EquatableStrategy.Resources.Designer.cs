@@ -72,7 +72,7 @@ namespace Monify.Strategies {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to global::System.Collections.Generic.EqualityComparer&lt;{0}&gt;.Default.Equals({1}, other).
+        ///   Looks up a localized string similar to other.Equals({0}).
         /// </summary>
         internal static string EqualityComparerSource {
             get {

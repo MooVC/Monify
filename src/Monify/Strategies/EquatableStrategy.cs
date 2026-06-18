@@ -87,7 +87,7 @@ namespace Monify.Strategies
                 return check;
             }
 
-            return string.Format(EqualityComparerSource, encapsulated.Type, FieldStrategy.Name);
+            return string.Format(EqualityComparerSource, FieldStrategy.Name);
         }
 
         private static Source GenerateImplementation(Func<string> implementation, string name, Subject subject, string type)

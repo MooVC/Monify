@@ -76,7 +76,7 @@ namespace Monify
 
                 foreach (Source source in sources)
                 {
-                    string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes);
+                    string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes).NormalizeLineEndings();
                     string hint = GetHint(source, match.Subject);
 
 #if DEBUG

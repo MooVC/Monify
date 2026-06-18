@@ -5,7 +5,6 @@ namespace Monify.Strategies
     using Microsoft.CodeAnalysis.CSharp;
     using Monify.Model;
     using static Monify.Model.Subject;
-
     using static Monify.Strategies.BinaryOperatorStrategy_Resources;
 
     /// <summary>

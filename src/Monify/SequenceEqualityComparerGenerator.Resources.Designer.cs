@@ -78,7 +78,8 @@ namespace Monify {
         ///            }}
         ///
         ///            if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
-        ///   [rest of string was truncated]&quot;;.
+        ///            {{
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GeneratedSource {
             get {

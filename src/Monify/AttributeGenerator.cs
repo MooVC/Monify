@@ -22,12 +22,12 @@ namespace Monify
         /// <summary>
         /// The source code for the Generic attribute that will be output by the generator.
         /// </summary>
-        internal static readonly string Generic = string.Format(GenericSource, Name);
+        internal static readonly string Generic = string.Format(GenericSource, Name).NormalizeLineEndings();
 
         /// <summary>
         /// The source code for the NonGeneric attribute that will be output by the generator.
         /// </summary>
-        internal static readonly string NonGeneric = string.Format(NonGenericSource, Name);
+        internal static readonly string NonGeneric = string.Format(NonGenericSource, Name).NormalizeLineEndings();
 
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -45,7 +45,7 @@ namespace Monify
 
         private static void Generate(string content, SourceProductionContext context, string name)
         {
-            var text = SourceText.From(content, Encoding.UTF8);
+            var text = SourceText.From(content.NormalizeLineEndings(), Encoding.UTF8);
 
             context.AddSource($"{Name}Attribute.{name}.g.cs", text);
         }

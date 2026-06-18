@@ -1,8 +1,8 @@
-namespace Monify.Strategies
+namespace Monify
 {
     using System.Text;
 
-    internal static class StringExtensions
+    internal static partial class StringExtensions
     {
         public static string NormalizeTypeForHint(this string value)
         {

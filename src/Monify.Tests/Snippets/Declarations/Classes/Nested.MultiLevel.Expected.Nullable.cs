@@ -1346,7 +1346,7 @@ internal static partial class Nested
                                             return false;
                                         }
 
-                                        return global::System.Collections.Generic.EqualityComparer<int>.Default.Equals(_value, other);
+                                        return other.Equals(_value);
                                     }
                                 }
                             }

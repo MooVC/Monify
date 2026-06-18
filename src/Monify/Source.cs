@@ -16,7 +16,7 @@ namespace Monify
         /// </param>
         public Source(string code, string hint)
         {
-            Code = code;
+            Code = code.NormalizeLineEndings();
             Hint = hint;
         }
 
