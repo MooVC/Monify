@@ -79,6 +79,7 @@ namespace Monify.Semantics
                 Namespace = @namespace,
                 Nesting = nesting,
                 Qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
+                Serialization = subject.ToSerialization(compilation),
             };
         }
     }

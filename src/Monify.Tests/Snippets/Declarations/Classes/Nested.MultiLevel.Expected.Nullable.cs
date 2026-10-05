@@ -39,6 +39,47 @@ internal static partial class Nested
                     Extensions.HasConstructorForEncapsulatedValue,
                     "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.ctor");
 
+                public static readonly Generated JsonConverter = new(
+                    """
+                    namespace Monify.Testing.Classes
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial class Snippet
+                        {
+                            partial class BlockOptions
+                            {
+                                [global::System.Text.Json.Serialization.JsonConverter(typeof(InlineStyle.Converter))]
+                                sealed partial class InlineStyle
+                                {
+                                    public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<InlineStyle>
+                                    {
+                                        public override InlineStyle Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                                        {
+                                            return new InlineStyle(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
+                                        }
+
+                                        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, InlineStyle value, global::System.Text.Json.JsonSerializerOptions options)
+                                        {
+                                            global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.JsonConverter",
+                    RequiresJsonSerialization: true);
+
                 public static readonly Generated ConversionFromValue = new(
                     """
                     namespace Monify.Testing.Classes

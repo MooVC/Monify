@@ -149,6 +149,14 @@ namespace Monify.Model
         public string Qualification { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the serialization metadata associated with the subject.
+        /// </summary>
+        /// <value>
+        /// The serialization metadata associated with the subject.
+        /// </value>
+        public Serialization Serialization { get; set; } = new Serialization();
+
+        /// <summary>
         /// Gets the qualified name of the value that is encapsulated by the subject.
         /// </summary>
         /// <value>

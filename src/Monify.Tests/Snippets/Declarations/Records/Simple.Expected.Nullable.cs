@@ -31,6 +31,41 @@ internal static partial class Simple
                 Extensions.HasConstructorForEncapsulatedValue,
                 "Monify.Testing.Records.Simple.ctor");
 
+            public static readonly Generated JsonConverter = new(
+                """
+                namespace Monify.Testing.Records
+                {
+                    using System;
+                    using System.Collections.Generic;
+
+                    #nullable disable
+                    #pragma warning disable CS8625
+
+                    [global::System.Text.Json.Serialization.JsonConverter(typeof(Simple.Converter))]
+                    sealed partial record Simple
+                    {
+                        public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Simple>
+                        {
+                            public override Simple Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                            {
+                                return new Simple(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
+                            }
+
+                            public override void Write(global::System.Text.Json.Utf8JsonWriter writer, Simple value, global::System.Text.Json.JsonSerializerOptions options)
+                            {
+                                global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);
+                            }
+                        }
+                    }
+
+                    #pragma warning restore CS8625
+                    #nullable restore
+                }
+                """,
+                Extensions.None,
+                "Monify.Testing.Records.Simple.JsonConverter",
+                RequiresJsonSerialization: true);
+
             public static readonly Generated ConversionFromValue = new(
                 """
                 namespace Monify.Testing.Records

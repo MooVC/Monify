@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="ConverterSource" xml:space="preserve"><value>[global::System.Text.Json.Serialization.JsonConverter(typeof({4}))]
+{0} {1}
+{{
+    public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter&lt;{1}&gt;
+    {{
+        public override {1} Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+        {{
+            return new {1}(global::System.Text.Json.JsonSerializer.Deserialize&lt;{2}&gt;(ref reader, options));
+        }}
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, {1} value, global::System.Text.Json.JsonSerializerOptions options)
+        {{
+            global::System.Text.Json.JsonSerializer.Serialize&lt;{2}&gt;(writer, value.{3}, options);
+        }}
+    }}
+}}</value></data><data name="FactorySource" xml:space="preserve"><value>internal sealed class {0} : global::System.Text.Json.Serialization.JsonConverterFactory
+{{
+    public override bool CanConvert(Type typeToConvert)
+    {{
+        return typeToConvert.IsGenericType &amp;&amp; typeToConvert.GetGenericTypeDefinition().FullName == "{1}";
+    }}
+
+    public override global::System.Text.Json.Serialization.JsonConverter CreateConverter(Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+    {{
+        Type converter = typeToConvert.GetNestedType("Converter");
+        converter = converter.MakeGenericType(typeToConvert.GetGenericArguments());
+
+        return (global::System.Text.Json.Serialization.JsonConverter)Activator.CreateInstance(converter);
+    }}
+}}</value></data></root>

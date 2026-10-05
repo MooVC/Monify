@@ -14,10 +14,14 @@ namespace Monify
         /// <param name="hint">
         /// The hint name to be used for the source file.
         /// </param>
-        public Source(string code, string hint)
+        /// <param name="isNested">
+        /// A value indicating whether the source should be enclosed in the subject's containing types.
+        /// </param>
+        public Source(string code, string hint, bool isNested = true)
         {
             Code = code.NormalizeLineEndings();
             Hint = hint;
+            IsNested = isNested;
         }
 
         /// <summary>
@@ -35,5 +39,13 @@ namespace Monify
         /// The hint name to be used for the source file.
         /// </value>
         public string Hint { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the source should be enclosed in the subject's containing types.
+        /// </summary>
+        /// <value>
+        /// A value indicating whether the source should be enclosed in the subject's containing types.
+        /// </value>
+        public bool IsNested { get; }
     }
 }

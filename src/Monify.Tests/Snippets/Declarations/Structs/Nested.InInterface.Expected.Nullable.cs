@@ -36,6 +36,78 @@ internal static partial class Nested
                     Extensions.HasConstructorForEncapsulatedValue,
                     "Monify.Testing.Structs.IOutter.Inner.ctor");
 
+                public static readonly Generated JsonConverter = new(
+                    """
+                    namespace Monify.Testing.Structs
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        partial interface IOutter<T>
+                        {
+                            [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Structs.IOutter_1_InnerJsonConverterFactory))]
+                            readonly partial struct Inner
+                            {
+                                public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Inner>
+                                {
+                                    public override Inner Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                                    {
+                                        return new Inner(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
+                                    }
+
+                                    public override void Write(global::System.Text.Json.Utf8JsonWriter writer, Inner value, global::System.Text.Json.JsonSerializerOptions options)
+                                    {
+                                        global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);
+                                    }
+                                }
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Structs.IOutter.Inner.JsonConverter",
+                    RequiresJsonSerialization: true);
+
+                public static readonly Generated JsonConverterFactory = new(
+                    """
+                    namespace Monify.Testing.Structs
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        #nullable disable
+                        #pragma warning disable CS8625
+
+                        internal sealed class IOutter_1_InnerJsonConverterFactory : global::System.Text.Json.Serialization.JsonConverterFactory
+                        {
+                            public override bool CanConvert(Type typeToConvert)
+                            {
+                                return typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition().FullName == "Monify.Testing.Structs.IOutter`1+Inner";
+                            }
+
+                            public override global::System.Text.Json.Serialization.JsonConverter CreateConverter(Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                            {
+                                Type converter = typeToConvert.GetNestedType("Converter");
+                                converter = converter.MakeGenericType(typeToConvert.GetGenericArguments());
+
+                                return (global::System.Text.Json.Serialization.JsonConverter)Activator.CreateInstance(converter);
+                            }
+                        }
+
+                        #pragma warning restore CS8625
+                        #nullable restore
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Structs.IOutter.Inner.JsonConverterFactory",
+                    RequiresJsonSerialization: true);
+
                 public static readonly Generated ConversionFromValue = new(
                     """
                     namespace Monify.Testing.Structs

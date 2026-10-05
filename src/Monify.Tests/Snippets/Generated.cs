@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 
 [DebuggerDisplay("{Hint,nq}")]
-public sealed record Generated(string Content, Extensions Extensions, string Hint, Type? Generator = default)
+public sealed record Generated(string Content, Extensions Extensions, string Hint, Type? Generator = default, bool RequiresJsonSerialization = false)
 {
     public void IsExpectedIn(SolutionState state)
     {

@@ -6,6 +6,10 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Fluentify">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="Valuify">
       <PrivateAssets>all</PrivateAssets>
@@ -98,6 +102,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>InterfaceDeclarationStrategy.Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Strategies\JsonConverterStrategy.Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>JsonConverterStrategy.Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Strategies\MemberPassthroughStrategy.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -187,6 +196,10 @@
     <EmbeddedResource Update="Strategies\InterfaceDeclarationStrategy.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>InterfaceDeclarationStrategy.Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Strategies\JsonConverterStrategy.Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>JsonConverterStrategy.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Strategies\MemberPassthroughStrategy.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

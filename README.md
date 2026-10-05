@@ -59,6 +59,7 @@ When applied, Monify generates the boilerplate needed for a lightweight value ob
 - Equality (`==`) and inequality (`!=`) operators for comparing with other instances or with the underlying value.
 - Overrides of `Equals(object)`, `GetHashCode()`, and `ToString()`.
 - A debugger display that shows the wrapper type name and encapsulated value.
+- A nested `Converter` and a `JsonConverter` attribute for `System.Text.Json` serialization when the library is available.
 - Supported public and internal interfaces, methods, and properties from the encapsulated type.
 
 Debugger display generation is enabled by default. Set `DebuggerDisplay = false` to disable it for a type:
@@ -100,6 +101,18 @@ if (age == value)
     // comparisons work with both Age and int
 }
 ```
+
+### JSON serialization
+
+When `System.Text.Json` is referenced, Monify generates a nested converter named `Converter` and annotates the wrapper with `JsonConverter`. JSON uses the encapsulated value's representation:
+
+```csharp
+Age age = 42;
+string json = JsonSerializer.Serialize(age); // "42"
+Age restored = JsonSerializer.Deserialize<Age>(json);
+```
+
+The converter forwards serializer options to the encapsulated value. If your type already has a `JsonConverter` attribute, Monify preserves it and does not generate a converter. Generic wrappers and wrappers nested inside generic types use a generated converter factory that creates their nested `Converter`.
 
 ### Why engineers building monads care
 

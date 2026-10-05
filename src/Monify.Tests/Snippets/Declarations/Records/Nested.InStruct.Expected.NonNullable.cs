@@ -30,6 +30,66 @@ internal static partial class Nested
                     Extensions.HasConstructorForEncapsulatedValue,
                     "Monify.Testing.Records.Outter.Inner.ctor");
 
+                public static readonly Generated JsonConverter = new(
+                    """
+                    namespace Monify.Testing.Records
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        readonly ref partial struct Outter<T>
+                        {
+                            [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Records.Outter_1_InnerJsonConverterFactory))]
+                            sealed partial record Inner
+                            {
+                                public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Inner>
+                                {
+                                    public override Inner Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                                    {
+                                        return new Inner(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
+                                    }
+
+                                    public override void Write(global::System.Text.Json.Utf8JsonWriter writer, Inner value, global::System.Text.Json.JsonSerializerOptions options)
+                                    {
+                                        global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Records.Outter.Inner.JsonConverter",
+                    RequiresJsonSerialization: true);
+
+                public static readonly Generated JsonConverterFactory = new(
+                    """
+                    namespace Monify.Testing.Records
+                    {
+                        using System;
+                        using System.Collections.Generic;
+
+                        internal sealed class Outter_1_InnerJsonConverterFactory : global::System.Text.Json.Serialization.JsonConverterFactory
+                        {
+                            public override bool CanConvert(Type typeToConvert)
+                            {
+                                return typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition().FullName == "Monify.Testing.Records.Outter`1+Inner";
+                            }
+
+                            public override global::System.Text.Json.Serialization.JsonConverter CreateConverter(Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                            {
+                                Type converter = typeToConvert.GetNestedType("Converter");
+                                converter = converter.MakeGenericType(typeToConvert.GetGenericArguments());
+
+                                return (global::System.Text.Json.Serialization.JsonConverter)Activator.CreateInstance(converter);
+                            }
+                        }
+                    }
+                    """,
+                    Extensions.None,
+                    "Monify.Testing.Records.Outter.Inner.JsonConverterFactory",
+                    RequiresJsonSerialization: true);
+
                 public static readonly Generated ConversionFromValue = new(
                     """
                     namespace Monify.Testing.Records
