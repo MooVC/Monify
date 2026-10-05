@@ -46,14 +46,12 @@ namespace Monify.Semantics
                     continue;
                 }
 
-                conversions.Add(new Conversion
-                {
-                    IsParameterSubject = isParameterEncapsulated,
-                    IsReturnSubject = isReturnEncapsulated,
-                    Operator = method.Name,
-                    Parameter = parameter.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    Return = result.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                });
+                conversions.Add(new Conversion()
+                    .IsParameterSubject(isParameterEncapsulated)
+                    .IsReturnSubject(isReturnEncapsulated)
+                    .WithOperator(method.Name)
+                    .WithParameter(parameter.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .WithReturn(result.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)));
             }
 
             return conversions

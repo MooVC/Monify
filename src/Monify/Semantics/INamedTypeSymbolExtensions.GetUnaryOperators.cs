@@ -60,13 +60,11 @@ namespace Monify.Semantics
                     continue;
                 }
 
-                unaryOperators.Add(new UnaryOperator
-                {
-                    IsReturnSubject = isReturnSubject,
-                    Operator = method.Name,
-                    Return = returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    Symbol = symbol,
-                });
+                unaryOperators.Add(new UnaryOperator()
+                    .IsReturnSubject(isReturnSubject)
+                    .WithOperator(method.Name)
+                    .WithReturn(returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .WithSymbol(symbol));
             }
 
             return unaryOperators
@@ -89,13 +87,11 @@ namespace Monify.Semantics
                 return;
             }
 
-            unaryOperators.Add(new UnaryOperator
-            {
-                IsReturnSubject = isReturnSubject,
-                Operator = operatorName,
-                Return = returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                Symbol = symbol,
-            });
+            unaryOperators.Add(new UnaryOperator()
+                .IsReturnSubject(isReturnSubject)
+                .WithOperator(operatorName)
+                .WithReturn(returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                .WithSymbol(symbol));
         }
 
         private static void AddBuiltInUnaryOperator(

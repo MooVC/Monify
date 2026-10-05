@@ -1,10 +1,12 @@
 namespace Monify.Model
 {
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// The definition of the <see cref="Nesting"/> type, which is used to capture information relating to type within which a subject is defined.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class Nesting
     {

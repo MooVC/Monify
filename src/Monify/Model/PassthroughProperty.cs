@@ -1,11 +1,13 @@
 namespace Monify.Model
 {
     using System.Collections.Immutable;
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// Represents a property that can be forwarded to the encapsulated value.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class PassthroughProperty
     {

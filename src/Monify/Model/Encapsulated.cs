@@ -2,11 +2,13 @@ namespace Monify.Model
 {
     using System;
     using System.Collections.Immutable;
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// Represents the metadata associated with the encapsulated type.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class Encapsulated
     {

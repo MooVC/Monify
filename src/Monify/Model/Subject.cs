@@ -2,12 +2,14 @@ namespace Monify.Model
 {
     using System;
     using System.Collections.Immutable;
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// The definition of the <see cref="Subject"/> type, which is used to capture information relating to a subject
     /// upon which the Monify attribute has been placed.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class Subject
     {

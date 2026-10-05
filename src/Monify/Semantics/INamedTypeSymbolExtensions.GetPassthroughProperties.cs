@@ -51,30 +51,39 @@ namespace Monify.Semantics
         {
             IPropertySymbol explicitImplementation = property.ExplicitInterfaceImplementations.FirstOrDefault();
             IPropertySymbol declaration = explicitImplementation ?? property;
+            string accessibility = string.Empty;
+            string explicitInterface = string.Empty;
+            string getterAccessibility = string.Empty;
+            bool hasGetter;
+            bool hasSetter;
+            string setterAccessibility = string.Empty;
 
-            return new PassthroughProperty
+            if (explicitImplementation is null)
             {
-                Accessibility = explicitImplementation is null
-                    ? property.DeclaredAccessibility.ToSource()
-                    : string.Empty,
-                ExplicitInterface = explicitImplementation?.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ?? string.Empty,
-                GetterAccessibility = explicitImplementation is null
-                    ? GetAccessorAccessibility(property, property.GetMethod, encapsulated, subject)
-                    : string.Empty,
-                HasGetter = explicitImplementation is null
-                    ? property.GetMethod?.DeclaredAccessibility.CanForward(encapsulated, subject) is true
-                    : declaration.GetMethod is object,
-                HasSetter = explicitImplementation is null
-                    ? property.SetMethod?.DeclaredAccessibility.CanForward(encapsulated, subject) is true
-                    : declaration.SetMethod is object,
-                IsIndexer = declaration.IsIndexer,
-                Name = declaration.Name,
-                Parameters = declaration.Parameters.Select(CreatePassthroughParameter).ToImmutableArray(),
-                SetterAccessibility = explicitImplementation is null
-                    ? GetAccessorAccessibility(property, property.SetMethod, encapsulated, subject)
-                    : string.Empty,
-                Type = declaration.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-            };
+                accessibility = property.DeclaredAccessibility.ToSource();
+                getterAccessibility = GetAccessorAccessibility(property, property.GetMethod, encapsulated, subject);
+                hasGetter = property.GetMethod?.DeclaredAccessibility.CanForward(encapsulated, subject) is true;
+                hasSetter = property.SetMethod?.DeclaredAccessibility.CanForward(encapsulated, subject) is true;
+                setterAccessibility = GetAccessorAccessibility(property, property.SetMethod, encapsulated, subject);
+            }
+            else
+            {
+                explicitInterface = explicitImplementation.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+                hasGetter = declaration.GetMethod is object;
+                hasSetter = declaration.SetMethod is object;
+            }
+
+            return new PassthroughProperty()
+                .WithAccessibility(accessibility)
+                .WithExplicitInterface(explicitInterface)
+                .WithGetterAccessibility(getterAccessibility)
+                .HasGetter(hasGetter)
+                .HasSetter(hasSetter)
+                .IsIndexer(declaration.IsIndexer)
+                .WithName(declaration.Name)
+                .WithParameters(declaration.Parameters.Select(CreatePassthroughParameter).ToArray())
+                .WithSetterAccessibility(setterAccessibility)
+                .WithType(declaration.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
         }
 
         private static string GetAccessorAccessibility(

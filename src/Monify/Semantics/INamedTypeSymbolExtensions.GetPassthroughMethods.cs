@@ -62,17 +62,32 @@ namespace Monify.Semantics
         {
             IMethodSymbol explicitImplementation = method.ExplicitInterfaceImplementations.FirstOrDefault();
             IMethodSymbol declaration = explicitImplementation ?? method;
+            string accessibility = string.Empty;
+            string[] constraints = Array.Empty<string>();
+            string explicitInterface = string.Empty;
 
-            return new PassthroughMethod
+            PassthroughParameter[] parameters = declaration.Parameters
+                .Select(CreatePassthroughParameter)
+                .ToArray();
+
+            if (explicitImplementation is null)
             {
-                Accessibility = explicitImplementation is null ? method.DeclaredAccessibility.ToSource() : string.Empty,
-                Constraints = explicitImplementation is null ? declaration.GetTypeParameterConstraints() : ImmutableArray<string>.Empty,
-                ExplicitInterface = explicitImplementation?.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ?? string.Empty,
-                Name = declaration.Name,
-                Parameters = declaration.Parameters.Select(CreatePassthroughParameter).ToImmutableArray(),
-                Return = declaration.ReturnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                TypeParameters = declaration.TypeParameters.Select(parameter => parameter.Name).ToImmutableArray(),
-            };
+                accessibility = method.DeclaredAccessibility.ToSource();
+                constraints = method.GetTypeParameterConstraints().ToArray();
+            }
+            else
+            {
+                explicitInterface = explicitImplementation.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            }
+
+            return new PassthroughMethod()
+                .WithAccessibility(accessibility)
+                .WithConstraints(constraints)
+                .WithExplicitInterface(explicitInterface)
+                .WithName(declaration.Name)
+                .WithParameters(parameters)
+                .WithReturn(declaration.ReturnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                .WithTypeParameters(declaration.TypeParameters.Select(parameter => parameter.Name).ToArray());
         }
 
         private static bool HasPassthroughMethod(this INamedTypeSymbol subject, IMethodSymbol method)
@@ -82,7 +97,7 @@ namespace Monify.Semantics
             foreach (IMethodSymbol candidate in subject.GetMembers().OfType<IMethodSymbol>())
             {
                 if (explicitImplementation is object
-                 && candidate.ExplicitInterfaceImplementations.Any(implementation => SymbolEqualityComparer.Default.Equals(implementation, explicitImplementation)))
+                 && candidate.ExplicitInterfaceImplementations.Any(IsImplementation(explicitImplementation)))
                 {
                     return true;
                 }
@@ -111,6 +126,20 @@ namespace Monify.Semantics
 
             return implementation.ContainingType.DeclaredAccessibility.CanForward(encapsulated, subject)
                 && interfaces.Contains(@interface);
+        }
+
+        private static bool IsAccessor(this IMethodSymbol method)
+        {
+            return IsAccessorName(method.Name)
+                || method.ExplicitInterfaceImplementations.Any(implementation => implementation.AssociatedSymbol is object || IsAccessorName(implementation.Name));
+        }
+
+        private static bool IsAccessorName(string name)
+        {
+            return name.StartsWith("add_", StringComparison.Ordinal)
+                || name.StartsWith("get_", StringComparison.Ordinal)
+                || name.StartsWith("remove_", StringComparison.Ordinal)
+                || name.StartsWith("set_", StringComparison.Ordinal);
         }
 
         private static bool IsDuplicateOfGeneratedMethod(IMethodSymbol method, INamedTypeSymbol equatable, ImmutableArray<ITypeSymbol> generatedEquatableTypes)
@@ -145,18 +174,9 @@ namespace Monify.Semantics
                 && SymbolEqualityComparer.Default.Equals(left.Type, right.Type);
         }
 
-        private static bool IsAccessor(this IMethodSymbol method)
+        private static Func<IMethodSymbol, bool> IsImplementation(IMethodSymbol explicitImplementation)
         {
-            return IsAccessorName(method.Name)
-                || method.ExplicitInterfaceImplementations.Any(implementation => implementation.AssociatedSymbol is object || IsAccessorName(implementation.Name));
-        }
-
-        private static bool IsAccessorName(string name)
-        {
-            return name.StartsWith("add_", StringComparison.Ordinal)
-                || name.StartsWith("get_", StringComparison.Ordinal)
-                || name.StartsWith("remove_", StringComparison.Ordinal)
-                || name.StartsWith("set_", StringComparison.Ordinal);
+            return implementation => SymbolEqualityComparer.Default.Equals(implementation, explicitImplementation);
         }
 
         private static bool IsPassthroughMethodCandidate(

@@ -1,10 +1,12 @@
 namespace Monify.Model
 {
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// Represents a unary operator to be forwarded from the encapsulated type.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class UnaryOperator
     {
