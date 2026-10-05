@@ -4,7 +4,12 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [Unreleased]
+# [1.6.0] - 2026-10-05
+
+## Added
+
+- Types annotated with `Monify` now generate a nested `Converter` and a `JsonConverter` attribute when `System.Text.Json` is available. Values serialize using the encapsulated type's JSON representation, and existing converter attributes are preserved.
+- Generic wrappers, including wrappers nested inside generic types, use a generated converter factory to support JSON serialization.
 
 # [1.5.2] - 2026-09-09
 

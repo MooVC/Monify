@@ -32,13 +32,11 @@ namespace Monify.Semantics
             string argument = GetArgumentModifier(parameter);
             string declaration = GetDeclarationModifier(parameter);
 
-            return new PassthroughParameter
-            {
-                ArgumentModifier = argument,
-                DeclarationModifier = declaration,
-                Name = parameter.Name,
-                Type = parameter.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-            };
+            return new PassthroughParameter()
+                .WithArgumentModifier(argument)
+                .WithDeclarationModifier(declaration)
+                .WithName(parameter.Name)
+                .WithType(parameter.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
         }
 
         private static string GetDeclarationModifier(IParameterSymbol parameter)

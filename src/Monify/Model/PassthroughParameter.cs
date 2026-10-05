@@ -1,10 +1,12 @@
 namespace Monify.Model
 {
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// Represents a parameter used by a passthrough member.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class PassthroughParameter
     {

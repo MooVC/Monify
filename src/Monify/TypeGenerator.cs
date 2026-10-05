@@ -35,6 +35,7 @@ namespace Monify
             new GetHashCodeStrategy(),
             new InterfaceDeclarationStrategy(),
             new InequalityStrategy(),
+            new JsonConverterStrategy(),
             new MemberPassthroughStrategy(),
             new ToStringStrategy(),
             new UnaryOperatorStrategy(),
@@ -76,7 +77,7 @@ namespace Monify
 
                 foreach (Source source in sources)
                 {
-                    string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes).NormalizeLineEndings();
+                    string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes, source.IsNested).NormalizeLineEndings();
                     string hint = GetHint(source, match.Subject);
 
 #if DEBUG
@@ -145,9 +146,12 @@ namespace Monify
             return code;
         }
 
-        private static string Wrap(string code, Subject subject, bool supportsNullableReferenceTypes)
+        private static string Wrap(string code, Subject subject, bool supportsNullableReferenceTypes, bool isNested)
         {
-            code = Nest(code, subject);
+            if (isNested)
+            {
+                code = Nest(code, subject);
+            }
 
             if (supportsNullableReferenceTypes)
             {

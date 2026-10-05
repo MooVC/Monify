@@ -2,6 +2,7 @@ namespace Monify.Semantics
 {
     using System;
     using System.Collections.Immutable;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Monify.Model;
 
@@ -62,24 +63,23 @@ namespace Monify.Semantics
 
             _ = subject.IsStateless(value, out bool hasFieldForEncapsulatedValue);
 
-            return new Subject
-            {
-                CanOverrideEquals = subject.CanOverrideEquals(),
-                CanOverrideGetHashCode = subject.CanOverrideGetHashCode(),
-                CanOverrideToString = subject.CanOverrideToString(),
-                Declaration = declaration,
-                Encapsulated = subject.GetEncapsulated(compilation, model, value, passthrough),
-                GenerateDebuggerDisplay = debuggerDisplay && !subject.HasDebuggerDisplay(),
-                HasEqualityOperator = subject.HasEqualityOperator(),
-                HasEquatable = subject.HasEquatable(),
-                HasField = hasFieldForEncapsulatedValue,
-                HasInequalityOperator = subject.HasInequalityOperator(),
-                IsEquatable = subject.IsEquatable(compilation),
-                Name = subject.Name,
-                Namespace = @namespace,
-                Nesting = nesting,
-                Qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
-            };
+            return new Subject()
+                .CanOverrideEquals(subject.CanOverrideEquals())
+                .CanOverrideGetHashCode(subject.CanOverrideGetHashCode())
+                .CanOverrideToString(subject.CanOverrideToString())
+                .WithDeclaration(declaration)
+                .WithEncapsulated(subject.GetEncapsulated(compilation, model, value, passthrough).ToArray())
+                .GenerateDebuggerDisplay(debuggerDisplay && !subject.HasDebuggerDisplay())
+                .HasEqualityOperator(subject.HasEqualityOperator())
+                .HasEquatable(subject.HasEquatable())
+                .HasField(hasFieldForEncapsulatedValue)
+                .HasInequalityOperator(subject.HasInequalityOperator())
+                .IsEquatable(subject.IsEquatable(compilation))
+                .WithName(subject.Name)
+                .WithNamespace(@namespace)
+                .WithNesting(nesting.ToArray())
+                .WithQualification(subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                .WithSerialization(subject.ToSerialization(compilation));
         }
     }
 }

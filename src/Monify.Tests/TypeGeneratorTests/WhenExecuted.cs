@@ -1,11 +1,12 @@
 ﻿namespace Monify.TypeGeneratorTests;
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Monify.Snippets;
 using Monify.Snippets.Declarations;
 
-public sealed class WhenExecuted
+public sealed partial class WhenExecuted
 {
     private static readonly Type[] _generators =
     [
@@ -25,7 +26,10 @@ public sealed class WhenExecuted
         Attributes.IsExpectedIn(test.TestState, language);
         Internal.HashCode.IsExpectedIn(test.TestState);
         Internal.SequenceEqualityComparer.IsExpectedIn(test.TestState);
-        expectations.IsDeclaredIn(test.TestState);
+        var references = await assembly.ResolveAsync(LanguageNames.CSharp, CancellationToken.None);
+        bool supportsJsonSerialization = references.OfType<PortableExecutableReference>()
+            .Any(reference => Path.GetFileName(reference.FilePath) == "System.Text.Json.dll");
+        expectations.IsDeclaredIn(test.TestState, supportsJsonSerialization);
 
         // Act
         Func<Task> act = () => test.RunAsync();

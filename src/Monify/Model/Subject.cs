@@ -2,12 +2,14 @@ namespace Monify.Model
 {
     using System;
     using System.Collections.Immutable;
+    using Fluentify;
     using Valuify;
 
     /// <summary>
     /// The definition of the <see cref="Subject"/> type, which is used to capture information relating to a subject
     /// upon which the Monify attribute has been placed.
     /// </summary>
+    [Fluentify]
     [Valuify]
     internal sealed partial class Subject
     {
@@ -147,6 +149,14 @@ namespace Monify.Model
         /// The qualified name of the subject, which includes any generic arguments.
         /// </value>
         public string Qualification { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the serialization metadata associated with the subject.
+        /// </summary>
+        /// <value>
+        /// The serialization metadata associated with the subject.
+        /// </value>
+        public Serialization Serialization { get; set; } = new Serialization();
 
         /// <summary>
         /// Gets the qualified name of the value that is encapsulated by the subject.

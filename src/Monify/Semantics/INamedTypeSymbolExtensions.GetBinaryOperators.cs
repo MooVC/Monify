@@ -103,17 +103,15 @@ namespace Monify.Semantics
                     continue;
                 }
 
-                binaryOperators.Add(new BinaryOperator
-                {
-                    IsLeftSubject = isLeftSubject,
-                    IsReturnSubject = isReturnSubject,
-                    IsRightSubject = isRightSubject,
-                    Left = leftType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    Operator = method.Name,
-                    Return = returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    Right = rightType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    Symbol = symbol,
-                });
+                binaryOperators.Add(new BinaryOperator()
+                    .IsLeftSubject(isLeftSubject)
+                    .IsReturnSubject(isReturnSubject)
+                    .IsRightSubject(isRightSubject)
+                    .WithLeft(leftType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .WithOperator(method.Name)
+                    .WithReturn(returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .WithRight(rightType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .WithSymbol(symbol));
             }
 
             return binaryOperators
@@ -142,17 +140,15 @@ namespace Monify.Semantics
                 return;
             }
 
-            binaryOperators.Add(new BinaryOperator
-            {
-                IsLeftSubject = isLeftSubject,
-                IsReturnSubject = isReturnSubject,
-                IsRightSubject = isRightSubject,
-                Left = leftType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                Operator = operatorName,
-                Return = returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                Right = rightType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                Symbol = symbol,
-            });
+            binaryOperators.Add(new BinaryOperator()
+                .IsLeftSubject(isLeftSubject)
+                .IsReturnSubject(isReturnSubject)
+                .IsRightSubject(isRightSubject)
+                .WithLeft(leftType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                .WithOperator(operatorName)
+                .WithReturn(returnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                .WithRight(rightType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                .WithSymbol(symbol));
         }
 
         private static void AddBuiltInBinaryOperator(

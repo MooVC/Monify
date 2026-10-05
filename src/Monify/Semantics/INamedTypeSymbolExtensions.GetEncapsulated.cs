@@ -112,24 +112,22 @@ namespace Monify.Semantics
                 }
             }
 
-            return new Encapsulated
-            {
-                BinaryOperators = binaryOperators,
-                Conversions = conversions,
-                HasConstructor = value.HasConstructorFor(constructors),
-                HasConversionFrom = subject.HasConversion(subject, value),
-                HasConversionTo = subject.HasConversion(value, subject),
-                HasEqualityOperator = subject.HasEqualityOperator(type: value),
-                HasEquatable = subject.HasEquatable(type: value),
-                HasInequalityOperator = subject.HasInequalityOperator(type: value),
-                Interfaces = interfaces,
-                IsEquatable = subject.IsEquatable(compilation, type: value),
-                IsSequence = value.IsSequence(),
-                Methods = methods,
-                Properties = properties,
-                Type = value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                UnaryOperators = unaryOperators,
-            };
+            return new Encapsulated()
+                .WithBinaryOperators(binaryOperators.ToArray())
+                .WithConversions(conversions.ToArray())
+                .HasConstructor(value.HasConstructorFor(constructors))
+                .HasConversionFrom(subject.HasConversion(subject, value))
+                .HasConversionTo(subject.HasConversion(value, subject))
+                .HasEqualityOperator(subject.HasEqualityOperator(type: value))
+                .HasEquatable(subject.HasEquatable(type: value))
+                .HasInequalityOperator(subject.HasInequalityOperator(type: value))
+                .WithInterfaces(interfaces.ToArray())
+                .IsEquatable(subject.IsEquatable(compilation, type: value))
+                .IsSequence(value.IsSequence())
+                .WithMethods(methods.ToArray())
+                .WithProperties(properties.ToArray())
+                .WithType(value.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                .WithUnaryOperators(unaryOperators.ToArray());
         }
 
         private static bool CanForwardMembers(INamedTypeSymbol encapsulated, ImmutableArray<string> interfaces)

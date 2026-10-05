@@ -53,12 +53,10 @@ namespace Monify.Semantics
                     return false;
                 }
 
-                var parent = new Nesting
-                {
-                    Declaration = declaration,
-                    Name = current.Name,
-                    Qualification = current.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
-                };
+                var parent = new Nesting()
+                    .WithDeclaration(declaration)
+                    .WithName(current.Name)
+                    .WithQualification(current.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
 
                 nesting.Push(parent);
             }
