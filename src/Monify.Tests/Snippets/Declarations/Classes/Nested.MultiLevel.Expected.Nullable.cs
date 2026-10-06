@@ -58,7 +58,7 @@ internal static partial class Nested
                                 {
                                     public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<InlineStyle>
                                     {
-                                        public override InlineStyle Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                                        public override InlineStyle Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                                         {
                                             return new InlineStyle(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
                                         }

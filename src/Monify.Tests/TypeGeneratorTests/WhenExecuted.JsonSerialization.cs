@@ -45,6 +45,48 @@ public sealed partial class WhenExecuted
     }
 
     [Theory]
+    [InlineData("Sample", "public partial class Sample { }")]
+    [InlineData("Sample`1", "public partial class Sample<T> { }")]
+    [InlineData("Outer`1+Sample", "public partial class Outer<T> { public partial class Sample { } }")]
+    public void GivenConflictingFrameworkTypeNamesThenGeneratedConverterRoundTripsValue(string typeName, string declaration)
+    {
+        // Arrange
+        const string namespaceName = "MooVC.Syntax.CSharp";
+        declaration = declaration.Replace(
+            "public partial class Sample",
+            "[Monify<int>(Passthrough = false)] public partial class Sample",
+            StringComparison.Ordinal);
+        string code = $$"""
+            using Monify;
+
+            namespace {{namespaceName}}
+            {
+                public abstract class Type { }
+                public static class Activator { }
+                {{declaration}}
+            }
+            """;
+
+        // Act
+        var (assembly, _) = Generate(code);
+        var type = assembly.GetType(namespaceName + "." + typeName).ShouldNotBeNull();
+
+        if (type.IsGenericTypeDefinition)
+        {
+            var arguments = Enumerable.Repeat(typeof(int), type.GetGenericArguments().Length).ToArray();
+            type = type.MakeGenericType(arguments);
+        }
+
+        var instance = Activator.CreateInstance(type, SampleValue).ShouldNotBeNull();
+        string json = JsonSerializer.Serialize(instance, type);
+        var restored = JsonSerializer.Deserialize(json, type).ShouldNotBeNull();
+
+        // Assert
+        json.ShouldBe(Json);
+        restored.ShouldBe(instance);
+    }
+
+    [Theory]
     [InlineData("Sample`1", "public partial class Sample<T> { }", "Sample_1JsonConverterFactory")]
     [InlineData("Outer`1+Sample", "public partial class Outer<T> { public partial class Sample { } }", "Outer_1_SampleJsonConverterFactory")]
     [InlineData("Outer`1+Sample`1", "public partial class Outer<T> { public partial class Sample<TValue> { } }", "Outer_1_Sample_1JsonConverterFactory")]

@@ -66,7 +66,7 @@ namespace Monify.Strategies {
         ///{{
         ///    public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter&lt;{1}&gt;
         ///    {{
-        ///        public override {1} Read(ref global::System.Text.Json.Utf8JsonReader reader, Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+        ///        public override {1} Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
         ///        {{
         ///            return new {1}(global::System.Text.Json.JsonSerializer.Deserialize&lt;{2}&gt;(ref reader, options));
         ///        }}
@@ -82,14 +82,14 @@ namespace Monify.Strategies {
         /// <summary>
         ///   Looks up a localized string similar to internal sealed class {0} : global::System.Text.Json.Serialization.JsonConverterFactory
         ///{{
-        ///    public override bool CanConvert(Type typeToConvert)
+        ///    public override bool CanConvert(global::System.Type typeToConvert)
         ///    {{
         ///        return typeToConvert.IsGenericType &amp;&amp; typeToConvert.GetGenericTypeDefinition().FullName == &quot;{1}&quot;;
         ///    }}
         ///
-        ///    public override global::System.Text.Json.Serialization.JsonConverter CreateConverter(Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+        ///    public override global::System.Text.Json.Serialization.JsonConverter CreateConverter(global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
         ///    {{
-        ///        Type converter = typeToConvert.GetNestedType(&quot;Converter&quot;);
+        ///        global::System.Type converter = typeToConvert.GetNestedType(&quot;Converter&quot;);
         ///      [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FactorySource {
