@@ -10,10 +10,6 @@ on:
       - release/*
       - feature/*
       - hotfix/*
-    paths:
-      - '.github/workflows/**'
-      - 'build/**'
-      - 'src/**'
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
@@ -58,7 +54,9 @@ jobs:
     - name: Build Solution
       shell: bash
       run: |
-        if [ "$GITHUB_EVENT_NAME" = "pull_request" ] || [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+        if [ "$GITHUB_EVENT_NAME" = "push" ] ||
+           [ "$GITHUB_EVENT_NAME" = "pull_request" ] ||
+           [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
           dotnet build ${{ env.solution }} --configuration ${{ env.configuration }} -p:DefineConstants="CI" --no-restore
         else
           dotnet build ${{ env.solution }} --configuration ${{ env.configuration }} --no-restore
