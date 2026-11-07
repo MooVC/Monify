@@ -7,7 +7,7 @@ using Monify.Semantics;
 
 public sealed class WhenHasConstructorForIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenMatchingConstructorThenTrueIsReturned()
     {
         // Arrange
@@ -52,7 +52,7 @@ public sealed class WhenHasConstructorForIsCalled
         result.ShouldBeTrue();
     }
 
-    [Fact]
+    [Test]
     public void GivenNonMatchingConstructorThenFalseIsReturned()
     {
         // Arrange

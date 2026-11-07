@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InStruct.OutterForArrayTests;
 
-public static class WhenEqualsWithObjectIsCalled
+public sealed class WhenEqualsWithObjectIsCalled
 {
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenDifferentTypeThenReturnsFalse()
+    [Test]
+    public void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualsWithObjectIsCalled
         result.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentOutterForArrayInnerThenReturnTrue()
+    [Test]
+    public void GivenEquivalentOutterForArrayInnerThenReturnTrue()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
@@ -32,8 +32,8 @@ public static class WhenEqualsWithObjectIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenNullThenReturnFalse()
+    [Test]
+    public void GivenNullThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);

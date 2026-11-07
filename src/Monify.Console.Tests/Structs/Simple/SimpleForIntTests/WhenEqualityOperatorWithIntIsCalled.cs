@@ -1,12 +1,12 @@
 namespace Monify.Console.Structs.Simple.SimpleForIntTests;
 
-public static class WhenEqualityOperatorWithIntIsCalled
+public sealed class WhenEqualityOperatorWithIntIsCalled
 {
     private const int DifferentValue = 84;
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         SimpleForInt subject = new(SampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualityOperatorWithIntIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForInt subject = new(SampleValue);
@@ -31,8 +31,8 @@ public static class WhenEqualityOperatorWithIntIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSubjectIsNullThenReturnFalse()
+    [Test]
+    public void GivenSubjectIsNullThenReturnFalse()
     {
         // Arrange
         SimpleForInt? subject = default;

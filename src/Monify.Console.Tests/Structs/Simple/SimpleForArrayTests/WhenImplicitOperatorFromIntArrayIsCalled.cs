@@ -1,11 +1,11 @@
 namespace Monify.Console.Structs.Simple.SimpleForArrayTests;
 
-public static class WhenImplicitOperatorFromIntArrayIsCalled
+public sealed class WhenImplicitOperatorFromIntArrayIsCalled
 {
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         SimpleForArray result = _sampleValue;

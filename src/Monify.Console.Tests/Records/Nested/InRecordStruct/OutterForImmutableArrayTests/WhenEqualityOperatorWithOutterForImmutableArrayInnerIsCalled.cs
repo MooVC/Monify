@@ -2,13 +2,13 @@ namespace Monify.Console.Records.Nested.InRecordStruct.OutterForImmutableArrayTe
 
 using System.Collections.Immutable;
 
-public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
+public sealed class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner? left = default;
@@ -21,8 +21,8 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner left = new(_sampleValue);
@@ -35,8 +35,8 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
+    [Test]
+    public void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
         ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
@@ -51,8 +51,8 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner? left = default;
@@ -65,8 +65,8 @@ public static class WhenEqualityOperatorWithOutterForImmutableArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner left = new(_sampleValue);

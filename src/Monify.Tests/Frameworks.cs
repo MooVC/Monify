@@ -1,4 +1,4 @@
-﻿namespace Monify;
+namespace Monify;
 
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Testing;
 
 internal static class Frameworks
 {
-    public static readonly ImmutableArray<(ReferenceAssemblies Assembly, LanguageVersion Maximum, DateOnly SupportTo)> InScope =
+    private static readonly ImmutableArray<(ReferenceAssemblies Assembly, LanguageVersion Maximum, DateOnly SupportTo)> _inScope =
     [
         (ReferenceAssemblies.Net.Net50, LanguageVersion.CSharp9, new DateOnly(2022, 5, 10)),
         (ReferenceAssemblies.Net.Net60, LanguageVersion.CSharp10, new DateOnly(2024, 11, 12)),
@@ -27,6 +27,7 @@ internal static class Frameworks
         (ReferenceAssemblies.NetStandard.NetStandard21, LanguageVersion.CSharp8, DateOnly.MaxValue),
     ];
 
+#if CI
     private static readonly LanguageVersion[] _languages;
 
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "The removal suggestion is a false positive.")]
@@ -35,44 +36,41 @@ internal static class Frameworks
     {
         _languages = Enum.GetValues<LanguageVersion>();
     }
+#endif
 
-    public static IEnumerable<object[]> All(LanguageVersion minimum, LanguageVersion maximum = LanguageVersion.Latest, Func<ReferenceAssemblies, LanguageVersion, object[]?>? prepare = default)
+    public static IEnumerable<(ReferenceAssemblies Assembly, LanguageVersion Language)> Cases(LanguageVersion minimum, LanguageVersion maximum)
     {
-        return Filter(InScope, frameworkMaximum => _languages.Where(language => language >= minimum && language <= frameworkMaximum && language <= maximum), prepare);
-    }
-
-    public static IEnumerable<object[]> Supported(LanguageVersion minimum, LanguageVersion maximum = LanguageVersion.Latest, Func<ReferenceAssemblies, LanguageVersion, object[]?>? prepare = default)
-    {
+#if CI
+        return Filter(_inScope, frameworkMaximum => _languages.Where(language => language >= minimum && language <= frameworkMaximum && language <= maximum));
+#else
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
-        return Filter(InScope.Where(framework => framework.SupportTo >= today && framework.Maximum >= minimum && maximum >= minimum), frameworkMaximum => [Lowest(frameworkMaximum, maximum)], prepare);
+        return Filter(
+            _inScope.Where(framework => framework.SupportTo >= today && framework.Maximum >= minimum && maximum >= minimum),
+            frameworkMaximum => [frameworkMaximum < maximum ? frameworkMaximum : maximum]);
+#endif
     }
 
-    private static IEnumerable<object[]> Filter(
-        IEnumerable<(ReferenceAssemblies Assembly, LanguageVersion Maximum, DateOnly SupportedTo)> frameworks,
-        Func<LanguageVersion, IEnumerable<LanguageVersion>> languages,
-        Func<ReferenceAssemblies, LanguageVersion, object[]?>? prepare)
+    public static IEnumerable<(ReferenceAssemblies Assembly, LanguageVersion Language)> CSharp11Cases()
     {
-        prepare ??= (assembly, language) => [assembly, language];
+        return Cases(LanguageVersion.CSharp11, LanguageVersion.Latest);
+    }
 
+    public static IEnumerable<(ReferenceAssemblies Assembly, LanguageVersion Language)> DefaultCases()
+    {
+        return Cases(LanguageVersion.CSharp2, LanguageVersion.Latest);
+    }
+
+    private static IEnumerable<(ReferenceAssemblies Assembly, LanguageVersion Language)> Filter(
+        IEnumerable<(ReferenceAssemblies Assembly, LanguageVersion Maximum, DateOnly SupportedTo)> frameworks,
+        Func<LanguageVersion, IEnumerable<LanguageVersion>> languages)
+    {
         foreach ((ReferenceAssemblies assembly, LanguageVersion maximum, DateOnly _) in frameworks)
         {
             foreach (LanguageVersion language in languages(maximum))
             {
-                object[]? payload = prepare(assembly, language);
-
-                if (payload is not null)
-                {
-                    yield return payload;
-                }
+                yield return (assembly, language);
             }
         }
-    }
-
-    private static LanguageVersion Lowest(LanguageVersion first, LanguageVersion second)
-    {
-        return first < second
-            ? first
-            : second;
     }
 }

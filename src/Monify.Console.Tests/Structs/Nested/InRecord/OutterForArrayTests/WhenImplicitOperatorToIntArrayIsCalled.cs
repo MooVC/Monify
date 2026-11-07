@@ -1,11 +1,11 @@
 namespace Monify.Console.Structs.Nested.InRecord.OutterForArrayTests;
 
-public static class WhenImplicitOperatorToIntArrayIsCalled
+public sealed class WhenImplicitOperatorToIntArrayIsCalled
 {
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);

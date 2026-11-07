@@ -1,12 +1,12 @@
 namespace Monify.Console.Records.Nested.InStruct.OutterForIntTests;
 
-public static class WhenInequalityOperatorWithIntIsCalled
+public sealed class WhenInequalityOperatorWithIntIsCalled
 {
     private const int DifferentValue = 84;
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnTrue()
+    [Test]
+    public void GivenDifferentValueThenReturnTrue()
     {
         // Arrange
         OutterForInt<int>.Inner subject = new(SampleValue);
@@ -18,8 +18,8 @@ public static class WhenInequalityOperatorWithIntIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         OutterForInt<int>.Inner subject = new(SampleValue);
@@ -31,8 +31,8 @@ public static class WhenInequalityOperatorWithIntIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSubjectIsNullThenReturnTrue()
+    [Test]
+    public void GivenSubjectIsNullThenReturnTrue()
     {
         // Arrange
         OutterForInt<int>.Inner? subject = default;

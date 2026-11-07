@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForArrayTests;
 
-public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
+public sealed class WhenEqualityOperatorWithSimpleForArrayIsCalled
 {
     private static readonly int[] _differentValue = [4, 5, 6];
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         SimpleForArray? left = default;
@@ -19,8 +19,8 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         SimpleForArray left = new(_sampleValue);
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         int[] leftValues = [1, 2, 3];
@@ -49,8 +49,8 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         SimpleForArray? left = default;
@@ -63,8 +63,8 @@ public static class WhenEqualityOperatorWithSimpleForArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForArray left = new(_sampleValue);

@@ -15,13 +15,14 @@
     <File Path="build/Tests.props" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
   </Folder>
   <Folder Name="/Configuration/">
     <File Path=".filenesting.json" />
     <File Path=".github/CODEOWNERS" />
     <File Path=".gitignore" />
-    <File Path=".runsettings" />
     <File Path="codecov.yml" />
+    <File Path="instrumentation.config.xml" />
     <File Path="nuget.config" />
   </Folder>
   <Folder Name="/Documentation/">

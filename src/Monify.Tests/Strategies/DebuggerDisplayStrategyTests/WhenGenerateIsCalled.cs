@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenDebuggerDisplayWhenAllowedThenSourceIsReturned()
     {
         // Arrange
@@ -21,7 +21,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("return string.Format(\"Sample {{ {0} }}\", _value);");
     }
 
-    [Fact]
+    [Test]
     public void GivenDebuggerDisplayWhenNotAllowedThenNoSourceIsGenerated()
     {
         // Arrange

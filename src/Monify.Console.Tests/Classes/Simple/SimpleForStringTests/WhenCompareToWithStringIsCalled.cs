@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Simple.SimpleForStringTests;
 
-public static class WhenCompareToWithStringIsCalled
+public sealed class WhenCompareToWithStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenEquivalentValueThenReturnZero()
+    [Test]
+    public void GivenEquivalentValueThenReturnZero()
     {
         // Arrange
         IComparable<string> subject = new SimpleForString(SampleValue);

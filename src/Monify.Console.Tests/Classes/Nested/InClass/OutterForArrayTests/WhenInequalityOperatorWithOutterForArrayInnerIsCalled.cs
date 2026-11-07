@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Nested.InClass.OutterForArrayTests;
 
-public static class WhenInequalityOperatorWithOutterForArrayInnerIsCalled
+public sealed class WhenInequalityOperatorWithOutterForArrayInnerIsCalled
 {
     private static readonly int[] _differentValue = [4, 5, 6];
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    [Test]
+    public void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         OutterForArray<int>.Inner left = new(_sampleValue);
@@ -19,8 +19,8 @@ public static class WhenInequalityOperatorWithOutterForArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
+    [Test]
+    public void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
         int[] leftValues = [1, 2, 3];
@@ -35,8 +35,8 @@ public static class WhenInequalityOperatorWithOutterForArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner left = new(_sampleValue);

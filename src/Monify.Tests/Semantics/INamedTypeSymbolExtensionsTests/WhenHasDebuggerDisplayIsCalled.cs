@@ -40,7 +40,7 @@ public sealed class WhenHasDebuggerDisplayIsCalled
         }
         """;
 
-    [Fact]
+    [Test]
     public void GivenDebuggerDisplayAttributeThenTrueIsReturned()
     {
         // Arrange
@@ -56,7 +56,7 @@ public sealed class WhenHasDebuggerDisplayIsCalled
         result.ShouldBeTrue();
     }
 
-    [Fact]
+    [Test]
     public void GivenLookalikeDebuggerDisplayAttributeThenFalseIsReturned()
     {
         // Arrange
@@ -72,7 +72,7 @@ public sealed class WhenHasDebuggerDisplayIsCalled
         result.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenNoDebuggerDisplayAttributeThenFalseIsReturned()
     {
         // Arrange

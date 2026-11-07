@@ -1,12 +1,12 @@
 namespace Monify.Console.Structs.Nested.InInterface.IOutterForArrayTests;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private const string Expected = "System.Int32[]";
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenValueTheExpectedStringIsReturned()
+    [Test]
+    public void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         IOutterForArray<int>.Inner subject = new(_sampleValue);

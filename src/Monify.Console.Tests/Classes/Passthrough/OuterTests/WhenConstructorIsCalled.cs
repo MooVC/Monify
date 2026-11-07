@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Passthrough.OuterTests;
 
-public static class WhenConstructorIsCalled
+public sealed class WhenConstructorIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenValueThenValueIsStored()
+    [Test]
+    public void GivenValueThenValueIsStored()
     {
         // Arrange
         Outer instance = new(SampleValue);

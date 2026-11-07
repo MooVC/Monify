@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenGetHashCodeIsCalled
+public sealed class WhenGetHashCodeIsCalled
 {
     private const int FirstValue = 3;
     private const int SecondValue = 4;
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
+    [Test]
+    public void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
         SimpleForInt first = new(FirstValue);
@@ -20,8 +20,8 @@ public static class WhenGetHashCodeIsCalled
         firstHash.ShouldNotBe(secondHash);
     }
 
-    [Fact]
-    public static void GivenSameValuesThenReturnSameHashCode()
+    [Test]
+    public void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
         SimpleForInt first = new(FirstValue);

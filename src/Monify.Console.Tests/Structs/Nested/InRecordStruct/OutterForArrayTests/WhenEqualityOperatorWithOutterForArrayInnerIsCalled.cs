@@ -1,12 +1,12 @@
 namespace Monify.Console.Structs.Nested.InRecordStruct.OutterForArrayTests;
 
-public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
+public sealed class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
 {
     private static readonly int[] _differentValue = [4, 5, 6];
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         OutterForArray<int>.Inner? left = default;
@@ -19,8 +19,8 @@ public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner left = new(_sampleValue);
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         int[] leftValues = [1, 2, 3];
@@ -49,8 +49,8 @@ public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner? left = default;
@@ -63,8 +63,8 @@ public static class WhenEqualityOperatorWithOutterForArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         OutterForArray<int>.Inner left = new(_sampleValue);

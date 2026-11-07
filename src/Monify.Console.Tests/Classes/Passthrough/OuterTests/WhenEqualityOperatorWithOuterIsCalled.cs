@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Passthrough.OuterTests;
 
-public static class WhenEqualityOperatorWithOuterIsCalled
+public sealed class WhenEqualityOperatorWithOuterIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         Outer? left = default;
@@ -19,8 +19,8 @@ public static class WhenEqualityOperatorWithOuterIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         Outer left = new(SampleValue);
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithOuterIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         string leftValue = new(SampleValue.ToCharArray());
@@ -49,8 +49,8 @@ public static class WhenEqualityOperatorWithOuterIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         Outer? left = default;
@@ -63,8 +63,8 @@ public static class WhenEqualityOperatorWithOuterIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         Outer left = new(SampleValue);

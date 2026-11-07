@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Nested.InClass.OutterForIntTests;
 
-public static class WhenGetHashCodeIsCalled
+public sealed class WhenGetHashCodeIsCalled
 {
     private const int FirstValue = 5;
     private const int SecondValue = 9;
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
+    [Test]
+    public void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
         OutterForInt<int>.Inner first = new(FirstValue);
@@ -20,8 +20,8 @@ public static class WhenGetHashCodeIsCalled
         firstHash.ShouldNotBe(secondHash);
     }
 
-    [Fact]
-    public static void GivenSameValuesThenReturnSameHashCode()
+    [Test]
+    public void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
         OutterForInt<int>.Inner first = new(FirstValue);

@@ -13,12 +13,12 @@ public sealed partial class WhenExecuted
     private const string JsonConverterHint = ".Sample.JsonConverter.g.cs";
     private const int SampleValue = 42;
 
-    [Theory]
-    [InlineData("partial class")]
-    [InlineData("partial record")]
-    [InlineData("partial struct")]
-    [InlineData("readonly partial struct")]
-    [InlineData("partial record struct")]
+    [Test]
+    [Arguments("partial class")]
+    [Arguments("partial record")]
+    [Arguments("partial struct")]
+    [Arguments("readonly partial struct")]
+    [Arguments("partial record struct")]
     public void GivenUnannotatedTypeThenGeneratedConverterRoundTripsValue(string declaration)
     {
         // Arrange
@@ -44,10 +44,10 @@ public sealed partial class WhenExecuted
         restored.ShouldBe(instance);
     }
 
-    [Theory]
-    [InlineData("Sample", "public partial class Sample { }")]
-    [InlineData("Sample`1", "public partial class Sample<T> { }")]
-    [InlineData("Outer`1+Sample", "public partial class Outer<T> { public partial class Sample { } }")]
+    [Test]
+    [Arguments("Sample", "public partial class Sample { }")]
+    [Arguments("Sample`1", "public partial class Sample<T> { }")]
+    [Arguments("Outer`1+Sample", "public partial class Outer<T> { public partial class Sample { } }")]
     public void GivenConflictingFrameworkTypeNamesThenGeneratedConverterRoundTripsValue(string typeName, string declaration)
     {
         // Arrange
@@ -86,11 +86,11 @@ public sealed partial class WhenExecuted
         restored.ShouldBe(instance);
     }
 
-    [Theory]
-    [InlineData("Sample`1", "public partial class Sample<T> { }", "Sample_1JsonConverterFactory")]
-    [InlineData("Outer`1+Sample", "public partial class Outer<T> { public partial class Sample { } }", "Outer_1_SampleJsonConverterFactory")]
-    [InlineData("Outer`1+Sample`1", "public partial class Outer<T> { public partial class Sample<TValue> { } }", "Outer_1_Sample_1JsonConverterFactory")]
-    [InlineData("Outer`1+Sample", "public partial class Outer<T> { private partial class Sample { } }", "Outer_1_SampleJsonConverterFactory")]
+    [Test]
+    [Arguments("Sample`1", "public partial class Sample<T> { }", "Sample_1JsonConverterFactory")]
+    [Arguments("Outer`1+Sample", "public partial class Outer<T> { public partial class Sample { } }", "Outer_1_SampleJsonConverterFactory")]
+    [Arguments("Outer`1+Sample`1", "public partial class Outer<T> { public partial class Sample<TValue> { } }", "Outer_1_Sample_1JsonConverterFactory")]
+    [Arguments("Outer`1+Sample", "public partial class Outer<T> { private partial class Sample { } }", "Outer_1_SampleJsonConverterFactory")]
     public void GivenGenericTypeThenFactoryRoundTripsValue(string typeName, string declaration, string factoryName)
     {
         // Arrange
@@ -114,7 +114,7 @@ public sealed partial class WhenExecuted
         restored.ShouldBe(instance);
     }
 
-    [Fact]
+    [Test]
     public void GivenAnnotatedTypeThenExistingConverterIsPreserved()
     {
         // Arrange
@@ -155,11 +155,11 @@ public sealed partial class WhenExecuted
         restored.ShouldBe(instance);
     }
 
-    [Theory]
-    [InlineData("string", "\"sample\"")]
-    [InlineData("int[]", "[1,2,3]")]
-    [InlineData("int?", "null")]
-    [InlineData("string", "null")]
+    [Test]
+    [Arguments("string", "\"sample\"")]
+    [Arguments("int[]", "[1,2,3]")]
+    [Arguments("int?", "null")]
+    [Arguments("string", "null")]
     public void GivenEncapsulatedValueThenJsonShapeIsPreserved(string valueType, string json)
     {
         // Arrange
@@ -179,7 +179,7 @@ public sealed partial class WhenExecuted
         actual.ShouldBe(json);
     }
 
-    [Fact]
+    [Test]
     public void GivenSerializerOptionsThenOptionsAreForwardedToEncapsulatedValue()
     {
         // Arrange

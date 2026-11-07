@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Nested.InClass.OutterForStringTests;
 
-public static class WhenEqualityOperatorWithStringIsCalled
+public sealed class WhenEqualityOperatorWithStringIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         OutterForString<int>.Inner subject = new(SampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualityOperatorWithStringIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValueThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValueThenReturnTrue()
     {
         // Arrange
         string subjectValue = new(SampleValue.ToCharArray());
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithStringIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         OutterForString<int>.Inner subject = new(SampleValue);
@@ -46,8 +46,8 @@ public static class WhenEqualityOperatorWithStringIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSubjectIsNullThenReturnFalse()
+    [Test]
+    public void GivenSubjectIsNullThenReturnFalse()
     {
         // Arrange
         OutterForString<int>.Inner? subject = default;

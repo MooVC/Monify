@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenCompareToWithObjectIsCalled
+public sealed class WhenCompareToWithObjectIsCalled
 {
     private const int SampleValue = 91;
 
-    [Fact]
-    public static void GivenEquivalentAnnotatedTypeThenReturnZero()
+    [Test]
+    public void GivenEquivalentAnnotatedTypeThenReturnZero()
     {
         // Arrange
         IComparable subject = new SimpleForInt(SampleValue);
@@ -18,8 +18,8 @@ public static class WhenCompareToWithObjectIsCalled
         actual.ShouldBe(0);
     }
 
-    [Fact]
-    public static void GivenEquivalentEncapsulatedTypeThenReturnZero()
+    [Test]
+    public void GivenEquivalentEncapsulatedTypeThenReturnZero()
     {
         // Arrange
         IComparable subject = new SimpleForInt(SampleValue);
@@ -32,8 +32,8 @@ public static class WhenCompareToWithObjectIsCalled
         actual.ShouldBe(0);
     }
 
-    [Fact]
-    public static void GivenInvalidTypeThenThrowArgumentException()
+    [Test]
+    public void GivenInvalidTypeThenThrowArgumentException()
     {
         // Arrange
         IComparable subject = new SimpleForInt(SampleValue);

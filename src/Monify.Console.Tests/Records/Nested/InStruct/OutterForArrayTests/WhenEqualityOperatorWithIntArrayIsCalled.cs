@@ -1,12 +1,12 @@
 namespace Monify.Console.Records.Nested.InStruct.OutterForArrayTests;
 
-public static class WhenEqualityOperatorWithIntArrayIsCalled
+public sealed class WhenEqualityOperatorWithIntArrayIsCalled
 {
     private static readonly int[] _differentValue = [4, 5, 6];
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         OutterForArray<int>.Inner subject = new(_sampleValue);
@@ -31,8 +31,8 @@ public static class WhenEqualityOperatorWithIntArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSubjectIsNullThenReturnFalse()
+    [Test]
+    public void GivenSubjectIsNullThenReturnFalse()
     {
         // Arrange
         OutterForArray<int>.Inner? subject = default;

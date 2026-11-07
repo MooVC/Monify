@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Passthrough.OuterTests;
 
-public static class WhenEqualsWithOuterIsCalled
+public sealed class WhenEqualsWithOuterIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         Outer left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenEqualsWithOuterIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         Outer left = new(SampleValue);

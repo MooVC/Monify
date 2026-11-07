@@ -1,11 +1,11 @@
 namespace Monify.Console.Structs.Simple.SimpleForStringTests;
 
-public static class WhenImplicitOperatorToStringIsCalled
+public sealed class WhenImplicitOperatorToStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         SimpleForString subject = new(SampleValue);

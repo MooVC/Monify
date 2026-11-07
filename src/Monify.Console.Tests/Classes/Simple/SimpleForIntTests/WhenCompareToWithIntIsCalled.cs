@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenCompareToWithIntIsCalled
+public sealed class WhenCompareToWithIntIsCalled
 {
     private const int SampleValue = 91;
 
-    [Fact]
-    public static void GivenEquivalentValueThenReturnZero()
+    [Test]
+    public void GivenEquivalentValueThenReturnZero()
     {
         // Arrange
         IComparable<int> subject = new SimpleForInt(SampleValue);

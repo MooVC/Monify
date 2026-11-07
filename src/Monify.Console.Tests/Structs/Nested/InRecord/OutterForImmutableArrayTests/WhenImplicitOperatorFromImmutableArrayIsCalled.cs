@@ -2,12 +2,12 @@ namespace Monify.Console.Structs.Nested.InRecord.OutterForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenImplicitOperatorFromImmutableArrayIsCalled
+public sealed class WhenImplicitOperatorFromImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner result = _sampleValue;

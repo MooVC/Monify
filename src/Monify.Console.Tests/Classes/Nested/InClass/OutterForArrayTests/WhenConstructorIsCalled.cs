@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InClass.OutterForArrayTests;
 
-public static class WhenConstructorIsCalled
+public sealed class WhenConstructorIsCalled
 {
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenValueThenValueIsStored()
+    [Test]
+    public void GivenValueThenValueIsStored()
     {
         // Arrange
         OutterForArray<int>.Inner instance = new(_sampleValue);

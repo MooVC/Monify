@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenOverridesWhenAllowedThenSourceIsReturned()
     {
         // Arrange
@@ -20,7 +20,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("public override int GetHashCode()");
     }
 
-    [Fact]
+    [Test]
     public void GivenOverridesWhenNotAllowedThenNoSourceIsGenerated()
     {
         // Arrange

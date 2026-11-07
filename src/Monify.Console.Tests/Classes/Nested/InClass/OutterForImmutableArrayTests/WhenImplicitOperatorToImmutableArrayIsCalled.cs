@@ -2,12 +2,12 @@ namespace Monify.Console.Classes.Nested.InClass.OutterForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenImplicitOperatorToImmutableArrayIsCalled
+public sealed class WhenImplicitOperatorToImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenNullSubjectThenThrowsArgumentNullException()
+    [Test]
+    public void GivenNullSubjectThenThrowsArgumentNullException()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner? subject = default;
@@ -20,8 +20,8 @@ public static class WhenImplicitOperatorToImmutableArrayIsCalled
         exception.ParamName.ShouldBe(nameof(subject));
     }
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);

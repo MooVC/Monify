@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Nested.InInterface.IOutterForImmutableArrayTest
 
 using System.Collections.Immutable;
 
-public static class WhenInequalityOperatorWithIOutterForImmutableArrayInnerIsCalled
+public sealed class WhenInequalityOperatorWithIOutterForImmutableArrayInnerIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    [Test]
+    public void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         IOutterForImmutableArray<int>.Inner left = new(_sampleValue);
@@ -21,8 +21,8 @@ public static class WhenInequalityOperatorWithIOutterForImmutableArrayInnerIsCal
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
+    [Test]
+    public void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
         ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
@@ -37,8 +37,8 @@ public static class WhenInequalityOperatorWithIOutterForImmutableArrayInnerIsCal
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         IOutterForImmutableArray<int>.Inner left = new(_sampleValue);

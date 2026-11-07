@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Passthrough.InnerTests;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private const string Expected = SampleValue;
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenValueTheExpectedStringIsReturned()
+    [Test]
+    public void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         Inner subject = new(SampleValue);

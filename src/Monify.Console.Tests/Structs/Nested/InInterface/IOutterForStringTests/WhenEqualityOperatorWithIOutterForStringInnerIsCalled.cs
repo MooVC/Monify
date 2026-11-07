@@ -1,12 +1,12 @@
 namespace Monify.Console.Structs.Nested.InInterface.IOutterForStringTests;
 
-public static class WhenEqualityOperatorWithIOutterForStringInnerIsCalled
+public sealed class WhenEqualityOperatorWithIOutterForStringInnerIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         IOutterForString<int>.Inner? left = default;
@@ -19,8 +19,8 @@ public static class WhenEqualityOperatorWithIOutterForStringInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         IOutterForString<int>.Inner left = new(SampleValue);
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithIOutterForStringInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         string leftValue = new(SampleValue.ToCharArray());
@@ -49,8 +49,8 @@ public static class WhenEqualityOperatorWithIOutterForStringInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         IOutterForString<int>.Inner? left = default;
@@ -63,8 +63,8 @@ public static class WhenEqualityOperatorWithIOutterForStringInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         IOutterForString<int>.Inner left = new(SampleValue);

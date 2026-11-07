@@ -1,4 +1,4 @@
-﻿namespace Monify.AttributeAnalyzerTests;
+namespace Monify.AttributeAnalyzerTests;
 
 using System.Text;
 using Microsoft.CodeAnalysis.CSharp;
@@ -20,22 +20,37 @@ using UnsupportedStruct = Monify.Snippets.Declarations.Structs.Unsupported;
 
 public sealed class WhenExecuted
 {
-    [Theory]
-    [Snippets(
-        exclusions:
-        [
-            typeof(Attributes),
-            typeof(SelfReferencedClass),
-            typeof(SelfReferencedRecord),
-            typeof(SelfReferencedStruct),
-            typeof(UnannotatedClass),
-            typeof(UnsupportedClass),
-            typeof(UnannotatedRecord),
-            typeof(UnsupportedRecord),
-            typeof(UnannotatedStruct),
-            typeof(UnsupportedStruct),
-        ],
-        extensions: Extensions.None)]
+    public static IEnumerable<TestDataRow<(ReferenceAssemblies Assembly, Expectations Expectations, LanguageVersion Language)>> CompliantCases()
+    {
+        return SnippetCases.Create(
+            exclusions:
+            [
+                typeof(Attributes),
+                typeof(SelfReferencedClass),
+                typeof(SelfReferencedRecord),
+                typeof(SelfReferencedStruct),
+                typeof(UnannotatedClass),
+                typeof(UnannotatedRecord),
+                typeof(UnannotatedStruct),
+                typeof(UnsupportedClass),
+                typeof(UnsupportedRecord),
+                typeof(UnsupportedStruct),
+            ],
+            extensions: Extensions.None);
+    }
+
+    public static IEnumerable<TestDataRow<(ReferenceAssemblies Assembly, Expectations Expectations, LanguageVersion Language)>> NonPartialCases()
+    {
+        return SnippetCases.Create(inclusions: [typeof(UnsupportedClass), typeof(UnsupportedRecord), typeof(UnsupportedStruct)]);
+    }
+
+    public static IEnumerable<TestDataRow<(ReferenceAssemblies Assembly, Expectations Expectations, LanguageVersion Language)>> SelfReferencingCases()
+    {
+        return SnippetCases.Create(inclusions: [typeof(SelfReferencedClass), typeof(SelfReferencedRecord), typeof(SelfReferencedStruct)]);
+    }
+
+    [Test]
+    [MethodDataSource(nameof(CompliantCases))]
     public async Task GivenATypeWhenCompliantThenNoDiagnosticsAreRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange
@@ -50,8 +65,8 @@ public sealed class WhenExecuted
         await act.ShouldNotThrowAsync();
     }
 
-    [Theory]
-    [Frameworks(Language = LanguageVersion.CSharp11)]
+    [Test]
+    [MethodDataSource(typeof(Frameworks), nameof(Frameworks.CSharp11Cases))]
     public async Task GivenAClassWhenNoStateExistsThenCapturesStateRuleIsNotRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
         // Arrange
@@ -76,8 +91,8 @@ public sealed class WhenExecuted
         await act.ShouldNotThrowAsync();
     }
 
-    [Theory]
-    [Frameworks(Language = LanguageVersion.CSharp11)]
+    [Test]
+    [MethodDataSource(typeof(Frameworks), nameof(Frameworks.CSharp11Cases))]
     public async Task GivenAPositionalRecordWhenOnlyImplicitStateExistsThenCapturesStateRuleIsRaised(ReferenceAssemblies assembly, LanguageVersion language)
     {
         // Arrange
@@ -100,8 +115,8 @@ public sealed class WhenExecuted
         _ = await act.ShouldThrowAsync<InvalidOperationException>();
     }
 
-    [Theory]
-    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(UnsupportedClass), typeof(UnsupportedRecord), typeof(UnsupportedStruct)])]
+    [Test]
+    [MethodDataSource(nameof(NonPartialCases))]
     public async Task GivenATypeWhenNotPartialThenPartialTypeRuleIsRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange
@@ -117,8 +132,8 @@ public sealed class WhenExecuted
         await act.ShouldNotThrowAsync();
     }
 
-    [Theory]
-    [Snippets(exclusions: [typeof(Attributes)], inclusions: [typeof(SelfReferencedClass), typeof(SelfReferencedRecord), typeof(SelfReferencedStruct)])]
+    [Test]
+    [MethodDataSource(nameof(SelfReferencingCases))]
     public async Task GivenATypeWhenSelfReferencedThenSelfReferencingRuleIsRaised(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange

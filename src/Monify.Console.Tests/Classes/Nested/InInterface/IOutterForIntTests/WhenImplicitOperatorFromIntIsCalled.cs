@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InInterface.IOutterForIntTests;
 
-public static class WhenImplicitOperatorFromIntIsCalled
+public sealed class WhenImplicitOperatorFromIntIsCalled
 {
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         IOutterForInt<int>.Inner result = SampleValue;

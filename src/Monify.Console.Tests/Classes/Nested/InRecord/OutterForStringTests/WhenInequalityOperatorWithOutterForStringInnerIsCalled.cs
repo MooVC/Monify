@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Nested.InRecord.OutterForStringTests;
 
-public static class WhenInequalityOperatorWithOutterForStringInnerIsCalled
+public sealed class WhenInequalityOperatorWithOutterForStringInnerIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    [Test]
+    public void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         OutterForString<int>.Inner left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenInequalityOperatorWithOutterForStringInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
+    [Test]
+    public void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
         string leftValue = new(SampleValue.ToCharArray());
@@ -35,8 +35,8 @@ public static class WhenInequalityOperatorWithOutterForStringInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         OutterForString<int>.Inner left = new(SampleValue);

@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenSubjectWhenHasFieldThenNoSourceIsGenerated()
     {
         // Arrange
@@ -19,7 +19,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenLacksFieldThenSourceIsReturned()
     {
         // Arrange

@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public sealed class WhenIsPartialIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenNonPartialTypeDeclarationThenReturnsFalse()
     {
         // Arrange
@@ -18,7 +18,7 @@ public sealed class WhenIsPartialIsCalled
         result.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenPartialTypeDeclarationThenReturnsTrue()
     {
         // Arrange

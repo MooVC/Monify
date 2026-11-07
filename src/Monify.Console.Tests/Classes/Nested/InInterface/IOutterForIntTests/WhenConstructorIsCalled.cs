@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InInterface.IOutterForIntTests;
 
-public static class WhenConstructorIsCalled
+public sealed class WhenConstructorIsCalled
 {
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenValueThenValueIsStored()
+    [Test]
+    public void GivenValueThenValueIsStored()
     {
         // Arrange
         IOutterForInt<int>.Inner instance = new(SampleValue);

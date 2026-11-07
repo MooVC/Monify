@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenInequalityOperatorWithSimpleForIntIsCalled
+public sealed class WhenInequalityOperatorWithSimpleForIntIsCalled
 {
     private const int DifferentValue = 64;
     private const int SampleValue = 63;
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    [Test]
+    public void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         SimpleForInt left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenInequalityOperatorWithSimpleForIntIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         SimpleForInt left = new(SampleValue);

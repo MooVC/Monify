@@ -6,7 +6,7 @@ using Monify.Strategies;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenNoUnaryOperatorsThenNoSourceIsGenerated()
     {
         // Arrange
@@ -21,7 +21,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughUnaryOperatorsDuplicateEarlierSignaturesThenTheyAreSkipped()
     {
         // Arrange
@@ -77,7 +77,7 @@ public sealed class WhenGenerateIsCalled
         sources[1].Hint.ShouldBe("Unary.Passthrough.Level01.op_LogicalNot.Sample");
     }
 
-    [Fact]
+    [Test]
     public void GivenUnaryOperatorsThenSourceIsGenerated()
     {
         // Arrange

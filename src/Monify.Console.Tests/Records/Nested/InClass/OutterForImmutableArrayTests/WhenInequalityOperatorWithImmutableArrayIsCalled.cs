@@ -2,13 +2,13 @@ namespace Monify.Console.Records.Nested.InClass.OutterForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenInequalityOperatorWithImmutableArrayIsCalled
+public sealed class WhenInequalityOperatorWithImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenDefaultValueThenReturnFalse()
+    [Test]
+    public void GivenDefaultValueThenReturnFalse()
     {
         // Arrange
         ImmutableArray<string> value = default;
@@ -21,8 +21,8 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnTrue()
+    [Test]
+    public void GivenDifferentValueThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
@@ -34,8 +34,8 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
@@ -47,8 +47,8 @@ public static class WhenInequalityOperatorWithImmutableArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSubjectIsNullThenReturnTrue()
+    [Test]
+    public void GivenSubjectIsNullThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner? subject = default;

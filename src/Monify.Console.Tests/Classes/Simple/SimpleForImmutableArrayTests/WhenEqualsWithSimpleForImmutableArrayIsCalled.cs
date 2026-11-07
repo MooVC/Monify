@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Simple.SimpleForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenEqualsWithSimpleForImmutableArrayIsCalled
+public sealed class WhenEqualsWithSimpleForImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         SimpleForImmutableArray left = new(_sampleValue);
@@ -21,8 +21,8 @@ public static class WhenEqualsWithSimpleForImmutableArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForImmutableArray left = new(_sampleValue);

@@ -8,7 +8,7 @@ using Monify.Semantics;
 
 public sealed class WhenGetEncapsulatedIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenEncapsulatedStringThenBuiltInBinaryOperatorsAreCaptured()
     {
         // Arrange
@@ -87,7 +87,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && @operator.Symbol == "+");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedStringThenInterfacesAreCaptured()
     {
         // Arrange
@@ -108,7 +108,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && method.Parameters[0].Type == "string");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedSortableSpecialTypesThenInterfacesAreCaptured()
     {
         // Arrange
@@ -137,7 +137,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         }
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedBoolThenBuiltInOperatorsAreCaptured()
     {
         // Arrange
@@ -161,7 +161,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         ShouldContainUnaryOperator(unaryOperators, "op_True", "true", isReturnSubject: false, returnType: "bool");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedIntThenBuiltInUnaryOperatorsAreCaptured()
     {
         // Arrange
@@ -226,7 +226,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && @operator.Symbol == "-");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedNumericTypesThenBuiltInBinaryOperatorsAreCaptured()
     {
         // Arrange
@@ -282,7 +282,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         }
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedNumericTypesThenBuiltInUnaryOperatorsAreCaptured()
     {
         // Arrange
@@ -330,7 +330,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         }
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedTypeWithBinaryOperatorsThenTheyAreCaptured()
     {
         // Arrange
@@ -427,7 +427,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && @operator.Symbol == ">=");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedTypeWithConversionsThenTheyAreCaptured()
     {
         // Arrange
@@ -499,7 +499,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Conversions[1].Return.ShouldBe("string");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedTypeWithInterfacesThenTheyAreCaptured()
     {
         // Arrange
@@ -586,7 +586,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Interfaces.ShouldNotContain("global::System.IEquatable<global::Sample.Wrapper>");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedTypeWithMembersThenTheyAreCaptured()
     {
         // Arrange
@@ -706,7 +706,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && method.Parameters[0].Type == "int");
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughIsFalseThenMembersAndInterfacesAreNotCaptured()
     {
         // Arrange
@@ -789,7 +789,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].BinaryOperators.ShouldContain(@operator => @operator.Operator == "op_Addition");
     }
 
-    [Fact]
+    [Test]
     public void GivenAnnotatedTypeWithMatchingMembersThenTheyAreNotCaptured()
     {
         // Arrange
@@ -865,7 +865,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Methods[0].Name.ShouldBe("Other");
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughMethodRequiresUnsupportedLanguageVersionThenItIsNotCaptured()
     {
         // Arrange
@@ -935,7 +935,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && method.Parameters[0].Type == "global::System.ReadOnlySpan<int>");
     }
 
-    [Fact]
+    [Test]
     public void GivenAnnotatedTypeWithMatchingInterfaceThenPassthroughMembersAreNotCaptured()
     {
         // Arrange
@@ -1015,7 +1015,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Properties.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedTypeWithStrategyGeneratedMethodsThenTheyAreNotCaptured()
     {
         // Arrange
@@ -1090,7 +1090,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Methods[0].Name.ShouldBe("Format");
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughTypeWithGeneratedEquatableMembersThenTheyAreNotCaptured()
     {
         // Arrange
@@ -1169,7 +1169,7 @@ public sealed class WhenGetEncapsulatedIsCalled
         encapsulated[0].Methods.ShouldContain(method => method.Name == "Format");
     }
 
-    [Fact]
+    [Test]
     public void GivenEncapsulatedTypeWithUnaryOperatorsThenTheyAreCaptured()
     {
         // Arrange
@@ -1257,7 +1257,7 @@ public sealed class WhenGetEncapsulatedIsCalled
             && @operator.Symbol == "true");
     }
 
-    [Fact]
+    [Test]
     public void GivenMonifyAttributesWithNamedArgumentsThenPassthroughValuesAreCaptured()
     {
         // Arrange

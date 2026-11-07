@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private const string Expected = "91";
     private const int SampleValue = 91;
 
-    [Fact]
-    public static void GivenValueTheExpectedStringIsReturned()
+    [Test]
+    public void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         SimpleForInt subject = new(SampleValue);

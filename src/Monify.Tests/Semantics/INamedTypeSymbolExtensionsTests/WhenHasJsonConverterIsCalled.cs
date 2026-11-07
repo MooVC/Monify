@@ -35,10 +35,10 @@ public sealed class WhenHasJsonConverterIsCalled
         }
         """;
 
-    [Theory]
-    [InlineData("Sample.Decorated")]
-    [InlineData("Sample.Aliased")]
-    [InlineData("Sample.Derived")]
+    [Test]
+    [Arguments("Sample.Decorated")]
+    [Arguments("Sample.Aliased")]
+    [Arguments("Sample.Derived")]
     public void GivenJsonConverterAttributeThenTrueIsReturned(string typeName)
     {
         // Arrange
@@ -52,9 +52,9 @@ public sealed class WhenHasJsonConverterIsCalled
         result.ShouldBeTrue();
     }
 
-    [Theory]
-    [InlineData("Sample.Plain")]
-    [InlineData("Other.Decorated")]
+    [Test]
+    [Arguments("Sample.Plain")]
+    [Arguments("Other.Decorated")]
     public void GivenNoJsonConverterAttributeThenFalseIsReturned(string typeName)
     {
         // Arrange

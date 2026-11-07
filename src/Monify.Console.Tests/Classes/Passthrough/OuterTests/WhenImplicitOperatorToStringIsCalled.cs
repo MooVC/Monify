@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Passthrough.OuterTests;
 
-public static class WhenImplicitOperatorToStringIsCalled
+public sealed class WhenImplicitOperatorToStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenNullSubjectThenThrowsArgumentNullException()
+    [Test]
+    public void GivenNullSubjectThenThrowsArgumentNullException()
     {
         // Arrange
         Outer? subject = default;
@@ -18,8 +18,8 @@ public static class WhenImplicitOperatorToStringIsCalled
         exception.ParamName.ShouldBe(nameof(subject));
     }
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         Outer subject = new(SampleValue);

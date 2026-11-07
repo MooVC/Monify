@@ -2,7 +2,7 @@ namespace Monify.SourceTests;
 
 public sealed class WhenConstructed
 {
-    [Fact]
+    [Test]
     public void GivenCodeAndHintThenPropertiesAreSet()
     {
         // Arrange
@@ -17,7 +17,7 @@ public sealed class WhenConstructed
         source.Hint.ShouldBe(hint);
     }
 
-    [Fact]
+    [Test]
     public void GivenCodeWithWindowsLineEndingsThenCodeIsNormalized()
     {
         // Arrange

@@ -1,12 +1,12 @@
 namespace Monify.Console.Structs.Passthrough.InnerTests;
 
-public static class WhenEqualityOperatorWithInnerIsCalled
+public sealed class WhenEqualityOperatorWithInnerIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         Inner? left = default;
@@ -19,8 +19,8 @@ public static class WhenEqualityOperatorWithInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         Inner left = new(SampleValue);
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         string leftValue = new(SampleValue.ToCharArray());
@@ -49,8 +49,8 @@ public static class WhenEqualityOperatorWithInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         Inner? left = default;
@@ -63,8 +63,8 @@ public static class WhenEqualityOperatorWithInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         Inner left = new(SampleValue);

@@ -5,7 +5,7 @@ using Monify.Strategies;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenExplicitConversionToSubjectThenSourceIsGenerated()
     {
         // Arrange
@@ -38,7 +38,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("new Sample((int)value)");
     }
 
-    [Fact]
+    [Test]
     public void GivenImplicitConversionFromSubjectThenSourceIsGenerated()
     {
         // Arrange
@@ -71,7 +71,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("(string)subject._value");
     }
 
-    [Fact]
+    [Test]
     public void GivenNoConversionsThenNoSourceIsGenerated()
     {
         // Arrange

@@ -1,11 +1,11 @@
 namespace Monify.Console.Structs.Passthrough.InnerTests;
 
-public static class WhenImplicitOperatorToStringIsCalled
+public sealed class WhenImplicitOperatorToStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenNullSubjectThenNullIsReturned()
+    [Test]
+    public void GivenNullSubjectThenNullIsReturned()
     {
         // Arrange
         Inner? subject = default;
@@ -17,8 +17,8 @@ public static class WhenImplicitOperatorToStringIsCalled
         result.ShouldBeNull();
     }
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         Inner subject = new(SampleValue);

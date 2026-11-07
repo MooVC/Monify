@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenSubjectWhenHasConversionToThenNoSourceIsGenerated()
     {
         // Arrange
@@ -19,7 +19,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenLacksConversionToThenSourceIsReturned()
     {
         // Arrange
@@ -34,7 +34,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("implicit operator Sample(");
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWithAdditionalConversionsThenAllSourcesAreReturned()
     {
         // Arrange

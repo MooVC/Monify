@@ -1,12 +1,12 @@
 namespace Monify.Console.Records.Nested.InInterface.IOutterForStringTests;
 
-public static class WhenEqualsWithIOutterForStringInnerIsCalled
+public sealed class WhenEqualsWithIOutterForStringInnerIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         IOutterForString<int>.Inner left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenEqualsWithIOutterForStringInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         IOutterForString<int>.Inner left = new(SampleValue);

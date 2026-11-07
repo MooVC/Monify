@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForStringTests;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private const string Expected = SampleValue;
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenNullThenEmptyStringIsReturned()
+    [Test]
+    public void GivenNullThenEmptyStringIsReturned()
     {
         // Arrange
         SimpleForString subject = new(null!);
@@ -18,8 +18,8 @@ public static class WhenToStringIsCalled
         result.ShouldBe(string.Empty);
     }
 
-    [Fact]
-    public static void GivenValueTheExpectedStringIsReturned()
+    [Test]
+    public void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         SimpleForString subject = new(SampleValue);

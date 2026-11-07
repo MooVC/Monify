@@ -1,12 +1,12 @@
 namespace Monify.Console.Records.Nested.InInterface.IOutterForStringTests;
 
-public static class WhenGetHashCodeIsCalled
+public sealed class WhenGetHashCodeIsCalled
 {
     private const string FirstValue = "Alpha";
     private const string SecondValue = "Beta";
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
+    [Test]
+    public void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
         IOutterForString<int>.Inner first = new(FirstValue);
@@ -20,8 +20,8 @@ public static class WhenGetHashCodeIsCalled
         firstHash.ShouldNotBe(secondHash);
     }
 
-    [Fact]
-    public static void GivenSameValuesThenReturnSameHashCode()
+    [Test]
+    public void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
         IOutterForString<int>.Inner first = new(FirstValue);

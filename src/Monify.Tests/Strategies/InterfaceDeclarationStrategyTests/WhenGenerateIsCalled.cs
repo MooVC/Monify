@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenInterfacesThenDeclarationsAreGenerated()
     {
         // Arrange
@@ -37,7 +37,7 @@ public sealed class WhenGenerateIsCalled
         sources[1].Code.ShouldContain(": global::System.IComparable<int>");
     }
 
-    [Fact]
+    [Test]
     public void GivenNoInterfacesThenNoSourceIsGenerated()
     {
         // Arrange
@@ -52,7 +52,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughInterfacesThenNoSourceIsGenerated()
     {
         // Arrange

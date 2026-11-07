@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenMethodsThenSourcesAreGenerated()
     {
         // Arrange
@@ -54,7 +54,7 @@ public sealed class WhenGenerateIsCalled
         sources[1].Code.ShouldContain("((global::Sample.IValue)_value).Reset();");
     }
 
-    [Fact]
+    [Test]
     public void GivenMethodWithObjectParameterThenAnnotatedValueIsUnwrapped()
     {
         // Arrange
@@ -94,7 +94,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("return _value.CompareTo(value);");
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughLevelMembersThenNoSourceIsGenerated()
     {
         // Arrange
@@ -125,7 +125,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenPropertiesThenSourcesAreGenerated()
     {
         // Arrange

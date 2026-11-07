@@ -2,13 +2,13 @@ namespace Monify.Console.Records.Nested.InRecordStruct.OutterForImmutableArrayTe
 
 using System.Collections.Immutable;
 
-public static class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCalled
+public sealed class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    [Test]
+    public void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner left = new(_sampleValue);
@@ -21,8 +21,8 @@ public static class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCall
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
@@ -37,8 +37,8 @@ public static class WhenInequalityOperatorWithOutterForImmutableArrayInnerIsCall
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner left = new(_sampleValue);

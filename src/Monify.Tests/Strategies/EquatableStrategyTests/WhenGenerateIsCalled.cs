@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenPassthroughEncapsulatedSequenceThenSequenceComparerIsUsed()
     {
         // Arrange
@@ -29,7 +29,7 @@ public sealed class WhenGenerateIsCalled
         sources.ShouldContain(source => source.Code.Contains("SequenceEqualityComparer.Default.Equals"));
     }
 
-    [Fact]
+    [Test]
     public void GivenSequenceEncapsulatedValueThenImmutableArrayCheckIsGenerated()
     {
         // Arrange
@@ -54,7 +54,7 @@ public sealed class WhenGenerateIsCalled
         sources.ShouldContain(source => source.Code.Contains("IsDefault ? other.IsDefault"));
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenDoesNotHaveEquatableThenTwoSourcesAreReturned()
     {
         // Arrange
@@ -72,7 +72,7 @@ public sealed class WhenGenerateIsCalled
         sources[1].Hint.ShouldBe("IEquatable.Self.Equals");
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenHasEquatablesThenNoSourceIsGenerated()
     {
         // Arrange

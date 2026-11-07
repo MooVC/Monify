@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Nested.InInterface.IOutterForImmutableArrayTest
 
 using System.Collections.Immutable;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private static readonly string Expected = typeof(ImmutableArray<string>).ToString();
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenValueTheExpectedStringIsReturned()
+    [Test]
+    public void GivenValueTheExpectedStringIsReturned()
     {
         // Arrange
         IOutterForImmutableArray<int>.Inner subject = new(_sampleValue);

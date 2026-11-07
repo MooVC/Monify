@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForStringTests;
 
-public static class WhenEqualsWithSimpleForStringIsCalled
+public sealed class WhenEqualsWithSimpleForStringIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         SimpleForString left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenEqualsWithSimpleForStringIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForString left = new(SampleValue);

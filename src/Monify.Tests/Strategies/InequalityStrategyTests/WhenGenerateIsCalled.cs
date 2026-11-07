@@ -6,7 +6,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenSubjectWhenOperatorsExistThenNoSourceIsGenerated()
     {
         // Arrange
@@ -26,7 +26,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenOperatorsMissingThenSelfAndValueAreGenerated()
     {
         // Arrange
@@ -42,7 +42,7 @@ public sealed class WhenGenerateIsCalled
         sources[1].Hint.ShouldBe("Inequality.Value");
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWithPassthroughConversionThenSourceIsReturned()
     {
         // Arrange

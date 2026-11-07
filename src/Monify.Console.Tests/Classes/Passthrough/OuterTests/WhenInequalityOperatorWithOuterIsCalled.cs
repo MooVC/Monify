@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Passthrough.OuterTests;
 
-public static class WhenInequalityOperatorWithOuterIsCalled
+public sealed class WhenInequalityOperatorWithOuterIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnTrue()
+    [Test]
+    public void GivenDifferentValuesThenReturnTrue()
     {
         // Arrange
         Outer left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenInequalityOperatorWithOuterIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
+    [Test]
+    public void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
         string leftValue = new(SampleValue.ToCharArray());
@@ -35,8 +35,8 @@ public static class WhenInequalityOperatorWithOuterIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnFalse()
+    [Test]
+    public void GivenSameValueThenReturnFalse()
     {
         // Arrange
         Outer left = new(SampleValue);

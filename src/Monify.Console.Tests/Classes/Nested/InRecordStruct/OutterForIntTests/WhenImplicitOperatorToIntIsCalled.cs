@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InRecordStruct.OutterForIntTests;
 
-public static class WhenImplicitOperatorToIntIsCalled
+public sealed class WhenImplicitOperatorToIntIsCalled
 {
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenNullSubjectThenThrowsArgumentNullException()
+    [Test]
+    public void GivenNullSubjectThenThrowsArgumentNullException()
     {
         // Arrange
         OutterForInt<int>.Inner? subject = default;
@@ -18,8 +18,8 @@ public static class WhenImplicitOperatorToIntIsCalled
         exception.ParamName.ShouldBe(nameof(subject));
     }
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         OutterForInt<int>.Inner subject = new(SampleValue);

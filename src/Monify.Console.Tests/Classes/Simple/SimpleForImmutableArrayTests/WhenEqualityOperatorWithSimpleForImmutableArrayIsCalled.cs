@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Simple.SimpleForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
+public sealed class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         SimpleForImmutableArray? left = default;
@@ -21,8 +21,8 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         SimpleForImmutableArray left = new(_sampleValue);
@@ -35,8 +35,8 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnTrue()
+    [Test]
+    public void GivenEquivalentValuesThenReturnTrue()
     {
         // Arrange
         ImmutableArray<string> leftValues = ["Alpha", "Beta", "Gamma"];
@@ -51,8 +51,8 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         SimpleForImmutableArray? left = default;
@@ -65,8 +65,8 @@ public static class WhenEqualityOperatorWithSimpleForImmutableArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForImmutableArray left = new(_sampleValue);

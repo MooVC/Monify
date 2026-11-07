@@ -6,7 +6,7 @@ using Monify.Strategies;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenBinaryOperatorsThenSourceIsGenerated()
     {
         // Arrange
@@ -72,7 +72,7 @@ public sealed class WhenGenerateIsCalled
         sources[2].Code.ShouldContain("return (bool)(left > right._value);");
     }
 
-    [Fact]
+    [Test]
     public void GivenNoBinaryOperatorsThenNoSourceIsGenerated()
     {
         // Arrange
@@ -87,7 +87,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenPassthroughBinaryOperatorsDuplicateEarlierSignaturesThenTheyAreSkipped()
     {
         // Arrange

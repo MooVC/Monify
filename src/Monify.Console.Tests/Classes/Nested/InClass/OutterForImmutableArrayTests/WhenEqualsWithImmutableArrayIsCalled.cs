@@ -2,13 +2,13 @@ namespace Monify.Console.Classes.Nested.InClass.OutterForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenEqualsWithImmutableArrayIsCalled
+public sealed class WhenEqualsWithImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _differentValue = ["Delta", "Epsilon", "Zeta"];
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);
@@ -20,8 +20,8 @@ public static class WhenEqualsWithImmutableArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner subject = new(_sampleValue);

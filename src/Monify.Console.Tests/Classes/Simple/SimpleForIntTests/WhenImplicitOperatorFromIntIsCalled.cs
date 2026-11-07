@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenImplicitOperatorFromIntIsCalled
+public sealed class WhenImplicitOperatorFromIntIsCalled
 {
     private const int SampleValue = 77;
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         SimpleForInt result = SampleValue;

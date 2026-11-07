@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForIntTests;
 
-public static class WhenEqualsWithIntIsCalled
+public sealed class WhenEqualsWithIntIsCalled
 {
     private const int DifferentValue = 12;
     private const int SampleValue = 36;
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         SimpleForInt subject = new(SampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualsWithIntIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForInt subject = new(SampleValue);

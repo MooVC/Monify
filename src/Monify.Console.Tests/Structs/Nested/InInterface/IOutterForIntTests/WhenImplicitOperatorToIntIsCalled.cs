@@ -1,11 +1,11 @@
 namespace Monify.Console.Structs.Nested.InInterface.IOutterForIntTests;
 
-public static class WhenImplicitOperatorToIntIsCalled
+public sealed class WhenImplicitOperatorToIntIsCalled
 {
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenValidSubjectThenReturnsValue()
+    [Test]
+    public void GivenValidSubjectThenReturnsValue()
     {
         // Arrange
         IOutterForInt<int>.Inner subject = new(SampleValue);

@@ -2,12 +2,12 @@ namespace Monify.Console.Structs.Simple.SimpleForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenEqualsWithObjectIsCalled
+public sealed class WhenEqualsWithObjectIsCalled
 {
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenDifferentTypeThenReturnsFalse()
+    [Test]
+    public void GivenDifferentTypeThenReturnsFalse()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);
@@ -20,8 +20,8 @@ public static class WhenEqualsWithObjectIsCalled
         result.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentSimpleForImmutableArrayThenReturnTrue()
+    [Test]
+    public void GivenEquivalentSimpleForImmutableArrayThenReturnTrue()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);
@@ -34,8 +34,8 @@ public static class WhenEqualsWithObjectIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenNullThenReturnsFalse()
+    [Test]
+    public void GivenNullThenReturnsFalse()
     {
         // Arrange
         SimpleForImmutableArray subject = new(_sampleValue);

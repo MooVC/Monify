@@ -2,12 +2,12 @@ namespace Monify.Console.Structs.Nested.InInterface.IOutterForImmutableArrayTest
 
 using System.Collections.Immutable;
 
-public static class WhenConstructorIsCalled
+public sealed class WhenConstructorIsCalled
 {
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenValueThenValueIsStored()
+    [Test]
+    public void GivenValueThenValueIsStored()
     {
         // Arrange
         IOutterForImmutableArray<int>.Inner instance = new(_sampleValue);

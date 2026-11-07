@@ -6,7 +6,7 @@ using Monify.Semantics;
 
 public sealed class WhenHasConversionIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenNullableValueTypeThenConversionIsNotDetectedForNonNullableValueType()
     {
         // Arrange
@@ -46,7 +46,7 @@ public sealed class WhenHasConversionIsCalled
         hasConversionTo.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenNonNullableValueTypeThenConversionIsDetected()
     {
         // Arrange
@@ -90,7 +90,7 @@ public sealed class WhenHasConversionIsCalled
         hasConversionTo.ShouldBeTrue();
     }
 
-    [Fact]
+    [Test]
     public void GivenNullableReferenceAnnotationsThenConversionIsDetected()
     {
         // Arrange

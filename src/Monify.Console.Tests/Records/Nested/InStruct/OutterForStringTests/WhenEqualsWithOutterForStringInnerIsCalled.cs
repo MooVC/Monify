@@ -1,12 +1,12 @@
 namespace Monify.Console.Records.Nested.InStruct.OutterForStringTests;
 
-public static class WhenEqualsWithOutterForStringInnerIsCalled
+public sealed class WhenEqualsWithOutterForStringInnerIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         OutterForString<int>.Inner left = new(SampleValue);
@@ -19,8 +19,8 @@ public static class WhenEqualsWithOutterForStringInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         OutterForString<int>.Inner left = new(SampleValue);

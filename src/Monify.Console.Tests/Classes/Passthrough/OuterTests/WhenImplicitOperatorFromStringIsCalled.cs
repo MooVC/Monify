@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Passthrough.OuterTests;
 
-public static class WhenImplicitOperatorFromStringIsCalled
+public sealed class WhenImplicitOperatorFromStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         Outer result = SampleValue;

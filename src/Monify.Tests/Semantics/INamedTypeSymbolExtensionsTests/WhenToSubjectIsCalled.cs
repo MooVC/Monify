@@ -6,7 +6,7 @@ using Monify.Semantics;
 
 public sealed class WhenToSubjectIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenStatefulTypeThenSubjectIsStillCreated()
     {
         // Arrange
@@ -66,7 +66,7 @@ public sealed class WhenToSubjectIsCalled
         subject!.HasField.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenCircularEncapsulationThenConversionDetectionIsTerminated()
     {
         // Arrange
@@ -135,7 +135,7 @@ public sealed class WhenToSubjectIsCalled
         subject.Encapsulated[0].HasInequalityOperator.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectEncapsulatingMonifiedTypeThenConversionsAreIncluded()
     {
         // Arrange
@@ -209,7 +209,7 @@ public sealed class WhenToSubjectIsCalled
         subject.Encapsulated[1].HasInequalityOperator.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenDebuggerDisplayAttributeThenSubjectDisablesGeneration()
     {
         // Arrange
@@ -270,7 +270,7 @@ public sealed class WhenToSubjectIsCalled
         subject!.GenerateDebuggerDisplay.ShouldBeFalse();
     }
 
-    [Fact]
+    [Test]
     public void GivenDebuggerDisplayIsFalseThenSubjectCapturesSetting()
     {
         // Arrange

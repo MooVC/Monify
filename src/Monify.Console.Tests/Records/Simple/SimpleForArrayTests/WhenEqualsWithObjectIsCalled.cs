@@ -1,11 +1,11 @@
 namespace Monify.Console.Records.Simple.SimpleForArrayTests;
 
-public static class WhenEqualsWithObjectIsCalled
+public sealed class WhenEqualsWithObjectIsCalled
 {
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenDifferentTypeThenReturnFalse()
+    [Test]
+    public void GivenDifferentTypeThenReturnFalse()
     {
         // Arrange
         SimpleForArray subject = new(_sampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualsWithObjectIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentSimpleForArrayThenReturnTrue()
+    [Test]
+    public void GivenEquivalentSimpleForArrayThenReturnTrue()
     {
         // Arrange
         SimpleForArray subject = new(_sampleValue);
@@ -32,8 +32,8 @@ public static class WhenEqualsWithObjectIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenNullThenReturnFalse()
+    [Test]
+    public void GivenNullThenReturnFalse()
     {
         // Arrange
         SimpleForArray subject = new(_sampleValue);

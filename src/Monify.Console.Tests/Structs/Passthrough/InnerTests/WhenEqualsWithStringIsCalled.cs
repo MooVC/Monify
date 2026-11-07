@@ -1,12 +1,12 @@
 namespace Monify.Console.Structs.Passthrough.InnerTests;
 
-public static class WhenEqualsWithStringIsCalled
+public sealed class WhenEqualsWithStringIsCalled
 {
     private const string SampleValue = "Sample";
     private const string DifferentValue = "Different";
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         Inner subject = new(SampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualsWithStringIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         Inner subject = new(SampleValue);

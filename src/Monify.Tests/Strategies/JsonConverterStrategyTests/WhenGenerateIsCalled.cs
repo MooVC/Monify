@@ -4,12 +4,12 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Theory]
-    [InlineData("sealed partial class")]
-    [InlineData("sealed partial record")]
-    [InlineData("partial struct")]
-    [InlineData("readonly partial struct")]
-    [InlineData("readonly partial record struct")]
+    [Test]
+    [Arguments("sealed partial class")]
+    [Arguments("sealed partial record")]
+    [Arguments("partial struct")]
+    [Arguments("readonly partial struct")]
+    [Arguments("readonly partial record struct")]
     public void GivenSubjectWithoutJsonConverterThenNestedConverterIsGenerated(string declaration)
     {
         // Arrange
@@ -29,7 +29,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);");
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWithJsonConverterThenNoSourceIsGenerated()
     {
         // Arrange
@@ -46,7 +46,7 @@ public sealed class WhenGenerateIsCalled
         sources.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenCompilationWithoutJsonSerializationThenNoSourceIsGenerated()
     {
         // Arrange
@@ -60,9 +60,9 @@ public sealed class WhenGenerateIsCalled
         sources.ShouldBeEmpty();
     }
 
-    [Theory]
-    [InlineData("", "global::Sample_1JsonConverterFactory")]
-    [InlineData("Example", "global::Example.Sample_1JsonConverterFactory")]
+    [Test]
+    [Arguments("", "global::Sample_1JsonConverterFactory")]
+    [Arguments("Example", "global::Example.Sample_1JsonConverterFactory")]
     public void GivenGenericSubjectThenFactoryAndNestedConverterAreGenerated(string namespaceName, string converterType)
     {
         // Arrange

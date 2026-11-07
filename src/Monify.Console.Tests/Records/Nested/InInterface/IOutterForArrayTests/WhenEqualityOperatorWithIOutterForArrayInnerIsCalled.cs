@@ -1,12 +1,12 @@
 namespace Monify.Console.Records.Nested.InInterface.IOutterForArrayTests;
 
-public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
+public sealed class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
 {
     private static readonly int[] _differentValue = [4, 5, 6];
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenBothNullThenReturnTrue()
+    [Test]
+    public void GivenBothNullThenReturnTrue()
     {
         // Arrange
         IOutterForArray<int>.Inner? left = default;
@@ -19,8 +19,8 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
         actual.ShouldBeTrue();
     }
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnFalse()
+    [Test]
+    public void GivenDifferentValuesThenReturnFalse()
     {
         // Arrange
         IOutterForArray<int>.Inner left = new(_sampleValue);
@@ -33,8 +33,8 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenEquivalentValuesThenReturnFalse()
+    [Test]
+    public void GivenEquivalentValuesThenReturnFalse()
     {
         // Arrange
         int[] leftValues = [1, 2, 3];
@@ -49,8 +49,8 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenLeftIsNullThenReturnFalse()
+    [Test]
+    public void GivenLeftIsNullThenReturnFalse()
     {
         // Arrange
         IOutterForArray<int>.Inner? left = default;
@@ -63,8 +63,8 @@ public static class WhenEqualityOperatorWithIOutterForArrayInnerIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         IOutterForArray<int>.Inner left = new(_sampleValue);

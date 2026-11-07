@@ -1,11 +1,11 @@
 namespace Monify.Console.Records.Nested.InStruct.OutterForIntTests;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private const int SampleValue = 42;
 
-    [Fact]
-    public static void GivenValueThenReturnRecordDescription()
+    [Test]
+    public void GivenValueThenReturnRecordDescription()
     {
         // Arrange
         OutterForInt<int>.Inner subject = new(SampleValue);

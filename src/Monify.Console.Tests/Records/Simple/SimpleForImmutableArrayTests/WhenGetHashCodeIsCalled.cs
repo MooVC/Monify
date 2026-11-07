@@ -2,13 +2,13 @@ namespace Monify.Console.Records.Simple.SimpleForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenGetHashCodeIsCalled
+public sealed class WhenGetHashCodeIsCalled
 {
     private static readonly ImmutableArray<string> _firstValue = ["Eta", "Theta", "Iota"];
     private static readonly ImmutableArray<string> _secondValue = ["Kappa", "Lambda", "Mu"];
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
+    [Test]
+    public void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
         SimpleForImmutableArray first = new(_firstValue);
@@ -22,8 +22,8 @@ public static class WhenGetHashCodeIsCalled
         firstHash.ShouldNotBe(secondHash);
     }
 
-    [Fact]
-    public static void GivenSameValuesThenReturnSameHashCode()
+    [Test]
+    public void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
         SimpleForImmutableArray first = new(_firstValue);

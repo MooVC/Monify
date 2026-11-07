@@ -1,12 +1,12 @@
 namespace Monify.Console.Classes.Simple.SimpleForArrayTests;
 
-public static class WhenEqualsWithIntArrayIsCalled
+public sealed class WhenEqualsWithIntArrayIsCalled
 {
     private static readonly int[] _differentValue = [4, 5, 6];
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenDifferentValueThenReturnFalse()
+    [Test]
+    public void GivenDifferentValueThenReturnFalse()
     {
         // Arrange
         SimpleForArray subject = new(_sampleValue);
@@ -18,8 +18,8 @@ public static class WhenEqualsWithIntArrayIsCalled
         actual.ShouldBeFalse();
     }
 
-    [Fact]
-    public static void GivenSameValueThenReturnTrue()
+    [Test]
+    public void GivenSameValueThenReturnTrue()
     {
         // Arrange
         SimpleForArray subject = new(_sampleValue);

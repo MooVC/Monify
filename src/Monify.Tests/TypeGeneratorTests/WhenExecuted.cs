@@ -16,8 +16,13 @@ public sealed partial class WhenExecuted
         typeof(TypeGenerator),
     ];
 
-    [Theory]
-    [Snippets(exclusions: [typeof(Attributes)])]
+    public static IEnumerable<TestDataRow<(ReferenceAssemblies Assembly, Expectations Expectations, LanguageVersion Language)>> TypeGenerationCases()
+    {
+        return SnippetCases.Create(exclusions: [typeof(Attributes)]);
+    }
+
+    [Test]
+    [MethodDataSource(nameof(TypeGenerationCases))]
     public async Task GivenATypeTheExpectedSourceIsGenerated(ReferenceAssemblies assembly, Expectations expectations, LanguageVersion language)
     {
         // Arrange

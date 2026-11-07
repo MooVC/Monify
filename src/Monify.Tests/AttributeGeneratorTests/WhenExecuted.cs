@@ -6,8 +6,8 @@ using Monify.Snippets.Declarations;
 
 public sealed class WhenExecuted
 {
-    [Theory]
-    [Frameworks]
+    [Test]
+    [MethodDataSource(typeof(Frameworks), nameof(Frameworks.DefaultCases))]
     public async Task GivenAnAssemblyThenTheAttributeIsGenerated(ReferenceAssemblies assemblies, LanguageVersion language)
     {
         // Arrange

@@ -2,13 +2,13 @@ namespace Monify.Console.Structs.Nested.InRecord.OutterForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenGetHashCodeIsCalled
+public sealed class WhenGetHashCodeIsCalled
 {
     private static readonly ImmutableArray<string> _firstValue = ["Eta", "Theta", "Iota"];
     private static readonly ImmutableArray<string> _secondValue = ["Kappa", "Lambda", "Mu"];
 
-    [Fact]
-    public static void GivenDifferentValuesThenReturnDifferentHashCodes()
+    [Test]
+    public void GivenDifferentValuesThenReturnDifferentHashCodes()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner first = new(_firstValue);
@@ -22,8 +22,8 @@ public static class WhenGetHashCodeIsCalled
         firstHash.ShouldNotBe(secondHash);
     }
 
-    [Fact]
-    public static void GivenSameValuesThenReturnSameHashCode()
+    [Test]
+    public void GivenSameValuesThenReturnSameHashCode()
     {
         // Arrange
         OutterForImmutableArray<int>.Inner first = new(_firstValue);

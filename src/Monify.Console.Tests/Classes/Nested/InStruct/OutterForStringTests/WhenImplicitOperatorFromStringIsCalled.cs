@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InStruct.OutterForStringTests;
 
-public static class WhenImplicitOperatorFromStringIsCalled
+public sealed class WhenImplicitOperatorFromStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         OutterForString<int>.Inner result = SampleValue;

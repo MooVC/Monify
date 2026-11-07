@@ -4,7 +4,7 @@ using Monify.Model;
 
 public sealed class WhenGenerateIsCalled
 {
-    [Fact]
+    [Test]
     public void GivenPassthroughEncapsulatedValueThenHintIncludesPassthrough()
     {
         // Arrange
@@ -26,7 +26,7 @@ public sealed class WhenGenerateIsCalled
         source.Code.ShouldContain("public Sample(string value)");
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenHasConstructorThenNoSourceIsGenerated()
     {
         // Arrange
@@ -41,7 +41,7 @@ public sealed class WhenGenerateIsCalled
         result.ShouldBeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void GivenSubjectWhenLacksConstructorThenSourceIsReturned()
     {
         // Arrange

@@ -1,11 +1,11 @@
 namespace Monify.Console.Classes.Nested.InInterface.IOutterForArrayTests;
 
-public static class WhenImplicitOperatorFromIntArrayIsCalled
+public sealed class WhenImplicitOperatorFromIntArrayIsCalled
 {
     private static readonly int[] _sampleValue = [1, 2, 3];
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         IOutterForArray<int>.Inner result = _sampleValue;

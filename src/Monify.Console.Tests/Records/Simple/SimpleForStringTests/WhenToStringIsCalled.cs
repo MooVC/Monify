@@ -1,11 +1,11 @@
 namespace Monify.Console.Records.Simple.SimpleForStringTests;
 
-public static class WhenToStringIsCalled
+public sealed class WhenToStringIsCalled
 {
     private const string SampleValue = "Sample";
 
-    [Fact]
-    public static void GivenValueThenReturnRecordDescription()
+    [Test]
+    public void GivenValueThenReturnRecordDescription()
     {
         // Arrange
         SimpleForString subject = new(SampleValue);

@@ -2,12 +2,12 @@ namespace Monify.Console.Structs.Simple.SimpleForImmutableArrayTests;
 
 using System.Collections.Immutable;
 
-public static class WhenImplicitOperatorFromImmutableArrayIsCalled
+public sealed class WhenImplicitOperatorFromImmutableArrayIsCalled
 {
     private static readonly ImmutableArray<string> _sampleValue = ["Alpha", "Beta", "Gamma"];
 
-    [Fact]
-    public static void GivenValueThenReturnsEquivalentInstance()
+    [Test]
+    public void GivenValueThenReturnsEquivalentInstance()
     {
         // Arrange
         SimpleForImmutableArray result = _sampleValue;
