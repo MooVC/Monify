@@ -12,9 +12,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -43,9 +40,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -53,17 +47,17 @@ internal static partial class Nested
                         {
                             partial class BlockOptions
                             {
-                                [global::System.Text.Json.Serialization.JsonConverter(typeof(InlineStyle.Converter))]
+                                [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle.Converter))]
                                 sealed partial class InlineStyle
                                 {
-                                    public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<InlineStyle>
+                                    public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle>
                                     {
-                                        public override InlineStyle Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                                        public override global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                                         {
-                                            return new InlineStyle(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
+                                            return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
                                         }
 
-                                        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, InlineStyle value, global::System.Text.Json.JsonSerializerOptions options)
+                                        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle value, global::System.Text.Json.JsonSerializerOptions options)
                                         {
                                             global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);
                                         }
@@ -84,9 +78,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -96,11 +87,11 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static implicit operator int(InlineStyle subject)
+                                    public static implicit operator int(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle subject)
                                     {
-                                        if (ReferenceEquals(subject, null))
+                                        if (global::System.Object.ReferenceEquals(subject, null))
                                         {
-                                            throw new ArgumentNullException("subject");
+                                            throw new global::System.ArgumentNullException("subject");
                                         }
 
                                         return subject._value;
@@ -120,9 +111,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -132,9 +120,9 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static implicit operator InlineStyle(int value)
+                                    public static implicit operator global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(int value)
                                     {
-                                        return new InlineStyle(value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(value);
                                     }
                                 }
                             }
@@ -151,9 +139,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -161,7 +146,7 @@ internal static partial class Nested
                         {
                             partial class BlockOptions
                             {
-                                sealed partial class InlineStyle : IEquatable<InlineStyle>
+                                sealed partial class InlineStyle : global::System.IEquatable<global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle>
                                 {
                                 }
                             }
@@ -178,9 +163,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -188,7 +170,7 @@ internal static partial class Nested
                         {
                             partial class BlockOptions
                             {
-                                sealed partial class InlineStyle : IEquatable<int>
+                                sealed partial class InlineStyle : global::System.IEquatable<int>
                                 {
                                 }
                             }
@@ -205,9 +187,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -218,8 +197,7 @@ internal static partial class Nested
                                 [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
                                 [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
                                 [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
-                                sealed partial class InlineStyle
-                                    : global::System.IComparable
+                                sealed partial class InlineStyle : global::System.IComparable
                                 {
                                 }
                             }
@@ -236,9 +214,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -249,8 +224,7 @@ internal static partial class Nested
                                 [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
                                 [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
                                 [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
-                                sealed partial class InlineStyle
-                                    : global::System.IComparable<int>
+                                sealed partial class InlineStyle : global::System.IComparable<int>
                                 {
                                 }
                             }
@@ -267,9 +241,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -279,14 +250,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator ==(InlineStyle left, InlineStyle right)
+                                    public static bool operator ==(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, right))
+                                        if (global::System.Object.ReferenceEquals(left, right))
                                         {
                                             return true;
                                         }
 
-                                        if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(left, null) || global::System.Object.ReferenceEquals(right, null))
                                         {
                                             return false;
                                         }
@@ -308,9 +279,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -320,14 +288,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator ==(InlineStyle left, int right)
+                                    public static bool operator ==(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, int right)
                                     {
-                                        if (ReferenceEquals(left, right))
+                                        if (global::System.Object.ReferenceEquals(left, right))
                                         {
                                             return true;
                                         }
 
-                                        if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(left, null) || global::System.Object.ReferenceEquals(right, null))
                                         {
                                             return false;
                                         }
@@ -349,9 +317,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -363,9 +328,9 @@ internal static partial class Nested
                                 {
                                     public override bool Equals(object other)
                                     {
-                                        if (other is InlineStyle)
+                                        if (other is global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle)
                                         {
-                                            return Equals((InlineStyle)other);
+                                            return Equals((global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle)other);
                                         }
 
                                         return false;
@@ -385,9 +350,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -413,9 +375,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -445,9 +404,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -476,9 +432,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -488,7 +441,7 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator !=(InlineStyle left, InlineStyle right)
+                                    public static bool operator !=(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
                                         return !(left == right);
                                     }
@@ -507,9 +460,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -519,7 +469,7 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator !=(InlineStyle left, int right)
+                                    public static bool operator !=(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, int right)
                                     {
                                         return !(left == right);
                                     }
@@ -538,9 +488,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -552,7 +499,7 @@ internal static partial class Nested
                                 {
                                     public override string ToString()
                                     {
-                                        if (ReferenceEquals(_value, null))
+                                        if (global::System.Object.ReferenceEquals(_value, null))
                                         {
                                             return string.Empty;
                                         }
@@ -574,9 +521,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -586,19 +530,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator +(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator +(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value + right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value + right._value);
                                     }
                                 }
                             }
@@ -615,9 +559,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -627,19 +568,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator &(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator &(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value & right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value & right._value);
                                     }
                                 }
                             }
@@ -656,9 +597,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -668,19 +606,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator |(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator |(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value | right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value | right._value);
                                     }
                                 }
                             }
@@ -697,9 +635,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -709,19 +644,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator /(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator /(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value / right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value / right._value);
                                     }
                                 }
                             }
@@ -738,9 +673,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -750,19 +682,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator ^(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator ^(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value ^ right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value ^ right._value);
                                     }
                                 }
                             }
@@ -779,9 +711,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -791,16 +720,16 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator >(InlineStyle left, InlineStyle right)
+                                    public static bool operator >(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
                                         return (bool)(left._value > right._value);
@@ -820,9 +749,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -832,16 +758,16 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator >=(InlineStyle left, InlineStyle right)
+                                    public static bool operator >=(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
                                         return (bool)(left._value >= right._value);
@@ -861,9 +787,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -873,14 +796,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator <<(InlineStyle left, int right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator <<(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, int right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        return new InlineStyle(left._value << right);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value << right);
                                     }
                                 }
                             }
@@ -897,9 +820,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -909,16 +829,16 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator <(InlineStyle left, InlineStyle right)
+                                    public static bool operator <(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
                                         return (bool)(left._value < right._value);
@@ -938,9 +858,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -950,16 +867,16 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static bool operator <=(InlineStyle left, InlineStyle right)
+                                    public static bool operator <=(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
                                         return (bool)(left._value <= right._value);
@@ -979,9 +896,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -991,19 +905,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator %(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator %(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value % right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value % right._value);
                                     }
                                 }
                             }
@@ -1020,9 +934,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1032,19 +943,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator *(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator *(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value * right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value * right._value);
                                     }
                                 }
                             }
@@ -1061,9 +972,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1073,14 +981,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator >>(InlineStyle left, int right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator >>(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, int right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        return new InlineStyle(left._value >> right);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value >> right);
                                     }
                                 }
                             }
@@ -1097,9 +1005,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1109,19 +1014,19 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator -(InlineStyle left, InlineStyle right)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator -(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle left, global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle right)
                                     {
-                                        if (ReferenceEquals(left, null))
+                                        if (global::System.Object.ReferenceEquals(left, null))
                                         {
-                                            throw new ArgumentNullException("left");
+                                            throw new global::System.ArgumentNullException("left");
                                         }
 
-                                        if (ReferenceEquals(right, null))
+                                        if (global::System.Object.ReferenceEquals(right, null))
                                         {
-                                            throw new ArgumentNullException("right");
+                                            throw new global::System.ArgumentNullException("right");
                                         }
 
-                                        return new InlineStyle(left._value - right._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(left._value - right._value);
                                     }
                                 }
                             }
@@ -1138,9 +1043,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1150,16 +1052,16 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator --(InlineStyle subject)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator --(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle subject)
                                     {
-                                        if (ReferenceEquals(subject, null))
+                                        if (global::System.Object.ReferenceEquals(subject, null))
                                         {
-                                            throw new ArgumentNullException("subject");
+                                            throw new global::System.ArgumentNullException("subject");
                                         }
 
                                         int value = subject._value;
 
-                                        return new InlineStyle(--value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(--value);
                                     }
                                 }
                             }
@@ -1176,9 +1078,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1188,16 +1087,16 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator ++(InlineStyle subject)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator ++(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle subject)
                                     {
-                                        if (ReferenceEquals(subject, null))
+                                        if (global::System.Object.ReferenceEquals(subject, null))
                                         {
-                                            throw new ArgumentNullException("subject");
+                                            throw new global::System.ArgumentNullException("subject");
                                         }
 
                                         int value = subject._value;
 
-                                        return new InlineStyle(++value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(++value);
                                     }
                                 }
                             }
@@ -1214,9 +1113,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1226,14 +1122,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator ~(InlineStyle subject)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator ~(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle subject)
                                     {
-                                        if (ReferenceEquals(subject, null))
+                                        if (global::System.Object.ReferenceEquals(subject, null))
                                         {
-                                            throw new ArgumentNullException("subject");
+                                            throw new global::System.ArgumentNullException("subject");
                                         }
 
-                                        return new InlineStyle(~subject._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(~subject._value);
                                     }
                                 }
                             }
@@ -1250,9 +1146,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1262,14 +1155,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator -(InlineStyle subject)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator -(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle subject)
                                     {
-                                        if (ReferenceEquals(subject, null))
+                                        if (global::System.Object.ReferenceEquals(subject, null))
                                         {
-                                            throw new ArgumentNullException("subject");
+                                            throw new global::System.ArgumentNullException("subject");
                                         }
 
-                                        return new InlineStyle(-subject._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(-subject._value);
                                     }
                                 }
                             }
@@ -1286,9 +1179,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1298,14 +1188,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public static InlineStyle operator +(InlineStyle subject)
+                                    public static global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle operator +(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle subject)
                                     {
-                                        if (ReferenceEquals(subject, null))
+                                        if (global::System.Object.ReferenceEquals(subject, null))
                                         {
-                                            throw new ArgumentNullException("subject");
+                                            throw new global::System.ArgumentNullException("subject");
                                         }
 
-                                        return new InlineStyle(+subject._value);
+                                        return new global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle(+subject._value);
                                     }
                                 }
                             }
@@ -1322,9 +1212,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1334,14 +1221,14 @@ internal static partial class Nested
                             {
                                 sealed partial class InlineStyle
                                 {
-                                    public bool Equals(InlineStyle other)
+                                    public bool Equals(global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle other)
                                     {
-                                        if (ReferenceEquals(this, other))
+                                        if (global::System.Object.ReferenceEquals(this, other))
                                         {
                                             return true;
                                         }
 
-                                        if (ReferenceEquals(other, null))
+                                        if (global::System.Object.ReferenceEquals(other, null))
                                         {
                                             return false;
                                         }
@@ -1363,9 +1250,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1377,12 +1261,12 @@ internal static partial class Nested
                                 {
                                     public bool Equals(int other)
                                     {
-                                        if (ReferenceEquals(this, other))
+                                        if (global::System.Object.ReferenceEquals(this, other))
                                         {
                                             return true;
                                         }
 
-                                        if (ReferenceEquals(other, null))
+                                        if (global::System.Object.ReferenceEquals(other, null))
                                         {
                                             return false;
                                         }
@@ -1404,9 +1288,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1435,9 +1316,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1449,9 +1327,9 @@ internal static partial class Nested
                                 {
                                     public int CompareTo(object value)
                                     {
-                                        if (value is InlineStyle)
+                                        if (value is global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle)
                                         {
-                                            value = ((InlineStyle)value)._value;
+                                            value = ((global::Monify.Testing.Classes.Snippet.BlockOptions.InlineStyle)value)._value;
                                         }
 
                                         return _value.CompareTo(value);

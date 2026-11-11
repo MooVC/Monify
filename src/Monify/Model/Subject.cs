@@ -3,6 +3,7 @@ namespace Monify.Model
     using System;
     using System.Collections.Immutable;
     using Fluentify;
+    using Graphify;
     using Valuify;
 
     /// <summary>
@@ -10,6 +11,7 @@ namespace Monify.Model
     /// upon which the Monify attribute has been placed.
     /// </summary>
     [Fluentify]
+    [Graphify(Mode = Modes.Synchronous, PropertyPrefix = "_")]
     [Valuify]
     internal sealed partial class Subject
     {
@@ -28,6 +30,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject can override <see cref="object.Equals(object)"/>.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool CanOverrideEquals { get; set; }
 
         /// <summary>
@@ -36,6 +39,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject can override <see cref="object.GetHashCode()"/>.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool CanOverrideGetHashCode { get; set; }
 
         /// <summary>
@@ -44,6 +48,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject can override <see cref="object.ToString()"/>.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool CanOverrideToString { get; set; }
 
         /// <summary>
@@ -52,7 +57,7 @@ namespace Monify.Model
         /// <value>
         /// The metadata for each encapsulated type.
         /// </value>
-        public ImmutableArray<Encapsulated> Encapsulated { get; set; } = ImmutableArray<Encapsulated>.Empty;
+        public ImmutableArray<Encapsulated> EncapsulatedValues { get; set; } = ImmutableArray<Encapsulated>.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether or not the subject should generate a debugger display.
@@ -60,6 +65,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject should generate a debugger display.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool GenerateDebuggerDisplay { get; set; } = true;
 
         /// <summary>
@@ -68,6 +74,7 @@ namespace Monify.Model
         /// <value>
         /// The type declaration of the subject, be it a class, record or struct.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public string Declaration { get; set; } = string.Empty;
 
         /// <summary>
@@ -76,6 +83,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for its own type.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasEquatable { get; set; }
 
         /// <summary>
@@ -84,6 +92,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject declares an equality operator for its own type.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasEqualityOperator { get; set; }
 
         /// <summary>
@@ -92,6 +101,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject defines a field for the encapsulated value.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasField { get; set; }
 
         /// <summary>
@@ -100,6 +110,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject declares an inequality operator for its own type.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasInequalityOperator { get; set; }
 
         /// <summary>
@@ -108,6 +119,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/>for its own type.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool IsEquatable { get; set; }
 
         /// <summary>
@@ -116,6 +128,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject belongs to the global namespace.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool IsGlobal => string.IsNullOrEmpty(Namespace);
 
         /// <summary>
@@ -124,6 +137,7 @@ namespace Monify.Model
         /// <value>
         /// The name of the subject.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
@@ -132,6 +146,7 @@ namespace Monify.Model
         /// <value>
         /// The globally qualified namespace for the subject.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public string Namespace { get; set; } = string.Empty;
 
         /// <summary>
@@ -140,6 +155,7 @@ namespace Monify.Model
         /// <value>
         /// The declarations associated with the parent types in order of declaration.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public ImmutableArray<Nesting> Nesting { get; set; } = ImmutableArray<Nesting>.Empty;
 
         /// <summary>
@@ -148,7 +164,22 @@ namespace Monify.Model
         /// <value>
         /// The qualified name of the subject, which includes any generic arguments.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public string Qualification { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the fully qualified name used in references to the subject.
+        /// </summary>
+        [Traverse(Scope = TraverseScope.None)]
+        public string QualifiedName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Exposes the whole subject as a terminal node for source generation visitors.
+        /// </summary>
+        /// <value>The root semantic subject.</value>
+        [Traverse(Scope = TraverseScope.Property)]
+        [Valuify.Ignore]
+        public Subject Self => this;
 
         /// <summary>
         /// Gets or sets the serialization metadata associated with the subject.
@@ -156,6 +187,7 @@ namespace Monify.Model
         /// <value>
         /// The serialization metadata associated with the subject.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public Serialization Serialization { get; set; } = new Serialization();
 
         /// <summary>
@@ -164,6 +196,7 @@ namespace Monify.Model
         /// <value>
         /// The qualified name of the value that is encapsulated by the subject.
         /// </value>
-        public string Value => Encapsulated[IndexForEncapsulatedValue].Type;
+        [Traverse(Scope = TraverseScope.None)]
+        public string Value => EncapsulatedValues[IndexForEncapsulatedValue].Type;
     }
 }

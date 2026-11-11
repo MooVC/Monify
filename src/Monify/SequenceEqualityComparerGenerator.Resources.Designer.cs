@@ -61,25 +61,7 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace Monify.Internal
-        ///{{
-        ///    using System;
-        ///    using System.Collections;
-        ///
-        ///    internal sealed class SequenceEqualityComparer
-        ///    {{
-        ///        public static readonly SequenceEqualityComparer Default = new SequenceEqualityComparer();
-        ///
-        ///        public bool Equals(IEnumerable left, IEnumerable right)
-        ///        {{
-        ///            if (ReferenceEquals(left, right))
-        ///            {{
-        ///                return true;
-        ///            }}
-        ///
-        ///            if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
-        ///            {{
-        ///     [rest of string was truncated]&quot;;.
+        ///   Looks up the sequence equality comparer implementation.
         /// </summary>
         internal static string GeneratedSource {
             get {

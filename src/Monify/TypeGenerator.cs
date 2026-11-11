@@ -1,14 +1,12 @@
 namespace Monify
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Monify.Model;
-    using Monify.Strategies;
     using Monify.Syntax;
 
     using static Monify.TypeGenerator_Resources;
@@ -20,26 +18,7 @@ namespace Monify
     public sealed class TypeGenerator
         : IIncrementalGenerator
     {
-        private static readonly IStrategy[] _strategies = new IStrategy[]
-        {
-            new BinaryOperatorStrategy(),
-            new ConstructorStrategy(),
-            new ConversionOperatorStrategy(),
-            new ConvertFromStrategy(),
-            new ConvertToStrategy(),
-            new EqualityStrategy(),
-            new EqualsStrategy(),
-            new EquatableStrategy(),
-            new FieldStrategy(),
-            new DebuggerDisplayStrategy(),
-            new GetHashCodeStrategy(),
-            new InterfaceDeclarationStrategy(),
-            new InequalityStrategy(),
-            new JsonConverterStrategy(),
-            new MemberPassthroughStrategy(),
-            new ToStringStrategy(),
-            new UnaryOperatorStrategy(),
-        };
+        private static readonly IServiceProvider _services = new GenerationServices();
 
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -67,25 +46,14 @@ namespace Monify
                 return;
             }
 
-#if DEBUG
-            var files = new Dictionary<string, string>();
-#endif
+            var navigator = new SubjectNavigator(_services);
 
-            foreach (IStrategy strategy in _strategies)
+            foreach (Source source in navigator.Navigate<Source>(match.Subject))
             {
-                IEnumerable<Source> sources = strategy.Generate(match.Subject);
+                string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes, source.IsNested).NormalizeLineEndings();
+                string hint = GetHint(source, match.Subject);
 
-                foreach (Source source in sources)
-                {
-                    string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes, source.IsNested).NormalizeLineEndings();
-                    string hint = GetHint(source, match.Subject);
-
-#if DEBUG
-                    files[hint] = code;
-#endif
-
-                    context.AddSource(hint, code);
-                }
+                context.AddSource(hint, code);
             }
         }
 
@@ -138,9 +106,7 @@ namespace Monify
         {
             foreach (Nesting parent in subject.Nesting.Reverse())
             {
-                code = code.Indent();
-
-                code = string.Format(NestedTypeSource, parent.Declaration, parent.Qualification, code);
+                code = GenerationSyntax.Block(GenerationSyntax.ToSnippet(code), $"{parent.Declaration} {parent.Qualification}");
             }
 
             return code;
@@ -158,14 +124,12 @@ namespace Monify
                 code = string.Format(NullableSource, code);
             }
 
-            code = string.Format(UsingsSource, code);
-
             if (subject.IsGlobal)
             {
                 return code;
             }
 
-            return string.Format(NamespaceSource, subject.Namespace, code.Indent());
+            return GenerationSyntax.Block(GenerationSyntax.ToSnippet(code), $"namespace {subject.Namespace}");
         }
     }
 }

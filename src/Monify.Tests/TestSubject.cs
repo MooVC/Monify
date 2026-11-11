@@ -8,12 +8,19 @@ internal static class TestSubject
     {
         return new()
         {
-            Encapsulated = [new Encapsulated { Type = "int" }],
+            EncapsulatedValues = [new Encapsulated { Type = "int" }],
             Declaration = "class",
             Name = "Sample",
             Namespace = string.Empty,
             Nesting = [],
             Qualification = "Sample",
         };
+    }
+
+    public static Subject.Graph.EncapsulatedValues.Encapsulated EncapsulatedAt(Subject subject, int index = 0)
+    {
+        var values = new Subject.Graph.EncapsulatedValues(subject, subject.EncapsulatedValues);
+
+        return new Subject.Graph.EncapsulatedValues.Encapsulated(values, index, subject, subject.EncapsulatedValues[index]);
     }
 }

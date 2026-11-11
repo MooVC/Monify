@@ -12,9 +12,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -40,9 +37,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -51,14 +45,14 @@ internal static partial class Nested
                             [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Classes.Outter_1_InnerJsonConverterFactory))]
                             sealed partial class Inner
                             {
-                                public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Inner>
+                                public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Classes.Outter<T>.Inner>
                                 {
-                                    public override Inner Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
+                                    public override global::Monify.Testing.Classes.Outter<T>.Inner Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                                     {
-                                        return new Inner(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
+                                        return new global::Monify.Testing.Classes.Outter<T>.Inner(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));
                                     }
 
-                                    public override void Write(global::System.Text.Json.Utf8JsonWriter writer, Inner value, global::System.Text.Json.JsonSerializerOptions options)
+                                    public override void Write(global::System.Text.Json.Utf8JsonWriter writer, global::Monify.Testing.Classes.Outter<T>.Inner value, global::System.Text.Json.JsonSerializerOptions options)
                                     {
                                         global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);
                                     }
@@ -78,9 +72,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -112,9 +103,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -122,11 +110,11 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static implicit operator int(Inner subject)
+                                public static implicit operator int(global::Monify.Testing.Classes.Outter<T>.Inner subject)
                                 {
-                                    if (ReferenceEquals(subject, null))
+                                    if (global::System.Object.ReferenceEquals(subject, null))
                                     {
-                                        throw new ArgumentNullException("subject");
+                                        throw new global::System.ArgumentNullException("subject");
                                     }
 
                                     return subject._value;
@@ -145,9 +133,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -155,9 +140,9 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static implicit operator Inner(int value)
+                                public static implicit operator global::Monify.Testing.Classes.Outter<T>.Inner(int value)
                                 {
-                                    return new Inner(value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(value);
                                 }
                             }
                         }
@@ -173,15 +158,12 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
                         partial class Outter<T>
                         {
-                            sealed partial class Inner : IEquatable<Inner>
+                            sealed partial class Inner : global::System.IEquatable<global::Monify.Testing.Classes.Outter<T>.Inner>
                             {
                             }
                         }
@@ -197,15 +179,12 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
                         partial class Outter<T>
                         {
-                            sealed partial class Inner : IEquatable<int>
+                            sealed partial class Inner : global::System.IEquatable<int>
                             {
                             }
                         }
@@ -221,9 +200,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -232,8 +208,7 @@ internal static partial class Nested
                             [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
                             [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
                             [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
-                            sealed partial class Inner
-                                : global::System.IComparable
+                            sealed partial class Inner : global::System.IComparable
                             {
                             }
                         }
@@ -249,9 +224,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -260,8 +232,7 @@ internal static partial class Nested
                             [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
                             [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
                             [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
-                            sealed partial class Inner
-                                : global::System.IComparable<int>
+                            sealed partial class Inner : global::System.IComparable<int>
                             {
                             }
                         }
@@ -277,9 +248,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -287,14 +255,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator ==(Inner left, Inner right)
+                                public static bool operator ==(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, right))
+                                    if (global::System.Object.ReferenceEquals(left, right))
                                     {
                                         return true;
                                     }
 
-                                    if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(left, null) || global::System.Object.ReferenceEquals(right, null))
                                     {
                                         return false;
                                     }
@@ -315,9 +283,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -325,14 +290,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator ==(Inner left, int right)
+                                public static bool operator ==(global::Monify.Testing.Classes.Outter<T>.Inner left, int right)
                                 {
-                                    if (ReferenceEquals(left, right))
+                                    if (global::System.Object.ReferenceEquals(left, right))
                                     {
                                         return true;
                                     }
 
-                                    if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(left, null) || global::System.Object.ReferenceEquals(right, null))
                                     {
                                         return false;
                                     }
@@ -353,9 +318,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -365,9 +327,9 @@ internal static partial class Nested
                             {
                                 public override bool Equals(object other)
                                 {
-                                    if (other is Inner)
+                                    if (other is global::Monify.Testing.Classes.Outter<T>.Inner)
                                     {
-                                        return Equals((Inner)other);
+                                        return Equals((global::Monify.Testing.Classes.Outter<T>.Inner)other);
                                     }
 
                                     return false;
@@ -386,9 +348,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -411,9 +370,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -440,9 +396,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -468,9 +421,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -478,7 +428,7 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator !=(Inner left, Inner right)
+                                public static bool operator !=(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
                                     return !(left == right);
                                 }
@@ -496,9 +446,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -506,7 +453,7 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator !=(Inner left, int right)
+                                public static bool operator !=(global::Monify.Testing.Classes.Outter<T>.Inner left, int right)
                                 {
                                     return !(left == right);
                                 }
@@ -524,9 +471,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -536,7 +480,7 @@ internal static partial class Nested
                             {
                                 public override string ToString()
                                 {
-                                    if (ReferenceEquals(_value, null))
+                                    if (global::System.Object.ReferenceEquals(_value, null))
                                     {
                                         return string.Empty;
                                     }
@@ -557,9 +501,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -567,19 +508,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator +(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator +(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value + right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value + right._value);
                                 }
                             }
                         }
@@ -595,9 +536,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -605,19 +543,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator &(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator &(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value & right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value & right._value);
                                 }
                             }
                         }
@@ -633,9 +571,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -643,19 +578,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator |(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator |(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value | right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value | right._value);
                                 }
                             }
                         }
@@ -671,9 +606,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -681,19 +613,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator /(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator /(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value / right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value / right._value);
                                 }
                             }
                         }
@@ -709,9 +641,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -719,19 +648,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator ^(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator ^(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value ^ right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value ^ right._value);
                                 }
                             }
                         }
@@ -747,9 +676,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -757,16 +683,16 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator >(Inner left, Inner right)
+                                public static bool operator >(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
                                     return (bool)(left._value > right._value);
@@ -785,9 +711,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -795,16 +718,16 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator >=(Inner left, Inner right)
+                                public static bool operator >=(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
                                     return (bool)(left._value >= right._value);
@@ -823,9 +746,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -833,14 +753,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator <<(Inner left, int right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator <<(global::Monify.Testing.Classes.Outter<T>.Inner left, int right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    return new Inner(left._value << right);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value << right);
                                 }
                             }
                         }
@@ -856,9 +776,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -866,16 +783,16 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator <(Inner left, Inner right)
+                                public static bool operator <(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
                                     return (bool)(left._value < right._value);
@@ -894,9 +811,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -904,16 +818,16 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static bool operator <=(Inner left, Inner right)
+                                public static bool operator <=(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
                                     return (bool)(left._value <= right._value);
@@ -932,9 +846,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -942,19 +853,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator %(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator %(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value % right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value % right._value);
                                 }
                             }
                         }
@@ -970,9 +881,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -980,19 +888,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator *(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator *(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value * right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value * right._value);
                                 }
                             }
                         }
@@ -1008,9 +916,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1018,14 +923,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator >>(Inner left, int right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator >>(global::Monify.Testing.Classes.Outter<T>.Inner left, int right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    return new Inner(left._value >> right);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value >> right);
                                 }
                             }
                         }
@@ -1041,9 +946,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1051,19 +953,19 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator -(Inner left, Inner right)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator -(global::Monify.Testing.Classes.Outter<T>.Inner left, global::Monify.Testing.Classes.Outter<T>.Inner right)
                                 {
-                                    if (ReferenceEquals(left, null))
+                                    if (global::System.Object.ReferenceEquals(left, null))
                                     {
-                                        throw new ArgumentNullException("left");
+                                        throw new global::System.ArgumentNullException("left");
                                     }
 
-                                    if (ReferenceEquals(right, null))
+                                    if (global::System.Object.ReferenceEquals(right, null))
                                     {
-                                        throw new ArgumentNullException("right");
+                                        throw new global::System.ArgumentNullException("right");
                                     }
 
-                                    return new Inner(left._value - right._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(left._value - right._value);
                                 }
                             }
                         }
@@ -1079,9 +981,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1089,16 +988,16 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator --(Inner subject)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator --(global::Monify.Testing.Classes.Outter<T>.Inner subject)
                                 {
-                                    if (ReferenceEquals(subject, null))
+                                    if (global::System.Object.ReferenceEquals(subject, null))
                                     {
-                                        throw new ArgumentNullException("subject");
+                                        throw new global::System.ArgumentNullException("subject");
                                     }
 
                                     int value = subject._value;
 
-                                    return new Inner(--value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(--value);
                                 }
                             }
                         }
@@ -1114,9 +1013,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1124,16 +1020,16 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator ++(Inner subject)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator ++(global::Monify.Testing.Classes.Outter<T>.Inner subject)
                                 {
-                                    if (ReferenceEquals(subject, null))
+                                    if (global::System.Object.ReferenceEquals(subject, null))
                                     {
-                                        throw new ArgumentNullException("subject");
+                                        throw new global::System.ArgumentNullException("subject");
                                     }
 
                                     int value = subject._value;
 
-                                    return new Inner(++value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(++value);
                                 }
                             }
                         }
@@ -1149,9 +1045,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1159,14 +1052,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator ~(Inner subject)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator ~(global::Monify.Testing.Classes.Outter<T>.Inner subject)
                                 {
-                                    if (ReferenceEquals(subject, null))
+                                    if (global::System.Object.ReferenceEquals(subject, null))
                                     {
-                                        throw new ArgumentNullException("subject");
+                                        throw new global::System.ArgumentNullException("subject");
                                     }
 
-                                    return new Inner(~subject._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(~subject._value);
                                 }
                             }
                         }
@@ -1182,9 +1075,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1192,14 +1082,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator -(Inner subject)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator -(global::Monify.Testing.Classes.Outter<T>.Inner subject)
                                 {
-                                    if (ReferenceEquals(subject, null))
+                                    if (global::System.Object.ReferenceEquals(subject, null))
                                     {
-                                        throw new ArgumentNullException("subject");
+                                        throw new global::System.ArgumentNullException("subject");
                                     }
 
-                                    return new Inner(-subject._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(-subject._value);
                                 }
                             }
                         }
@@ -1215,9 +1105,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1225,14 +1112,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public static Inner operator +(Inner subject)
+                                public static global::Monify.Testing.Classes.Outter<T>.Inner operator +(global::Monify.Testing.Classes.Outter<T>.Inner subject)
                                 {
-                                    if (ReferenceEquals(subject, null))
+                                    if (global::System.Object.ReferenceEquals(subject, null))
                                     {
-                                        throw new ArgumentNullException("subject");
+                                        throw new global::System.ArgumentNullException("subject");
                                     }
 
-                                    return new Inner(+subject._value);
+                                    return new global::Monify.Testing.Classes.Outter<T>.Inner(+subject._value);
                                 }
                             }
                         }
@@ -1248,9 +1135,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1258,14 +1142,14 @@ internal static partial class Nested
                         {
                             sealed partial class Inner
                             {
-                                public bool Equals(Inner other)
+                                public bool Equals(global::Monify.Testing.Classes.Outter<T>.Inner other)
                                 {
-                                    if (ReferenceEquals(this, other))
+                                    if (global::System.Object.ReferenceEquals(this, other))
                                     {
                                         return true;
                                     }
 
-                                    if (ReferenceEquals(other, null))
+                                    if (global::System.Object.ReferenceEquals(other, null))
                                     {
                                         return false;
                                     }
@@ -1286,9 +1170,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1298,12 +1179,12 @@ internal static partial class Nested
                             {
                                 public bool Equals(int other)
                                 {
-                                    if (ReferenceEquals(this, other))
+                                    if (global::System.Object.ReferenceEquals(this, other))
                                     {
                                         return true;
                                     }
 
-                                    if (ReferenceEquals(other, null))
+                                    if (global::System.Object.ReferenceEquals(other, null))
                                     {
                                         return false;
                                     }
@@ -1324,9 +1205,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1352,9 +1230,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         #nullable disable
                         #pragma warning disable CS8625
 
@@ -1364,9 +1239,9 @@ internal static partial class Nested
                             {
                                 public int CompareTo(object value)
                                 {
-                                    if (value is Inner)
+                                    if (value is global::Monify.Testing.Classes.Outter<T>.Inner)
                                     {
-                                        value = ((Inner)value)._value;
+                                        value = ((global::Monify.Testing.Classes.Outter<T>.Inner)value)._value;
                                     }
 
                                     return _value.CompareTo(value);

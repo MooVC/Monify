@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" VersionOverride="$(RoslynVersion)" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" VersionOverride="$(RoslynVersion)" PrivateAssets="all" />
+    <PackageReference Include="MooVC.Syntax.CSharp" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AttributeAnalyzerTests\" />

@@ -34,6 +34,20 @@ public sealed record Snippets(
         }
     }
 
+    private static LanguageVersion Highest(LanguageVersion first, LanguageVersion second)
+    {
+        return first > second
+            ? first
+            : second;
+    }
+
+    private static LanguageVersion Lowest(LanguageVersion first, LanguageVersion second)
+    {
+        return first < second
+            ? first
+            : second;
+    }
+
     private IEnumerable<Content> Compose()
     {
         if (Body.Length == 0)
@@ -85,19 +99,5 @@ public sealed record Snippets(
             string[] contents = [declaration.Body, .. extensions];
             yield return new Expectations(contents, expectations, declaration.Minimum, declaration.Maximum);
         }
-    }
-
-    private static LanguageVersion Highest(LanguageVersion first, LanguageVersion second)
-    {
-        return first > second
-            ? first
-            : second;
-    }
-
-    private static LanguageVersion Lowest(LanguageVersion first, LanguageVersion second)
-    {
-        return first < second
-            ? first
-            : second;
     }
 }
