@@ -66,9 +66,6 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Classes
                     {
-                        using System;
-                        using System.Collections.Generic;
-
                         internal sealed class Outter_1_InnerJsonConverterFactory : global::System.Text.Json.Serialization.JsonConverterFactory
                         {
                             public override bool CanConvert(global::System.Type typeToConvert)

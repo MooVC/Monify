@@ -1,6 +1,7 @@
 namespace Monify
 {
     using Microsoft.CodeAnalysis;
+    using Monify.Syntax;
 
     using static Monify.SequenceEqualityComparerGenerator_Resources;
 
@@ -14,7 +15,9 @@ namespace Monify
         /// <summary>
         /// The source code that will be output by the generator.
         /// </summary>
-        public static readonly string Content = string.Format(GeneratedSource).NormalizeLineEndings();
+        public static readonly string Content = GenerationSyntax.Block(
+            GenerationSyntax.Block(GenerationSyntax.ToSnippet(GeneratedSource), "internal sealed class SequenceEqualityComparer"),
+            "namespace Monify.Internal").ToString().NormalizeLineEndings();
 
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)

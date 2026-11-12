@@ -39,8 +39,8 @@ public sealed class WhenExecuted
         string content = SequenceEqualityComparerGenerator.Content;
 
         // Assert
-        content.ShouldContain("if (ReferenceEquals(left.Current, null))");
-        content.ShouldContain("if (!ReferenceEquals(right.Current, null))");
+        content.ShouldContain("if (global::System.Object.ReferenceEquals(left.Current, null))");
+        content.ShouldContain("if (!global::System.Object.ReferenceEquals(right.Current, null))");
         content.ShouldContain(expected);
     }
 }

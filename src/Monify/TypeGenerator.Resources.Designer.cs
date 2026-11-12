@@ -61,30 +61,6 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace {0}
-        ///{{
-        ///    {1}
-        ///}}.
-        /// </summary>
-        internal static string NamespaceSource {
-            get {
-                return ResourceManager.GetString("NamespaceSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} {1}
-        ///{{
-        ///    {2}
-        ///}}.
-        /// </summary>
-        internal static string NestedTypeSource {
-            get {
-                return ResourceManager.GetString("NestedTypeSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to #nullable disable
         ///#pragma warning disable CS8625
         ///
@@ -99,16 +75,5 @@ namespace Monify {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///
-        ///{0}.
-        /// </summary>
-        internal static string UsingsSource {
-            get {
-                return ResourceManager.GetString("UsingsSource", resourceCulture);
-            }
-        }
     }
 }

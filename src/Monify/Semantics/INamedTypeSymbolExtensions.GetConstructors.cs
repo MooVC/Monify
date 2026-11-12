@@ -2,7 +2,7 @@ namespace Monify.Semantics
 {
     using System.Linq;
     using Microsoft.CodeAnalysis;
-    using Monify.Strategies;
+    using Monify.Visitors;
 
     /// <summary>
     /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -24,7 +24,7 @@ namespace Monify.Semantics
                 .GetMembers()
                 .Where(member => member.Kind == SymbolKind.Method
                               && !member.IsStatic
-                              && member.Name == ConstructorStrategy.Name
+                              && member.Name == GenerateConstructorsWhenEncapsulatedVisited.Name
                               && !member.IsImplicitlyDeclared)
                 .OfType<IMethodSymbol>()
                 .ToArray();

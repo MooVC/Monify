@@ -61,25 +61,7 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace Monify.Internal
-        ///{{
-        ///    using System;
-        ///    using System.Collections;
-        ///
-        ///    internal static class HashCode
-        ///    {{
-        ///        private const int HashSeed = 0x1505;
-        ///        private const int HashPrime = -1521134295;
-        ///
-        ///        public static int Combine(params object[] values)
-        ///        {{
-        ///            int hash = HashSeed;
-        ///
-        ///            foreach (object value in values)
-        ///            {{
-        ///                if (value is IEnumerable &amp;&amp; !(value is string))
-        ///                {{
-        ///                    IEnumerable [rest of string was truncated]&quot;;.
+        ///   Looks up the hash code implementation.
         /// </summary>
         internal static string GeneratedSource {
             get {

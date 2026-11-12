@@ -1,15 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Description>Monify is a .NET Roslyn source generator for strongly typed wrappers and encapsulated functional value types (including monad-style wrappers), improving semantic clarity, type safety, and maintainability.</Description>
+    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetAnalyzerDependencyTargetPaths</GetTargetPathDependsOn>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>7.3</LangVersion>
     <Nullable>disable</Nullable>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackAnalyzerDependencies</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Fluentify">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Graphify" IncludeAssets="build; analyzers; buildtransitive" PrivateAssets="all" />
+    <PackageReference Include="MooVC.Syntax.CSharp" PrivateAssets="all" />
     <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="Valuify">
       <PrivateAssets>all</PrivateAssets>
@@ -37,90 +42,90 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SequenceEqualityComparerGenerator.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\BinaryOperatorStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateBinaryOperatorWhenBinaryOperatorVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>BinaryOperatorStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateBinaryOperatorWhenBinaryOperatorVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\ConstructorStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateConstructorsWhenEncapsulatedVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ConstructorStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateConstructorsWhenEncapsulatedVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\ConversionOperatorStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateConversionOperatorWhenConversionVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ConversionOperatorStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateConversionOperatorWhenConversionVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\ConvertFromStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateConversionsToValueWhenEncapsulatedVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ConvertFromStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateConversionsToValueWhenEncapsulatedVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\ConvertToStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateConversionsFromValueWhenEncapsulatedVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ConvertToStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateConversionsFromValueWhenEncapsulatedVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\DebuggerDisplayStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateDebuggerDisplayWhenSubjectVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>DebuggerDisplayStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateDebuggerDisplayWhenSubjectVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\EqualityStrategy.Resources.Designer.cs">
+    <Compile Update="Syntax\EqualityOperatorSyntax.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>EqualityStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>EqualityOperatorSyntax.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\EqualsStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateEqualsOverrideWhenSubjectVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>EqualsStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateEqualsOverrideWhenSubjectVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\EquatableStrategy.Resources.Designer.cs">
+    <Compile Update="Syntax\EquatableMemberSyntax.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>EquatableStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>EquatableMemberSyntax.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\FieldStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateValueFieldWhenEncapsulatedVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>FieldStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateValueFieldWhenEncapsulatedVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\GetHashCodeStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateGetHashCodeOverrideWhenSubjectVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>GetHashCodeStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateGetHashCodeOverrideWhenSubjectVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\InequalityStrategy.Resources.Designer.cs">
+    <Compile Update="Syntax\InequalityOperatorSyntax.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>InequalityStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>InequalityOperatorSyntax.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\InterfaceDeclarationStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateInterfaceWhenInterfaceVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>InterfaceDeclarationStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateInterfaceWhenInterfaceVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\JsonConverterStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateJsonConverterWhenSerializationVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>JsonConverterStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateJsonConverterWhenSerializationVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\MemberPassthroughStrategy.Resources.Designer.cs">
+    <Compile Update="Syntax\PassthroughMemberSyntax.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MemberPassthroughStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>PassthroughMemberSyntax.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\ToStringStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateToStringOverrideWhenSubjectVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ToStringStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateToStringOverrideWhenSubjectVisited.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Strategies\UnaryOperatorStrategy.Resources.Designer.cs">
+    <Compile Update="Visitors\GenerateUnaryOperatorWhenUnaryOperatorVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>UnaryOperatorStrategy.Resources.resx</DependentUpon>
+      <DependentUpon>GenerateUnaryOperatorWhenUnaryOperatorVisited.Resources.resx</DependentUpon>
     </Compile>
     <Compile Update="TypeGenerator.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -145,77 +150,92 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SequenceEqualityComparerGenerator.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\BinaryOperatorStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateBinaryOperatorWhenBinaryOperatorVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>BinaryOperatorStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateBinaryOperatorWhenBinaryOperatorVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\ConstructorStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateConstructorsWhenEncapsulatedVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConstructorStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateConstructorsWhenEncapsulatedVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\ConversionOperatorStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateConversionOperatorWhenConversionVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConversionOperatorStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateConversionOperatorWhenConversionVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\ConvertFromStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateConversionsToValueWhenEncapsulatedVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConvertFromStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateConversionsToValueWhenEncapsulatedVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\ConvertToStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateConversionsFromValueWhenEncapsulatedVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConvertToStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateConversionsFromValueWhenEncapsulatedVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\DebuggerDisplayStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateDebuggerDisplayWhenSubjectVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DebuggerDisplayStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateDebuggerDisplayWhenSubjectVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\EqualityStrategy.Resources.resx">
+    <EmbeddedResource Update="Syntax\EqualityOperatorSyntax.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EqualityStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>EqualityOperatorSyntax.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\EqualsStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateEqualsOverrideWhenSubjectVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EqualsStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateEqualsOverrideWhenSubjectVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\EquatableStrategy.Resources.resx">
+    <EmbeddedResource Update="Syntax\EquatableMemberSyntax.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EquatableStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>EquatableMemberSyntax.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\FieldStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateValueFieldWhenEncapsulatedVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>FieldStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateValueFieldWhenEncapsulatedVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\GetHashCodeStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateGetHashCodeOverrideWhenSubjectVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GetHashCodeStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateGetHashCodeOverrideWhenSubjectVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\InequalityStrategy.Resources.resx">
+    <EmbeddedResource Update="Syntax\InequalityOperatorSyntax.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>InequalityStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>InequalityOperatorSyntax.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\InterfaceDeclarationStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateInterfaceWhenInterfaceVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>InterfaceDeclarationStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateInterfaceWhenInterfaceVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\JsonConverterStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateJsonConverterWhenSerializationVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>JsonConverterStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateJsonConverterWhenSerializationVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\MemberPassthroughStrategy.Resources.resx">
+    <EmbeddedResource Update="Syntax\PassthroughMemberSyntax.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MemberPassthroughStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>PassthroughMemberSyntax.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\ToStringStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateToStringOverrideWhenSubjectVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ToStringStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateToStringOverrideWhenSubjectVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Strategies\UnaryOperatorStrategy.Resources.resx">
+    <EmbeddedResource Update="Visitors\GenerateUnaryOperatorWhenUnaryOperatorVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>UnaryOperatorStrategy.Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>GenerateUnaryOperatorWhenUnaryOperatorVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="TypeGenerator.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TypeGenerator.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <Target Name="ResolveAnalyzerDependencies" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <_AnalyzerDependency Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll'&#xD;&#xA;                                      AND '%(ReferenceCopyLocalPaths.Filename)' != '$(AssemblyName)'&#xD;&#xA;                                      AND '%(ReferenceCopyLocalPaths.Filename)' != 'Fluentify'&#xD;&#xA;                                      AND '%(ReferenceCopyLocalPaths.Filename)' != 'Valuify'&#xD;&#xA;                                      AND !$([System.String]::Copy('%(ReferenceCopyLocalPaths.Filename)').StartsWith('Microsoft.CodeAnalysis'))" />
+    </ItemGroup>
+  </Target>
+  <Target Name="GetAnalyzerDependencyTargetPaths" Condition="'$(IncludeAnalyzerDependencies)' == 'true'" DependsOnTargets="ResolveAnalyzerDependencies">
+    <ItemGroup>
+      <TargetPathWithTargetPlatformMoniker Include="@(_AnalyzerDependency)" IncludeRuntimeDependency="false" />
+    </ItemGroup>
+  </Target>
+  <Target Name="PackAnalyzerDependencies" DependsOnTargets="ResolveAnalyzerDependencies">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="@(_AnalyzerDependency)" PackagePath="analyzers/dotnet/cs" />
+    </ItemGroup>
+  </Target>
 </Project>

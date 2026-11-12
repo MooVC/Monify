@@ -61,20 +61,7 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace Monify
-        ///{{
-        ///    using System;
-        ///    using System.Diagnostics.CodeAnalysis;
-        ///
-        ///    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-        ///    internal sealed class {0}Attribute&lt;T&gt;
-        ///        : Attribute
-        ///    {{
-        ///        public bool DebuggerDisplay {{ get; set; }} = true;
-        ///
-        ///        public bool Passthrough {{ get; set; }} = true;
-        ///    }}
-        ///}}.
+        ///   Looks up the generic attribute declaration.
         /// </summary>
         internal static string GenericSource {
             get {
@@ -83,24 +70,7 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace Monify
-        ///{{
-        ///    using System;
-        ///    using System.Diagnostics.CodeAnalysis;
-        ///
-        ///    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
-        ///    internal sealed class {0}Attribute
-        ///        : Attribute
-        ///    {{
-        ///        private bool _debuggerDisplay = true;
-        ///        private bool _passthrough = true;
-        ///        private Type _type;
-        ///
-        ///        public bool DebuggerDisplay
-        ///        {{
-        ///            get
-        ///            {{
-        ///                return _debuggerDisplay [rest of string was truncated]&quot;;.
+        ///   Looks up the non-generic attribute declaration.
         /// </summary>
         internal static string NonGenericSource {
             get {

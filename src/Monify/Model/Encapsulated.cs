@@ -3,6 +3,7 @@ namespace Monify.Model
     using System;
     using System.Collections.Immutable;
     using Fluentify;
+    using Graphify;
     using Valuify;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Monify.Model
         /// <value>
         /// The conversions supported by the encapsulated type.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public ImmutableArray<Conversion> Conversions { get; set; } = ImmutableArray<Conversion>.Empty;
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject defines a constructor for the encapsulated value.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasConstructor { get; set; }
 
         /// <summary>
@@ -34,6 +37,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether a conversion from the subject to <see cref="Type"/> already exists.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasConversionFrom { get; set; }
 
         /// <summary>
@@ -42,6 +46,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether a conversion from <see cref="Type"/> to the subject already exists.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasConversionTo { get; set; }
 
         /// <summary>
@@ -50,6 +55,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether the subject already defines an equality operator for <see cref="Type"/>.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasEqualityOperator { get; set; }
 
         /// <summary>
@@ -58,6 +64,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject implements <see cref="IEquatable{T}.Equals(T)"/> for the encapsulated value.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasEquatable { get; set; }
 
         /// <summary>
@@ -66,6 +73,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether the subject already defines an inequality operator for <see cref="Type"/>.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool HasInequalityOperator { get; set; }
 
         /// <summary>
@@ -74,6 +82,7 @@ namespace Monify.Model
         /// <value>
         /// The interfaces supported by the encapsulated type.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public ImmutableArray<string> Interfaces { get; set; } = ImmutableArray<string>.Empty;
 
         /// <summary>
@@ -82,6 +91,7 @@ namespace Monify.Model
         /// <value>
         /// The methods supported by the encapsulated type.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public ImmutableArray<PassthroughMethod> Methods { get; set; } = ImmutableArray<PassthroughMethod>.Empty;
 
         /// <summary>
@@ -90,6 +100,7 @@ namespace Monify.Model
         /// <value>
         /// The properties supported by the encapsulated type.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public ImmutableArray<PassthroughProperty> Properties { get; set; } = ImmutableArray<PassthroughProperty>.Empty;
 
         /// <summary>
@@ -98,6 +109,7 @@ namespace Monify.Model
         /// <value>
         /// A value indicating whether or not the subject implements <see cref="IEquatable{T}"/> for the encapsulated value.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool IsEquatable { get; set; }
 
         /// <summary>
@@ -106,6 +118,7 @@ namespace Monify.Model
         /// <value>
         /// The value indicating whether or not the encapsulated type is deemed to be a sequence.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public bool IsSequence { get; set; }
 
         /// <summary>
@@ -114,6 +127,7 @@ namespace Monify.Model
         /// <value>
         /// The fully qualified name of the related type these operator checks apply to.
         /// </value>
+        [Traverse(Scope = TraverseScope.None)]
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
@@ -122,6 +136,7 @@ namespace Monify.Model
         /// <value>
         /// The binary operators supported by the encapsulated type.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public ImmutableArray<BinaryOperator> BinaryOperators { get; set; } = ImmutableArray<BinaryOperator>.Empty;
 
         /// <summary>
@@ -130,6 +145,7 @@ namespace Monify.Model
         /// <value>
         /// The unary operators supported by the encapsulated type.
         /// </value>
+        [Traverse(Scope = TraverseScope.Property)]
         public ImmutableArray<UnaryOperator> UnaryOperators { get; set; } = ImmutableArray<UnaryOperator>.Empty;
     }
 }

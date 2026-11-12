@@ -2,7 +2,7 @@ namespace Monify.Semantics
 {
     using System.Linq;
     using Microsoft.CodeAnalysis;
-    using Monify.Strategies;
+    using Monify.Visitors;
 
     /// <summary>
     /// Provides extensions relating to <see cref="INamedTypeSymbol"/>.
@@ -41,7 +41,7 @@ namespace Monify.Semantics
                 .ToArray();
 
             hasFieldForEncapsulatedValue = value is object
-                && fields.Any(field => field.Name.Equals(FieldStrategy.Name)
+                && fields.Any(field => field.Name.Equals(GenerateValueFieldWhenEncapsulatedVisited.Name)
                     && SymbolEqualityComparer.IncludeNullability.Equals(field.Type, value));
 
             if (fields.Length == ExpectedFieldsForStatelessType)
@@ -53,7 +53,7 @@ namespace Monify.Semantics
             {
                 IFieldSymbol field = fields[OffsetForFieldWhenAlreadyDefined];
 
-                hasFieldForEncapsulatedValue = field.Name.Equals(FieldStrategy.Name)
+                hasFieldForEncapsulatedValue = field.Name.Equals(GenerateValueFieldWhenEncapsulatedVisited.Name)
                     && SymbolEqualityComparer.IncludeNullability.Equals(field.Type, value);
             }
 

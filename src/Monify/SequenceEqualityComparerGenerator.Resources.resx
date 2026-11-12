@@ -1,55 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="GeneratedSource" xml:space="preserve"><value>namespace Monify.Internal
-{{
-    using System;
-    using System.Collections;
+<?xml version="1.0" encoding="utf-8"?><root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="GeneratedSource" xml:space="preserve"><value>public static readonly global::Monify.Internal.SequenceEqualityComparer Default = new global::Monify.Internal.SequenceEqualityComparer();
 
-    internal sealed class SequenceEqualityComparer
-    {{
-        public static readonly SequenceEqualityComparer Default = new SequenceEqualityComparer();
+public bool Equals(global::System.Collections.IEnumerable left, global::System.Collections.IEnumerable right)
+{
+    if (global::System.Object.ReferenceEquals(left, right))
+    {
+        return true;
+    }
 
-        public bool Equals(IEnumerable left, IEnumerable right)
-        {{
-            if (ReferenceEquals(left, right))
-            {{
-                return true;
-            }}
+    if (global::System.Object.ReferenceEquals(left, null) || global::System.Object.ReferenceEquals(null, right))
+    {
+        return false;
+    }
 
-            if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
-            {{
+    return Equals(left.GetEnumerator(), right.GetEnumerator());
+}
+
+public int GetHashCode(global::System.Collections.IEnumerable enumerable)
+{
+    return global::Monify.Internal.HashCode.Combine(enumerable);
+}
+
+private static bool Equals(global::System.Collections.IEnumerator left, global::System.Collections.IEnumerator right)
+{
+    while (left.MoveNext())
+    {
+        if (!right.MoveNext())
+        {
+            return false;
+        }
+
+        if (global::System.Object.ReferenceEquals(left.Current, null))
+        {
+            if (!global::System.Object.ReferenceEquals(right.Current, null))
+            {
                 return false;
-            }}
+            }
+        }
+        else if (!left.Current.Equals(right.Current))
+        {
+            return false;
+        }
+    }
 
-            return Equals(left.GetEnumerator(), right.GetEnumerator());
-        }}
-
-        public int GetHashCode(IEnumerable enumerable)
-        {{
-            return HashCode.Combine(enumerable);
-        }}
-
-        private static bool Equals(IEnumerator left, IEnumerator right)
-        {{
-            while (left.MoveNext())
-            {{
-                if (!right.MoveNext())
-                {{
-                    return false;
-                }}
-
-                if (ReferenceEquals(left.Current, null))
-                {{
-                    if (!ReferenceEquals(right.Current, null))
-                    {{
-                        return false;
-                    }}
-                }}
-                else if (!left.Current.Equals(right.Current))
-                {{
-                    return false;
-                }}
-            }}
-
-            return !right.MoveNext();
-        }}
-    }}
-}}</value></data></root>
+    return !right.MoveNext();
+}</value></data></root>

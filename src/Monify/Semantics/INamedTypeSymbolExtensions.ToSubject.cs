@@ -1,6 +1,7 @@
 namespace Monify.Semantics
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
     using Microsoft.CodeAnalysis;
@@ -63,12 +64,16 @@ namespace Monify.Semantics
 
             _ = subject.IsStateless(value, out bool hasFieldForEncapsulatedValue);
 
+            string qualification = subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+            ImmutableArray<Encapsulated> encapsulated = subject.GetEncapsulated(compilation, model, value, passthrough);
+            RemoveDuplicateOperators(encapsulated, qualification);
+
             return new Subject()
                 .CanOverrideEquals(subject.CanOverrideEquals())
                 .CanOverrideGetHashCode(subject.CanOverrideGetHashCode())
                 .CanOverrideToString(subject.CanOverrideToString())
                 .WithDeclaration(declaration)
-                .WithEncapsulated(subject.GetEncapsulated(compilation, model, value, passthrough).ToArray())
+                .WithEncapsulatedValues(encapsulated.ToArray())
                 .GenerateDebuggerDisplay(debuggerDisplay && !subject.HasDebuggerDisplay())
                 .HasEqualityOperator(subject.HasEqualityOperator())
                 .HasEquatable(subject.HasEquatable())
@@ -78,8 +83,28 @@ namespace Monify.Semantics
                 .WithName(subject.Name)
                 .WithNamespace(@namespace)
                 .WithNesting(nesting.ToArray())
-                .WithQualification(subject.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                .WithQualification(qualification)
+                .WithQualifiedName(subject.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
                 .WithSerialization(subject.ToSerialization(compilation));
+        }
+
+        private static void RemoveDuplicateOperators(ImmutableArray<Encapsulated> encapsulated, string qualification)
+        {
+            var binarySignatures = new HashSet<(string Operator, string Left, string Right)>();
+            var unarySignatures = new HashSet<string>(StringComparer.Ordinal);
+
+            foreach (Encapsulated value in encapsulated)
+            {
+                value.BinaryOperators = value.BinaryOperators
+                    .Where(binary => binarySignatures.Add((
+                        binary.Operator,
+                        binary.IsLeftSubject ? qualification : binary.Left,
+                        binary.IsRightSubject ? qualification : binary.Right)))
+                    .ToImmutableArray();
+                value.UnaryOperators = value.UnaryOperators
+                    .Where(unary => unarySignatures.Add(unary.Operator))
+                    .ToImmutableArray();
+            }
         }
     }
 }
