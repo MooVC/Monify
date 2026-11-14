@@ -63,7 +63,6 @@ namespace Monify.Semantics
             IMethodSymbol explicitImplementation = method.ExplicitInterfaceImplementations.FirstOrDefault();
             IMethodSymbol declaration = explicitImplementation ?? method;
             string accessibility = string.Empty;
-            string[] constraints = Array.Empty<string>();
             string explicitInterface = string.Empty;
 
             PassthroughParameter[] parameters = declaration.Parameters
@@ -73,7 +72,6 @@ namespace Monify.Semantics
             if (explicitImplementation is null)
             {
                 accessibility = method.DeclaredAccessibility.ToSource();
-                constraints = method.GetTypeParameterConstraints().ToArray();
             }
             else
             {
@@ -82,12 +80,13 @@ namespace Monify.Semantics
 
             return new PassthroughMethod()
                 .WithAccessibility(accessibility)
-                .WithConstraints(constraints)
                 .WithExplicitInterface(explicitInterface)
                 .WithName(declaration.Name)
                 .WithParameters(parameters)
                 .WithReturn(declaration.ReturnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
-                .WithTypeParameters(declaration.TypeParameters.Select(parameter => parameter.Name).ToArray());
+                .WithTypeParameters(declaration.TypeParameters
+                    .Select(parameter => CreateTypeParameter(parameter, includeConstraints: explicitImplementation is null))
+                    .ToArray());
         }
 
         private static bool HasPassthroughMethod(this INamedTypeSymbol subject, IMethodSymbol method)
@@ -241,15 +240,6 @@ namespace Monify.Semantics
             }
 
             return false;
-        }
-
-        private static ImmutableArray<string> GetTypeParameterConstraints(this IMethodSymbol method)
-        {
-            return method
-                .TypeParameters
-                .Select(GetTypeParameterConstraint)
-                .Where(constraint => constraint.Length > 0)
-                .ToImmutableArray();
         }
     }
 }

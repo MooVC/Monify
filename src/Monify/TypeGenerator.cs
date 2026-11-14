@@ -8,6 +8,7 @@ namespace Monify
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Monify.Model;
     using Monify.Syntax;
+    using MooVC.Syntax;
 
     using static Monify.TypeGenerator_Resources;
 
@@ -50,10 +51,10 @@ namespace Monify
 
             foreach (Source source in navigator.Navigate<Source>(match.Subject))
             {
-                string code = Wrap(source.Code, match.Subject, match.SupportsNullableReferenceTypes, source.IsNested).NormalizeLineEndings();
+                Snippet code = Wrap(source.Content, match.Subject, match.SupportsNullableReferenceTypes, source.IsNested);
                 string hint = GetHint(source, match.Subject);
 
-                context.AddSource(hint, code);
+                context.AddSource(hint, code.RemoveSpellingMarkers().NormalizeLineEndings());
             }
         }
 
@@ -102,17 +103,17 @@ namespace Monify
             return context.Node as TypeDeclarationSyntax;
         }
 
-        private static string Nest(string code, Subject subject)
+        private static Snippet Nest(Snippet code, Subject subject)
         {
             foreach (Nesting parent in subject.Nesting.Reverse())
             {
-                code = GenerationSyntax.Block(GenerationSyntax.ToSnippet(code), $"{parent.Declaration} {parent.Qualification}");
+                code = code.Block(Configuration.Options, $"{parent.Declaration} {parent.Qualification}");
             }
 
             return code;
         }
 
-        private static string Wrap(string code, Subject subject, bool supportsNullableReferenceTypes, bool isNested)
+        private static Snippet Wrap(Snippet code, Subject subject, bool supportsNullableReferenceTypes, bool isNested)
         {
             if (isNested)
             {
@@ -121,7 +122,7 @@ namespace Monify
 
             if (supportsNullableReferenceTypes)
             {
-                code = string.Format(NullableSource, code);
+                code = Snippet.From(Configuration.Options, string.Format(NullableSource, code));
             }
 
             if (subject.IsGlobal)
@@ -129,7 +130,7 @@ namespace Monify
                 return code;
             }
 
-            return GenerationSyntax.Block(GenerationSyntax.ToSnippet(code), $"namespace {subject.Namespace}");
+            return code.Block(Configuration.Options, $"namespace {subject.Namespace}");
         }
     }
 }

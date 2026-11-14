@@ -1,7 +1,8 @@
 namespace Monify
 {
     using Microsoft.CodeAnalysis;
-    using Monify.Syntax;
+    using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
 
     using static Monify.HashCodeGenerator_Resources;
 
@@ -15,14 +16,50 @@ namespace Monify
         /// <summary>
         /// The source code that will be output by the generator.
         /// </summary>
-        public static readonly string Content = GenerationSyntax.Block(
-            GenerationSyntax.Block(GenerationSyntax.ToSnippet(GeneratedSource), "internal static class HashCode"),
-            "namespace Monify.Internal").ToString().NormalizeLineEndings();
+        public static readonly string Content = GetContent();
 
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
             context.RegisterPostInitializationOutput(productionContext => productionContext.AddSource("Monify.Internal.HashCode.g.cs", Content));
+        }
+
+        private static string GetContent()
+        {
+            string source = Definition.Undefined
+                .From("Monify.Internal")
+                .For<Class>(@class => @class
+                    .Named("HashCode")
+                    .WithScope(Scopes.Internal)
+                    .IsPartial(false)
+                    .IsStatic(true)
+                    .WithMethods(combine => combine
+                        .Named("Combine")
+                        .WithExtensibility(Modifiers.Static)
+                        .Accepts(parameter => parameter
+                            .Named("Values")
+                            .OfType(((Symbol)typeof(object)).IsArray(true))
+                            .WithModifier(Parameter.Modes.Params))
+                        .Returns(Result.Void.OfType(typeof(int)))
+                        .WithBody(Snippet.From(Configuration.Options, CombineBody)))
+                    .WithMethods(getHashCode => getHashCode
+                        .Named("GetHashCode")
+                        .WithScope(Scopes.Private)
+                        .WithExtensibility(Modifiers.Static)
+                        .Accepts(parameter => parameter.Named("Value").OfType(typeof(object)))
+                        .Returns(Result.Void.OfType(typeof(int)))
+                        .WithBody(Snippet.From(Configuration.Options, GetHashCodeBody)))
+                    .WithMethods(performCombine => performCombine
+                        .Named("PerformCombine")
+                        .WithScope(Scopes.Private)
+                        .WithExtensibility(Modifiers.Static)
+                        .Accepts(parameter => parameter.Named("Hash").OfType(typeof(int)))
+                        .Accepts(parameter => parameter.Named("Value").OfType(typeof(object)))
+                        .Returns(Result.Void.OfType(typeof(int)))
+                        .WithBody(Snippet.From(Configuration.Options, PerformCombineBody))))
+                .ToSnippet(Configuration.Options);
+
+            return source.NormalizeLineEndings();
         }
     }
 }

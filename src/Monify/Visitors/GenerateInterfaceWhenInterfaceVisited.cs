@@ -32,7 +32,7 @@ namespace Monify.Visitors
             string @interface = instance._Value;
             string hint = $"Interfaces.{@interface.NormalizeTypeForHint()}";
 
-            yield return GenerationSyntax.CreateInterfaceSource(instance._Root, hint, @interface, _attributes);
+            yield return instance._Root.ToSource(hint, TypeReferences.FromRoslyn(@interface), _attributes);
         }
 
         private static Attribute CreateSuppression(string category, string rule, string justification)

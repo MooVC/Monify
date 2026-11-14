@@ -12,7 +12,7 @@ public sealed class WhenObserveIsCalled
         Subject subject = TestSubject.Create();
 
         // Act
-        Source[] sources = visitor.Observe(new Subject.Graph.Self(subject, subject)).ToArray();
+        Source[] sources = visitor.Observe(new Subject.Graph(subject)).ToArray();
 
         // Assert
         sources.Length.ShouldBe(2);
@@ -30,7 +30,7 @@ public sealed class WhenObserveIsCalled
         subject.HasEquatable = true;
 
         // Act
-        IEnumerable<Source> result = visitor.Observe(new Subject.Graph.Self(subject, subject));
+        IEnumerable<Source> result = visitor.Observe(new Subject.Graph(subject));
 
         // Assert
         result.ShouldBeEmpty();

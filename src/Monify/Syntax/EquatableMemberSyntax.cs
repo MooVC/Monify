@@ -4,6 +4,7 @@ namespace Monify.Syntax
     using System.Collections.Generic;
     using Monify.Model;
     using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
 
     using static Monify.Syntax.EquatableMemberSyntax_Resources;
 
@@ -21,18 +22,22 @@ namespace Monify.Syntax
             Func<string> implementation)
         {
             string hint = $"{nameof(IEquatable<Subject>)}.{name}";
+            Symbol operand = TypeReferences.FromRoslyn(type);
 
             if (!isEquatable)
             {
-                yield return GenerationSyntax.CreateInterfaceSource(subject, hint, $"global::System.IEquatable<{type}>");
+                Symbol contract = typeof(IEquatable<>);
+                yield return subject.ToSource(hint, contract.WithArguments(operand));
             }
 
             if (!hasEquatable)
             {
-                string declaration = $"public bool {nameof(object.Equals)}({type} other)";
-                Snippet body = GenerationSyntax.ToSnippet(string.Format(ImplementationSource, implementation()));
+                Method equals = Method.Undefined.Named(nameof(object.Equals))
+                    .Accepts(parameter => parameter.Named("Other").OfType(operand))
+                    .Returns(Result.Void.OfType(typeof(bool)))
+                    .WithBody(Snippet.From(Configuration.Options, string.Format(ImplementationSource, implementation())));
 
-                yield return GenerationSyntax.CreateSource(subject, $"{hint}.{nameof(object.Equals)}", GenerationSyntax.Block(body, declaration));
+                yield return subject.ToSource($"{hint}.{nameof(object.Equals)}", equals);
             }
         }
     }

@@ -25,7 +25,7 @@ public sealed class WhenObserveIsCalled
         // Assert
         source.Hint.ShouldBe("JsonConverter");
         source.Code.ShouldContain("[global::System.Text.Json.Serialization.JsonConverter(typeof(global::Sample.Converter))]");
-        source.Code.ShouldContain("public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<global::Sample>");
+        source.Code.ShouldContain("public sealed class Converter\n        : global::System.Text.Json.Serialization.JsonConverter<global::Sample>");
         source.Code.ShouldContain("return new global::Sample(global::System.Text.Json.JsonSerializer.Deserialize<int>(ref reader, options));");
         source.Code.ShouldContain("global::System.Text.Json.JsonSerializer.Serialize<int>(writer, value._value, options);");
     }

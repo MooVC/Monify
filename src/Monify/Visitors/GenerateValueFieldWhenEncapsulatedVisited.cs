@@ -3,10 +3,9 @@ namespace Monify.Visitors
     using System.Collections.Generic;
     using Monify.Model;
     using Monify.Syntax;
-    using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
 
     using static Monify.Model.Subject;
-    using static Monify.Visitors.GenerateValueFieldWhenEncapsulatedVisited_Resources;
     using EncapsulatedNode = Monify.Model.Subject.Graph.EncapsulatedValues.Encapsulated;
 
     /// <summary>
@@ -30,9 +29,9 @@ namespace Monify.Visitors
                 yield break;
             }
 
-            var field = Snippet.From(string.Format(FieldSource, instance._Value.Type, Name));
+            Field field = Field.Undefined.Named(Name).OfType(TypeReferences.FromRoslyn(instance._Value.Type));
 
-            yield return GenerationSyntax.CreateSource(subject, Name, field);
+            yield return subject.ToSource(Name, field.ToSnippet(Configuration.Options));
         }
     }
 }

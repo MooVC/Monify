@@ -4,9 +4,12 @@ namespace Monify.Visitors
     using Monify.Model;
     using Monify.Syntax;
     using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
     using static Monify.Model.Subject;
     using static Monify.Visitors.GenerateConversionOperatorWhenConversionVisited_Resources;
+    using Conversion = Monify.Model.Conversion;
     using ConversionNode = Monify.Model.Subject.Graph.EncapsulatedValues.Encapsulated.Conversions.Conversion;
+    using ConversionSyntax = MooVC.Syntax.CSharp.Conversion;
 
     /// <summary>
     /// Generates a conversion operator that forwards to the encapsulated type.
@@ -28,26 +31,23 @@ namespace Monify.Visitors
                 : $"Conversions.Passthrough.Level{index:D2}";
             string hint = $"{hintPrefix}.{instance._Index:D2}";
 
-            yield return GenerationSyntax.CreateSource(subject, hint, CreateConversion(subject, encapsulated._Value, conversion));
+            yield return CreateConversion(subject, encapsulated._Value, conversion).ToSource(subject, hint);
         }
 
-        private static Snippet CreateConversion(Subject subject, Encapsulated encapsulated, Conversion conversion)
+        private static ConversionSyntax CreateConversion(Subject subject, Encapsulated encapsulated, Conversion conversion)
         {
-            string operatorName = conversion.Operator == ExplicitOperatorName
-                ? "explicit"
-                : "implicit";
-
-            string self = GenerationSyntax.Self(subject);
-            string parameter = conversion.IsParameterSubject ? self : conversion.Parameter;
+            string self = subject.GetSelfType();
             string result = conversion.IsReturnSubject ? self : conversion.Return;
-            string parameterName = conversion.IsParameterSubject ? "subject" : "value";
             string body = conversion.IsParameterSubject
                 ? string.Format(SubjectConversionSource, result)
                 : string.Format(ValueConversionSource, self, encapsulated.Type);
 
-            return GenerationSyntax.Block(
-                GenerationSyntax.ToSnippet(body),
-                $"public static {operatorName} operator {result}({parameter} {parameterName})");
+            return ConversionSyntax.Undefined
+                .WithMode(conversion.Operator == ExplicitOperatorName ? ConversionSyntax.Types.Explicit : ConversionSyntax.Types.Implicit)
+                .WithDirection(conversion.IsParameterSubject ? ConversionSyntax.Intents.To : ConversionSyntax.Intents.From)
+                .WithInput(parameter => parameter.Named(conversion.IsParameterSubject ? "Subject" : "Value"))
+                .ForType(TypeReferences.FromRoslyn(conversion.IsParameterSubject ? result : conversion.Parameter))
+                .WithBody(Snippet.From(Configuration.Options, body));
         }
     }
 }

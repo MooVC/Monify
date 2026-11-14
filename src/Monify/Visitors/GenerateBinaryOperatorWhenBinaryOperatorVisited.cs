@@ -4,6 +4,7 @@ namespace Monify.Visitors
     using Monify.Model;
     using Monify.Syntax;
     using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
     using static Monify.Model.Subject;
     using static Monify.Visitors.GenerateBinaryOperatorWhenBinaryOperatorVisited_Resources;
     using BinaryOperatorNode = Monify.Model.Subject.Graph.EncapsulatedValues.Encapsulated.BinaryOperators.BinaryOperator;
@@ -30,12 +31,12 @@ namespace Monify.Visitors
             string rightHint = rightType.NormalizeTypeForHint();
             string hint = $"{hintPrefix}.{binary.Operator}.{leftHint}-{rightHint}";
 
-            yield return GenerationSyntax.CreateSource(subject, hint, CreateOperator(subject, binary));
+            yield return subject.ToSource(hint, CreateOperator(subject, binary));
         }
 
         private static Snippet CreateOperator(Subject subject, BinaryOperator binary)
         {
-            string self = GenerationSyntax.Self(subject);
+            string self = subject.GetSelfType();
             string leftType = binary.IsLeftSubject ? self : binary.Left;
             string rightType = binary.IsRightSubject ? self : binary.Right;
             string returnType = binary.IsReturnSubject ? self : binary.Return;
@@ -53,13 +54,19 @@ namespace Monify.Visitors
                 CreateGuard(binary.IsRightSubject, "right"),
                 Snippet.From(result));
 
-            return GenerationSyntax.Block(body, $"public static {returnType} operator {binary.Symbol}({leftType} left, {rightType} right)");
+            return Binary.Undefined
+                .WithOperator(binary.Symbol)
+                .WithLeft(parameter => parameter.Named("Left").OfType(TypeReferences.FromRoslyn(leftType)))
+                .WithRight(parameter => parameter.Named("Right").OfType(TypeReferences.FromRoslyn(rightType)))
+                .WithResult(TypeReferences.FromRoslyn(returnType))
+                .WithBody(body)
+                .ToSnippet(Configuration.Options);
         }
 
         private static Snippet CreateGuard(bool shouldGuard, string parameter)
         {
             return shouldGuard
-                ? GenerationSyntax.ToSnippet(string.Format(GuardSource, parameter))
+                ? Snippet.From(Configuration.Options, string.Format(GuardSource, parameter))
                 : Snippet.Empty;
         }
     }

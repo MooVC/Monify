@@ -36,7 +36,8 @@ internal static partial class Nested
                             [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Structs.Outter_1_InnerJsonConverterFactory))]
                             readonly partial struct Inner
                             {
-                                public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Structs.Outter<T>.Inner>
+                                public sealed class Converter
+                                    : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Structs.Outter<T>.Inner>
                                 {
                                     public override global::Monify.Testing.Structs.Outter<T>.Inner Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                                     {
@@ -60,7 +61,8 @@ internal static partial class Nested
                     """
                     namespace Monify.Testing.Structs
                     {
-                        internal sealed class Outter_1_InnerJsonConverterFactory : global::System.Text.Json.Serialization.JsonConverterFactory
+                        internal sealed class Outter_1_InnerJsonConverterFactory
+                            : global::System.Text.Json.Serialization.JsonConverterFactory
                         {
                             public override bool CanConvert(global::System.Type typeToConvert)
                             {

@@ -29,7 +29,8 @@ internal static partial class Simple
                     [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Structs.Simple.Converter))]
                     partial struct Simple
                     {
-                        public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Structs.Simple>
+                        public sealed class Converter
+                            : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Structs.Simple>
                         {
                             public override global::Monify.Testing.Structs.Simple Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                             {

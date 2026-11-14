@@ -61,11 +61,29 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up the hash code implementation.
+        ///   Looks up the combine body.
         /// </summary>
-        internal static string GeneratedSource {
+        internal static string CombineBody {
             get {
-                return ResourceManager.GetString("GeneratedSource", resourceCulture);
+                return ResourceManager.GetString("CombineBody", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up the get hash code body.
+        /// </summary>
+        internal static string GetHashCodeBody {
+            get {
+                return ResourceManager.GetString("GetHashCodeBody", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up the perform combine body.
+        /// </summary>
+        internal static string PerformCombineBody {
+            get {
+                return ResourceManager.GetString("PerformCombineBody", resourceCulture);
             }
         }
     }

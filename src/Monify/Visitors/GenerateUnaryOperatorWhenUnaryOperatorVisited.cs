@@ -5,6 +5,7 @@ namespace Monify.Visitors
     using Monify.Model;
     using Monify.Syntax;
     using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
     using static Monify.Model.Subject;
     using static Monify.Visitors.GenerateUnaryOperatorWhenUnaryOperatorVisited_Resources;
     using UnaryOperatorNode = Monify.Model.Subject.Graph.EncapsulatedValues.Encapsulated.UnaryOperators.UnaryOperator;
@@ -29,7 +30,7 @@ namespace Monify.Visitors
 
             string hint = $"{hintPrefix}.{unary.Operator}.{subjectHint}";
 
-            yield return GenerationSyntax.CreateSource(subject, hint, CreateOperator(subject, encapsulated._Value, unary));
+            yield return subject.ToSource(hint, CreateOperator(subject, encapsulated._Value, unary));
         }
 
         private static Snippet CreateOperator(Subject subject, Encapsulated encapsulated, UnaryOperator unary)
@@ -37,7 +38,7 @@ namespace Monify.Visitors
             (string operand, bool requiresValueCopy) = GetOperand(unary.Symbol);
             string operation = ApplyOperator(unary.Symbol, operand);
 
-            string self = GenerationSyntax.Self(subject);
+            string self = subject.GetSelfType();
             string returnType = unary.IsReturnSubject ? self : unary.Return;
 
             string result = unary.IsReturnSubject
@@ -48,9 +49,12 @@ namespace Monify.Visitors
                 ? string.Format(ValueCopyOperatorSource, encapsulated.Type, result)
                 : string.Format(OperatorSource, result);
 
-            return GenerationSyntax.Block(
-                GenerationSyntax.ToSnippet(body),
-                $"public static {returnType} operator {unary.Symbol}({self} subject)");
+            return Unary.Undefined
+                .WithOperator(unary.Symbol)
+                .WithOperand(parameter => parameter.Named("Subject").OfType(TypeReferences.FromRoslyn(self)))
+                .WithResult(TypeReferences.FromRoslyn(returnType))
+                .WithBody(Snippet.From(Configuration.Options, body))
+                .ToSnippet(Configuration.Options);
         }
 
         private static string ApplyOperator(string symbol, string operand)

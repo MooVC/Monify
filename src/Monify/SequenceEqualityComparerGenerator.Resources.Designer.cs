@@ -61,11 +61,29 @@ namespace Monify {
         }
         
         /// <summary>
-        ///   Looks up the sequence equality comparer implementation.
+        ///   Looks up the equals enumerable body.
         /// </summary>
-        internal static string GeneratedSource {
+        internal static string EqualsEnumerableBody {
             get {
-                return ResourceManager.GetString("GeneratedSource", resourceCulture);
+                return ResourceManager.GetString("EqualsEnumerableBody", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up the equals enumerator body.
+        /// </summary>
+        internal static string EqualsEnumeratorBody {
+            get {
+                return ResourceManager.GetString("EqualsEnumeratorBody", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up the get hash code body.
+        /// </summary>
+        internal static string GetHashCodeBody {
+            get {
+                return ResourceManager.GetString("GetHashCodeBody", resourceCulture);
             }
         }
     }

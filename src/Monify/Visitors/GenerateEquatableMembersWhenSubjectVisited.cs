@@ -1,6 +1,7 @@
 namespace Monify.Visitors
 {
     using System.Collections.Generic;
+    using Graphify;
     using Monify.Model;
     using Monify.Syntax;
 
@@ -10,16 +11,16 @@ namespace Monify.Visitors
     /// Generates equatable members for comparison with the subject type.
     /// </summary>
     internal sealed class GenerateEquatableMembersWhenSubjectVisited
-        : ISubjectVisitor<Subject.Graph.Self, Source>
+        : ISubjectVisitor<Subject.Graph, Source>
     {
         /// <inheritdoc/>
-        public IEnumerable<Source> Observe(Subject.Graph.Self instance)
+        public IEnumerable<Source> Observe(Subject.Graph instance)
         {
-            Subject subject = instance._Value;
+            Subject subject = ((IGraph<Subject>)instance).Root;
 
             return EquatableMemberSyntax.Create(
                 subject,
-                GenerationSyntax.Self(subject),
+                subject.GetSelfType(),
                 "Self",
                 subject.IsEquatable,
                 subject.HasEquatable,

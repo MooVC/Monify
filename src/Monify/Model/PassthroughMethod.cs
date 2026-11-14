@@ -2,6 +2,7 @@ namespace Monify.Model
 {
     using System.Collections.Immutable;
     using Fluentify;
+    using MooVC.Syntax.CSharp;
     using Valuify;
 
     /// <summary>
@@ -18,14 +19,6 @@ namespace Monify.Model
         /// The accessibility used when declaring the method.
         /// </value>
         public string Accessibility { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the generic constraints used when declaring the method.
-        /// </summary>
-        /// <value>
-        /// The generic constraints used when declaring the method.
-        /// </value>
-        public ImmutableArray<string> Constraints { get; set; } = ImmutableArray<string>.Empty;
 
         /// <summary>
         /// Gets or sets the explicitly implemented interface, when applicable.
@@ -73,6 +66,6 @@ namespace Monify.Model
         /// <value>
         /// The method type parameters.
         /// </value>
-        public ImmutableArray<string> TypeParameters { get; set; } = ImmutableArray<string>.Empty;
+        public ImmutableArray<Generic> TypeParameters { get; set; } = ImmutableArray<Generic>.Empty;
     }
 }

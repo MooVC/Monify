@@ -1,5 +1,8 @@
 namespace Monify
 {
+    using Monify.Syntax;
+    using MooVC.Syntax;
+
     /// <summary>
     /// Represents a unit of source code to be added to the output.
     /// </summary>
@@ -17,9 +20,9 @@ namespace Monify
         /// <param name="isNested">
         /// A value indicating whether the source should be enclosed in the subject's containing types.
         /// </param>
-        public Source(string code, string hint, bool isNested = true)
+        public Source(Snippet code, string hint, bool isNested = true)
         {
-            Code = code.NormalizeLineEndings();
+            Content = code;
             Hint = hint;
             IsNested = isNested;
         }
@@ -30,7 +33,9 @@ namespace Monify
         /// <value>
         /// The contents of the source file.
         /// </value>
-        public string Code { get; }
+        public string Code => Content.RemoveSpellingMarkers().NormalizeLineEndings();
+
+        public Snippet Content { get; }
 
         /// <summary>
         /// Gets the hint name to be used for the source file.

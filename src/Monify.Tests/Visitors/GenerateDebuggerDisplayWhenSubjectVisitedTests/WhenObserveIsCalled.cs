@@ -12,7 +12,7 @@ public sealed class WhenObserveIsCalled
         var visitor = new GenerateDebuggerDisplayWhenSubjectVisited();
 
         // Act
-        Source source = visitor.Observe(new Subject.Graph.Self(subject, subject)).Single();
+        Source source = visitor.Observe(new Subject.Graph(subject)).Single();
 
         // Assert
         source.Hint.ShouldBe("DebuggerDisplay");
@@ -30,7 +30,7 @@ public sealed class WhenObserveIsCalled
         var visitor = new GenerateDebuggerDisplayWhenSubjectVisited();
 
         // Act
-        IEnumerable<Source> result = visitor.Observe(new Subject.Graph.Self(subject, subject));
+        IEnumerable<Source> result = visitor.Observe(new Subject.Graph(subject));
 
         // Assert
         result.ShouldBeEmpty();

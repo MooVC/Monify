@@ -35,7 +35,8 @@ internal static partial class Simple
                     [global::System.Text.Json.Serialization.JsonConverter(typeof(Simple.Converter))]
                     sealed partial record Simple
                     {
-                        public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Simple>
+                        public sealed class Converter
+                            : global::System.Text.Json.Serialization.JsonConverter<Simple>
                         {
                             public override Simple Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                             {

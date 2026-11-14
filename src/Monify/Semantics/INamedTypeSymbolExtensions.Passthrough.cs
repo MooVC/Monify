@@ -1,10 +1,10 @@
 namespace Monify.Semantics
 {
-    using System.Collections.Immutable;
     using System.Linq;
     using Microsoft.CodeAnalysis;
     using Monify.Model;
-    using static Monify.Semantics.INamedTypeSymbolExtensions_Resources;
+    using Monify.Syntax;
+    using MooVC.Syntax.CSharp;
     using LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion;
     using LanguageVersionFacts = Microsoft.CodeAnalysis.CSharp.LanguageVersionFacts;
 
@@ -85,38 +85,45 @@ namespace Monify.Semantics
             }
         }
 
-        private static string GetTypeParameterConstraint(ITypeParameterSymbol parameter)
+        private static Generic CreateTypeParameter(ITypeParameterSymbol parameter, bool includeConstraints)
         {
-            ImmutableArray<string>.Builder constraints = ImmutableArray.CreateBuilder<string>();
+            Generic generic = Generic.Undefined.Named(parameter.Name);
 
-            if (parameter.HasNotNullConstraint)
+            if (!includeConstraints)
             {
-                constraints.Add("notnull");
+                return generic;
             }
+
+            Natures nature = Natures.Unspecified;
 
             if (parameter.HasUnmanagedTypeConstraint)
             {
-                constraints.Add("unmanaged");
+                nature = Natures.Unmanaged;
             }
             else if (parameter.HasValueTypeConstraint)
             {
-                constraints.Add("struct");
+                nature = Natures.Struct;
             }
             else if (parameter.HasReferenceTypeConstraint)
             {
-                constraints.Add("class");
+                nature = Natures.Class;
             }
-
-            constraints.AddRange(parameter.ConstraintTypes.Select(type => type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)));
-
-            if (parameter.HasConstructorConstraint)
+            else if (parameter.HasNotNullConstraint)
             {
-                constraints.Add("new()");
+                nature = Natures.NotNull;
             }
 
-            return constraints.Count == 0
-                ? string.Empty
-                : string.Format(TypeParameterConstraintSource, parameter.Name, string.Join(", ", constraints));
+            // Keep Roslyn's ordering for base classes, interfaces, and type-parameter constraints.
+            Implementation[] types = parameter.ConstraintTypes
+                .Select(type => (Implementation)TypeReferences.FromRoslyn(type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)))
+                .ToArray();
+
+            Constraint constraint = Constraint.Unspecified
+                .WithNature(nature)
+                .WithInterfaces(types)
+                .WithNew(parameter.HasConstructorConstraint ? New.Required : New.NotRequired);
+
+            return constraint.IsUnspecified ? generic : generic.WithConstraints(constraint);
         }
 
         private static bool HasSourceCompatibleSignature(this IMethodSymbol method, LanguageVersion languageVersion)

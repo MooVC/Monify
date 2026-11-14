@@ -29,7 +29,8 @@ internal static partial class Simple
                     [global::System.Text.Json.Serialization.JsonConverter(typeof(global::Monify.Testing.Classes.Simple.Converter))]
                     sealed partial class Simple
                     {
-                        public sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Classes.Simple>
+                        public sealed class Converter
+                            : global::System.Text.Json.Serialization.JsonConverter<global::Monify.Testing.Classes.Simple>
                         {
                             public override global::Monify.Testing.Classes.Simple Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
                             {
@@ -89,7 +90,8 @@ internal static partial class Simple
                 """
                 namespace Monify.Testing.Classes
                 {
-                    sealed partial class Simple : global::System.IEquatable<global::Monify.Testing.Classes.Simple>
+                    sealed partial class Simple
+                        : global::System.IEquatable<global::Monify.Testing.Classes.Simple>
                     {
                     }
                 }
@@ -101,7 +103,8 @@ internal static partial class Simple
                 """
                 namespace Monify.Testing.Classes
                 {
-                    sealed partial class Simple : global::System.IEquatable<int>
+                    sealed partial class Simple
+                        : global::System.IEquatable<int>
                     {
                     }
                 }
@@ -116,7 +119,8 @@ internal static partial class Simple
                     [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
                     [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
                     [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
-                    sealed partial class Simple : global::System.IComparable
+                    sealed partial class Simple
+                        : global::System.IComparable
                     {
                     }
                 }
@@ -131,7 +135,8 @@ internal static partial class Simple
                     [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Generated interface forwarding preserves the annotated type name.")]
                     [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
                     [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1210:Comparable types should implement comparison operators", Justification = "Generated interface forwarding preserves the encapsulated type contract.")]
-                    sealed partial class Simple : global::System.IComparable<int>
+                    sealed partial class Simple
+                        : global::System.IComparable<int>
                     {
                     }
                 }

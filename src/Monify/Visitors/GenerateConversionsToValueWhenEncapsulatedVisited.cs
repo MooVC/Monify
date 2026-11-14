@@ -4,8 +4,10 @@ namespace Monify.Visitors
     using Monify.Model;
     using Monify.Syntax;
     using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
     using static Monify.Model.Subject;
     using static Monify.Visitors.GenerateConversionsToValueWhenEncapsulatedVisited_Resources;
+    using Conversion = MooVC.Syntax.CSharp.Conversion;
 
     /// <summary>
     /// Generates an implicit conversion from the subject to the encapsulated type.
@@ -28,10 +30,11 @@ namespace Monify.Visitors
                 : $"ConvertFrom.Passthrough.Level{instance._Index:D2}";
 
             Subject subject = instance._Root;
-            string declaration = $"public static implicit operator {conversion.Type}({GenerationSyntax.Self(subject)} subject)";
-            var body = GenerationSyntax.ToSnippet(ConversionSource);
+            Conversion member = Conversion.Undefined
+                .ForType(TypeReferences.FromRoslyn(conversion.Type))
+                .WithBody(Snippet.From(Configuration.Options, ConversionSource));
 
-            yield return GenerationSyntax.CreateSource(subject, hint, GenerationSyntax.Block(body, declaration));
+            yield return member.ToSource(subject, hint);
         }
     }
 }

@@ -3,6 +3,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Description>Monify is a .NET Roslyn source generator for strongly typed wrappers and encapsulated functional value types (including monad-style wrappers), improving semantic clarity, type safety, and maintainability.</Description>
     <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetAnalyzerDependencyTargetPaths</GetTargetPathDependsOn>
+    <GraphifyBootstrapVersion>1.2.0</GraphifyBootstrapVersion>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>7.3</LangVersion>
     <Nullable>disable</Nullable>
@@ -13,7 +14,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Graphify" IncludeAssets="build; analyzers; buildtransitive" PrivateAssets="all" />
+    <!-- Graphify runs at build time and uses the compiler host's immutable collections. -->
+    <PackageDownload Include="Graphify" Version="[$(GraphifyBootstrapVersion)]" />
+    <Analyzer Include="$(NuGetPackageRoot)/graphify/$(GraphifyBootstrapVersion)/analyzers/dotnet/cs/Graphify.dll" />
     <PackageReference Include="MooVC.Syntax.CSharp" PrivateAssets="all" />
     <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="Valuify">
@@ -26,11 +29,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AttributeAnalyzer.Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="AttributeGenerator.Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AttributeGenerator.Resources.resx</DependentUpon>
     </Compile>
     <Compile Update="HashCodeGenerator.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -87,11 +85,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EquatableMemberSyntax.Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Visitors\GenerateValueFieldWhenEncapsulatedVisited.Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GenerateValueFieldWhenEncapsulatedVisited.Resources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Visitors\GenerateGetHashCodeOverrideWhenSubjectVisited.Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -138,10 +131,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AttributeAnalyzer.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="AttributeGenerator.Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AttributeGenerator.Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="HashCodeGenerator.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>HashCodeGenerator.Resources.Designer.cs</LastGenOutput>
@@ -185,10 +174,6 @@
     <EmbeddedResource Update="Syntax\EquatableMemberSyntax.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>EquatableMemberSyntax.Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Visitors\GenerateValueFieldWhenEncapsulatedVisited.Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GenerateValueFieldWhenEncapsulatedVisited.Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Visitors\GenerateGetHashCodeOverrideWhenSubjectVisited.Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

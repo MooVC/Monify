@@ -61,36 +61,38 @@ namespace Monify.Visitors {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to public override {0} Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
-        ///{{
-        ///    return new {0}(global::System.Text.Json.JsonSerializer.Deserialize&lt;{1}&gt;(ref reader, options));
-        ///}}
-        ///
-        ///public override void Write(global::System.Text.Json.Utf8JsonWriter writer, {0} value, global::System.Text.Json.JsonSerializerOptions options)
-        ///{{
-        ///    global::System.Text.Json.JsonSerializer.Serialize&lt;{1}&gt;(writer, value.{2}, options);
-        ///}}.
+        ///   Looks up the can convert body.
         /// </summary>
-        internal static string ConverterSource {
+        internal static string CanConvertBody {
             get {
-                return ResourceManager.GetString("ConverterSource", resourceCulture);
+                return ResourceManager.GetString("CanConvertBody", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to public override bool CanConvert(global::System.Type typeToConvert)
-        ///{{
-        ///    return typeToConvert.IsGenericType &amp;&amp; typeToConvert.GetGenericTypeDefinition().FullName == &quot;{0}&quot;;
-        ///}}
-        ///
-        ///public override global::System.Text.Json.Serialization.JsonConverter CreateConverter(global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)
-        ///{{
-        ///    global::System.Type converter = typeToConvert.GetNestedType(&quot;Converter&quot;);
-        ///    converter = converter.MakeGenericType(typeToConvert.GetGenericArguments()); [rest of string was truncated]&quot;;.
+        ///   Looks up the create converter body.
         /// </summary>
-        internal static string FactorySource {
+        internal static string CreateConverterBody {
             get {
-                return ResourceManager.GetString("FactorySource", resourceCulture);
+                return ResourceManager.GetString("CreateConverterBody", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up the read body.
+        /// </summary>
+        internal static string ReadBody {
+            get {
+                return ResourceManager.GetString("ReadBody", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up the write body.
+        /// </summary>
+        internal static string WriteBody {
+            get {
+                return ResourceManager.GetString("WriteBody", resourceCulture);
             }
         }
     }

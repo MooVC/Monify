@@ -1,8 +1,10 @@
 namespace Monify.Visitors
 {
     using System.Collections.Generic;
+    using Graphify;
     using Monify.Model;
     using Monify.Syntax;
+    using MooVC.Syntax;
     using MooVC.Syntax.CSharp;
 
     using static Monify.Visitors.GenerateGetHashCodeOverrideWhenSubjectVisited_Resources;
@@ -11,12 +13,12 @@ namespace Monify.Visitors
     /// Generates the source needed to support <see cref="object.GetHashCode()"/>.
     /// </summary>
     internal sealed class GenerateGetHashCodeOverrideWhenSubjectVisited
-        : ISubjectVisitor<Subject.Graph.Self, Source>
+        : ISubjectVisitor<Subject.Graph, Source>
     {
         /// <inheritdoc/>
-        public IEnumerable<Source> Observe(Subject.Graph.Self instance)
+        public IEnumerable<Source> Observe(Subject.Graph instance)
         {
-            Subject subject = instance._Value;
+            Subject subject = ((IGraph<Subject>)instance).Root;
 
             if (!subject.CanOverrideGetHashCode)
             {
@@ -27,9 +29,9 @@ namespace Monify.Visitors
                 .Named(nameof(GetHashCode))
                 .WithExtensibility(Modifiers.Override)
                 .Returns(Result.Void.OfType(typeof(int)))
-                .WithBody(GenerationSyntax.ToSnippet(string.Format(GetHashCodeSource, GenerateValueFieldWhenEncapsulatedVisited.Name)));
+                .WithBody(Snippet.From(Configuration.Options, string.Format(GetHashCodeSource, GenerateValueFieldWhenEncapsulatedVisited.Name)));
 
-            yield return GenerationSyntax.CreateSource(subject, nameof(GetHashCode), method);
+            yield return subject.ToSource(nameof(GetHashCode), method);
         }
     }
 }

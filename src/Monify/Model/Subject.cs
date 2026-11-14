@@ -174,14 +174,6 @@ namespace Monify.Model
         public string QualifiedName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Exposes the whole subject as a terminal node for source generation visitors.
-        /// </summary>
-        /// <value>The root semantic subject.</value>
-        [Traverse(Scope = TraverseScope.Property)]
-        [Valuify.Ignore]
-        public Subject Self => this;
-
-        /// <summary>
         /// Gets or sets the serialization metadata associated with the subject.
         /// </summary>
         /// <value>

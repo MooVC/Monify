@@ -33,7 +33,7 @@ namespace Monify
         {
             var visitors = new Dictionary<Type, object>();
 
-            Register<Subject.Graph.Self>(
+            Register<Subject.Graph>(
                 visitors,
                 new GenerateDebuggerDisplayWhenSubjectVisited(),
                 new GenerateEqualityOperatorsWhenSubjectVisited(),

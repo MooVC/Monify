@@ -4,6 +4,7 @@ namespace Monify.Visitors
     using Monify.Model;
     using Monify.Syntax;
     using MooVC.Syntax;
+    using MooVC.Syntax.CSharp;
 
     using static Monify.Visitors.GenerateConstructorsWhenEncapsulatedVisited_Resources;
 
@@ -33,10 +34,12 @@ namespace Monify.Visitors
                 : $"{Name}.Passthrough.{instance._Index:D2}";
 
             Subject subject = instance._Root;
-            string declaration = $"public {subject.Name}({encapsulated.Type} value)";
-            Snippet body = GenerationSyntax.ToSnippet(string.Format(ConstructorSource, GenerateValueFieldWhenEncapsulatedVisited.Name));
+            Class owner = Class.Undefined.Named(subject.Name);
+            Constructor constructor = Constructor.Undefined
+                .WithParameters(parameter => parameter.Named("Value").OfType(TypeReferences.FromRoslyn(encapsulated.Type)))
+                .WithBody(Snippet.From(Configuration.Options, string.Format(ConstructorSource, GenerateValueFieldWhenEncapsulatedVisited.Name)));
 
-            yield return GenerationSyntax.CreateSource(subject, hint, GenerationSyntax.Block(body, declaration));
+            yield return subject.ToSource(hint, constructor.ToSnippet(Configuration.Options, owner));
         }
     }
 }
