@@ -7,7 +7,8 @@ It is particularly useful for engineers implementing encapsulated types in funct
 ## Requirements
 
 - C# v2.0 or later.
-- Visual Studio 2022 v17.4 or later, or any compatible IDE that supports Roslyn source generators.
+- .NET 11 SDK or later for building projects that reference Monify. The generated code can target earlier frameworks.
+- An IDE that supports the .NET 11 toolchain when using IDE source generation.
 
 ## Installation
 

@@ -17,7 +17,7 @@
     <PackageDownload Include="Graphify" Version="[$(GraphifyBootstrapVersion)]" />
     <Analyzer Include="$(NuGetPackageRoot)/graphify/$(GraphifyBootstrapVersion)/analyzers/dotnet/cs/Graphify.dll" />
     <PackageReference Include="MooVC.Syntax.CSharp" PrivateAssets="all" />
-    <PackageReference Include="System.Collections.Immutable" />
+    <PackageReference Include="System.Collections.Immutable" PrivateAssets="all" />
     <PackageReference Include="Valuify">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

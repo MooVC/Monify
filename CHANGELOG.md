@@ -4,12 +4,15 @@ All notable changes to Monify will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [Unreleased]
+# [1.7.1] - 2026-11-23
 
 ## Changed
 
-- Migrated generated declarations, including forwarded operators, to the typed builders in `MooVC.Syntax.CSharp` 10.1.0.
-- Updated Graphify to 1.2.0 and switched subject visitors to the generated root node.
+- Updated `System.Collections.Immutable` from `10.0.15` to `11.0.0`.
+
+## Fixed
+
+- Kept `System.Collections.Immutable` private to the generator so installing Monify no longer adds it as a consumer dependency.
 
 # [1.7.0] - 2026-11-12
 
