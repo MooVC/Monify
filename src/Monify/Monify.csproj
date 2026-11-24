@@ -2,7 +2,7 @@
   <PropertyGroup>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Description>Monify is a .NET Roslyn source generator for strongly typed wrappers and encapsulated functional value types (including monad-style wrappers), improving semantic clarity, type safety, and maintainability.</Description>
-    <GraphifyBootstrapVersion>1.2.0</GraphifyBootstrapVersion>
+    <GraphifyBootstrapVersion>1.3.1</GraphifyBootstrapVersion>
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>7.3</LangVersion>
     <Nullable>disable</Nullable>
